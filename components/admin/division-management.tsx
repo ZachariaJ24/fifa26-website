@@ -46,7 +46,9 @@ export function DivisionManagement() {
   const fetchDivisions = async () => {
     try {
       setLoading(true)
-      const response = await fetch("/api/admin/divisions")
+      const response = await fetch("/api/admin/divisions", {
+        credentials: 'include'
+      })
       
       if (!response.ok) {
         throw new Error("Failed to fetch divisions")
@@ -74,6 +76,7 @@ export function DivisionManagement() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify(formData),
       })
 
@@ -112,6 +115,7 @@ export function DivisionManagement() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify(formData),
       })
 
@@ -150,6 +154,7 @@ export function DivisionManagement() {
       setSaving(true)
       const response = await fetch(`/api/admin/divisions/${division.id}`, {
         method: "DELETE",
+        credentials: 'include',
       })
 
       if (!response.ok) {

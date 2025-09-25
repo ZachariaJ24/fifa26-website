@@ -33,7 +33,9 @@ export function PromotionRelegation() {
   const fetchLastChanges = async () => {
     try {
       setLoading(true)
-      const response = await fetch("/api/admin/promotion-relegation")
+      const response = await fetch("/api/admin/promotion-relegation", {
+        credentials: 'include'
+      })
       
       if (!response.ok) {
         throw new Error("Failed to fetch promotion/relegation data")
@@ -60,6 +62,7 @@ export function PromotionRelegation() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify({}),
       })
 

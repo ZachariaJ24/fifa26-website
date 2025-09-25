@@ -59,8 +59,8 @@ export function TeamManagement() {
       
       // Fetch teams and divisions in parallel
       const [teamsResponse, divisionsResponse] = await Promise.all([
-        fetch("/api/admin/teams"),
-        fetch("/api/admin/divisions")
+        fetch("/api/admin/teams", { credentials: 'include' }),
+        fetch("/api/admin/divisions", { credentials: 'include' })
       ])
 
       if (!teamsResponse.ok || !divisionsResponse.ok) {
@@ -94,6 +94,7 @@ export function TeamManagement() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify(formData),
       })
 
@@ -132,6 +133,7 @@ export function TeamManagement() {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify(formData),
       })
 
@@ -170,6 +172,7 @@ export function TeamManagement() {
       setSaving(true)
       const response = await fetch(`/api/admin/teams/${team.id}`, {
         method: "DELETE",
+        credentials: 'include',
       })
 
       if (!response.ok) {
