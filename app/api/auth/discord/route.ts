@@ -7,7 +7,8 @@ const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.trim() ||
   (isDevelopment ? "http://localhost:3000" : "https://www.secretchelsociety.com")
-const DISCORD_REDIRECT_URI = `${SITE_URL}/api/auth/discord/callback`
+// Ensure no double slashes in redirect URI
+const DISCORD_REDIRECT_URI = `${SITE_URL.replace(/\/$/, '')}/api/auth/discord/callback`
 
 export async function GET(request: Request) {
   try {
@@ -20,6 +21,7 @@ export async function GET(request: Request) {
       state,
       hasClientId: !!DISCORD_CLIENT_ID,
       hasClientSecret: !!DISCORD_CLIENT_SECRET,
+      clientId: DISCORD_CLIENT_ID, // Log the actual client ID for debugging
       redirectUri: DISCORD_REDIRECT_URI,
       siteUrl: SITE_URL, // Log the site URL for debugging
     })
