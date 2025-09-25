@@ -198,6 +198,7 @@ const ManagementPage = () => {
   const [projectedSalary, setProjectedSalary] = useState(0)
   const [projectedRosterSize, setProjectedRosterSize] = useState(0)
   const [currentSalaryCap, setCurrentSalaryCap] = useState(65000000) // $65M salary cap
+  const [currentTeamSalary, setCurrentTeamSalary] = useState(0)
   const [isBiddingEnabled, setIsBiddingEnabled] = useState(true)
 
   // Add this state variable near the top with other useState declarations
@@ -345,6 +346,10 @@ const ManagementPage = () => {
       }
 
       setTeamPlayers(teamPlayersData || [])
+      
+      // Calculate current team salary
+      const totalSalary = (teamPlayersData || []).reduce((sum, player) => sum + (player.salary || 0), 0)
+      setCurrentTeamSalary(totalSalary)
 
       // Get team matches
       const { data: matchesData, error: matchesError } = await supabase
