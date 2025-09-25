@@ -147,19 +147,11 @@ export default function AdminDashboardPage() {
     },
     {
       title: "League Management",
-      description: "Manage divisions, teams, and promotion/relegation",
+      description: "Manage divisions, teams, promotion/relegation, and EA Sports integration",
       icon: <Trophy className="h-6 w-6" />,
       href: "/admin/league-management",
       category: "team",
       color: "assist-green"
-    },
-    {
-      title: "Club Management",
-      description: "Manage clubs and rosters",
-      icon: <Users className="h-6 w-6" />,
-      href: "/admin/teams",
-      category: "team",
-      color: "rink-blue"
     },
     {
       title: "Fixture Management",
