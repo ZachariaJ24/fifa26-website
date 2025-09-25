@@ -470,7 +470,7 @@ class WebsiteTestSuite {
       const startTime = Date.now();
       
       try {
-        // await import(`@/${component}`); // Commented out to fix build issue
+        await import(`@/${component}`);
         
         suite.tests.push({
           name: `Component: ${component}`,
