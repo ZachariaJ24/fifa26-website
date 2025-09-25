@@ -10,9 +10,9 @@ export async function POST() {
 
     // Update the bot configuration with the correct registered role ID
     const { error } = await supabase.from("discord_bot_config").upsert({
-      guild_id: "1345946042281234442",
-      bot_token: "MTM2NTg4ODY2MDE3MTY1MzE1MA.G9DxJ3.QzAkopXtoHjPTjMo7gf1-MYaOmmVbk5K2Ca3Wc",
-      registered_role_id: "1376351990354804848",
+      guild_id: process.env.DISCORD_GUILD_ID || "1420630992757985333",
+      bot_token: process.env.DISCORD_BOT_TOKEN || "",
+      registered_role_id: process.env.DISCORD_REGISTERED_ROLE_ID || "1420812444649132116",
     })
 
     if (error) {
@@ -22,7 +22,7 @@ export async function POST() {
     return NextResponse.json({
       success: true,
       message: "Bot configuration updated with correct registered role ID",
-      registered_role_id: "1376351990354804848",
+      registered_role_id: process.env.DISCORD_REGISTERED_ROLE_ID || "1420812444649132116",
     })
   } catch (error: any) {
     console.error("Error updating bot config:", error)

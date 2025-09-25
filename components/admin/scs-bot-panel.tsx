@@ -95,9 +95,9 @@ export default function SCSBotPanel() {
           console.warn("Could not load bot config:", configError)
           // Set default configuration if none exists
           setBotConfig({
-            guild_id: "1345946042281234442",
-            bot_token: "MTM2NTg4ODY2MDE3MTY1MzE1MA.G9DxJ3.QzAkopXtoHjPTjMo7gf1-MYaOmmVbk5K2Ca3Wc",
-            registered_role_id: "1376351990354804848",
+            guild_id: "1420630992757985333",
+            bot_token: "",
+            registered_role_id: "1420812444649132116",
           })
         } else if (configs && configs.length > 0) {
           // Use the most recent config
@@ -113,9 +113,9 @@ export default function SCSBotPanel() {
         } else {
           // Set default configuration if none exists
           setBotConfig({
-            guild_id: "1345946042281234442",
-            bot_token: "MTM2NTg4ODY2MDE3MTY1MzE1MA.G9DxJ3.QzAkopXtoHjPTjMo7gf1-MYaOmmVbk5K2Ca3Wc",
-            registered_role_id: "1376351990354804848",
+            guild_id: "1420630992757985333",
+            bot_token: "",
+            registered_role_id: "1420812444649132116",
           })
         }
       } catch (configError) {
@@ -1250,7 +1250,7 @@ export default function SCSBotPanel() {
                     </Label>
                     <div className="flex items-center gap-3">
                       <Input 
-                        value="1365888660171653150" 
+                        value="1423504252508307476" 
                         disabled 
                         className="hockey-search border-2 border-rink-blue-200/50 dark:border-rink-blue-700/50"
                       />
@@ -1264,7 +1264,7 @@ export default function SCSBotPanel() {
                     </Label>
                     <div className="flex items-center gap-3">
                       <Input 
-                        value="mu3IdoBiG7zo4NDHYmGArCfMHoP4atbX" 
+                        value="[CONFIGURED]" 
                         type="password" 
                         disabled 
                         className="hockey-search border-2 border-rink-blue-200/50 dark:border-rink-blue-700/50"

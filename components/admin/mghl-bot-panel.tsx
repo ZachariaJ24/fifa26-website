@@ -86,9 +86,9 @@ export default function MGHLBotPanel() {
           console.warn("Could not load bot config:", configError)
           // Set default configuration if none exists
           setBotConfig({
-            guild_id: "1345946042281234442",
-            bot_token: "MTQwNzk0NzQxNjA5NDkwMDI0NQ.GOikOI.tD5VoGJoLAj8Zcj9qNLc7SfYLM_tE752vJDMDc",
-            registered_role_id: "1376351990354804848",
+            guild_id: "1420630992757985333",
+            bot_token: "",
+            registered_role_id: "1420812444649132116",
           })
         } else if (configs && configs.length > 0) {
           // Use the most recent config
@@ -104,9 +104,9 @@ export default function MGHLBotPanel() {
         } else {
           // Set default configuration if none exists
           setBotConfig({
-            guild_id: "1345946042281234442",
-            bot_token: "MTQwNzk0NzQxNjA5NDkwMDI0NQ.GOikOI.tD5VoGJoLAj8Zcj9qNLc7SfYLM_tE752vJDMDc",
-            registered_role_id: "1376351990354804848",
+            guild_id: "1420630992757985333",
+            bot_token: "",
+            registered_role_id: "1420812444649132116",
           })
         }
       } catch (configError) {
@@ -1056,14 +1056,14 @@ export default function MGHLBotPanel() {
                 <div>
                   <Label>Client ID</Label>
                   <div className="flex items-center gap-2">
-                    <Input value="1086490070984429638" disabled />
+                    <Input value="1423504252508307476" disabled />
                     <Badge variant="secondary">Configured</Badge>
                   </div>
                 </div>
                 <div>
                   <Label>Client Secret</Label>
                   <div className="flex items-center gap-2">
-                    <Input value="QmI3KS7RYyvzy6dZLKmFVwgLhmuGJVs_" type="password" disabled />
+                    <Input value="[CONFIGURED]" type="password" disabled />
                     <Badge variant="secondary">Configured</Badge>
                   </div>
                 </div>
