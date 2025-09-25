@@ -224,20 +224,110 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
           return
         }
 
-        // Get standings data
-        const { data: standingsData, error: standingsError } = await supabase
-          .from("team_standings")
-          .select("*")
-          .eq("season_id", seasonData.id)
-          .order("points", { ascending: false })
+        // Calculate standings dynamically from matches (same logic as home page)
+        const { data: teamsData, error: teamsError } = await supabase
+          .from("teams")
+          .select(`
+            id,
+            name,
+            logo_url,
+            division,
+            conference_id,
+            conferences (
+              name
+            )
+          `)
+          .eq("is_active", true)
 
-        if (standingsError) {
-          console.error("Error fetching standings:", standingsError)
-          setError("Failed to load standings data")
+        if (teamsError) {
+          console.error("Error fetching teams:", teamsError)
+          setError("Failed to load teams data")
           return
         }
 
-        setStandings(standingsData || [])
+        const { data: matchesData, error: matchesError } = await supabase
+          .from("matches")
+          .select(`
+            id,
+            home_team_id,
+            away_team_id,
+            home_score,
+            away_score,
+            status
+          `)
+          .eq("season_id", seasonData.id)
+          .eq("status", "completed")
+
+        if (matchesError) {
+          console.error("Error fetching matches:", matchesError)
+          setError("Failed to load matches data")
+          return
+        }
+
+        // Calculate standings for each team
+        const calculatedStandings = teamsData.map((team) => {
+          let wins = 0
+          let losses = 0
+          let otl = 0
+          let goalsFor = 0
+          let goalsAgainst = 0
+
+          matchesData.forEach((match) => {
+            if (match.home_team_id === team.id) {
+              goalsFor += match.home_score || 0
+              goalsAgainst += match.away_score || 0
+              
+              if (match.home_score > match.away_score) {
+                wins++
+              } else if (match.home_score < match.away_score) {
+                losses++
+              } else {
+                otl++
+              }
+            } else if (match.away_team_id === team.id) {
+              goalsFor += match.away_score || 0
+              goalsAgainst += match.home_score || 0
+              
+              if (match.away_score > match.home_score) {
+                wins++
+              } else if (match.away_score < match.home_score) {
+                losses++
+              } else {
+                otl++
+              }
+            }
+          })
+
+          const gamesPlayed = wins + losses + otl
+          const points = wins * 2 + otl * 1 // 2 points for win, 1 for OTL
+          const goalDifferential = goalsFor - goalsAgainst
+
+          return {
+            id: team.id,
+            name: team.name,
+            logo_url: team.logo_url,
+            wins,
+            losses,
+            otl,
+            games_played: gamesPlayed,
+            points,
+            goals_for: goalsFor,
+            goals_against: goalsAgainst,
+            goal_differential: goalDifferential,
+            division: team.division || "Premier Division",
+            conference: team.conferences?.name || "Unknown",
+            conference_id: team.conference_id,
+          }
+        })
+
+        // Sort by points (descending), then by wins (descending), then by goal differential (descending)
+        calculatedStandings.sort((a, b) => {
+          if (b.points !== a.points) return b.points - a.points
+          if (b.wins !== a.wins) return b.wins - a.wins
+          return b.goal_differential - a.goal_differential
+        })
+
+        setStandings(calculatedStandings)
       } catch (err) {
         console.error("Error in fetchStandings:", err)
         setError("An unexpected error occurred")

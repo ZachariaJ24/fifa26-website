@@ -490,8 +490,8 @@ const ManagementPage = () => {
         myOffersList.push(offer)
       })
 
-      setPlayerBids(offersMap)
-      setMyOffers(myOffersList)
+      setPlayerOffers(offersMap)
+      setMyTransferOffers(myOffersList)
 
       // Count active offers and outbid status
       const activeCount = myOffersList.length
@@ -500,8 +500,7 @@ const ManagementPage = () => {
         return false // Simplified for now
       }).length
 
-      setActiveOffersCount(activeCount)
-      setOutbidCount(outbidCount)
+      setActiveTransferOffersCount(activeCount)
     } catch (error) {
       console.error("Error in fetchPlayerOffers:", error)
     }
@@ -1101,7 +1100,7 @@ const ManagementPage = () => {
               fetchData()
             }}
             teamData={teamData}
-            currentOffer={playerBids[selectedPlayer.id]}
+            currentOffer={playerOffers[selectedPlayer.id]}
             projectedSalary={projectedSalary}
             salaryCap={currentSalaryCap}
             projectedRosterSize={projectedRosterSize}
