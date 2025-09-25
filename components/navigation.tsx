@@ -157,7 +157,7 @@ export default function Navigation() {
       case "Stats": return "from-hockey-silver-500 to-hockey-silver-600"
       case "Matches": return "from-rink-blue-500 to-rink-blue-600"
       case "Awards": return "from-amber-500 to-amber-600"
-      case "Free Agency": return "from-emerald-500 to-emerald-600"
+      case "Transfer Market": return "from-emerald-500 to-emerald-600"
       case "News": return "from-purple-500 to-purple-600"
       case "Forum": return "from-indigo-500 to-indigo-600"
       default: return "from-ice-blue-500 to-rink-blue-600"
@@ -172,12 +172,12 @@ export default function Navigation() {
     { name: "Matches", href: "/matches", icon: Calendar },
     { name: "Awards", href: "/awards", icon: Award },
     {
-      name: "Free Agency",
-      href: "/free-agency",
+      name: "Transfer Market",
+      href: "/transfers",
       icon: DollarSign,
       submenu: [
-        { name: "Free Agency", href: "/free-agency" },
-        { name: "Bidding Recap", href: "/free-agency/bidding-recap" },
+        { name: "Transfer Market", href: "/transfers" },
+        { name: "Transfer Recap", href: "/transfers/recap" },
       ],
     },
     {

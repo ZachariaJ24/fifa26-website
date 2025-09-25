@@ -588,7 +588,7 @@ export async function calculateStandings(seasonId: number): Promise<TeamStanding
       // Return teams with zero stats
       const zeroStatsTeams = teams.map((team) => {
         // Handle conference data properly
-        const conferenceName = team.conference?.name || (nhlDivisionTeams.includes(team.name) ? "NHL" : "Custom")
+        const conferenceName = team.conference?.name || "Premier League"
         const conferenceData = team.conference ? {
           id: team.conference.id,
           name: team.conference.name,
@@ -615,7 +615,7 @@ export async function calculateStandings(seasonId: number): Promise<TeamStanding
           penalty_kill_goals_against: 0,
           penalty_kill_opportunities: 0,
           penalty_kill_percentage: 0,
-          division: hasDivisionColumn ? team.division : nhlDivisionTeams.includes(team.name) ? "NHL" : "Custom",
+          division: hasDivisionColumn ? team.division : "Premier Division",
           conference: conferenceName,
           conference_id: team.conference_id,
           conference_data: conferenceData,

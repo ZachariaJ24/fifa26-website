@@ -713,73 +713,111 @@ function DivisionStandings({ standings }: { standings: TeamStanding[] }) {
   const leagueOneTeams = sortDivisionTeams(divisions.get("League One")?.teams || [])
 
   return (
-    <div className="grid gap-8 lg:grid-cols-2">
+    <div className="grid gap-8 lg:grid-cols-3">
+      {/* Premier Division */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <Card className="fifa-card fifa-card-hover h-full group border-2 border-field-green-200/50 dark:border-pitch-blue-700/50 shadow-2xl shadow-field-green-500/20 overflow-hidden">
+        <Card className="fifa-card fifa-card-hover h-full group border-2 border-field-green-200/50 dark:border-field-green-700/50 shadow-2xl shadow-field-green-500/20 overflow-hidden">
           <CardHeader className="pb-4 relative">
             <div 
               className="absolute top-0 right-0 w-24 h-24 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"
               style={{ 
-                background: `linear-gradient(135deg, ${conference1Color}20, ${conference1Color}40)`
+                background: `linear-gradient(135deg, #10b98120, #10b98140)`
               }}
             ></div>
             <CardTitle className="flex items-center gap-2 sm:gap-3 relative z-10">
               <div 
                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg"
                 style={{ 
-                  background: `linear-gradient(135deg, ${conference1Color}, ${conference1Color}dd)`,
-                  boxShadow: `0 10px 25px ${conference1Color}40`
+                  background: `linear-gradient(135deg, #10b981, #10b981dd)`,
+                  boxShadow: `0 10px 25px #10b98140`
                 }}
               >
-                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                <Trophy className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">{conference1Name}</div>
-                <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{conference1Teams.length} clubs</div>
+                <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Premier Division</div>
+                <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{premierTeams.length} clubs</div>
               </div>
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
-            <TeamStandings teams={conference1Teams} />
+            <TeamStandings teams={premierTeams} />
           </CardContent>
         </Card>
       </motion.div>
 
+      {/* Championship Division */}
       <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.4 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
       >
-        <Card className="fifa-card fifa-card-hover h-full group border-2 border-field-green-200/50 dark:border-pitch-blue-700/50 shadow-2xl shadow-field-green-500/20 overflow-hidden">
+        <Card className="fifa-card fifa-card-hover h-full group border-2 border-stadium-gold-200/50 dark:border-stadium-gold-700/50 shadow-2xl shadow-stadium-gold-500/20 overflow-hidden">
           <CardHeader className="pb-4 relative">
             <div 
               className="absolute top-0 right-0 w-24 h-24 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"
               style={{ 
-                background: `linear-gradient(135deg, ${conference2Color}20, ${conference2Color}40)`
+                background: `linear-gradient(135deg, #f59e0b20, #f59e0b40)`
               }}
             ></div>
             <CardTitle className="flex items-center gap-2 sm:gap-3 relative z-10">
               <div 
                 className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg"
                 style={{ 
-                  background: `linear-gradient(135deg, ${conference2Color}, ${conference2Color}dd)`,
-                  boxShadow: `0 10px 25px ${conference2Color}40`
+                  background: `linear-gradient(135deg, #f59e0b, #f59e0bdd)`,
+                  boxShadow: `0 10px 25px #f59e0b40`
                 }}
               >
                 <Award className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">{conference2Name}</div>
-                <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{conference2Teams.length} clubs</div>
+                <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Championship Division</div>
+                <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{championshipTeams.length} clubs</div>
               </div>
             </CardTitle>
           </CardHeader>
           <CardContent className="p-0">
-            <TeamStandings teams={conference2Teams} />
+            <TeamStandings teams={championshipTeams} />
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* League One */}
+      <motion.div
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.4 }}
+      >
+        <Card className="fifa-card fifa-card-hover h-full group border-2 border-goal-orange-200/50 dark:border-goal-orange-700/50 shadow-2xl shadow-goal-orange-500/20 overflow-hidden">
+          <CardHeader className="pb-4 relative">
+            <div 
+              className="absolute top-0 right-0 w-24 h-24 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"
+              style={{ 
+                background: `linear-gradient(135deg, #ea580c20, #ea580c40)`
+              }}
+            ></div>
+            <CardTitle className="flex items-center gap-2 sm:gap-3 relative z-10">
+              <div 
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg"
+                style={{ 
+                  background: `linear-gradient(135deg, #ea580c, #ea580cdd)`,
+                  boxShadow: `0 10px 25px #ea580c40`
+                }}
+              >
+                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+              </div>
+              <div>
+                <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">League One</div>
+                <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{leagueOneTeams.length} clubs</div>
+              </div>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0">
+            <TeamStandings teams={leagueOneTeams} />
           </CardContent>
         </Card>
       </motion.div>

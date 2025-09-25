@@ -389,13 +389,13 @@ export function SidebarNavigation({ isOpen: externalIsOpen, onToggle: externalOn
     },
     {
       name: "Transfer Market",
-      href: "/free-agency",
+      href: "/transfers",
       icon: DollarSign,
       color: "stadium-gold",
       description: "Available players and transfers",
       submenu: [
-        { name: "Transfer Market", href: "/free-agency", icon: Target },
-        { name: "Transfer Recap", href: "/free-agency/bidding-recap", icon: BarChart3 },
+        { name: "Transfer Market", href: "/transfers", icon: Target },
+        { name: "Transfer Recap", href: "/transfers/recap", icon: BarChart3 },
       ],
     },
     {

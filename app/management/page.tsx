@@ -92,7 +92,7 @@ interface FreeAgent {
 interface Bid {
   id: string
   amount: number
-  bid_expires_at: string
+  offer_expires_at: string
   status: string
   players: {
     id: string
@@ -218,7 +218,7 @@ const ManagementPage = () => {
   const [positionFilter, setPositionFilter] = useState<string>("all")
   const [nameFilter, setNameFilter] = useState<string>("")
   const [playerOffers, setPlayerOffers] = useState<Record<string, any>>({})
-  const [myBids, setMyBids] = useState<any[]>([])
+  const [myOffers, setMyOffers] = useState<any[]>([])
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState<any>(false)
@@ -318,17 +318,17 @@ const ManagementPage = () => {
       return
     }
 
-    // Calculate projected values based on winning bids that haven't expired
-    const winningBids = myBids.filter((bid) => {
-      const isWinning = bid.isHighestBidder
-      const isActive = new Date(bid.bid_expires_at) > now
+    // Calculate projected values based on winning offers that haven't expired
+    const winningOffers = myOffers.filter((offer) => {
+      const isWinning = offer.isHighestOfferer
+      const isActive = new Date(offer.offer_expires_at) > now
       return isWinning && isActive
     })
 
-    console.log("Calculating projections - Winning bids:", winningBids.length) // Debug log
+    console.log("Calculating projections - Winning offers:", winningOffers.length) // Debug log
 
-    const projectedSalaryIncrease = winningBids.reduce((sum, bid) => sum + bid.bid_amount, 0)
-    const projectedRosterIncrease = winningBids.length
+    const projectedSalaryIncrease = winningOffers.reduce((sum, offer) => sum + offer.offer_amount, 0)
+    const projectedRosterIncrease = winningOffers.length
 
     const newProjectedSalary = currentTeamSalary + projectedSalaryIncrease
     const newProjectedRosterSize = teamPlayers.length + projectedRosterIncrease
@@ -337,22 +337,22 @@ const ManagementPage = () => {
 
     setProjectedSalary(newProjectedSalary)
     setProjectedRosterSize(newProjectedRosterSize)
-  }, [myBids, currentTeamSalary, teamPlayers.length, teamData, now]) // Always runs when these change
+  }, [myOffers, currentTeamSalary, teamPlayers.length, teamData, now]) // Always runs when these change
 
-  // Check bidding status
+  // Check transfer status
   useEffect(() => {
-    const checkBiddingStatus = async () => {
+    const checkTransferStatus = async () => {
       try {
-        const response = await fetch("/api/bidding/status")
+        const response = await fetch("/api/transfers/status")
         const data = await response.json()
-        setIsBiddingEnabled(data.enabled)
+        setIsTransferEnabled(data.enabled)
       } catch (error) {
-        console.error("Error checking bidding status:", error)
-        setIsBiddingEnabled(false) // Default to disabled on error
+        console.error("Error checking transfer status:", error)
+        setIsTransferEnabled(false) // Default to disabled on error
       }
     }
 
-    checkBiddingStatus()
+    checkTransferStatus()
   }, [])
 
   // Add this useEffect after the existing useEffects
@@ -861,9 +861,9 @@ const ManagementPage = () => {
       // Load free agents - this will be called separately when needed
       // await loadFreeAgents()
 
-      // Fetch my team's bids with enhanced status tracking
-      const { data: myTeamBids, error: bidsError } = await supabase
-        .from("player_bidding")
+      // Fetch my team's transfer offers with enhanced status tracking
+      const { data: myTeamOffers, error: offersError } = await supabase
+        .from("player_transfer_offers")
         .select(`
           *,
           players (
@@ -878,51 +878,51 @@ const ManagementPage = () => {
           )
         `)
         .eq("team_id", playerData.team_id)
-        .order("bid_expires_at", { ascending: true })
+          .order("offer_expires_at", { ascending: true })
 
-      if (bidsError) {
-        console.error("Error fetching team bids:", bidsError)
+      if (offersError) {
+        console.error("Error fetching team offers:", offersError)
       } else {
-        // Get all current highest bids to determine if our bids are winning
-        const { data: allBids, error: allBidsError } = await supabase
-          .from("player_bidding")
+        // Get all current highest offers to determine if our offers are winning
+        const { data: allOffers, error: allOffersError } = await supabase
+          .from("player_transfer_offers")
           .select("*")
-          .order("bid_amount", { ascending: false })
+          .order("offer_amount", { ascending: false })
 
-        if (!allBidsError && allBids) {
-          // Group all bids by player_id to find highest bid for each player
-          const highestBidsByPlayer: Record<string, any> = {}
-          allBids.forEach((bid) => {
-            if (!highestBidsByPlayer[bid.player_id] || bid.bid_amount > highestBidsByPlayer[bid.player_id].bid_amount) {
-              highestBidsByPlayer[bid.player_id] = bid
+        if (!allOffersError && allOffers) {
+          // Group all offers by player_id to find highest offer for each player
+          const highestOffersByPlayer: Record<string, any> = {}
+          allOffers.forEach((offer) => {
+            if (!highestOffersByPlayer[offer.player_id] || offer.offer_amount > highestOffersByPlayer[offer.player_id].offer_amount) {
+              highestOffersByPlayer[offer.player_id] = offer
             }
           })
 
-          // Enhance our bids with winning status and categorize them
-          const enhancedBids =
-            myTeamBids?.map((bid) => {
-              const highestBid = highestBidsByPlayer[bid.player_id]
-              const isHighestBidder = highestBid && highestBid.id === bid.id
+          // Enhance our offers with winning status and categorize them
+          const enhancedOffers =
+            myTeamOffers?.map((offer) => {
+              const highestOffer = highestOffersByPlayer[offer.player_id]
+              const isHighestOfferer = highestOffer && highestOffer.id === offer.id
 
-              const isExpired = new Date(bid.bid_expires_at) <= now
+              const isExpired = new Date(offer.offer_expires_at) <= now
 
               return {
-                ...bid,
-                isHighestBidder,
-                highestBid: !isHighestBidder ? highestBid : null,
+                ...offer,
+                isHighestOfferer,
+                highestOffer: !isHighestOfferer ? highestOffer : null,
                 isExpired,
-                status: isExpired ? "expired" : isHighestBidder ? "winning" : "outbid",
+                status: isExpired ? "expired" : isHighestOfferer ? "winning" : "outbid",
               }
             }) || []
 
-          setMyBids(enhancedBids)
+          setMyOffers(enhancedOffers)
 
-          // Count active and outbid bids
-          const activeBids = enhancedBids.filter((bid) => !bid.isExpired && bid.isHighestBidder)
-          const outbidBids = enhancedBids.filter((bid) => !bid.isExpired && !bid.isHighestBidder)
+          // Count active and outbid offers
+          const activeOffers = enhancedOffers.filter((offer) => !offer.isExpired && offer.isHighestOfferer)
+          const outbidOffers = enhancedOffers.filter((offer) => !offer.isExpired && !offer.isHighestOfferer)
 
-          setActiveBidsCount(activeBids.length)
-          setOutbidCount(outbidBids.length)
+          setActiveBidsCount(activeOffers.length)
+          setOutbidCount(outbidOffers.length)
         }
       }
     } catch (error: any) {
@@ -987,7 +987,7 @@ const ManagementPage = () => {
       console.log("User role:", session?.user?.role)
       console.log("Team data:", teamData?.name)
 
-      const response = await fetch("/api/free-agents", {
+      const response = await fetch("/api/transfers", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -1035,9 +1035,9 @@ const ManagementPage = () => {
     if (!teamData?.id) return
 
     try {
-      // Fetch my team's bids
-      const { data: myBids, error: myBidsError } = await supabase
-        .from("player_bidding")
+      // Fetch my team's transfer offers
+      const { data: myOffers, error: myOffersError } = await supabase
+        .from("player_transfer_offers")
         .select(`
           *,
           players:player_id (
@@ -1054,26 +1054,26 @@ const ManagementPage = () => {
           )
         `)
         .eq("team_id", teamData.id)
-        .in("status", ["Active", null])
-        .order("bid_expires_at", { ascending: true })
+        .in("status", ["active", null])
+          .order("offer_expires_at", { ascending: true })
 
-      if (myBidsError) {
-        console.error("Error fetching my team's bids:", myBidsError)
+      if (myOffersError) {
+        console.error("Error fetching my team's offers:", myOffersError)
         return
       }
 
-      // Create a map of player_id to bid for easy lookup
-      const bidsMap: Record<string, any> = {}
-      const myBidsList: any[] = []
+      // Create a map of player_id to offer for easy lookup
+      const offersMap: Record<string, any> = {}
+      const myOffersList: any[] = []
 
-      myBids?.forEach((bid) => {
-        bidsMap[bid.players.id] = bid
-        myBidsList.push(bid)
+      myOffers?.forEach((offer) => {
+        offersMap[offer.players.id] = offer
+        myOffersList.push(offer)
       })
 
-      // Also fetch all bids to show highest bids for each player
-      const { data: allBids, error: allBidsError } = await supabase
-        .from("player_bidding")
+      // Also fetch all offers to show highest offers for each player
+      const { data: allOffers, error: allOffersError } = await supabase
+        .from("player_transfer_offers")
         .select(`
           *,
           teams:team_id (
@@ -1082,45 +1082,45 @@ const ManagementPage = () => {
             logo_url
           )
         `)
-        .in("status", ["Active", null])
-        .order("bid_amount", { ascending: false })
+        .in("status", ["active", null])
+        .order("offer_amount", { ascending: false })
 
-      if (!allBidsError && allBids) {
-        // Group all bids by player_id to find highest bid for each player
-        const highestBidsByPlayer: Record<string, any> = {}
-        allBids.forEach((bid) => {
-          if (!highestBidsByPlayer[bid.player_id] || bid.bid_amount > highestBidsByPlayer[bid.player_id].bid_amount) {
-            highestBidsByPlayer[bid.player_id] = bid
+      if (!allOffersError && allOffers) {
+        // Group all offers by player_id to find highest offer for each player
+        const highestOffersByPlayer: Record<string, any> = {}
+        allOffers.forEach((offer) => {
+          if (!highestOffersByPlayer[offer.player_id] || offer.offer_amount > highestOffersByPlayer[offer.player_id].offer_amount) {
+            highestOffersByPlayer[offer.player_id] = offer
           }
         })
-        setPlayerBids(highestBidsByPlayer)
+        setPlayerOffers(highestOffersByPlayer)
 
-        // Enhance my bids with status information
-        const enhancedBids = myBidsList.map((bid) => {
-          const highestBid = highestBidsByPlayer[bid.player_id]
-          const isHighestBidder = highestBid && highestBid.id === bid.id
-          const isExpired = new Date(bid.bid_expires_at) <= new Date()
+        // Enhance my offers with status information
+        const enhancedOffers = myOffersList.map((offer) => {
+          const highestOffer = highestOffersByPlayer[offer.player_id]
+          const isHighestOfferer = highestOffer && highestOffer.id === offer.id
+          const isExpired = new Date(offer.offer_expires_at) <= new Date()
 
           return {
-            ...bid,
-            isHighestBidder,
-            highestBid: !isHighestBidder ? highestBid : null,
+            ...offer,
+            isHighestOfferer,
+            highestOffer: !isHighestOfferer ? highestOffer : null,
             isExpired,
-            status: isExpired ? "expired" : isHighestBidder ? "winning" : "outbid",
+            status: isExpired ? "expired" : isHighestOfferer ? "winning" : "outbid",
           }
         })
 
-        setMyBids(enhancedBids)
+        setMyBids(enhancedOffers)
 
-        // Count active and outbid bids
-        const activeBids = enhancedBids.filter((bid) => !bid.isExpired && bid.isHighestBidder)
-        const outbidBids = enhancedBids.filter((bid) => !bid.isExpired && !bid.isHighestBidder)
+        // Count active and outbid offers
+        const activeOffers = enhancedOffers.filter((offer) => !offer.isExpired && offer.isHighestOfferer)
+        const outbidOffers = enhancedOffers.filter((offer) => !offer.isExpired && !offer.isHighestOfferer)
 
-        setActiveBidsCount(activeBids.length)
-        setOutbidCount(outbidBids.length)
+        setActiveBidsCount(activeOffers.length)
+        setOutbidCount(outbidOffers.length)
       }
     } catch (error) {
-      console.log("Error fetching player bids:", error)
+      console.log("Error fetching player offers:", error)
     }
   }
 
@@ -1408,18 +1408,18 @@ const ManagementPage = () => {
     }
   }, [activeTab, teamData?.id])
 
-  // Effect to reload free agents when switching to free-agents tab
+  // Effect to reload free agents when switching to transfers tab
   useEffect(() => {
-    if (activeTab === "free-agents" && teamData?.id) {
-      console.log("Switching to free-agents tab, reloading free agents") // Debug log
+    if (activeTab === "transfers" && teamData?.id) {
+      console.log("Switching to transfers tab, reloading free agents") // Debug log
       loadFreeAgents()
     }
   }, [activeTab, teamData?.id])
 
-  // Effect to reload bids when switching to my-bids tab
+  // Effect to reload offers when switching to my-offers tab
   useEffect(() => {
-    if (activeTab === "my-bids" && teamData?.id) {
-      console.log("Switching to my-bids tab, reloading bids") // Debug log
+    if (activeTab === "my-offers" && teamData?.id) {
+      console.log("Switching to my-offers tab, reloading offers") // Debug log
       fetchPlayerOffers()
     }
   }, [activeTab, teamData?.id])
@@ -1700,13 +1700,13 @@ const ManagementPage = () => {
                   <span className="hidden md:inline">Team Schedule</span>
                   <span className="md:hidden">Schedule</span>
                 </TabsTrigger>
-                <TabsTrigger value="free-agents" className="text-xs md:text-sm px-2 md:px-4 py-2">
-              <span className="hidden md:inline">Free Agents</span>
-                  <span className="md:hidden">Free Agents</span>
+                <TabsTrigger value="transfers" className="text-xs md:text-sm px-2 md:px-4 py-2">
+              <span className="hidden md:inline">Transfer Market</span>
+                  <span className="md:hidden">Transfers</span>
             </TabsTrigger>
-                <TabsTrigger value="my-bids" className="text-xs md:text-sm px-2 md:px-4 py-2">
-              <span className="hidden md:inline">My Bids</span>
-                  <span className="md:hidden">Bids</span>
+                <TabsTrigger value="my-offers" className="text-xs md:text-sm px-2 md:px-4 py-2">
+              <span className="hidden md:inline">My Offers</span>
+                  <span className="md:hidden">Offers</span>
             </TabsTrigger>
                 <TabsTrigger value="waivers" className="text-xs md:text-sm px-2 md:px-4 py-2">
                   <span className="hidden md:inline">Waivers</span>
@@ -1925,11 +1925,11 @@ const ManagementPage = () => {
                 </Card>
               </TabsContent>
 
-              {/* Free Agents Tab Content */}
-              <TabsContent value="free-agents">
+              {/* Transfer Market Tab Content */}
+              <TabsContent value="transfers">
             <Card>
               <CardHeader>
-                    <CardTitle className="text-lg md:text-xl">Free Agents</CardTitle>
+                    <CardTitle className="text-lg md:text-xl">Transfer Market</CardTitle>
                     <CardDescription className="text-sm md:text-base">
                       Available players for transfer. {!isTransferEnabled && "Transfer market is currently disabled."}
                     </CardDescription>
@@ -2210,13 +2210,13 @@ const ManagementPage = () => {
                 </Card>
               </TabsContent>
 
-              {/* My Bids Tab Content */}
-              <TabsContent value="my-bids">
+              {/* My Offers Tab Content */}
+              <TabsContent value="my-offers">
             <Card>
               <CardHeader>
-                <CardTitle>My Bids</CardTitle>
+                <CardTitle>My Transfer Offers</CardTitle>
                     <CardDescription>
-                      Bids placed by {teamData?.name}. Active: {activeBidsCount} | Outbid: {outbidCount}
+                      Transfer offers placed by {teamData?.name}. Active: {activeBidsCount} | Outbid: {outbidCount}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -2251,12 +2251,12 @@ const ManagementPage = () => {
                         </div>
                       </div>
                     ) : null}
-                    {myBids.length > 0 ? (
+                    {myOffers.length > 0 ? (
                       <div className="space-y-4">
-                        {myBids.map((bid) => {
-                          const isExpired = bid.isExpired
-                          const isWinning = bid.isHighestBidder && !isExpired
-                          const isOutbid = !bid.isHighestBidder && !isExpired
+                        {myOffers.map((offer) => {
+                          const isExpired = offer.isExpired
+                          const isWinning = offer.isHighestOfferer && !isExpired
+                          const isOutbid = !offer.isHighestOfferer && !isExpired
 
                           let cardClass = "border rounded-lg p-4"
                           let statusBadge = { variant: "secondary" as const, text: "EXPIRED" }
@@ -2267,7 +2267,7 @@ const ManagementPage = () => {
                           } else if (isOutbid) {
                             cardClass = "border-2 border-red-500 bg-red-50 dark:bg-red-900/20 rounded-lg p-4"
                             statusBadge = { variant: "destructive" as const, text: "OUTBID" }
-                          } else if (isExpired && bid.isHighestBidder) {
+                          } else if (isExpired && offer.isHighestOfferer) {
                             cardClass =
                               "border-2 border-green-500 bg-green-50 dark:bg-green-900/20 rounded-lg p-4 opacity-75"
                             statusBadge = { variant: "default" as const, text: "WON" }
@@ -2277,56 +2277,56 @@ const ManagementPage = () => {
                           }
 
                           return (
-                            <div key={bid.id} className={cardClass}>
+                            <div key={offer.id} className={cardClass}>
                               <div className="flex justify-between items-start">
                                 <div>
                                   <h3 className="font-medium">
-                                    {bid.players?.users?.gamer_tag_id || "Unknown Player"}
+                                    {offer.players?.users?.gamer_tag_id || "Unknown Player"}
                                   </h3>
                                   <div className="flex items-center gap-1 mt-1">
-                                    <span className={getPositionColor(bid.players?.users?.primary_position)}>
-                                      {getPositionAbbreviation(bid.players?.users?.primary_position || "Unknown")}
+                                    <span className={getPositionColor(offer.players?.users?.primary_position)}>
+                                      {getPositionAbbreviation(offer.players?.users?.primary_position || "Unknown")}
                                     </span>
-                                    {bid.players?.users?.secondary_position && (
+                                    {offer.players?.users?.secondary_position && (
                                       <>
                                         {" / "}
-                                        <span className={getPositionColor(bid.players?.users?.secondary_position)}>
-                                          {getPositionAbbreviation(bid.players?.users?.secondary_position)}
+                                        <span className={getPositionColor(offer.players?.users?.secondary_position)}>
+                                          {getPositionAbbreviation(offer.players?.users?.secondary_position)}
                                         </span>
                                       </>
                                     )}
                                   </div>
                                   <p className="text-sm text-muted-foreground mt-1">
-                                    Your bid: ${bid.bid_amount.toLocaleString()}
+                                    Your offer: ${offer.offer_amount.toLocaleString()}
                                   </p>
                                   {isWinning && (
                                     <div className="mt-2 p-2 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-md">
                                       <div className="flex items-center gap-2">
                                         <span className="text-blue-600 dark:text-blue-400 text-xs font-medium">🔮</span>
                                         <span className="text-blue-600 dark:text-blue-400 text-xs">
-                                          Will add ${(bid.bid_amount / 1000000).toFixed(1)}M to future salary
+                                          Will add ${(offer.offer_amount / 1000000).toFixed(1)}M to future salary
                                         </span>
                                       </div>
                                     </div>
                                   )}
-                                  {!bid.isHighestBidder && bid.highestBid && (
+                                  {!offer.isHighestOfferer && offer.highestOffer && (
                                     <p className="text-sm text-red-600 dark:text-red-400 font-bold">
-                                      Outbid by {bid.highestBid.teams?.name}: $
-                                      {bid.highestBid.bid_amount.toLocaleString()}
+                                      Outbid by {offer.highestOffer.teams?.name}: $
+                                      {offer.highestOffer.offer_amount.toLocaleString()}
                                     </p>
                                   )}
-                                  {isExpired && !bid.isHighestBidder && (
-                                    <p className="text-sm text-red-600 dark:text-red-400 font-bold">BID LOST</p>
+                                  {isExpired && !offer.isHighestOfferer && (
+                                    <p className="text-sm text-red-600 dark:text-red-400 font-bold">OFFER LOST</p>
                                   )}
-                                  {isExpired && bid.isHighestBidder && (
-                                    <p className="text-sm text-green-600 dark:text-green-400 font-bold">BID WON</p>
+                                  {isExpired && offer.isHighestOfferer && (
+                                    <p className="text-sm text-green-600 dark:text-green-400 font-bold">OFFER WON</p>
                                   )}
                                 </div>
                                 <div className="text-right">
                                   <Badge variant={statusBadge.variant}>{statusBadge.text}</Badge>
                                   <div className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
                                     <Clock className="h-3 w-3" />
-                                    {formatTimeRemaining(bid.bid_expires_at)}
+                                    {formatTimeRemaining(offer.offer_expires_at)}
                                   </div>
                                 </div>
                               </div>

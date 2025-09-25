@@ -238,10 +238,10 @@ export default function SideNavigation() {
     { name: "Awards", href: "/awards" },
     {
       name: "Transfer Market",
-      href: "/free-agency",
+      href: "/transfers",
       submenu: [
-        { name: "Transfer Market", href: "/free-agency" },
-        { name: "Transfer Recap", href: "/free-agency/bidding-recap" },
+        { name: "Transfer Market", href: "/transfers" },
+        { name: "Transfer Recap", href: "/transfers/recap" },
       ],
     },
     {
