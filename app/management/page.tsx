@@ -157,7 +157,7 @@ const getPositionColor = (position: string): string => {
 
 const tabs = [
   { id: "overview", label: "Overview", icon: Home },
-  { id: "bids", label: "Bids", icon: Gavel },
+  { id: "offers", label: "Offers", icon: Gavel },
   { id: "lineups", label: "Lineups", icon: Users },
   { id: "availability", label: "Availability", icon: Calendar },
 ]
@@ -179,14 +179,14 @@ const ManagementPage = () => {
   const [positionFilter, setPositionFilter] = useState<string>("all")
   const [nameFilter, setNameFilter] = useState<string>("")
   const [playerBids, setPlayerBids] = useState<Record<string, any>>({})
-  const [myBids, setMyBids] = useState<any[]>([])
+  const [myOffers, setMyOffers] = useState<any[]>([])
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState<any>(false)
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState<any>(false)
   const [historyPlayer, setHistoryPlayer] = useState<any>(null)
   const [now, setNow] = useState(new Date())
-  const [activeBidsCount, setActiveBidsCount] = useState(0)
+  const [activeOffersCount, setActiveOffersCount] = useState(0)
   const [outbidCount, setOutbidCount] = useState(0)
   const [freeAgentsError, setFreeAgentsError] = useState<string | null>(null)
   const [freeAgentsLoading, setFreeAgentsLoading] = useState(false)
@@ -199,11 +199,11 @@ const ManagementPage = () => {
   const [projectedRosterSize, setProjectedRosterSize] = useState(0)
   const [currentSalaryCap, setCurrentSalaryCap] = useState(65000000) // $65M salary cap
   const [currentTeamSalary, setCurrentTeamSalary] = useState(0)
-  const [isBiddingEnabled, setIsBiddingEnabled] = useState(true)
+  const [isTransferEnabled, setIsTransferEnabled] = useState(true)
 
   // Add this state variable near the top with other useState declarations
   const [userRole, setUserRole] = useState<string | null>(null)
-  const [bidModalOpen, setBidModalOpen] = useState(false)
+  const [offerModalOpen, setOfferModalOpen] = useState(false)
 
   // Add state for cap space withholding
   const [capSpaceWithholding, setCapSpaceWithholding] = useState<{ [playerId: string]: number }>({})
@@ -384,8 +384,8 @@ const ManagementPage = () => {
       // Fetch free agents
       await fetchFreeAgents()
 
-      // Fetch player bids
-      await fetchPlayerBids()
+      // Fetch player offers
+      await fetchPlayerOffers()
 
     } catch (error) {
       console.error("Error in fetchData:", error)
@@ -448,17 +448,17 @@ const ManagementPage = () => {
     }
   }
 
-  // Fetch player bids
-  const fetchPlayerBids = async () => {
+  // Fetch player offers
+  const fetchPlayerOffers = async () => {
     if (!teamData?.id) return
 
     try {
-      const { data: bidsData, error } = await supabase
-        .from("player_bidding")
+      const { data: offersData, error } = await supabase
+        .from("player_transfer_offers")
         .select(`
           id,
-          bid_amount,
-          bid_expires_at,
+          offer_amount,
+          offer_expires_at,
           status,
           players!inner (
             id,
@@ -473,35 +473,35 @@ const ManagementPage = () => {
           )
         `)
         .eq("team_id", teamData.id)
-        .in("status", ["Active", null])
+        .eq("status", "active")
 
       if (error) {
-        console.error("Error fetching bids:", error)
+        console.error("Error fetching offers:", error)
         return
       }
 
-      const bidsMap: Record<string, any> = {}
-      const myBidsList: any[] = []
+      const offersMap: Record<string, any> = {}
+      const myOffersList: any[] = []
 
-      bidsData?.forEach((bid) => {
-        bidsMap[bid.players.id] = bid
-        myBidsList.push(bid)
+      offersData?.forEach((offer) => {
+        offersMap[offer.players.id] = offer
+        myOffersList.push(offer)
       })
 
-      setPlayerBids(bidsMap)
-      setMyBids(myBidsList)
+      setPlayerBids(offersMap)
+      setMyOffers(myOffersList)
 
-      // Count active bids and outbid status
-      const activeCount = myBidsList.length
-      const outbidCount = myBidsList.filter((bid) => {
-        // Check if there are higher bids for the same player
+      // Count active offers and outbid status
+      const activeCount = myOffersList.length
+      const outbidCount = myOffersList.filter((offer) => {
+        // Check if there are higher offers for the same player
         return false // Simplified for now
       }).length
 
-      setActiveBidsCount(activeCount)
+      setActiveOffersCount(activeCount)
       setOutbidCount(outbidCount)
     } catch (error) {
-      console.error("Error in fetchPlayerBids:", error)
+      console.error("Error in fetchPlayerOffers:", error)
     }
   }
 
@@ -513,7 +513,7 @@ const ManagementPage = () => {
     router.push(url.pathname + url.search)
   }
 
-  // Handle player selection for bidding
+  // Handle player selection for transfer offers
   const handlePlayerSelect = (player: any) => {
     setSelectedPlayer(player)
     setIsModalOpen(true)
@@ -661,10 +661,11 @@ const ManagementPage = () => {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="roster">Roster</TabsTrigger>
-            <TabsTrigger value="free-agents">Free Agents</TabsTrigger>
-            <TabsTrigger value="my-bids">My Bids</TabsTrigger>
+            <TabsTrigger value="transfers">Transfer Market</TabsTrigger>
+            <TabsTrigger value="my-offers">My Offers</TabsTrigger>
+            <TabsTrigger value="team-transfers">Team Transfers</TabsTrigger>
             <TabsTrigger value="schedule">Schedule</TabsTrigger>
           </TabsList>
 
@@ -727,12 +728,12 @@ const ManagementPage = () => {
             </Card>
           </TabsContent>
 
-          {/* Free Agents Tab Content */}
-          <TabsContent value="free-agents">
+          {/* Transfer Market Tab Content */}
+          <TabsContent value="transfers">
             <Card>
               <CardHeader>
-                <CardTitle>Free Agents</CardTitle>
-                <CardDescription>Browse and bid on available players</CardDescription>
+                <CardTitle>Transfer Market</CardTitle>
+                <CardDescription>Browse and make offers for available players</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -822,53 +823,102 @@ const ManagementPage = () => {
             </Card>
           </TabsContent>
 
-          {/* My Bids Tab Content */}
-          <TabsContent value="my-bids">
+          {/* My Offers Tab Content */}
+          <TabsContent value="my-offers">
             <Card>
               <CardHeader>
-                <CardTitle>My Bids</CardTitle>
-                <CardDescription>Track your active bids on players</CardDescription>
+                <CardTitle>My Transfer Offers</CardTitle>
+                <CardDescription>Track your active transfer offers</CardDescription>
               </CardHeader>
               <CardContent>
-                {myBids.length > 0 ? (
+                {myOffers.length > 0 ? (
                   <div className="space-y-4">
-                    {myBids.map((bid) => (
+                    {myOffers.map((offer) => (
                       <div
-                        key={bid.id}
+                        key={offer.id}
                         className="flex items-center justify-between p-4 border rounded-lg"
                       >
                         <div className="flex items-center gap-4">
-                          {bid.players?.users?.avatar_url && (
+                          {offer.players?.users?.avatar_url && (
                             <Image
-                              src={bid.players.users.avatar_url}
-                              alt={bid.players.users.gamer_tag_id}
+                              src={offer.players.users.avatar_url}
+                              alt={offer.players.users.gamer_tag_id}
                               width={40}
                               height={40}
                               className="rounded-full"
                             />
                           )}
                           <div>
-                            <h3 className="font-medium">{bid.players?.users?.gamer_tag_id}</h3>
+                            <h3 className="font-medium">{offer.players?.users?.gamer_tag_id}</h3>
                             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <span className={getPositionColor(bid.players?.users?.primary_position)}>
-                                {getPositionAbbreviation(bid.players?.users?.primary_position)}
+                              <span className={getPositionColor(offer.players?.users?.primary_position)}>
+                                {getPositionAbbreviation(offer.players?.users?.primary_position)}
                               </span>
                               <span>•</span>
-                              <span>${(bid.bid_amount / 1000000).toFixed(2)}M</span>
+                              <span>${(offer.offer_amount / 1000000).toFixed(2)}M</span>
                               <span>•</span>
-                              <span>Expires: {new Date(bid.bid_expires_at).toLocaleDateString()}</span>
+                              <span>Expires: {new Date(offer.offer_expires_at).toLocaleDateString()}</span>
                             </div>
                           </div>
                         </div>
-                        <Badge variant="outline">{bid.status}</Badge>
+                        <Badge variant="outline">{offer.status}</Badge>
                       </div>
                     ))}
                   </div>
                 ) : (
                   <div className="text-center py-8 text-muted-foreground">
-                    No bids placed yet
+                    No transfer offers placed yet
                   </div>
                 )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Team Transfers Tab Content */}
+          <TabsContent value="team-transfers">
+            <Card>
+              <CardHeader>
+                <CardTitle>Team-to-Team Transfers</CardTitle>
+                <CardDescription>Send transfer offers to other teams for their players</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-6">
+                  {/* Team Selection */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Select Team to Negotiate With</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {/* This would be populated with other teams */}
+                      <div className="p-4 border rounded-lg bg-muted/50">
+                        <div className="text-center">
+                          <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-blue-600 rounded-full mx-auto mb-2 flex items-center justify-center">
+                            <span className="text-white font-bold">T</span>
+                          </div>
+                          <h4 className="font-medium">Team Name</h4>
+                          <p className="text-sm text-muted-foreground">Division</p>
+                          <Button size="sm" className="mt-2" variant="outline">
+                            View Players
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Transfer Offers Received */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Incoming Transfer Offers</h3>
+                    <div className="text-sm text-muted-foreground">
+                      No incoming transfer offers at this time.
+                    </div>
+                  </div>
+
+                  {/* Transfer Offers Sent */}
+                  <div className="space-y-4">
+                    <h3 className="text-lg font-semibold">Outgoing Transfer Offers</h3>
+                    <div className="text-sm text-muted-foreground">
+                      No outgoing transfer offers at this time.
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
@@ -945,13 +995,13 @@ const ManagementPage = () => {
               setIsModalOpen(false)
               setSelectedPlayer(null)
             }}
-            onBidPlaced={() => {
-              // Refresh bids and free agents
-              fetchPlayerBids()
+            onOfferPlaced={() => {
+              // Refresh offers and free agents
+              fetchPlayerOffers()
               fetchData()
             }}
             teamData={teamData}
-            currentBid={playerBids[selectedPlayer.id]}
+            currentOffer={playerBids[selectedPlayer.id]}
             projectedSalary={projectedSalary}
             salaryCap={currentSalaryCap}
             projectedRosterSize={projectedRosterSize}
