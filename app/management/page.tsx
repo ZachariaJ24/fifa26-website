@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Users, Calendar, Clock, Trophy, DollarSign, Filter, History, Search, ArrowLeftRight } from "lucide-react"
-import { WaiverPriorityDisplay } from "@/components/management/waiver-priority-display"
+// Removed waiver functionality - replaced with team transfers
 import { SalaryProgress } from "@/components/management/salary-progress"
 import { RosterProgress } from "@/components/management/roster-progress"
 import { TeamAvailabilityTab } from "@/components/management/team-availability-tab"
@@ -107,41 +107,7 @@ interface Bid {
   }
 }
 
-interface Waiver {
-  id: string
-  player_id: string
-  waiving_team_id: string
-  waived_at: string
-  claim_deadline: string
-  status: string
-  players: {
-    id: string
-    salary: number
-    users: {
-      id: string
-      gamer_tag_id: string
-      primary_position: string
-      secondary_position?: string
-      console: string
-      avatar_url?: string
-    }
-  }
-  waiving_team: {
-    id: string
-    name: string
-    logo_url?: string
-  }
-  waiver_claims?: Array<{
-    id: string
-    claiming_team_id: string
-    priority_at_claim: number
-    teams: {
-      name: string
-      logo_url?: string
-    }
-  }>
-  hasTeamClaimed?: boolean
-}
+// Removed Waiver interface - replaced with team transfer system
 
 // Update the getPositionAbbreviation function to handle both full names and abbreviations
 const getPositionAbbreviation = (position: string): string => {
@@ -233,41 +199,34 @@ const ManagementPage = () => {
   // Get active tab from search params or default to "roster"
   const [activeTab, setActiveTab] = useState(searchParams?.get("tab") || "roster")
 
-  // Trade state
+  // Team Transfer state
   const [allTeams, setAllTeams] = useState<any[]>([])
-  const [selectedTeamForTrade, setSelectedTeamForTrade] = useState<string | null>(null)
+  const [selectedTeamForTransfer, setSelectedTeamForTransfer] = useState<string | null>(null)
   const [selectedTeamPlayers, setSelectedTeamPlayers] = useState<any[]>([])
   const [selectedMyPlayers, setSelectedMyPlayers] = useState<any[]>([])
   const [selectedOtherPlayers, setSelectedOtherPlayers] = useState<any[]>([])
-  const [tradeError, setTradeError] = useState<string | null>(null)
-  const [tradeSuccess, setTradeSuccess] = useState<string | null>(null)
-  const [isSubmittingTrade, setIsSubmittingTrade] = useState(false)
+  const [transferError, setTransferError] = useState<string | null>(null)
+  const [transferSuccess, setTransferSuccess] = useState<string | null>(null)
+  const [isSubmittingTransfer, setIsSubmittingTransfer] = useState(false)
   const [currentSalaryCap, setCurrentSalaryCap] = useState(60000000) // $60M salary cap
   const [currentTeamSalary, setCurrentTeamSalary] = useState(0)
   const [projectedTeamSalary, setProjectedTeamSalary] = useState(0)
   const [otherTeamSalary, setOtherTeamSalary] = useState(0)
   const [projectedOtherTeamSalary, setProjectedOtherTeamSalary] = useState(0)
-  const [tradeMessage, setTradeMessage] = useState("")
+  const [transferMessage, setTransferMessage] = useState("")
   const [isTransferEnabled, setIsTransferEnabled] = useState(true)
 
-  // Trade proposals
-  const [incomingTradeProposals, setIncomingTradeProposals] = useState<any[]>([])
-  const [outgoingTradeProposals, setOutgoingTradeProposals] = useState<any[]>([])
-  const [selectedTradeProposal, setSelectedTradeProposal] = useState<any>(null)
-  const [isTradeDetailsOpen, setIsTradeDetailsOpen] = useState(false)
-  const [isProcessingTradeResponse, setIsProcessingTradeResponse] = useState(false)
-  const [cancellingTrades, setCancellingTrades] = useState<Set<string>>(new Set())
+  // Team Transfer proposals
+  const [incomingTransferProposals, setIncomingTransferProposals] = useState<any[]>([])
+  const [outgoingTransferProposals, setOutgoingTransferProposals] = useState<any[]>([])
+  const [selectedTransferProposal, setSelectedTransferProposal] = useState<any>(null)
+  const [isTransferDetailsOpen, setIsTransferDetailsOpen] = useState(false)
+  const [isProcessingTransferResponse, setIsProcessingTransferResponse] = useState(false)
+  const [cancellingTransfers, setCancellingTransfers] = useState<Set<string>>(new Set())
 
   // Add these state variables after the existing useState declarations
   const [projectedSalary, setProjectedSalary] = useState(0)
   const [projectedRosterSize, setProjectedRosterSize] = useState(0)
-
-  // Waiver state
-  const [waivers, setWaivers] = useState<any[]>([])
-  const [loadingWaivers, setLoadingWaivers] = useState(false)
-  const [waiverError, setWaiverError] = useState<string | null>(null)
-  const [waivingPlayers, setWaivingPlayers] = useState<Set<string>>(new Set())
-  const [claimingWaivers, setClaimingWaivers] = useState<Set<string>>(new Set())
 
   // Add this state variable near the top with other useState declarations
   const [userRole, setUserRole] = useState<string | null>(null)
@@ -1458,10 +1417,10 @@ const ManagementPage = () => {
     return amounts
   }
 
-  // Enhanced trade response handler with better error handling
-  const handleTradeResponse = async (proposalId: string, accept: boolean) => {
+  // Enhanced transfer response handler with better error handling
+  const handleTransferResponse = async (proposalId: string, accept: boolean) => {
     try {
-      setIsProcessingTradeResponse(true)
+      setIsProcessingTransferResponse(true)
 
       console.log("Processing trade response:", { proposalId, accept, userId: session?.user?.id })
 
@@ -1506,12 +1465,12 @@ const ManagementPage = () => {
       console.log("Refreshing data after trade response...")
       await fetchData()
       if (teamData?.id && teamData?.name) {
-        await fetchTradeProposals(teamData.id, teamData.name)
+        await fetchTransferProposals(teamData.id, teamData.name)
       }
 
       // Close any open modals
-      setIsTradeDetailsOpen(false)
-      setSelectedTradeProposal(null)
+      setIsTransferDetailsOpen(false)
+      setSelectedTransferProposal(null)
     } catch (error: any) {
       console.error(`Error ${accept ? "accepting" : "rejecting"} trade:`, error)
       toast({
@@ -1520,7 +1479,7 @@ const ManagementPage = () => {
         variant: "destructive",
       })
     } finally {
-      setIsProcessingTradeResponse(false)
+      setIsProcessingTransferResponse(false)
     }
   }
 
@@ -1539,11 +1498,11 @@ const ManagementPage = () => {
   }
 
   return (
-      <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
         {/* Update the main title section to be more mobile-friendly: */}
         <div className="flex flex-col gap-2 md:gap-4 mb-6 md:mb-8">
-      <div>
+          <div>
             <h1 className="text-2xl md:text-3xl font-bold mb-2">Team Management</h1>
             {teamData && (
               <p className="text-muted-foreground flex items-center gap-2 text-sm md:text-base">
@@ -1708,16 +1667,13 @@ const ManagementPage = () => {
               <span className="hidden md:inline">My Offers</span>
                   <span className="md:hidden">Offers</span>
             </TabsTrigger>
-                <TabsTrigger value="waivers" className="text-xs md:text-sm px-2 md:px-4 py-2">
-                  <span className="hidden md:inline">Waivers</span>
-                  <span className="md:hidden">Waivers</span>
+                <TabsTrigger value="team-transfers" className="text-xs md:text-sm px-2 md:px-4 py-2">
+                  <span className="hidden md:inline">Team Transfers</span>
+                  <span className="md:hidden">Team Transfers</span>
                 </TabsTrigger>
-                <TabsTrigger value="trades" className="text-xs md:text-sm px-2 md:px-4 py-2 relative">
-                  <span className="hidden md:inline">Trades</span>
-                  <span className="md:hidden">Trades</span>
-                  {incomingTradeProposals.length > 0 && (
+                  {incomingTransferProposals.length > 0 && (
                     <span className="ml-1 md:ml-2 bg-primary text-primary-foreground rounded-full w-4 h-4 md:w-5 md:h-5 flex items-center justify-center text-xs">
-                      {incomingTradeProposals.length}
+                      {incomingTransferProposals.length}
                     </span>
                   )}
             </TabsTrigger>
@@ -2897,7 +2853,7 @@ const ManagementPage = () => {
                                     setCapSpaceWithholding({})
 
                                     // Refresh trade proposals
-                                    await fetchTradeProposals(teamData.id, teamData.name)
+                                    await fetchTransferProposals(teamData.id, teamData.name)
 
                                     // Switch to outgoing tab
                                     const tabsElement = document.querySelector('[data-value="outgoing"]')
@@ -3198,7 +3154,7 @@ const ManagementPage = () => {
                                             })
 
                                             // Refresh trade proposals
-                                            await fetchTradeProposals(teamData.id, teamData.name)
+                                            await fetchTransferProposals(teamData.id, teamData.name)
                                           } catch (error: any) {
                                             console.error("Error cancelling trade:", error)
                                             toast({

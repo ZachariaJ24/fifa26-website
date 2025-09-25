@@ -85,72 +85,7 @@ const customDivisionTeams = [
 ]
 
 const MAX_GAMES_PER_SEASON = 60
-const PLAYOFF_SPOTS = 8
-
-/**
- * Determines playoff status for teams based on their current standings
- * @param standings Array of team standings sorted by points
- * @returns Updated standings with playoff status
- */
-function calculatePlayoffStatus(standings: TeamStanding[]): TeamStanding[] {
-  const sortedStandings = [...standings].sort((a, b) => {
-    if (a.points !== b.points) return b.points - a.points
-    if (a.wins !== b.wins) return b.wins - a.wins
-    if (a.goal_differential !== b.goal_differential) return b.goal_differential - a.goal_differential
-    return b.goals_for - a.goals_for
-  })
-
-  return sortedStandings.map((team, index) => {
-    const gamesRemaining = MAX_GAMES_PER_SEASON - team.games_played
-    const maxPossiblePoints = team.points + gamesRemaining * 2 // Assuming all wins
-
-    // Check if team has clinched playoff spot
-    let hasClinched = false
-    if (index < PLAYOFF_SPOTS) {
-      // Team is currently in playoff position
-      // They clinch if the 9th place team (or first team outside playoffs) can't catch them
-      const ninthPlaceTeam = sortedStandings[PLAYOFF_SPOTS]
-      if (ninthPlaceTeam) {
-        const ninthPlaceGamesRemaining = MAX_GAMES_PER_SEASON - ninthPlaceTeam.games_played
-        const ninthPlaceMaxPoints = ninthPlaceTeam.points + ninthPlaceGamesRemaining * 2
-
-        // Team clinches if even if 9th place wins all remaining games, they can't catch this team
-        // assuming this team loses all remaining games
-        const teamMinPoints = team.points // Current points (assuming all losses)
-        hasClinched = teamMinPoints > ninthPlaceMaxPoints
-      } else {
-        // If there's no 9th place team, top 8 teams have clinched
-        hasClinched = true
-      }
-    }
-
-    // Check if team is eliminated
-    let isEliminated = false
-    if (index >= PLAYOFF_SPOTS) {
-      // Team is currently outside playoff position
-      const eighthPlaceTeam = sortedStandings[PLAYOFF_SPOTS - 1]
-      if (eighthPlaceTeam) {
-        const eighthPlaceGamesRemaining = MAX_GAMES_PER_SEASON - eighthPlaceTeam.games_played
-        const eighthPlaceMinPoints = eighthPlaceTeam.points // Assuming 8th place loses all remaining games
-
-        // Team is eliminated if even winning all remaining games won't get them to 8th place
-        isEliminated = maxPossiblePoints < eighthPlaceMinPoints
-      }
-    }
-
-    let playoff_status: "clinched" | "eliminated" | "active" = "active"
-    if (hasClinched) {
-      playoff_status = "clinched"
-    } else if (isEliminated) {
-      playoff_status = "eliminated"
-    }
-
-    return {
-      ...team,
-      playoff_status,
-    }
-  })
-}
+// No playoffs in FIFA 26 - teams compete for league positions and promotion/relegation
 
 /**
  * Gets the season name for a given season ID
@@ -853,7 +788,7 @@ export async function calculateStandings(seasonId: number): Promise<TeamStanding
           conference_data: conferenceDataObj,
           last_10: last10Record,
           current_streak: currentStreak,
-          playoff_status: "active" as const, // Will be calculated below
+          playoff_status: "active" as const, // No playoffs in FIFA 26
         }
       }),
     )
@@ -872,8 +807,8 @@ export async function calculateStandings(seasonId: number): Promise<TeamStanding
       return b.goals_for - a.goals_for
     })
 
-    // Calculate playoff status for all teams
-    return calculatePlayoffStatus(sortedStandings)
+    // No playoffs in FIFA 26 - return sorted standings
+    return sortedStandings
   } catch (error: any) {
     console.error("Error calculating standings:", error)
     throw error
