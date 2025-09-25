@@ -147,9 +147,9 @@ export default function AdminDashboardPage() {
     },
     {
       title: "League Management",
-      description: "Manage divisions, teams, and league standings (Working Version)",
+      description: "Manage divisions, teams, promotion/relegation, and EA Sports integration",
       icon: <Trophy className="h-6 w-6" />,
-      href: "/admin/league-working",
+      href: "/admin/league-management",
       category: "team",
       color: "assist-green"
     },

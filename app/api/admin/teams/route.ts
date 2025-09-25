@@ -1,30 +1,9 @@
 import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/server"
 
 export async function GET() {
   try {
-    const supabase = createClient()
-
-    // Check if user is authenticated
-    const {
-      data: { session },
-    } = await supabase.auth.getSession()
-
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
-
-    // Check if user is an admin
-    const { data: userRole, error: roleError } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", session.user.id)
-      .eq("role", "Admin")
-      .single()
-
-    if (roleError || !userRole) {
-      return NextResponse.json({ error: "Forbidden: Not an admin" }, { status: 403 })
-    }
+    const supabase = createAdminClient()
 
     // Get all teams with their division information
     const { data: teams, error: teamsError } = await supabase
