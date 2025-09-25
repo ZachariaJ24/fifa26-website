@@ -30,15 +30,19 @@ export default function MatchesPage() {
   const [currentWeek, setCurrentWeek] = useState(1)
   const [totalWeeks, setTotalWeeks] = useState(1)
   const [selectedTeam, setSelectedTeam] = useState<string>("all")
+  const [selectedDivision, setSelectedDivision] = useState<string>("all")
   const [weekMatches, setWeekMatches] = useState<any[]>([])
+  const [divisions, setDivisions] = useState<any[]>([])
 
   // Get initial filters from URL params
   useEffect(() => {
     const week = searchParams.get("week")
     const team = searchParams.get("team")
+    const division = searchParams.get("division")
 
     if (week) setCurrentWeek(Number.parseInt(week))
     if (team) setSelectedTeam(team)
+    if (division) setSelectedDivision(division)
   }, [searchParams])
 
   // Fetch current season
@@ -111,20 +115,33 @@ export default function MatchesPage() {
     fetchCurrentSeason()
   }, [supabase])
 
-  // Fetch teams for filter
+  // Fetch teams and divisions for filters
   useEffect(() => {
-    async function fetchTeams() {
+    async function fetchTeamsAndDivisions() {
       try {
-        const { data, error } = await supabase.from("teams").select("id, name").eq("is_active", true).order("name")
+        // Fetch teams with division information
+        const { data: teamsData, error: teamsError } = await supabase
+          .from("teams")
+          .select("id, name, division")
+          .eq("is_active", true)
+          .order("name")
 
-        if (error) throw error
-        setTeams(data || [])
+        if (teamsError) throw teamsError
+        setTeams(teamsData || [])
+
+        // Get unique divisions from teams
+        const uniqueDivisions = [...new Set(teamsData?.map(team => team.division).filter(Boolean) || [])]
+        const divisionsList = uniqueDivisions.map(division => ({
+          name: division,
+          value: division
+        }))
+        setDivisions(divisionsList)
       } catch (error) {
-        console.error("Error fetching teams:", error)
+        console.error("Error fetching teams and divisions:", error)
       }
     }
 
-    fetchTeams()
+    fetchTeamsAndDivisions()
   }, [supabase])
 
   // Fetch all matches
@@ -149,8 +166,8 @@ export default function MatchesPage() {
             away_score,
             season_id,
             season_name,
-            home_team:teams!home_team_id(id, name, logo_url),
-            away_team:teams!away_team_id(id, name, logo_url)
+            home_team:teams!home_team_id(id, name, logo_url, division),
+            away_team:teams!away_team_id(id, name, logo_url, division)
           `,
           )
           .eq("season_name", currentSeason.name)
@@ -165,7 +182,17 @@ export default function MatchesPage() {
         if (error) throw error
 
         console.log(`Found ${data?.length || 0} matches for ${currentSeason.name}`)
-        setMatches(data || [])
+        
+        // Apply division filter if selected
+        let filteredMatches = data || []
+        if (selectedDivision !== "all") {
+          filteredMatches = filteredMatches.filter(match => 
+            match.home_team?.division === selectedDivision || 
+            match.away_team?.division === selectedDivision
+          )
+        }
+        
+        setMatches(filteredMatches)
 
         // Calculate weeks based on matches
         if (data && data.length > 0) {
@@ -187,7 +214,7 @@ export default function MatchesPage() {
     }
 
     fetchMatches()
-  }, [supabase, toast, selectedTeam, currentSeason])
+  }, [supabase, toast, selectedTeam, selectedDivision, currentSeason])
 
   // Calculate weeks from matches
   const calculateWeeks = (matchesData: any[]) => {
@@ -228,10 +255,11 @@ export default function MatchesPage() {
   }, [matches, currentWeek])
 
   // Update URL when filters change
-  const updateURL = (week: number, team: string) => {
+  const updateURL = (week: number, team: string, division: string) => {
     const params = new URLSearchParams()
     if (week > 1) params.set("week", week.toString())
     if (team !== "all") params.set("team", team)
+    if (division !== "all") params.set("division", division)
 
     const newURL = params.toString() ? `/matches?${params.toString()}` : "/matches"
     router.replace(newURL, { scroll: false })
@@ -240,14 +268,21 @@ export default function MatchesPage() {
   // Handle week navigation
   const goToWeek = (week: number) => {
     setCurrentWeek(week)
-    updateURL(week, selectedTeam)
+    updateURL(week, selectedTeam, selectedDivision)
   }
 
   // Handle team filter change
   const handleTeamFilter = (team: string) => {
     setSelectedTeam(team)
     setCurrentWeek(1) // Reset to first week when changing team filter
-    updateURL(1, team)
+    updateURL(1, team, selectedDivision)
+  }
+
+  // Handle division filter change
+  const handleDivisionFilter = (division: string) => {
+    setSelectedDivision(division)
+    setCurrentWeek(1) // Reset to first week when changing division filter
+    updateURL(1, selectedTeam, division)
   }
 
   // Group matches by date
@@ -516,6 +551,24 @@ export default function MatchesPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+              {/* Division Filter */}
+              <div className="flex items-center gap-2">
+                <Trophy className="h-4 w-4 text-hockey-silver-500" />
+                <Select value={selectedDivision} onValueChange={handleDivisionFilter}>
+                  <SelectTrigger className="hockey-input w-48">
+                    <SelectValue placeholder="Filter by league" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Leagues</SelectItem>
+                    {divisions.map((division) => (
+                      <SelectItem key={division.value} value={division.value}>
+                        {division.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               {/* Team Filter */}
               <div className="flex items-center gap-2">
                 <Filter className="h-4 w-4 text-hockey-silver-500" />
@@ -659,9 +712,13 @@ export default function MatchesPage() {
                   No matches found
                 </h3>
                 <p className="text-hockey-silver-500 dark:text-hockey-silver-500">
-                  {selectedTeam === "all"
+                  {selectedTeam === "all" && selectedDivision === "all"
                     ? `No matches scheduled for Week ${currentWeek}.`
-                    : `No matches found for the selected team in Week ${currentWeek}.`}
+                    : selectedTeam !== "all"
+                    ? `No matches found for the selected team in Week ${currentWeek}.`
+                    : selectedDivision !== "all"
+                    ? `No matches found for ${selectedDivision} in Week ${currentWeek}.`
+                    : `No matches found for the selected filters in Week ${currentWeek}.`}
                 </p>
               </div>
             </div>
