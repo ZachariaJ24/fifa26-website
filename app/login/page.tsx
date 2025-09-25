@@ -103,7 +103,9 @@ export default function LoginPage() {
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-fifa-pattern opacity-5"></div>
+        <div className="absolute inset-0 opacity-5" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
+        }}></div>
         
         {/* Floating Elements */}
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl animate-float"></div>
@@ -111,10 +113,10 @@ export default function LoginPage() {
         
         <div className="container mx-auto text-center relative z-10">
           <div>
-            <h1 className="fifa-title mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-field-green-800 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-field-green-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">
               Welcome Back to FIFA 26 League
             </h1>
-            <p className="fifa-subtitle mx-auto mb-12 max-w-2xl">
+            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto mb-12">
               Sign in to your FIFA 26 League account and get back to the action. 
               Access your profile, manage your club, and stay connected with the league.
             </p>

@@ -313,7 +313,7 @@ export default function RegisterPage() {
                   <UserPlus className="h-8 w-8 text-white" />
                 </div>
               </div>
-              <h1 className="fifa-title text-3xl md:text-4xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-field-green-800 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-field-green-600 bg-clip-text text-transparent">
+              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-field-green-800 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-field-green-600 bg-clip-text text-transparent">
                 Join the FIFA 26 League
               </h1>
             </motion.div>
@@ -324,7 +324,7 @@ export default function RegisterPage() {
               transition={{ duration: 1, delay: 0.5 }}
             />
             <motion.p 
-              className="fifa-subtitle text-lg md:text-xl mx-auto mb-8 max-w-2xl leading-relaxed"
+              className="text-lg md:text-xl text-slate-600 dark:text-slate-400 mx-auto mb-8 max-w-2xl leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
