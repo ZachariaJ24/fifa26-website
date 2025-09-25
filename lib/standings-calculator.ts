@@ -38,14 +38,38 @@ export interface TeamStanding {
   playoff_status?: "clinched" | "eliminated" | "active" // New field for playoff status
 }
 
-// Division assignment logic - used if division column doesn't exist
-const nhlDivisionTeams = [
-  "Winnipeg Jets",
-  "Pittsburgh Penguins",
-  "Philadelphia Flyers",
-  "Toronto Maple Leafs",
-  "Washington Capitals",
-  "Ottawa Senators",
+// Division assignment logic - Premier League style 3 divisions
+const premierDivisionTeams = [
+  "Manchester United FC",
+  "Real Madrid CF", 
+  "FC Barcelona",
+  "Bayern Munich",
+  "Liverpool FC",
+  "Chelsea FC",
+  "Arsenal FC",
+  "Paris Saint-Germain",
+]
+
+const championshipDivisionTeams = [
+  "AC Milan",
+  "Juventus FC",
+  "Inter Milan",
+  "Atletico Madrid",
+  "Borussia Dortmund",
+  "Tottenham Hotspur",
+  "Manchester City",
+  "Napoli",
+]
+
+const leagueOneTeams = [
+  "AS Roma",
+  "Lazio",
+  "Valencia CF",
+  "Sevilla FC",
+  "RB Leipzig",
+  "Bayer Leverkusen",
+  "Newcastle United",
+  "West Ham United",
 ]
 
 const customDivisionTeams = [
@@ -760,17 +784,36 @@ export async function calculateStandings(seasonId: number): Promise<TeamStanding
             ((penaltyKillOpportunities - penaltyKillGoalsAgainst) / penaltyKillOpportunities) * 100
         }
 
-        // Assign division if it doesn't exist in the database
+        // Assign division if it doesn't exist in the database (Premier League style)
         let division = team.division
         let conference = team.conference
 
         if (!hasDivisionColumn) {
-          if (nhlDivisionTeams.includes(team.name)) {
-            division = "NHL"
-            conference = "NHL"
+          if (premierDivisionTeams.includes(team.name)) {
+            division = "Premier Division"
+            conference = "Premier Division"
+          } else if (championshipDivisionTeams.includes(team.name)) {
+            division = "Championship Division"
+            conference = "Championship Division"
+          } else if (leagueOneTeams.includes(team.name)) {
+            division = "League One"
+            conference = "League One"
           } else if (customDivisionTeams.includes(team.name)) {
-            division = "Custom"
-            conference = "Custom"
+            division = "League One"
+            conference = "League One"
+          } else {
+            // Default division assignment based on team order (split into 3 divisions)
+            const divisionIndex = Math.floor((index / teams.length) * 3)
+            if (divisionIndex === 0) {
+              division = "Premier Division"
+              conference = "Premier Division"
+            } else if (divisionIndex === 1) {
+              division = "Championship Division"
+              conference = "Championship Division"
+            } else {
+              division = "League One"
+              conference = "League One"
+            }
           }
         }
 

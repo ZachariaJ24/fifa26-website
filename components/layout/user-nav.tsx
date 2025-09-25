@@ -245,15 +245,6 @@ export default function SideNavigation() {
       ],
     },
     {
-      name: "Rankings",
-      href: "/elo/rankings",
-      submenu: [
-        { name: "Player Rankings", href: "/elo/rankings" },
-        { name: "Ranking Statistics", href: "/elo/statistics" },
-        { name: "Ranking Matches", href: "/elo/matches" },
-      ],
-    },
-    {
       name: "News",
       href: "/news",
       submenu: [

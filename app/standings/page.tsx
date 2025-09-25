@@ -40,12 +40,13 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
     return b.goals_for - a.goals_for
   })
 
-  // Get teams by conference
-  const easternTeams = standings.filter(team => team.conference === "Eastern Elites")
-  const westernTeams = standings.filter(team => team.conference === "Western Warriors")
+  // Get teams by division (Premier League style - 3 divisions)
+  const premierDivisionTeams = standings.filter(team => team.division === "Premier Division")
+  const championshipDivisionTeams = standings.filter(team => team.division === "Championship Division")
+  const leagueOneTeams = standings.filter(team => team.division === "League One")
 
-  // Sort teams within each conference
-  const sortConferenceTeams = (teams: TeamStanding[]) => {
+  // Sort teams within each division
+  const sortDivisionTeams = (teams: TeamStanding[]) => {
     return teams.sort((a, b) => {
       if (a.points !== b.points) return b.points - a.points
       if (a.wins !== b.wins) return b.wins - a.wins
@@ -54,111 +55,279 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
     })
   }
 
-  const sortedEastern = sortConferenceTeams(easternTeams)
-  const sortedWestern = sortConferenceTeams(westernTeams)
+  const sortedPremier = sortDivisionTeams(premierDivisionTeams)
+  const sortedChampionship = sortDivisionTeams(championshipDivisionTeams)
+  const sortedLeagueOne = sortDivisionTeams(leagueOneTeams)
 
-  // Top 4 teams from each conference make playoffs (only if there are enough teams)
-  const easternPlayoffTeams = sortedEastern.length >= 4 ? sortedEastern.slice(0, 4) : []
-  const westernPlayoffTeams = sortedWestern.length >= 4 ? sortedWestern.slice(0, 4) : []
+  // Top 4 teams from Premier Division make playoffs
+  const premierPlayoffTeams = sortedPremier.length >= 4 ? sortedPremier.slice(0, 4) : []
+  
+  // Top 2 teams from Championship Division make playoffs
+  const championshipPlayoffTeams = sortedChampionship.length >= 2 ? sortedChampionship.slice(0, 2) : []
+  
+  // Top 2 teams from League One make playoffs
+  const leagueOnePlayoffTeams = sortedLeagueOne.length >= 2 ? sortedLeagueOne.slice(0, 2) : []
 
-  // Bottom 2 teams from each conference are eliminated (only if there are enough teams)
-  const easternEliminatedTeams = sortedEastern.length >= 6 ? sortedEastern.slice(-2) : []
-  const westernEliminatedTeams = sortedWestern.length >= 6 ? sortedWestern.slice(-2) : []
+  // Bottom 2 teams from Premier Division are relegated
+  const premierRelegatedTeams = sortedPremier.length >= 6 ? sortedPremier.slice(-2) : []
+  
+  // Bottom 2 teams from Championship Division are relegated
+  const championshipRelegatedTeams = sortedChampionship.length >= 6 ? sortedChampionship.slice(-2) : []
 
-  // Bubble teams (5th and 6th place in each conference) (only if there are enough teams)
-  const easternBubbleTeams = sortedEastern.length >= 6 ? sortedEastern.slice(4, 6) : []
-  const westernBubbleTeams = sortedWestern.length >= 6 ? sortedWestern.slice(4, 6) : []
+  // Promotion teams (top 2 from Championship and League One)
+  const championshipPromotedTeams = sortedChampionship.length >= 2 ? sortedChampionship.slice(0, 2) : []
+  const leagueOnePromotedTeams = sortedLeagueOne.length >= 2 ? sortedLeagueOne.slice(0, 2) : []
+
+  // Bubble teams (3rd and 4th place in Championship, 3rd and 4th place in League One)
+  const championshipBubbleTeams = sortedChampionship.length >= 4 ? sortedChampionship.slice(2, 4) : []
+  const leagueOneBubbleTeams = sortedLeagueOne.length >= 4 ? sortedLeagueOne.slice(2, 4) : []
 
   return (
     <div className="space-y-8">
-      {/* Overall Playoff Teams - Only show if there are playoff teams */}
-      {(easternPlayoffTeams.length > 0 || westernPlayoffTeams.length > 0) && (
+      {/* Premier Division Playoff Teams */}
+      {premierPlayoffTeams.length > 0 && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-        <Card className="fifa-card fifa-card-hover border-2 border-field-green-200/50 dark:border-field-green-700/50 shadow-2xl shadow-field-green-500/20 overflow-hidden">
-          <CardHeader className="relative bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 border-b-2 border-field-green-200/50 dark:border-field-green-700/50">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-field-green-100 to-field-green-100 dark:from-field-green-900/30 dark:to-field-green-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
-            <CardTitle className="flex items-center gap-4 relative z-10">
-              <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-field-green-500/25">
-                <Crown className="h-6 w-6 text-white" />
-              </div>
-              <div>
-                <div className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Playoff Clubs</div>
-                <div className="text-lg text-pitch-blue-600 dark:text-pitch-blue-400">Top 8 Clubs - 4 from Each Conference</div>
-              </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="grid gap-3">
-              {[...easternPlayoffTeams, ...westernPlayoffTeams].map((team, index) => (
-                <motion.div
-                  key={team.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.1 * index }}
-                  className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-field-green-500/10 to-field-green-500/10 border border-field-green-400/20 hover:border-field-green-400/40 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="relative">
-                      <Badge
-                        variant="outline"
-                        className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-field-green-500/30 to-field-green-500/30 border-field-green-400/50 text-field-green-200"
-                      >
-                        {index + 1}
-                      </Badge>
-                      {index < 3 && (
-                        <div className="absolute -top-1 -right-1">
-                          <Medal className={`h-4 w-4 ${
-                            index === 0 ? 'text-yellow-400' : 
-                            index === 1 ? 'text-gray-300' : 'text-orange-400'
-                          }`} />
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <span className="font-semibold text-pitch-blue-800 dark:text-pitch-blue-200 text-lg">{team.name}</span>
-                      <Badge
-                        variant="default"
-                        className="bg-gradient-to-r from-field-green-500 to-field-green-600 text-white text-xs px-3 py-1 shadow-lg"
-                        title="Playoff Qualifier"
-                      >
-                        <Trophy className="h-3 w-3 mr-1" />
-                        PLAYOFF
-                      </Badge>
-                      <Badge
-                        variant="secondary"
-                        className="bg-gradient-to-r from-pitch-blue-500 to-field-green-600 text-white text-xs px-3 py-1 shadow-lg"
-                        title="Conference"
-                      >
-                        {easternPlayoffTeams.includes(team) ? "Eastern Conference" : "Western Conference"}
+          <Card className="fifa-card fifa-card-hover border-2 border-field-green-200/50 dark:border-field-green-700/50 shadow-2xl shadow-field-green-500/20 overflow-hidden">
+            <CardHeader className="relative bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 border-b-2 border-field-green-200/50 dark:border-field-green-700/50">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-field-green-100 to-field-green-100 dark:from-field-green-900/30 dark:to-field-green-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
+              <CardTitle className="flex items-center gap-4 relative z-10">
+                <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-field-green-500/25">
+                  <Crown className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Premier Division Playoffs</div>
+                  <div className="text-lg text-pitch-blue-600 dark:text-pitch-blue-400">Top 4 Clubs from Premier Division</div>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="grid gap-3">
+                {premierPlayoffTeams.map((team, index) => (
+                  <motion.div
+                    key={team.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                    className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-field-green-500/10 to-field-green-500/10 border border-field-green-400/20 hover:border-field-green-400/40 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="relative">
+                        <Badge
+                          variant="outline"
+                          className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-field-green-500/30 to-field-green-500/30 border-field-green-400/50 text-field-green-200"
+                        >
+                          {index + 1}
                         </Badge>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-6 text-sm">
-                    <div className="text-center">
-                      <div className="text-2xl font-bold text-field-green-600 dark:text-field-green-400">{team.points}</div>
-                      <div className="text-field-green-500 dark:text-field-green-500 text-xs">PTS</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-lg font-semibold text-pitch-blue-800 dark:text-pitch-blue-200">
-                        {team.wins}-{team.losses}-{team.otl}
+                        {index < 3 && (
+                          <div className="absolute -top-1 -right-1">
+                            <Medal className={`h-4 w-4 ${
+                              index === 0 ? 'text-yellow-400' : 
+                              index === 1 ? 'text-gray-300' : 'text-orange-400'
+                            }`} />
+                          </div>
+                        )}
                       </div>
-                      <div className="text-field-green-500 dark:text-field-green-500 text-xs">RECORD</div>
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-pitch-blue-800 dark:text-pitch-blue-200 text-lg">{team.name}</span>
+                        <Badge
+                          variant="default"
+                          className="bg-gradient-to-r from-field-green-500 to-field-green-600 text-white text-xs px-3 py-1 shadow-lg"
+                          title="Playoff Qualifier"
+                        >
+                          <Trophy className="h-3 w-3 mr-1" />
+                          PLAYOFF
+                        </Badge>
+                        <Badge
+                          variant="secondary"
+                          className="bg-gradient-to-r from-pitch-blue-500 to-field-green-600 text-white text-xs px-3 py-1 shadow-lg"
+                          title="Division"
+                        >
+                          Premier Division
+                        </Badge>
+                      </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                    <div className="flex items-center gap-6 text-sm">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-field-green-600 dark:text-field-green-400">{team.points}</div>
+                        <div className="text-field-green-500 dark:text-field-green-500 text-xs">PTS</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-lg font-semibold text-pitch-blue-800 dark:text-pitch-blue-200">
+                          {team.wins}-{team.losses}-{team.otl}
+                        </div>
+                        <div className="text-field-green-500 dark:text-field-green-500 text-xs">RECORD</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
       )}
 
-      {/* Bubble Teams Section */}
-      {(easternBubbleTeams.length > 0 || westernBubbleTeams.length > 0) && (
+      {/* Championship Division Playoff Teams */}
+      {championshipPlayoffTeams.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <Card className="fifa-card fifa-card-hover border-2 border-stadium-gold-200/50 dark:border-stadium-gold-700/50 shadow-2xl shadow-stadium-gold-500/20 overflow-hidden">
+            <CardHeader className="relative bg-gradient-to-r from-stadium-gold-500/20 to-stadium-gold-500/20 border-b-2 border-stadium-gold-200/50 dark:border-stadium-gold-700/50">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-stadium-gold-100 to-stadium-gold-100 dark:from-stadium-gold-900/30 dark:to-stadium-gold-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
+              <CardTitle className="flex items-center gap-4 relative z-10">
+                <div className="w-12 h-12 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-xl flex items-center justify-center shadow-lg shadow-stadium-gold-500/25">
+                  <Trophy className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Championship Division Playoffs</div>
+                  <div className="text-lg text-pitch-blue-600 dark:text-pitch-blue-400">Top 2 Clubs from Championship Division</div>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="grid gap-3">
+                {championshipPlayoffTeams.map((team, index) => (
+                  <motion.div
+                    key={team.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                    className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-stadium-gold-500/10 to-stadium-gold-500/10 border border-stadium-gold-400/20 hover:border-stadium-gold-400/40 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="relative">
+                        <Badge
+                          variant="outline"
+                          className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-stadium-gold-500/30 to-stadium-gold-500/30 border-stadium-gold-400/50 text-stadium-gold-200"
+                        >
+                          {index + 1}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-pitch-blue-800 dark:text-pitch-blue-200 text-lg">{team.name}</span>
+                        <Badge
+                          variant="default"
+                          className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 text-white text-xs px-3 py-1 shadow-lg"
+                          title="Playoff Qualifier"
+                        >
+                          <Trophy className="h-3 w-3 mr-1" />
+                          PLAYOFF
+                        </Badge>
+                        <Badge
+                          variant="secondary"
+                          className="bg-gradient-to-r from-stadium-gold-500 to-goal-orange-600 text-white text-xs px-3 py-1 shadow-lg"
+                          title="Division"
+                        >
+                          Championship Division
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-6 text-sm">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-stadium-gold-600 dark:text-stadium-gold-400">{team.points}</div>
+                        <div className="text-stadium-gold-500 dark:text-stadium-gold-500 text-xs">PTS</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-lg font-semibold text-pitch-blue-800 dark:text-pitch-blue-200">
+                          {team.wins}-{team.losses}-{team.otl}
+                        </div>
+                        <div className="text-stadium-gold-500 dark:text-stadium-gold-500 text-xs">RECORD</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      )}
+
+      {/* League One Playoff Teams */}
+      {leagueOnePlayoffTeams.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <Card className="fifa-card fifa-card-hover border-2 border-goal-orange-200/50 dark:border-goal-orange-700/50 shadow-2xl shadow-goal-orange-500/20 overflow-hidden">
+            <CardHeader className="relative bg-gradient-to-r from-goal-orange-500/20 to-goal-orange-500/20 border-b-2 border-goal-orange-200/50 dark:border-goal-orange-700/50">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-goal-orange-100 to-goal-orange-100 dark:from-goal-orange-900/30 dark:to-goal-orange-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
+              <CardTitle className="flex items-center gap-4 relative z-10">
+                <div className="w-12 h-12 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-goal-orange-500/25">
+                  <Award className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">League One Playoffs</div>
+                  <div className="text-lg text-pitch-blue-600 dark:text-pitch-blue-400">Top 2 Clubs from League One</div>
+                </div>
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="grid gap-3">
+                {leagueOnePlayoffTeams.map((team, index) => (
+                  <motion.div
+                    key={team.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 * index }}
+                    className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-goal-orange-500/10 to-goal-orange-500/10 border border-goal-orange-400/20 hover:border-goal-orange-400/40 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="relative">
+                        <Badge
+                          variant="outline"
+                          className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-goal-orange-500/30 to-goal-orange-500/30 border-goal-orange-400/50 text-goal-orange-200"
+                        >
+                          {index + 1}
+                        </Badge>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <span className="font-semibold text-pitch-blue-800 dark:text-pitch-blue-200 text-lg">{team.name}</span>
+                        <Badge
+                          variant="default"
+                          className="bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 text-white text-xs px-3 py-1 shadow-lg"
+                          title="Playoff Qualifier"
+                        >
+                          <Trophy className="h-3 w-3 mr-1" />
+                          PLAYOFF
+                        </Badge>
+                        <Badge
+                          variant="secondary"
+                          className="bg-gradient-to-r from-goal-orange-500 to-stadium-gold-600 text-white text-xs px-3 py-1 shadow-lg"
+                          title="Division"
+                        >
+                          League One
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-6 text-sm">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-goal-orange-600 dark:text-goal-orange-400">{team.points}</div>
+                        <div className="text-goal-orange-500 dark:text-goal-orange-500 text-xs">PTS</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-lg font-semibold text-pitch-blue-800 dark:text-pitch-blue-200">
+                          {team.wins}-{team.losses}-{team.otl}
+                        </div>
+                        <div className="text-goal-orange-500 dark:text-goal-orange-500 text-xs">RECORD</div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+      )}
+
+      {/* Promotion/Relegation Section */}
+      {(championshipPromotedTeams.length > 0 || leagueOnePromotedTeams.length > 0 || premierRelegatedTeams.length > 0 || championshipRelegatedTeams.length > 0) && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -169,11 +338,11 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
               <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-assist-white-100 to-assist-white-100 dark:from-assist-white-900/30 dark:to-assist-white-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
               <CardTitle className="flex items-center gap-4 relative z-10">
                 <div className="w-12 h-12 bg-gradient-to-r from-assist-white-500 to-assist-white-600 rounded-xl flex items-center justify-center shadow-lg shadow-assist-white-500/25">
-                  <Flame className="h-6 w-6 text-white" />
+                  <TrendingUp className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Bubble Clubs</div>
-                  <div className="text-lg text-pitch-blue-600 dark:text-pitch-blue-400">Fighting for Playoff Spots (5th & 6th Place in Each Conference)</div>
+                  <div className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Promotion & Relegation</div>
+                  <div className="text-lg text-pitch-blue-600 dark:text-pitch-blue-400">Division Movement for Next Season</div>
                 </div>
               </CardTitle>
             </CardHeader>
@@ -506,46 +675,42 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
   )
 }
 
-function ConferenceStandings({ standings }: { standings: TeamStanding[] }) {
-  // Group teams by conference using database conference data
-  const conferences = new Map<string, { teams: TeamStanding[], name: string, color: string }>()
+function DivisionStandings({ standings }: { standings: TeamStanding[] }) {
+  // Group teams by division (Premier League style - 3 divisions)
+  const divisions = new Map<string, { teams: TeamStanding[], name: string, color: string }>()
   
   standings.forEach(team => {
-    if (team.conference_data) {
-      const conferenceId = team.conference_data.id
-      if (!conferences.has(conferenceId)) {
-        conferences.set(conferenceId, {
-          teams: [],
-          name: team.conference_data.name,
-          color: team.conference_data.color
-        })
-      }
-      conferences.get(conferenceId)!.teams.push(team)
-    } else if (team.conference) {
-      // Fallback to string-based conference grouping
-      const conferenceKey = team.conference
-      if (!conferences.has(conferenceKey)) {
-        conferences.set(conferenceKey, {
-          teams: [],
-          name: team.conference,
-          color: '#6366f1' // Default color
-        })
-      }
-      conferences.get(conferenceKey)!.teams.push(team)
+    const divisionKey = team.division || "Premier Division"
+    if (!divisions.has(divisionKey)) {
+      // Assign colors based on division
+      let color = '#6366f1' // Default color
+      if (divisionKey === "Premier Division") color = '#16a34a' // Field green
+      else if (divisionKey === "Championship Division") color = '#f59e0b' // Stadium gold
+      else if (divisionKey === "League One") color = '#f97316' // Goal orange
+      
+      divisions.set(divisionKey, {
+        teams: [],
+        name: divisionKey,
+        color: color
+      })
     }
+    divisions.get(divisionKey)!.teams.push(team)
   })
 
-  // If no conference data, split teams roughly in half
-  const conferenceArray = Array.from(conferences.values())
-  const hasConferenceData = conferenceArray.length > 0
+  // Sort teams within each division
+  const sortDivisionTeams = (teams: TeamStanding[]) => {
+    return teams.sort((a, b) => {
+      if (a.points !== b.points) return b.points - a.points
+      if (a.wins !== b.wins) return b.wins - a.wins
+      if (a.goal_differential !== b.goal_differential) return b.goal_differential - a.goal_differential
+      return b.goals_for - a.goals_for
+    })
+  }
 
-  const conference1Teams = hasConferenceData ? conferenceArray[0]?.teams || [] : standings.slice(0, Math.ceil(standings.length / 2))
-  const conference2Teams = hasConferenceData ? conferenceArray[1]?.teams || [] : standings.slice(Math.ceil(standings.length / 2))
-
-  const conference1Name = hasConferenceData ? conferenceArray[0]?.name || "Conference 1" : "Eastern Conference"
-  const conference2Name = hasConferenceData ? conferenceArray[1]?.name || "Conference 2" : "Western Conference"
-  const conference1Color = hasConferenceData ? conferenceArray[0]?.color || '#6366f1' : '#3b82f6'
-  const conference2Color = hasConferenceData ? conferenceArray[1]?.color || '#6366f1' : '#ef4444'
+  // Get division data
+  const premierTeams = sortDivisionTeams(divisions.get("Premier Division")?.teams || [])
+  const championshipTeams = sortDivisionTeams(divisions.get("Championship Division")?.teams || [])
+  const leagueOneTeams = sortDivisionTeams(divisions.get("League One")?.teams || [])
 
   return (
     <div className="grid gap-8 lg:grid-cols-2">
@@ -920,13 +1085,13 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
                     <Trophy className="h-4 w-4 mr-2" />
                     Overall Standings
                   </TabsTrigger>
-                  <TabsTrigger 
-                    value="conference" 
-                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-assist-white-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-assist-white-500/30 transition-all duration-300 hover:scale-105 rounded-xl font-semibold"
-                  >
-                    <Users className="h-4 w-4 mr-2" />
-                    Conference
-                  </TabsTrigger>
+                    <TabsTrigger 
+                      value="divisions" 
+                      className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-assist-white-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-assist-white-500/30 transition-all duration-300 hover:scale-105 rounded-xl font-semibold"
+                    >
+                      <Users className="h-4 w-4 mr-2" />
+                      Divisions
+                    </TabsTrigger>
                   <TabsTrigger 
                     value="playoffs" 
                     className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-goal-orange-500 data-[state=active]:to-stadium-gold-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-goal-orange-500/30 transition-all duration-300 hover:scale-105 rounded-xl font-semibold"
@@ -982,9 +1147,9 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
                   </motion.div>
                 </TabsContent>
 
-                <TabsContent value="conference" className="space-y-6">
-                  <ConferenceStandings standings={standings} />
-                </TabsContent>
+                  <TabsContent value="divisions" className="space-y-6">
+                    <DivisionStandings standings={standings} />
+                  </TabsContent>
 
                 <TabsContent value="playoffs" className="space-y-6">
                   <PlayoffPicture standings={standings} />

@@ -181,16 +181,6 @@ export default function Navigation() {
       ],
     },
     {
-      name: "ELO",
-      href: "/elo/rankings",
-      icon: Target,
-      submenu: [
-        { name: "ELO Rankings", href: "/elo/rankings" },
-        { name: "ELO Statistics", href: "/elo/statistics" },
-        { name: "ELO Matches", href: "/elo/matches" },
-      ],
-    },
-    {
       name: "News",
       href: "/news",
       icon: Newspaper,
