@@ -272,11 +272,11 @@ export async function getCurrentSeasonId(): Promise<number> {
         }
 
         console.log("Using first season:", firstSeason)
-        return firstSeason.id
+        return firstSeason.season_number || 1
       }
 
       console.log("Using active season:", seasonData)
-      return seasonData.id
+      return seasonData.season_number || 1
     }
 
     const value = data?.value

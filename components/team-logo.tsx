@@ -81,7 +81,20 @@ export function TeamLogo({ teamName, teamId, logoUrl, size = "md", className }: 
   console.log(`Using generated logo for ${teamName} (logoUrl: ${logoUrl}, error: ${imageError})`)
 
   // Get team colors or use default if not found
-  const colors = TEAM_COLORS[teamName] || TEAM_COLORS["Default Team"]
+  const colors = TEAM_COLORS[teamName] || TEAM_COLORS["Default Club"]
+  
+  // Ensure colors object exists and has required properties
+  if (!colors || !colors.primary || !colors.secondary) {
+    console.error(`Invalid colors for team: ${teamName}`, colors)
+    const fallbackColors = TEAM_COLORS["Default Club"]
+    return (
+      <div
+        className={cn("relative rounded-full flex items-center justify-center font-bold bg-gray-500 text-white", SIZE_CLASSES[size], className)}
+      >
+        <span className="text-white drop-shadow-md">?</span>
+      </div>
+    )
+  }
 
   // Get team initials (up to 2 characters)
   const initials = teamName

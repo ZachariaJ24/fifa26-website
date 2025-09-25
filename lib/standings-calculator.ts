@@ -450,7 +450,7 @@ export async function calculateStandings(seasonId: number): Promise<TeamStanding
       hasDivisionColumn = false
     }
 
-    // Get all teams for the season - start with basic query to avoid join issues
+    // Get all teams for the season - try different approaches
     let { data: teams, error: teamsError } = await supabase
       .from("teams")
       .select(`
@@ -461,11 +461,31 @@ export async function calculateStandings(seasonId: number): Promise<TeamStanding
         ${hasDivisionColumn ? ", division" : ""}
       `)
       .eq("is_active", true)
-      .eq("season_id", seasonUuid)
 
-    // If basic query fails, try without season_id filter
-    if (teamsError) {
-      console.log("Teams query failed, trying without season filter:", teamsError.message)
+    // Try with season_id as integer first
+    if (!teamsError && teams && teams.length === 0) {
+      console.log("No teams found with is_active filter, trying with season_id as integer")
+      const seasonIntResult = await supabase
+        .from("teams")
+        .select(`
+          id, 
+          name, 
+          logo_url,
+          conference_id
+          ${hasDivisionColumn ? ", division" : ""}
+        `)
+        .eq("is_active", true)
+        .eq("season_id", seasonId)
+      
+      if (!seasonIntResult.error && seasonIntResult.data) {
+        teams = seasonIntResult.data
+        teamsError = seasonIntResult.error
+      }
+    }
+
+    // If still no teams, try without any season filter
+    if (teamsError || !teams || teams.length === 0) {
+      console.log("Teams query failed or no teams found, trying without season filter:", teamsError?.message)
       const fallbackResult = await supabase
         .from("teams")
         .select(`
