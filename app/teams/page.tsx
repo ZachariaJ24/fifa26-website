@@ -97,7 +97,7 @@ export default function TeamsPage() {
   const totalSalary = teams.reduce((sum, team) => sum + (team.total_salary || 0), 0)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/20">
       {/* Header Section */}
       <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
         <div className="container mx-auto px-6 py-12">

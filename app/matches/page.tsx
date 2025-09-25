@@ -374,7 +374,7 @@ export default function MatchesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
         <div className="container mx-auto px-4 py-8">
           <div className="hockey-header relative py-16 px-4 mb-12">
             <div className="container mx-auto text-center">
@@ -409,7 +409,7 @@ export default function MatchesPage() {
   // Add a fallback UI for connection errors
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
         <div className="container mx-auto px-4 py-8">
           <div className="hockey-header relative py-16 px-4 mb-12">
             <div className="container mx-auto text-center">
@@ -442,7 +442,7 @@ export default function MatchesPage() {
   const matchesByDate = groupMatchesByDate(weekMatches)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
       {/* Hero Header Section */}
       <div className="hockey-header relative py-16 px-4">
         <div className="container mx-auto text-center">

@@ -1772,7 +1772,7 @@ export default function StatisticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pitch-blue-50 via-white to-field-green-50 dark:from-assist-white-900 dark:via-assist-white-800 dark:to-field-green-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-pitch-blue-50 via-slate-50 to-field-green-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-field-green-900/30">
       {/* Header Section */}
       <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
         <div className="container mx-auto px-6 py-12">

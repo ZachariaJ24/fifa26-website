@@ -99,7 +99,7 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-stadium-gold-900 dark:via-stadium-gold-800 dark:to-pitch-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-slate-50 to-pitch-blue-50 dark:from-stadium-gold-900 dark:via-stadium-gold-800 dark:to-pitch-blue-900/30">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         {/* Background Pattern */}

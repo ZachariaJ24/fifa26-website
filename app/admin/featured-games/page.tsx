@@ -291,7 +291,7 @@ export default function AdminFeaturedGamesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
         <div className="container mx-auto px-4 py-20">
           <div className="text-center">
             <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-200 to-rink-blue-200 dark:from-ice-blue-800 dark:to-rink-blue-800 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
@@ -318,7 +318,7 @@ export default function AdminFeaturedGamesPage() {
 
   if (migrationStatus === "error") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
         <div className="container mx-auto px-4 py-20">
           <div className="text-center mb-12">
             <h1 className="hockey-title mb-6">Featured Games Management</h1>
@@ -350,7 +350,7 @@ export default function AdminFeaturedGamesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         {/* Background Pattern */}

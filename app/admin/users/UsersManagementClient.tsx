@@ -1626,9 +1626,9 @@ export default function UsersManagementClient() {
           throw error
         }
 
-        // Also mark any related bids as processed to prevent conflicts
-        const { error: bidUpdateError } = await supabase
-          .from("player_bidding")
+        // Also mark any related transfers as processed to prevent conflicts
+        const { error: transferUpdateError } = await supabase
+          .from("player_transfers")
           .update({
             status: "manually_assigned",
             processed: true,
@@ -1637,8 +1637,8 @@ export default function UsersManagementClient() {
           .eq("player_id", playerId)
           .in("status", ["active", "pending"])
 
-        if (bidUpdateError) {
-          console.error("Error updating bids for assigned player:", bidUpdateError)
+        if (transferUpdateError) {
+          console.error("Error updating transfers for assigned player:", transferUpdateError)
           // Don't fail the request as team assignment is more important
         }
 

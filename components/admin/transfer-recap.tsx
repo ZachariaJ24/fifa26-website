@@ -9,9 +9,9 @@ import { Loader2, RefreshCw, DollarSign, Users, Trophy, Download, UserCheck, Tar
 import { TeamLogo } from "@/components/team-logo"
 import { useToast } from "@/hooks/use-toast"
 
-interface BidData {
+interface TransferData {
   id: string
-  bid_amount: number
+  transfer_amount: number
   created_at: string
   team: {
     id: string
@@ -20,12 +20,12 @@ interface BidData {
   }
 }
 
-interface WonPlayer {
+interface SignedPlayer {
   id: string
   gamer_tag_id: string
   primary_position: string
   secondary_position: string | null
-  winningBid: number
+  signingAmount: number
 }
 
 interface RosterPlayer {
@@ -45,16 +45,16 @@ interface PositionCounts {
   Goalie: number
 }
 
-interface PlayerBid {
+interface PlayerTransfer {
   player: {
     id: string
     gamer_tag_id: string
     primary_position: string
     secondary_position: string | null
   }
-  bids: BidData[]
-  highestBid: number
-  totalBids: number
+  transfers: TransferData[]
+  highestTransfer: number
+  totalTransfers: number
   winningTeam: {
     id: string
     name: string
@@ -68,37 +68,37 @@ interface TeamStat {
     name: string
     logo_url: string | null
   }
-  totalBids: number
+  totalTransfers: number
   uniquePlayersCount: number
   currentSalary: number
   currentRoster: RosterPlayer[]
   positionCounts: PositionCounts
-  wonPlayers: WonPlayer[]
-  bids: BidData[]
+  signedPlayers: SignedPlayer[]
+  transfers: TransferData[]
 }
 
-interface BiddingRecapData {
+interface TransferRecapData {
   teamStats: TeamStat[]
-  playerBids: PlayerBid[]
-  totalBids: number
+  playerTransfers: PlayerTransfer[]
+  totalTransfers: number
   totalPlayers: number
   totalTeams: number
 }
 
-export function BiddingRecap() {
-  const [data, setData] = useState<BiddingRecapData | null>(null)
+export function TransferRecap() {
+  const [data, setData] = useState<TransferRecapData | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { toast } = useToast()
 
-  const fetchBiddingRecap = async () => {
+  const fetchTransferRecap = async () => {
     setLoading(true)
     setError(null)
 
     try {
-      const response = await fetch("/api/admin/bidding-recap")
+      const response = await fetch("/api/transfers/recap")
       if (!response.ok) {
-        throw new Error("Failed to fetch bidding recap")
+        throw new Error("Failed to fetch transfer recap")
       }
 
       const recapData = await response.json()
@@ -106,7 +106,7 @@ export function BiddingRecap() {
 
       // Save the recap data for public viewing
       try {
-        const saveResponse = await fetch("/api/bidding-recap/save", {
+        const saveResponse = await fetch("/api/transfers/recap/save", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -117,7 +117,7 @@ export function BiddingRecap() {
         if (saveResponse.ok) {
           toast({
             title: "Success",
-            description: "Bidding recap generated and saved for public viewing!",
+            description: "Transfer recap generated and saved for public viewing!",
           })
         } else {
           const errorData = await saveResponse.json()
@@ -140,7 +140,7 @@ export function BiddingRecap() {
       setError(err instanceof Error ? err.message : "An error occurred")
       toast({
         title: "Error",
-        description: "Failed to generate bidding recap.",
+        description: "Failed to generate transfer recap.",
         variant: "destructive",
       })
     } finally {
@@ -181,31 +181,31 @@ export function BiddingRecap() {
   const downloadCSV = () => {
     if (!data) return
 
-    let csvContent = "SCS Bidding Recap\n\n"
+    let csvContent = "SCS Transfer Recap\n\n"
 
     // Summary
     csvContent += "SUMMARY\n"
-    csvContent += `Total Bids,${data.totalBids}\n`
-    csvContent += `Players Bid On,${data.totalPlayers}\n`
+    csvContent += `Total Transfers,${data.totalTransfers}\n`
+    csvContent += `Players Transferred,${data.totalPlayers}\n`
     csvContent += `Teams Participating,${data.totalTeams}\n`
     csvContent += `Total League Salary,${formatCurrency(data.teamStats.reduce((sum, team) => sum + team.currentSalary, 0))}\n\n`
 
-    // Team Statistics with Won Players
+    // Team Statistics with Signed Players
     csvContent += "TEAM STATISTICS\n"
-    csvContent += "Rank,Team,Total Bids,Players Bid On,Won Players,Current Salary,Cap Space Remaining\n"
+    csvContent += "Rank,Team,Total Transfers,Players Transferred,Signed Players,Current Salary,Cap Space Remaining\n"
     data.teamStats.forEach((team, index) => {
       const capSpaceRemaining = 30000000 - team.currentSalary
-      csvContent += `${index + 1},${team.team.name},${team.totalBids},${team.uniquePlayersCount},${team.wonPlayers.length},${formatCurrency(team.currentSalary)},${formatCurrency(capSpaceRemaining)}\n`
+      csvContent += `${index + 1},${team.team.name},${team.totalTransfers},${team.uniquePlayersCount},${team.signedPlayers.length},${formatCurrency(team.currentSalary)},${formatCurrency(capSpaceRemaining)}\n`
     })
 
-    // Won Players by Team
-    csvContent += "\nWON PLAYERS BY TEAM\n"
+    // Signed Players by Team
+    csvContent += "\nSIGNED PLAYERS BY TEAM\n"
     data.teamStats.forEach((team) => {
-      if (team.wonPlayers.length > 0) {
-        csvContent += `\n${team.team.name} Won Players:\n`
-        csvContent += "Player,Position,Winning Bid\n"
-        team.wonPlayers.forEach((player) => {
-          csvContent += `${player.gamer_tag_id},${player.primary_position},${formatCurrency(player.winningBid)}\n`
+      if (team.signedPlayers.length > 0) {
+        csvContent += `\n${team.team.name} Signed Players:\n`
+        csvContent += "Player,Position,Signing Amount\n"
+        team.signedPlayers.forEach((player) => {
+          csvContent += `${player.gamer_tag_id},${player.primary_position},${formatCurrency(player.signingAmount)}\n`
         })
       }
     })
@@ -215,7 +215,7 @@ export function BiddingRecap() {
     const link = document.createElement("a")
     const url = URL.createObjectURL(blob)
     link.setAttribute("href", url)
-    link.setAttribute("download", `SCS_Bidding_Recap_${new Date().toISOString().split("T")[0]}.csv`)
+    link.setAttribute("download", `SCS_Transfer_Recap_${new Date().toISOString().split("T")[0]}.csv`)
     link.style.visibility = "hidden"
     document.body.appendChild(link)
     link.click()
@@ -231,8 +231,8 @@ export function BiddingRecap() {
             <DollarSign className="h-8 w-8 text-white" />
           </div>
           <div>
-            <h2 className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Bidding Recap</h2>
-            <p className="text-hockey-silver-600 dark:text-hockey-silver-400 text-lg">Comprehensive overview of all bidding activity</p>
+            <h2 className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Transfer Recap</h2>
+            <p className="text-hockey-silver-600 dark:text-hockey-silver-400 text-lg">Comprehensive overview of all transfer activity</p>
           </div>
         </div>
         <div className="flex gap-3">
@@ -246,7 +246,7 @@ export function BiddingRecap() {
             </Button>
           )}
           <Button 
-            onClick={fetchBiddingRecap} 
+            onClick={fetchTransferRecap} 
             disabled={loading}
             className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
           >
@@ -280,8 +280,8 @@ export function BiddingRecap() {
                     <Trophy className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <p className="text-3xl font-bold text-ice-blue-700 dark:text-ice-blue-300">{data.totalBids}</p>
-                    <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Total Bids</p>
+                    <p className="text-3xl font-bold text-ice-blue-700 dark:text-ice-blue-300">{data.totalTransfers}</p>
+                    <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Total Transfers</p>
                   </div>
                 </div>
               </CardContent>
@@ -294,7 +294,7 @@ export function BiddingRecap() {
                   </div>
                   <div>
                     <p className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300">{data.totalPlayers}</p>
-                    <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Players Bid On</p>
+                    <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Players Transferred</p>
                   </div>
                 </div>
               </CardContent>
@@ -329,14 +329,14 @@ export function BiddingRecap() {
             </Card>
           </div>
 
-          {/* Enhanced Team Statistics with Won Players and Roster */}
+          {/* Enhanced Team Statistics with Signed Players and Roster */}
           <Card className="hockey-card hockey-card-hover border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
             <CardHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
               <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
                 <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
                   <BarChart3 className="h-6 w-6 text-white" />
                 </div>
-                Team Bidding Statistics & Rosters
+                Team Transfer Statistics & Rosters
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -374,19 +374,19 @@ export function BiddingRecap() {
                         </div>
                       </div>
 
-                      {/* Enhanced Bidding Stats */}
+                      {/* Enhanced Transfer Stats */}
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
                         <div className="text-center p-3 bg-gradient-to-br from-ice-blue-100 to-ice-blue-200 dark:from-ice-blue-900/30 dark:to-ice-blue-800/20 rounded-lg border border-ice-blue-200/50 dark:border-ice-blue-700/50">
-                          <p className="text-lg font-semibold text-ice-blue-700 dark:text-ice-blue-300">{teamStat.totalBids}</p>
-                          <p className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">Total Bids</p>
+                          <p className="text-lg font-semibold text-ice-blue-700 dark:text-ice-blue-300">{teamStat.totalTransfers}</p>
+                          <p className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">Total Transfers</p>
                         </div>
                         <div className="text-center p-3 bg-gradient-to-br from-rink-blue-100 to-rink-blue-200 dark:from-rink-blue-900/30 dark:to-rink-blue-800/20 rounded-lg border border-rink-blue-200/50 dark:border-rink-blue-700/50">
                           <p className="text-lg font-semibold text-rink-blue-700 dark:text-rink-blue-300">{teamStat.uniquePlayersCount}</p>
-                          <p className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">Players Bid On</p>
+                          <p className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">Players Transferred</p>
                         </div>
                         <div className="text-center p-3 bg-gradient-to-br from-assist-green-100 to-assist-green-200 dark:from-assist-green-900/30 dark:to-assist-green-800/20 rounded-lg border border-assist-green-200/50 dark:border-assist-green-700/50">
-                          <p className="text-lg font-semibold text-assist-green-600 dark:text-assist-green-400">{teamStat.wonPlayers.length}</p>
-                          <p className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">Won Players</p>
+                          <p className="text-lg font-semibold text-assist-green-600 dark:text-assist-green-400">{teamStat.signedPlayers.length}</p>
+                          <p className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">Signed Players</p>
                         </div>
                         <div className="text-center p-3 bg-gradient-to-br from-goal-red-100 to-goal-red-200 dark:from-goal-red-900/30 dark:to-goal-red-800/20 rounded-lg border border-goal-red-200/50 dark:border-goal-red-700/50">
                           <p className="text-lg font-semibold text-goal-red-600 dark:text-goal-red-400">{totalRosterSize}</p>
@@ -394,17 +394,17 @@ export function BiddingRecap() {
                         </div>
                       </div>
 
-                      {/* Enhanced Won Players */}
-                      {teamStat.wonPlayers.length > 0 && (
+                      {/* Enhanced Signed Players */}
+                      {teamStat.signedPlayers.length > 0 && (
                         <div className="mb-6">
                           <div className="flex items-center gap-2 mb-3">
                             <div className="p-1 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
                               <UserCheck className="h-4 w-4 text-white" />
                             </div>
-                            <h4 className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Won Players ({teamStat.wonPlayers.length})</h4>
+                            <h4 className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Signed Players ({teamStat.signedPlayers.length})</h4>
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {teamStat.wonPlayers.map((player) => (
+                            {teamStat.signedPlayers.map((player) => (
                               <div
                                 key={player.id}
                                 className="flex items-center justify-between p-3 bg-gradient-to-br from-assist-green-100 to-assist-green-200 dark:from-assist-green-900/20 dark:to-assist-green-800/20 border border-assist-green-200/50 dark:border-assist-green-700/50 rounded-lg text-sm hover:scale-105 transition-transform duration-200"
@@ -419,7 +419,7 @@ export function BiddingRecap() {
                                   </Badge>
                                 </div>
                                 <span className="font-semibold text-assist-green-600 dark:text-assist-green-400">
-                                  {formatCurrency(player.winningBid)}
+                                  {formatCurrency(player.signingAmount)}
                                 </span>
                               </div>
                             ))}
@@ -464,48 +464,48 @@ export function BiddingRecap() {
             </CardContent>
           </Card>
 
-          {/* Enhanced Player Bid History */}
+          {/* Enhanced Player Transfer History */}
           <Card className="hockey-card hockey-card-hover border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
             <CardHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
               <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
                 <div className="p-2 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
                   <Activity className="h-6 w-6 text-white" />
                 </div>
-                Player Bid History
+                Player Transfer History
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                {data.playerBids.map((playerBid) => (
-                  <div key={playerBid.player.id} className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200">
+                {data.playerTransfers.map((playerTransfer) => (
+                  <div key={playerTransfer.player.id} className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 rounded-xl p-6 hover:shadow-lg transition-shadow duration-200">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-3">
                         <div className="p-2 bg-gradient-to-r from-ice-blue-500/20 to-rink-blue-500/20 rounded-lg">
                           <GamepadIcon className="h-5 w-5 text-ice-blue-600 dark:text-ice-blue-400" />
                         </div>
                         <div>
-                          <h3 className="font-semibold text-lg text-hockey-silver-800 dark:text-hockey-silver-200">{playerBid.player.gamer_tag_id}</h3>
+                          <h3 className="font-semibold text-lg text-hockey-silver-800 dark:text-hockey-silver-200">{playerTransfer.player.gamer_tag_id}</h3>
                           <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">
-                            {playerBid.player.primary_position}
-                            {playerBid.player.secondary_position && ` / ${playerBid.player.secondary_position}`}
+                            {playerTransfer.player.primary_position}
+                            {playerTransfer.player.secondary_position && ` / ${playerTransfer.player.secondary_position}`}
                           </p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-bold text-assist-green-600 dark:text-assist-green-400">{formatCurrency(playerBid.highestBid)}</p>
-                        <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">Highest Bid • {playerBid.totalBids} total bids</p>
-                        {playerBid.winningTeam && (
+                        <p className="text-lg font-bold text-assist-green-600 dark:text-assist-green-400">{formatCurrency(playerTransfer.highestTransfer)}</p>
+                        <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">Highest Transfer • {playerTransfer.totalTransfers} total transfers</p>
+                        {playerTransfer.winningTeam && (
                           <div className="flex items-center gap-2 mt-2">
                             <div className="w-5 h-5">
                               <TeamLogo
-                                teamId={playerBid.winningTeam.id}
-                                teamName={playerBid.winningTeam.name}
-                                logoUrl={playerBid.winningTeam.logo_url}
+                                teamId={playerTransfer.winningTeam.id}
+                                teamName={playerTransfer.winningTeam.name}
+                                logoUrl={playerTransfer.winningTeam.logo_url}
                                 size="xs"
                               />
                             </div>
                             <Badge className="bg-gradient-to-r from-assist-green-500 to-assist-green-600 text-white border-0 text-xs">
-                              Won by {playerBid.winningTeam.name}
+                              Won by {playerTransfer.winningTeam.name}
                             </Badge>
                           </div>
                         )}
@@ -517,21 +517,21 @@ export function BiddingRecap() {
                     <div className="space-y-3">
                       <h4 className="font-medium text-sm text-hockey-silver-600 dark:text-hockey-silver-400 mb-3 flex items-center gap-2">
                         <Clock className="h-4 w-4" />
-                        Bid History
+                        Transfer History
                       </h4>
-                      {playerBid.bids.map((bid, bidIndex) => (
-                        <div key={bid.id} className="flex items-center justify-between py-3 px-4 bg-gradient-to-br from-hockey-silver-100 to-hockey-silver-200 dark:from-hockey-silver-900/30 dark:to-hockey-silver-800/20 rounded-lg border border-hockey-silver-200/50 dark:border-hockey-silver-700/50 hover:scale-105 transition-transform duration-200">
+                      {playerTransfer.transfers.map((transfer, transferIndex) => (
+                        <div key={transfer.id} className="flex items-center justify-between py-3 px-4 bg-gradient-to-br from-hockey-silver-100 to-hockey-silver-200 dark:from-hockey-silver-900/30 dark:to-hockey-silver-800/20 rounded-lg border border-hockey-silver-200/50 dark:border-hockey-silver-700/50 hover:scale-105 transition-transform duration-200">
                           <div className="flex items-center space-x-3">
                             <div className="w-6 h-6">
                               <TeamLogo
-                                teamId={bid.team.id}
-                                teamName={bid.team.name}
-                                logoUrl={bid.team.logo_url}
+                                teamId={transfer.team.id}
+                                teamName={transfer.team.name}
+                                logoUrl={transfer.team.logo_url}
                                 size="xs"
                               />
                             </div>
-                            <span className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">{bid.team.name}</span>
-                            {bidIndex === 0 && (
+                            <span className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">{transfer.team.name}</span>
+                            {transferIndex === 0 && (
                               <Badge className="bg-gradient-to-r from-assist-green-500 to-assist-green-600 text-white border-0 text-xs">
                                 <Star className="h-3 w-3 mr-1" />
                                 Winner
@@ -539,10 +539,10 @@ export function BiddingRecap() {
                             )}
                           </div>
                           <div className="flex items-center space-x-3">
-                            <span className="font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">{formatCurrency(bid.bid_amount)}</span>
+                            <span className="font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">{formatCurrency(transfer.transfer_amount)}</span>
                             <span className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400 flex items-center gap-1">
                               <Clock className="h-3 w-3" />
-                              {formatDate(bid.created_at)}
+                              {formatDate(transfer.created_at)}
                             </span>
                           </div>
                         </div>

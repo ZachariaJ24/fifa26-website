@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useToast } from "@/components/ui/use-toast"
 import { useSupabase } from "@/lib/supabase/client"
-import { BiddingSettings } from "@/components/admin/bidding-settings"
-import { BidProcessor } from "@/components/admin/bid-processor"
+import { TransferSettings } from "@/components/admin/transfer-settings"
+import { SigningSettings } from "@/components/admin/signing-settings"
 import { AdminDiagnostics } from "@/components/admin/admin-diagnostics"
-import { RemoveUserBids } from "@/components/admin/remove-user-bids"
+import { RemoveUserTransfers } from "@/components/admin/remove-user-transfers"
 import { IpTracking } from "@/components/admin/ip-tracking"
 import { SeasonsManager } from "@/components/admin/seasons-manager"
 import { Settings, Shield, Users, Database, Trophy, Activity } from "lucide-react"
@@ -99,7 +99,7 @@ export function AdminSettingsPageClient() {
               System Settings
             </h1>
             <p className="hockey-subtitle mx-auto mb-8">
-              Configure and manage all system settings, bidding parameters, and administrative controls
+              Configure and manage all system settings, transfer parameters, and administrative controls
             </p>
             
             {/* Admin Status Badge */}
@@ -114,22 +114,22 @@ export function AdminSettingsPageClient() {
       <div className="container mx-auto px-4 pb-20">
         <div className="animate-fade-in-up">
 
-          <Tabs defaultValue="bidding" className="space-y-8">
+          <Tabs defaultValue="transfers" className="space-y-8">
             <div className="flex justify-center">
               <TabsList className="grid grid-cols-6 w-full max-w-5xl gap-3 p-2 bg-gradient-to-r from-ice-blue-100/80 to-rink-blue-100/80 dark:from-ice-blue-900/40 dark:to-rink-blue-900/40 rounded-2xl border-2 border-ice-blue-200/60 dark:border-rink-blue-700/60 shadow-xl backdrop-blur-sm">
                 <TabsTrigger 
-                  value="bidding" 
+                  value="transfers" 
                   className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
                 >
                   <Shield className="h-5 w-5" />
-                  Bidding
+                  Transfers
                 </TabsTrigger>
                 <TabsTrigger 
-                  value="bid-processor" 
+                  value="signings" 
                   className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
                 >
                   <Trophy className="h-5 w-5" />
-                  Process Bids
+                  Signings
                 </TabsTrigger>
                 <TabsTrigger 
                   value="ip-tracking" 
@@ -139,11 +139,11 @@ export function AdminSettingsPageClient() {
                   IP Tracking
                 </TabsTrigger>
                 <TabsTrigger 
-                  value="user-bids" 
+                  value="user-transfers" 
                   className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
                 >
                   <Users className="h-5 w-5" />
-                  User Bids
+                  User Transfers
                 </TabsTrigger>
                 <TabsTrigger 
                   value="seasons" 
@@ -162,20 +162,20 @@ export function AdminSettingsPageClient() {
               </TabsList>
             </div>
 
-        <TabsContent value="bidding">
-          <BiddingSettings />
+        <TabsContent value="transfers">
+          <TransferSettings />
         </TabsContent>
 
-        <TabsContent value="bid-processor">
-          <BidProcessor />
+        <TabsContent value="signings">
+          <SigningSettings />
         </TabsContent>
 
         <TabsContent value="ip-tracking">
           <IpTracking />
         </TabsContent>
 
-        <TabsContent value="user-bids">
-          <RemoveUserBids />
+        <TabsContent value="user-transfers">
+          <RemoveUserTransfers />
         </TabsContent>
 
         <TabsContent value="seasons">
