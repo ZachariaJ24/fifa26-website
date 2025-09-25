@@ -69,7 +69,7 @@ function DivisionStandings({ standings }: { standings: TeamStanding[] }) {
   const leagueOneTeams = sortDivisionTeams(divisions.get("League One")?.teams || [])
 
   return (
-    <div className="grid gap-8 lg:grid-cols-3">
+    <div className="grid gap-8 grid-cols-1">
       {/* Premier Division */}
       <motion.div
         initial={{ opacity: 0, x: -20 }}

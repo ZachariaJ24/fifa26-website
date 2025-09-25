@@ -407,43 +407,20 @@ const ManagementPage = () => {
       setFreeAgentsLoading(true)
       setFreeAgentsError(null)
 
-      const { data, error } = await supabase
-        .from("users")
-        .select(`
-          id,
-          gamer_tag_id,
-          primary_position,
-          secondary_position,
-          console,
-          avatar_url,
-          players!inner (
-            id,
-            salary
-          )
-        `)
-        .is("players.team_id", null)
-        .eq("players.role", "Player")
-
-      if (error) {
-        throw error
+      console.log("=== DEBUG: Starting loadFreeAgents via API ===")
+      
+      const response = await fetch("/api/free-agency")
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
 
-      const freeAgentsData = data?.map((user) => ({
-        id: user.players[0].id,
-        salary: user.players[0].salary,
-        users: {
-          id: user.id,
-          gamer_tag_id: user.gamer_tag_id,
-          primary_position: user.primary_position,
-          secondary_position: user.secondary_position,
-          console: user.console,
-          avatar_url: user.avatar_url,
-        },
-      })) || []
-
+      const freeAgentsData = await response.json()
+      console.log("Free agents loaded:", freeAgentsData.length)
+      
       setFreeAgents(freeAgentsData)
     } catch (error: any) {
-      console.error("Error fetching free agents:", error)
+      console.error("Error loading free agents:", error)
       setFreeAgentsError(error.message || "Failed to load free agents")
     } finally {
       setFreeAgentsLoading(false)
@@ -493,13 +470,8 @@ const ManagementPage = () => {
       setPlayerOffers(offersMap)
       setMyTransferOffers(myOffersList)
 
-      // Count active offers and outbid status
+      // Count active offers
       const activeCount = myOffersList.length
-      const outbidCount = myOffersList.filter((offer) => {
-        // Check if there are higher offers for the same player
-        return false // Simplified for now
-      }).length
-
       setActiveTransferOffersCount(activeCount)
     } catch (error) {
       console.error("Error in fetchPlayerOffers:", error)
@@ -833,9 +805,9 @@ const ManagementPage = () => {
                 <CardDescription>Track your active transfer offers</CardDescription>
               </CardHeader>
               <CardContent>
-                {myOffers.length > 0 ? (
+                {myTransferOffers.length > 0 ? (
                   <div className="space-y-4">
-                    {myOffers.map((offer) => (
+                    {myTransferOffers.map((offer) => (
                       <div
                         key={offer.id}
                         className="flex items-center justify-between p-4 border rounded-lg"
