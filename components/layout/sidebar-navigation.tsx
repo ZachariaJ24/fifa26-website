@@ -335,13 +335,13 @@ export function SidebarNavigation({ isOpen: externalIsOpen, onToggle: externalOn
 
   const getColorClasses = (color: string) => {
     const colorMap: Record<string, string> = {
-      'ice-blue': 'from-ice-blue-500 to-rink-blue-600',
-      'rink-blue': 'from-rink-blue-500 to-ice-blue-600',
-      'assist-green': 'from-assist-green-500 to-assist-green-600',
-      'goal-red': 'from-goal-red-500 to-goal-red-600',
-      'hockey-silver': 'from-hockey-silver-500 to-hockey-silver-600'
+      'field-green': 'from-field-green-500 to-pitch-blue-600',
+      'pitch-blue': 'from-pitch-blue-500 to-field-green-600',
+      'stadium-gold': 'from-stadium-gold-500 to-stadium-gold-600',
+      'goal-orange': 'from-goal-orange-500 to-goal-orange-600',
+      'assist-white': 'from-assist-white-500 to-assist-white-600'
     }
-    return colorMap[color] || 'from-ice-blue-500 to-rink-blue-600'
+    return colorMap[color] || 'from-field-green-500 to-pitch-blue-600'
   }
 
   const navigation = [
@@ -349,72 +349,72 @@ export function SidebarNavigation({ isOpen: externalIsOpen, onToggle: externalOn
       name: "Home", 
       href: "/", 
       icon: Home,
-      color: "ice-blue",
+      color: "field-green",
       description: "Return to the main page"
     },
     { 
-      name: "Teams", 
+      name: "Clubs", 
       href: "/teams", 
       icon: Users,
-      color: "assist-green",
-      description: "Browse all teams and rosters"
+      color: "stadium-gold",
+      description: "Browse all clubs and squads"
     },
     { 
       name: "Standings", 
       href: "/standings", 
       icon: Trophy,
-      color: "goal-red",
+      color: "goal-orange",
       description: "View league standings and rankings"
     },
     { 
       name: "Stats", 
       href: "/stats", 
       icon: BarChart3,
-      color: "rink-blue",
+      color: "pitch-blue",
       description: "Player and team statistics"
     },
     { 
       name: "Matches", 
       href: "/matches", 
       icon: Calendar,
-      color: "hockey-silver",
-      description: "Game schedules and results"
+      color: "assist-white",
+      description: "Match schedules and results"
     },
     { 
       name: "Awards", 
       href: "/awards", 
       icon: Award,
-      color: "goal-red",
+      color: "goal-orange",
       description: "Season awards and achievements"
     },
     {
-      name: "Free Agency",
+      name: "Transfer Market",
       href: "/free-agency",
       icon: DollarSign,
-      color: "assist-green",
-      description: "Available players and bidding",
+      color: "stadium-gold",
+      description: "Available players and transfers",
       submenu: [
-        { name: "Free Agency", href: "/free-agency", icon: Target },
-        { name: "Bidding Recap", href: "/free-agency/bidding-recap", icon: BarChart3 },
+        { name: "Transfer Market", href: "/free-agency", icon: Target },
+        { name: "Transfer Recap", href: "/free-agency/bidding-recap", icon: BarChart3 },
       ],
     },
     {
-      name: "ELO",
+      name: "Rankings",
       href: "/elo/rankings",
       icon: Target,
-      color: "rink-blue",
-      description: "ELO rankings and competitive matches",
+      color: "pitch-blue",
+      description: "Player rankings and competitive matches",
       submenu: [
-        { name: "ELO Rankings", href: "/elo/rankings", icon: Trophy },
-        { name: "ELO Statistics", href: "/elo/statistics", icon: BarChart3 },
-        { name: "ELO Matches", href: "/elo/matches", icon: Calendar },
+        { name: "Player Rankings", href: "/elo/rankings", icon: Trophy },
+        { name: "Ranking Statistics", href: "/elo/statistics", icon: BarChart3 },
+        { name: "Ranking Matches", href: "/elo/matches", icon: Calendar },
       ],
     },
     {
       name: "News",
       href: "/news",
       icon: Newspaper,
-      color: "rink-blue",
+      color: "pitch-blue",
       description: "Latest league updates and stories",
       submenu: [
         { name: "News", href: "/news", icon: FileText },
@@ -425,7 +425,7 @@ export function SidebarNavigation({ isOpen: externalIsOpen, onToggle: externalOn
       name: "Forum", 
       href: "/forum", 
       icon: MessageSquare,
-      color: "hockey-silver",
+      color: "assist-white",
       description: "Community discussions and chat"
     },
   ]

@@ -13,14 +13,14 @@ interface TeamLogoProps {
 }
 
 const TEAM_COLORS: Record<string, { primary: string; secondary: string }> = {
-  "Houston Ascension": { primary: "#8A2BE2", secondary: "#FF4500" }, // Purple and Orange
-  "Thunder Bay Thrashers": { primary: "#00008B", secondary: "#C0C0C0" }, // Dark Blue and Silver
-  "Toronto Blades": { primary: "#0038A8", secondary: "#FFFFFF" }, // Blue and White
-  "Vancouver Spartans": { primary: "#006400", secondary: "#C0C0C0" }, // Green and Silver
-  "Calgary Kings": { primary: "#8B0000", secondary: "#FFD700" }, // Dark Red and Gold
-  "Philadelphia Outlaws": { primary: "#000000", secondary: "#FF7F00" }, // Black and Orange
-  "St. Louis Skyhawks": { primary: "#00529B", secondary: "#FFD700" }, // Blue and Gold
-  "Default Team": { primary: "#6E6E6E", secondary: "#FFFFFF" }, // Gray and White
+  "Manchester United FC": { primary: "#DA020E", secondary: "#FFD700" }, // Red and Gold
+  "Real Madrid CF": { primary: "#FFFFFF", secondary: "#FFD700" }, // White and Gold
+  "FC Barcelona": { primary: "#A50044", secondary: "#004D98" }, // Blue and Red
+  "Bayern Munich": { primary: "#DC052D", secondary: "#FFFFFF" }, // Red and White
+  "Liverpool FC": { primary: "#C8102E", secondary: "#FFFFFF" }, // Red and White
+  "Chelsea FC": { primary: "#034694", secondary: "#FFFFFF" }, // Blue and White
+  "Arsenal FC": { primary: "#EF0107", secondary: "#FFFFFF" }, // Red and White
+  "Default Club": { primary: "#6E6E6E", secondary: "#FFFFFF" }, // Gray and White
 }
 
 const SIZE_CLASSES = {

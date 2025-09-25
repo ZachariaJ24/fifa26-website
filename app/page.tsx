@@ -136,18 +136,18 @@ export default function Home() {
   const [heroImages, setHeroImages] = useState([
     {
       url: "https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200",
-      title: "Welcome to Secret Chel Society",
-      subtitle: "The premier NHL 26 competitive gaming league with advanced stat tracking",
+      title: "Welcome to FIFA 26 League",
+      subtitle: "The premier FIFA 26 competitive gaming league with advanced stat tracking",
     },
     {
       url: "https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200",
       title: "Season 1 Registration Open",
-      subtitle: "Join the most competitive NHL 26 league and earn rewards through our token system",
+      subtitle: "Join the most competitive FIFA 26 league and earn rewards through our token system",
     },
     {
       url: "https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200",
       title: "Live Match Streaming",
-      subtitle: "Watch professional NHL 26 matches with real-time statistics and commentary",
+      subtitle: "Watch professional FIFA 26 matches with real-time statistics and commentary",
     },
   ])
 
@@ -547,13 +547,13 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-ice-blue-600 via-rink-blue-600 to-ice-blue-800 dark:from-ice-blue-400 dark:via-rink-blue-400 dark:to-ice-blue-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-field-green-800 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-field-green-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">
               League Statistics
             </h2>
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto">
               Real-time data from our advanced tracking system
             </p>
-            <div className="h-1 w-24 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full mx-auto mt-8"></div>
+            <div className="h-1 w-24 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-8"></div>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -615,13 +615,13 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-ice-blue-600 via-rink-blue-600 to-ice-blue-800 dark:from-ice-blue-400 dark:via-rink-blue-400 dark:to-ice-blue-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">
-              Featured Games
+            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-field-green-800 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-field-green-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">
+              Featured Matches
             </h2>
             <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto">
               Don't miss these highlighted matches from our competitive league
             </p>
-            <div className="h-1 w-24 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full mx-auto mt-8"></div>
+            <div className="h-1 w-24 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-8"></div>
           </div>
 
         {loading.featured ? (
@@ -748,10 +748,10 @@ export default function Home() {
       >
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            About SCS
+            About FIFA 26 League
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Discover what makes the Secret Chel Society the premier destination for competitive NHL 26 gaming
+            Discover what makes the FIFA 26 League the premier destination for competitive football gaming
           </p>
         </div>
 
@@ -769,19 +769,19 @@ export default function Home() {
                     <GamepadIcon className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">
-                    Premier NHL 26 League
+                    Premier FIFA 26 League
                   </h3>
                 </div>
                 <div className="space-y-4">
                   <p className="text-slate-600 dark:text-slate-400">
-                    The Secret Chel Society (SCS) is the most competitive and professionally organized NHL 26
-                    gaming league available today. We provide a complete hockey simulation experience with structured
-                    seasons, playoffs, and championship tournaments that mirror real NHL operations.
+                    The FIFA 26 League is the most competitive and professionally organized FIFA 26
+                    gaming league available today. We provide a complete football simulation experience with structured
+                    seasons, playoffs, and championship tournaments that mirror real football operations.
                   </p>
                   <p className="text-slate-600 dark:text-slate-400">
-                    We provide a comprehensive hockey experience with multiple divisions and in-depth team management. 
+                    We provide a comprehensive football experience with multiple divisions and in-depth team management. 
                     Players can engage in a full range of league activities, 
-                    from free agency to a complete statistical system that tracks every detail of on-ice performance.
+                    from transfers to a complete statistical system that tracks every detail of on-pitch performance.
                   </p>
                 </div>
               </CardContent>
@@ -806,9 +806,9 @@ export default function Home() {
                 </div>
                 <div className="space-y-4">
                   <p className="text-slate-600 dark:text-slate-400">
-                    Connect with hundreds of dedicated NHL 26 players in a top-tier competitive environment. 
+                    Connect with hundreds of dedicated FIFA 26 players in a top-tier competitive environment. 
                     Our community consists of seasoned gamers and 
-                    hockey enthusiasts who are passionate about strategic play and sportsmanship.
+                    football enthusiasts who are passionate about strategic play and sportsmanship.
                   </p>
                   <p className="text-slate-600 dark:text-slate-400">
                     Competitive integrity is at the heart of our community. 
@@ -836,12 +836,12 @@ export default function Home() {
                   <Trophy className="h-12 w-12 text-white" />
                 </div>
                 <h3 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-6">
-                  Why Choose SCS?
+                  Why Choose FIFA 26 League?
                 </h3>
                 <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-                  Join thousands of players who have made SCS their home for competitive NHL 26 gaming. 
+                  Join thousands of players who have made FIFA 26 League their home for competitive football gaming. 
                   Experience the perfect blend of professional league management, cutting-edge technology, 
-                  and a passionate community that shares your love for hockey.
+                  and a passionate community that shares your love for football.
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {[
@@ -888,7 +888,7 @@ export default function Home() {
             Advanced League Features
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Discover the cutting-edge features that make SCS the most advanced NHL 26 league platform
+            Discover the cutting-edge features that make FIFA 26 League the most advanced football league platform
           </p>
         </div>
 
@@ -913,8 +913,8 @@ export default function Home() {
               <CardContent>
                 <div className="space-y-4">
                   <p className="text-slate-600 dark:text-slate-400">
-                    Our proprietary API system provides detailed statistical tracking and analysis for every aspect of NHL 26 gameplay. 
-                    It automatically records all key metrics, from goals and assists to advanced analytics like Corsi and Fenwick ratings.
+                    Our proprietary API system provides detailed statistical tracking and analysis for every aspect of FIFA 26 gameplay. 
+                    It automatically records all key metrics, from goals and assists to advanced analytics like possession and passing accuracy.
                   </p>
                   <ul className="text-slate-600 dark:text-slate-400 space-y-3">
                     <li className="flex items-center gap-3">
@@ -961,7 +961,7 @@ export default function Home() {
               <CardContent>
                 <div className="space-y-4">
                   <p className="text-slate-600 dark:text-slate-400">
-                    Earn SCS tokens completely free by participating in matches, achieving milestones, and contributing
+                    Earn FIFA 26 League tokens completely free by participating in matches, achieving milestones, and contributing
                     to the community. Redeem tokens for exclusive prizes, merchandise, and special league privileges.
                   </p>
                   <ul className="text-slate-600 dark:text-slate-400 space-y-3">
@@ -1009,8 +1009,8 @@ export default function Home() {
               <CardContent>
                 <div className="space-y-4">
                   <p className="text-slate-600 dark:text-slate-400">
-                    Complete team management system with salary caps, contract negotiations, and
-                    claims, and draft systems that create an authentic NHL franchise experience.
+                    Complete team management system with transfer budgets, contract negotiations, and
+                    scouting systems that create an authentic football club experience.
                   </p>
                   <ul className="text-slate-600 dark:text-slate-400 space-y-3">
                     <li className="flex items-center gap-3">
@@ -1049,7 +1049,7 @@ export default function Home() {
       >
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            Upcoming NHL 26 Matches
+            Upcoming FIFA 26 Matches
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             Live-streamed competitive games with real-time statistics and professional commentary
@@ -1074,7 +1074,7 @@ export default function Home() {
                 No Upcoming Matches
               </h3>
               <p className="text-slate-600 dark:text-slate-400 text-lg max-w-md mx-auto">
-                Check back soon for the next round of competitive NHL 26 games with live streaming and real-time statistics!
+                Check back soon for the next round of competitive FIFA 26 games with live streaming and real-time statistics!
               </p>
             </CardContent>
           </Card>
@@ -1245,16 +1245,16 @@ export default function Home() {
             </div>
 
             <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-200 mb-6">
-              Join the Premier NHL 26 League
+              Join the Premier FIFA 26 League
             </h2>
 
             <div className="mb-8 max-w-4xl mx-auto">
               <p className="text-xl mb-4 leading-relaxed text-slate-600 dark:text-slate-400">
-                Experience the most competitive NHL 26 gaming environment with professional-grade statistics tracking,
-                free token rewards, and authentic hockey league management.
+                Experience the most competitive FIFA 26 gaming environment with professional-grade statistics tracking,
+                free token rewards, and authentic football league management.
               </p>
               <p className="text-lg text-slate-600 dark:text-slate-400 font-medium">
-                No entry fees, no pay-to-win mechanics - just pure competitive hockey gaming with real rewards!
+                No entry fees, no pay-to-win mechanics - just pure competitive football gaming with real rewards!
               </p>
             </div>
 
@@ -1325,7 +1325,7 @@ export default function Home() {
       >
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            Latest SCS News
+            Latest FIFA 26 League News
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-8">
             Stay updated with the latest league announcements, player highlights, and community updates

@@ -22,8 +22,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Secret Chel Society",
-  description: "Official website for the NHL 26 Secret Chel Society",
+  title: "FIFA 26 League",
+  description: "Official website for the FIFA 26 Competitive League",
   viewport: "width=device-width, initial-scale=1",
   generator: "v0.dev",
   icons: {
@@ -50,7 +50,7 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
       </head>
-      <body className={`${inter.className} hockey-scrollbar`}>
+      <body className={`${inter.className} fifa-scrollbar`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <MantineProviderWrapper>
             <SupabaseProvider>
@@ -60,7 +60,7 @@ export default function RootLayout({
                 {/* Main content area */}
                 <div className="flex-1 flex flex-col md:ml-72 mobile-content w-full">
                   <Suspense>
-                    <main className="flex-1 p-6 hockey-scrollbar w-full">
+                    <main className="flex-1 p-6 fifa-scrollbar w-full">
                       {children}
                     </main>
                   </Suspense>

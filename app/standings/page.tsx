@@ -876,21 +876,21 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
             transition={{ delay: 0.2 }}
           >
             {/* Season Badge */}
-            <div className="inline-flex items-center gap-3 mb-8 p-4 bg-gradient-to-r from-ice-blue-500/20 to-rink-blue-500/20 rounded-2xl border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-lg shadow-ice-blue-500/20">
-              <div className="w-10 h-10 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+            <div className="inline-flex items-center gap-3 mb-8 p-4 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-2xl border-2 border-field-green-200/50 dark:border-pitch-blue-700/50 shadow-lg shadow-field-green-500/20">
+              <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <Trophy className="h-6 w-6 text-white" />
               </div>
-               <span className="text-ice-blue-800 dark:text-ice-blue-200 font-semibold text-lg">SCSHL Season 1</span>
+               <span className="text-field-green-800 dark:text-field-green-200 font-semibold text-lg">FIFA 26 League Season 1</span>
             </div>
 
             {/* Main Title */}
-            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-ice-blue-600 via-rink-blue-600 to-hockey-silver-600 dark:from-ice-blue-400 dark:via-rink-blue-400 dark:to-hockey-silver-400 bg-clip-text text-transparent leading-tight">
+            <h1 className="text-6xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-stadium-gold-600 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-stadium-gold-400 bg-clip-text text-transparent leading-tight">
               League Standings
             </h1>
             
             {/* Subtitle */}
-            <p className="text-xl md:text-2xl text-ice-blue-700 dark:text-ice-blue-300 max-w-3xl mx-auto leading-relaxed">
-              Track your team's journey through the season with comprehensive statistics, rankings, and playoff projections
+            <p className="text-xl md:text-2xl text-field-green-700 dark:text-field-green-300 max-w-3xl mx-auto leading-relaxed">
+              Track your club's journey through the season with comprehensive statistics, rankings, and playoff projections
             </p>
           </motion.div>
         </div>

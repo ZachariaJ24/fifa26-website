@@ -231,26 +231,26 @@ export default function SideNavigation() {
 
   const baseNavigation = [
     { name: "Home", href: "/" },
-    { name: "Teams", href: "/teams" },
+    { name: "Clubs", href: "/teams" },
     { name: "Standings", href: "/standings" },
     { name: "Stats", href: "/stats" },
     { name: "Matches", href: "/matches" },
     { name: "Awards", href: "/awards" },
     {
-      name: "Free Agency",
+      name: "Transfer Market",
       href: "/free-agency",
       submenu: [
-        { name: "Free Agency", href: "/free-agency" },
-        { name: "Bidding Recap", href: "/free-agency/bidding-recap" },
+        { name: "Transfer Market", href: "/free-agency" },
+        { name: "Transfer Recap", href: "/free-agency/bidding-recap" },
       ],
     },
     {
-      name: "ELO",
+      name: "Rankings",
       href: "/elo/rankings",
       submenu: [
-        { name: "ELO Rankings", href: "/elo/rankings" },
-        { name: "ELO Statistics", href: "/elo/statistics" },
-        { name: "ELO Matches", href: "/elo/matches" },
+        { name: "Player Rankings", href: "/elo/rankings" },
+        { name: "Ranking Statistics", href: "/elo/statistics" },
+        { name: "Ranking Matches", href: "/elo/matches" },
       ],
     },
     {

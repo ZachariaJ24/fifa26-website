@@ -308,29 +308,29 @@ export default function RegisterPage() {
               whileHover={{ scale: 1.05 }}
             >
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-ice-blue-500/30 to-rink-blue-500/30 rounded-xl blur-lg scale-150" />
-                <div className="relative p-3 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-xl shadow-lg">
+                <div className="absolute inset-0 bg-gradient-to-r from-field-green-500/30 to-pitch-blue-500/30 rounded-xl blur-lg scale-150" />
+                <div className="relative p-3 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl shadow-lg">
                   <UserPlus className="h-8 w-8 text-white" />
                 </div>
               </div>
-              <h1 className="hockey-title text-3xl md:text-4xl font-bold bg-gradient-to-r from-ice-blue-600 via-rink-blue-600 to-ice-blue-800 dark:from-ice-blue-400 dark:via-rink-blue-400 dark:to-ice-blue-600 bg-clip-text text-transparent">
-                Join the Secret Chel Society
+              <h1 className="fifa-title text-3xl md:text-4xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-field-green-800 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-field-green-600 bg-clip-text text-transparent">
+                Join the FIFA 26 League
               </h1>
             </motion.div>
             <motion.div 
-              className="h-1 w-40 bg-gradient-to-r from-ice-blue-500 via-rink-blue-500 to-transparent rounded-full mx-auto mb-8"
+              className="h-1 w-40 bg-gradient-to-r from-field-green-500 via-pitch-blue-500 to-transparent rounded-full mx-auto mb-8"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
             />
             <motion.p 
-              className="hockey-subtitle text-lg md:text-xl mx-auto mb-8 max-w-2xl leading-relaxed"
+              className="fifa-subtitle text-lg md:text-xl mx-auto mb-8 max-w-2xl leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
             >
-              Create your account and become part of the premier hockey gaming community. 
-              Connect with players, join teams, and compete in the most exciting league experience.
+              Create your account and become part of the premier football gaming community. 
+              Connect with players, join clubs, and compete in the most exciting league experience.
             </motion.p>
           </motion.div>
         </div>
