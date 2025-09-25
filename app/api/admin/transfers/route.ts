@@ -46,8 +46,7 @@ export async function POST(request: Request) {
       throw error;
     }
 
-    // Log the action
-    console.log(`Transfer market ${enabled ? 'enabled' : 'disabled'} by user ${session.user.id}`)
+    // Log the action (removed for production)
 
     return NextResponse.json({
       success: true,

@@ -11,7 +11,13 @@ const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, proces
 
 export async function GET() {
   try {
-    console.log("Fetching player signups...")
+    // Check if environment variables are set
+    if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+      return NextResponse.json({ 
+        error: "Server configuration error",
+        players: [] 
+      }, { status: 500 })
+    }
 
     // Get approved registrations for the current season
     const { data: registrations, error } = await supabaseAdmin
@@ -30,11 +36,16 @@ export async function GET() {
       .order("gamer_tag")
 
     if (error) {
-      console.error("Error fetching registrations:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
+      // If table doesn't exist, return empty array instead of error
+      if (error.code === '42P01') {
+        return NextResponse.json({ players: [] })
+      }
+      
+      return NextResponse.json({ 
+        error: error.message,
+        players: [] 
+      }, { status: 500 })
     }
-
-    console.log(`Found ${registrations?.length || 0} approved registrations`)
 
     // If no approved registrations, let's check what we have
     if (!registrations || registrations.length === 0) {
@@ -42,8 +53,6 @@ export async function GET() {
         .from("season_registrations")
         .select("status, count(*)")
         .group("status")
-
-      console.log("Registration status breakdown:", allRegs, allError)
 
       // For development, also return pending registrations
       if (process.env.NODE_ENV === "development") {
@@ -62,7 +71,6 @@ export async function GET() {
           .order("gamer_tag")
 
         if (!devError && devRegs) {
-          console.log(`Development mode: returning ${devRegs.length} total registrations`)
           return NextResponse.json({ players: devRegs })
         }
       }
@@ -71,6 +79,9 @@ export async function GET() {
     return NextResponse.json({ players: registrations || [] })
   } catch (error: any) {
     console.error("Unexpected error:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    return NextResponse.json({ 
+      error: "Internal server error",
+      players: [] 
+    }, { status: 500 })
   }
 }

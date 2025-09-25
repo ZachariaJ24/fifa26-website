@@ -15,7 +15,6 @@ export async function GET() {
 
     if (error && error.code !== "PGRST116") {
       // PGRST116 means no rows returned, which is fine
-      console.log("No signings_enabled setting found, defaulting to false")
       return NextResponse.json({ enabled: false })
     }
 
