@@ -147,9 +147,9 @@ export default function AdminDashboardPage() {
     },
     {
       title: "League Management",
-      description: "Manage divisions, teams, and league standings",
+      description: "Manage divisions, teams, and league standings (Working Version)",
       icon: <Trophy className="h-6 w-6" />,
-      href: "/admin/league",
+      href: "/admin/league-working",
       category: "team",
       color: "assist-green"
     },
