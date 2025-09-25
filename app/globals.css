@@ -801,15 +801,15 @@
   }
   
   .fifa-standings-table th {
-    @apply bg-gradient-to-r from-fifa-silver-50 to-field-green-50/30 dark:from-fifa-silver-900/30 dark:to-field-green-900/20;
-    @apply border-fifa-silver-200 dark:border-fifa-silver-700;
-    @apply text-fifa-silver-700 dark:text-fifa-silver-300;
+    @apply bg-gradient-to-r from-assist-white-50 to-field-green-50/30 dark:from-assist-white-900/30 dark:to-field-green-900/20;
+    @apply border-assist-white-200 dark:border-assist-white-700;
+    @apply text-assist-white-700 dark:text-assist-white-300;
     @apply font-bold;
     @apply px-4 py-3;
   }
   
   .fifa-standings-table td {
-    @apply border-fifa-silver-200 dark:border-fifa-silver-700;
+    @apply border-assist-white-200 dark:border-assist-white-700;
     @apply px-4 py-3;
     @apply transition-all duration-200;
   }
@@ -830,7 +830,7 @@
     @apply transition-all duration-200;
   }
   
-  /* Enhanced Hockey-Themed Components */
+  /* Enhanced FIFA-Themed Components */
   .fifa-glow-effect {
     @apply relative;
   }
@@ -884,7 +884,7 @@
   .fifa-stats-enhanced {
     @apply text-center p-4 rounded-xl;
     @apply bg-gradient-to-br from-white/80 to-field-green-50/50;
-    @apply dark:from-fifa-silver-800/80 dark:to-pitch-blue-900/30;
+    @apply dark:from-assist-white-800/80 dark:to-pitch-blue-900/30;
     @apply backdrop-blur-sm border border-field-green-200/50;
     @apply dark:border-pitch-blue-700/50;
     @apply transition-all duration-300 ease-out;
@@ -893,7 +893,7 @@
   }
   
   .fifa-stats-enhanced:hover {
-    @apply bg-white dark:bg-fifa-silver-800;
+    @apply bg-white dark:bg-assist-white-800;
     @apply border-field-green-300 dark:border-pitch-blue-600;
   }
   
@@ -951,7 +951,7 @@
     @apply bg-fifa-pattern;
   }
 
-  /* Premium Hockey Gradient Text Animation */
+  /* Premium FIFA Gradient Text Animation */
   .fifa-gradient-text-animated {
     @apply bg-gradient-to-r from-field-green-400 via-pitch-blue-500 to-stadium-gold-400;
     @apply dark:from-field-green-300 dark:via-pitch-blue-400 dark:to-stadium-gold-300;
@@ -961,7 +961,7 @@
     @apply font-black;
   }
 
-  /* Premium Hockey Card Hover Effects */
+  /* Premium FIFA Card Hover Effects */
   .fifa-stat-hover-enhanced {
     @apply transition-all duration-500 ease-out;
     @apply hover:scale-105 hover:shadow-2xl;
@@ -970,7 +970,7 @@
     @apply backdrop-blur-sm;
   }
 
-  /* Premium Hockey Button Enhancements */
+  /* Premium FIFA Button Enhancements */
   .fifa-button-hover-enhanced {
     @apply transition-all duration-300 ease-out;
     @apply hover:scale-105 hover:shadow-xl;
@@ -978,7 +978,7 @@
     @apply transform-gpu;
   }
 
-  /* Premium Hockey Hover Lift Effect */
+  /* Premium FIFA Hover Lift Effect */
   .fifa-hover-lift {
     @apply transition-all duration-300 ease-out;
     @apply hover:scale-105 hover:-translate-y-1;
@@ -987,7 +987,7 @@
   }
 
 
-  /* Premium Hockey Table Row Hover */
+  /* Premium FIFA Table Row Hover */
   .fifa-table-row-hover {
     @apply transition-all duration-300 ease-out;
     @apply hover:bg-gradient-to-r hover:from-field-green-50 hover:to-pitch-blue-50;
@@ -996,7 +996,7 @@
     @apply hover:scale-[1.01];
   }
 
-  /* Premium Hockey Alert Styling */
+  /* Premium FIFA Alert Styling */
   .fifa-alert {
     @apply bg-gradient-to-r from-field-green-50 to-pitch-blue-50;
     @apply dark:from-field-green-900/30 dark:to-pitch-blue-900/30;
@@ -1050,7 +1050,7 @@ div[style*="position: fixed"][style*="bottom: 1rem"][style*="right: 1rem"] {
   display: none !important;
 }
 
-/* Enhanced Hockey Button Styles */
+/* Enhanced FIFA Button Styles */
 .fifa-button {
   @apply bg-gradient-to-r from-field-green-500 to-pitch-blue-600;
   @apply hover:from-field-green-600 hover:to-pitch-blue-700;
@@ -1083,9 +1083,9 @@ div[style*="position: fixed"][style*="bottom: 1rem"][style*="right: 1rem"] {
   @apply transition-all duration-200 ease-out;
 }
 
-/* Enhanced Hockey Card Styles */
+/* Enhanced FIFA Card Styles */
 .fifa-card {
-  @apply bg-white dark:bg-fifa-silver-800;
+  @apply bg-white dark:bg-assist-white-800;
   @apply border border-field-green-200 dark:border-field-green-700;
   @apply rounded-xl shadow-lg;
   @apply transition-all duration-300 ease-out;
@@ -1097,13 +1097,13 @@ div[style*="position: fixed"][style*="bottom: 1rem"][style*="right: 1rem"] {
 }
 
 .fifa-stat-item {
-  @apply bg-white dark:bg-fifa-silver-800;
+  @apply bg-white dark:bg-assist-white-800;
   @apply border border-field-green-200 dark:border-field-green-700;
   @apply rounded-xl p-6 shadow-lg;
   @apply transition-all duration-300 ease-out;
 }
 
-/* Enhanced Hockey Title Styles */
+/* Enhanced FIFA Title Styles */
 .fifa-title {
   @apply text-4xl md:text-5xl font-bold;
   @apply bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-field-green-800;
@@ -1113,20 +1113,20 @@ div[style*="position: fixed"][style*="bottom: 1rem"][style*="right: 1rem"] {
 }
 
 .fifa-subtitle {
-  @apply text-lg md:text-xl text-fifa-silver-600 dark:text-fifa-silver-400;
+  @apply text-lg md:text-xl text-assist-white-600 dark:text-assist-white-400;
   @apply max-w-2xl;
 }
 
-/* Enhanced Hockey Search Styles */
+/* Enhanced FIFA Search Styles */
 .fifa-search {
-  @apply bg-white dark:bg-fifa-silver-800;
+  @apply bg-white dark:bg-assist-white-800;
   @apply border-2 border-field-green-200 dark:border-field-green-700;
   @apply rounded-xl shadow-lg;
   @apply focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20;
   @apply transition-all duration-300 ease-out;
 }
 
-/* Enhanced Hockey Alert Styles */
+/* Enhanced FIFA Alert Styles */
 .fifa-alert {
   @apply bg-gradient-to-r from-field-green-50 to-pitch-blue-50;
   @apply dark:from-field-green-900/30 dark:to-pitch-blue-900/30;
@@ -1148,7 +1148,7 @@ div[style*="position: fixed"][style*="bottom: 1rem"][style*="right: 1rem"] {
   @apply rounded-xl shadow-lg;
 }
 
-/* Enhanced Hockey Badge Styles */
+/* Enhanced FIFA Badge Styles */
 .fifa-badge {
   @apply bg-gradient-to-r from-field-green-500 to-pitch-blue-600;
   @apply text-white font-semibold px-3 py-1 rounded-full;
@@ -1399,8 +1399,8 @@ div[style*="position: fixed"][style*="bottom: 1rem"][style*="right: 1rem"] {
 
 /* Enhanced Loading States */
 .fifa-loading-skeleton {
-  @apply bg-gradient-to-r from-fifa-silver-200 via-fifa-silver-100 to-fifa-silver-200;
-  @apply dark:from-fifa-silver-700 dark:via-fifa-silver-600 dark:to-fifa-silver-700;
+  @apply bg-gradient-to-r from-assist-white-200 via-assist-white-100 to-assist-white-200;
+  @apply dark:from-assist-white-700 dark:via-assist-white-600 dark:to-assist-white-700;
   @apply animate-shimmer;
   @apply rounded-lg;
 }
@@ -1413,10 +1413,10 @@ div[style*="position: fixed"][style*="bottom: 1rem"][style*="right: 1rem"] {
   @apply transition-all duration-200 ease-out;
 }
 
-/* Enhanced Scrollbar for Hockey Theme */
+/* Enhanced Scrollbar for FIFA Theme */
 .fifa-scrollbar-enhanced {
   scrollbar-width: thin;
-  scrollbar-color: hsl(var(--field-green) / 0.8) hsl(var(--fifa-silver) / 0.3);
+  scrollbar-color: hsl(var(--field-green) / 0.8) hsl(var(--assist-white) / 0.3);
 }
 
 .fifa-scrollbar-enhanced::-webkit-scrollbar {
@@ -1425,14 +1425,14 @@ div[style*="position: fixed"][style*="bottom: 1rem"][style*="right: 1rem"] {
 }
 
 .fifa-scrollbar-enhanced::-webkit-scrollbar-track {
-  background: hsl(var(--fifa-silver) / 0.2);
+  background: hsl(var(--assist-white) / 0.2);
   border-radius: 5px;
 }
 
 .fifa-scrollbar-enhanced::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, hsl(var(--field-green) / 0.8), hsl(var(--pitch-blue) / 0.8));
   border-radius: 5px;
-  border: 2px solid hsl(var(--fifa-silver) / 0.3);
+  border: 2px solid hsl(var(--assist-white) / 0.3);
 }
 
 .fifa-scrollbar-enhanced::-webkit-scrollbar-thumb:hover {
@@ -1441,7 +1441,7 @@ div[style*="position: fixed"][style*="bottom: 1rem"][style*="right: 1rem"] {
 }
 
 .fifa-scrollbar-enhanced::-webkit-scrollbar-corner {
-  background: hsl(var(--fifa-silver) / 0.2);
+  background: hsl(var(--assist-white) / 0.2);
 }
 
 /* Responsive Mobile Scaling - Only scale the main content area */
