@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server"
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs"
 import { cookies, headers } from "next/headers"
-import { logger } from "@/lib/logger"
 
 export async function POST(request: Request) {
   const supabase = createRouteHandlerClient({ cookies })
@@ -43,22 +42,12 @@ export async function POST(request: Request) {
       )
 
     if (error) {
-      logger.error("Database error updating transfer market status", error, {
-        userId: session.user.id,
-        action: 'update_transfer_market_status',
-        ipAddress: headers().get('x-forwarded-for'),
-        userAgent: headers().get('user-agent')
-      });
+      console.error("Database error updating transfer market status", error)
       throw error;
     }
 
     // Log the action
-    logger.info(`Transfer market ${enabled ? 'enabled' : 'disabled'}`, {
-      userId: session.user.id,
-      action: `transfer_market_${enabled ? 'enabled' : 'disabled'}`,
-      ipAddress: headers().get('x-forwarded-for'),
-      userAgent: headers().get('user-agent')
-    })
+    console.log(`Transfer market ${enabled ? 'enabled' : 'disabled'} by user ${session.user.id}`)
 
     return NextResponse.json({
       success: true,
@@ -67,12 +56,7 @@ export async function POST(request: Request) {
     })
     
   } catch (error: any) {
-    logger.error("Error updating transfer market status", error, {
-      userId: session?.user?.id,
-      action: 'update_transfer_market_status',
-      ipAddress: headers().get('x-forwarded-for'),
-      userAgent: headers().get('user-agent')
-    });
+    console.error("Error updating transfer market status", error)
 
     return NextResponse.json(
       {

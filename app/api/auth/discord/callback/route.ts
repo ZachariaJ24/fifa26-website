@@ -171,7 +171,7 @@ export async function GET(request: Request) {
       const discordUser = await userResponse.json()
       console.log("Discord user connected:", { id: discordUser.id, username: discordUser.username })
 
-      image.png      return NextResponse.redirect(`${SITE_URL}/register?discord_connected=true`)
+      return NextResponse.redirect(`${SITE_URL}/register?discord_connected=true`)
     } catch (error) {
       console.error("Error in settings flow:", error)
       return NextResponse.redirect(`${SITE_URL}/register?discord_error=settings_flow_failed`)
