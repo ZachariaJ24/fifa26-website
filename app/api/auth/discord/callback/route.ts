@@ -43,8 +43,8 @@ export async function GET(request: Request) {
       return NextResponse.redirect(`${SITE_URL}/register?discord_error=no_code`)
     }
 
-    // Handle registration flow
-    if (state === "register") {
+    // Handle Discord authentication flow
+    if (state === "register" || !state) {
       console.log("Processing Discord connection for registration")
 
       try {
