@@ -26,17 +26,14 @@ export async function GET() {
       return NextResponse.json({ error: "Forbidden: Not an admin" }, { status: 403 })
     }
 
-    // Get all divisions with team counts
+    // Get all divisions with team counts using the division_standings view
     const { data: divisions, error: divisionsError } = await supabase
-      .from("divisions")
+      .from("division_standings")
       .select(`
-        id,
-        name,
-        tier,
-        color,
-        description,
-        created_at,
-        updated_at
+        division,
+        division_color,
+        division_description,
+        tier
       `)
       .order("tier")
 
