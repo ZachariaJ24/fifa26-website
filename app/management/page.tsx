@@ -21,7 +21,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { Skeleton } from "@/components/ui/skeleton"
 import { TeamLogos } from "@/components/management/team-logos"
-import { BidPlayerModal } from "@/components/management/bid-player-modal"
+import { SignPlayerModal } from "@/components/management/sign-player-modal"
 import { Textarea } from "@/components/ui/textarea"
 import { XCircle, CheckCircle2 } from "lucide-react"
 import { Label } from "@/components/ui/label"
@@ -217,7 +217,7 @@ const ManagementPage = () => {
   const [filteredFreeAgents, setFilteredFreeAgents] = useState<any[]>([])
   const [positionFilter, setPositionFilter] = useState<string>("all")
   const [nameFilter, setNameFilter] = useState<string>("")
-  const [playerBids, setPlayerBids] = useState<Record<string, any>>({})
+  const [playerOffers, setPlayerOffers] = useState<Record<string, any>>({})
   const [myBids, setMyBids] = useState<any[]>([])
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState<any>(null)
@@ -248,7 +248,7 @@ const ManagementPage = () => {
   const [otherTeamSalary, setOtherTeamSalary] = useState(0)
   const [projectedOtherTeamSalary, setProjectedOtherTeamSalary] = useState(0)
   const [tradeMessage, setTradeMessage] = useState("")
-  const [isBiddingEnabled, setIsBiddingEnabled] = useState(true)
+  const [isTransferEnabled, setIsTransferEnabled] = useState(true)
 
   // Trade proposals
   const [incomingTradeProposals, setIncomingTradeProposals] = useState<any[]>([])
@@ -1014,7 +1014,7 @@ const ManagementPage = () => {
       setFilteredFreeAgents(freeAgentsList)
 
       // Fetch bids for all players
-      await fetchPlayerBids()
+      await fetchPlayerOffers()
 
       console.log("Successfully loaded free agents:", freeAgentsList.length)
     } catch (error: any) {
@@ -1031,7 +1031,7 @@ const ManagementPage = () => {
   }
 
   // Fetch current bids for all players
-  const fetchPlayerBids = async () => {
+  const fetchPlayerOffers = async () => {
     if (!teamData?.id) return
 
     try {
@@ -1396,7 +1396,7 @@ const ManagementPage = () => {
   // Fetch player bids when teamData is available
   useEffect(() => {
     if (teamData?.id) {
-      fetchPlayerBids()
+      fetchPlayerOffers()
     }
   }, [teamData?.id])
 
@@ -1420,12 +1420,12 @@ const ManagementPage = () => {
   useEffect(() => {
     if (activeTab === "my-bids" && teamData?.id) {
       console.log("Switching to my-bids tab, reloading bids") // Debug log
-      fetchPlayerBids()
+      fetchPlayerOffers()
     }
   }, [activeTab, teamData?.id])
 
-  const handleBidClick = (player: any) => {
-    console.log("handleBidClick called for player:", player)
+  const handleOfferClick = (player: any) => {
+    console.log("handleOfferClick called for player:", player)
     console.log("Current userTeam:", teamData)
     console.log("Current isModalOpen:", isModalOpen)
     setSelectedPlayer(player)
@@ -1931,7 +1931,7 @@ const ManagementPage = () => {
               <CardHeader>
                     <CardTitle className="text-lg md:text-xl">Free Agents</CardTitle>
                     <CardDescription className="text-sm md:text-base">
-                      Available players for bidding. {!isBiddingEnabled && "Bidding is currently disabled."}
+                      Available players for transfer. {!isTransferEnabled && "Transfer market is currently disabled."}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -2116,11 +2116,11 @@ const ManagementPage = () => {
                             // Skip players with null users
                             if (!player.users) return null
 
-                            const currentBid = playerBids[player.id]
+                            const currentOffer = playerOffers[player.id]
                             const hasTeam = !!userTeam
-                            const canBid =
-                              isBiddingEnabled &&
-                              (!currentBid || currentBid.team_id !== teamData?.id) &&
+                            const canOffer =
+                              isTransferEnabled &&
+                              (!currentOffer || currentOffer.team_id !== teamData?.id) &&
                               projectedRosterSize < 15
 
                             return (
@@ -2156,19 +2156,19 @@ const ManagementPage = () => {
                                   </div>
                                 </div>
 
-                                {currentBid && (
+                                {currentOffer && (
                                   <div className="mb-2 md:mb-3 p-2 bg-muted rounded-md">
                                     <div className="flex justify-between items-center mb-1">
-                                      <span className="text-xs md:text-sm font-medium">Current Bid:</span>
+                                      <span className="text-xs md:text-sm font-medium">Current Offer:</span>
                                       <span className="font-bold text-xs md:text-sm">
-                                        ${currentBid.bid_amount.toLocaleString()}
+                                        ${currentOffer.offer_amount.toLocaleString()}
                                       </span>
                                     </div>
                                     <div className="flex justify-between items-center text-xs">
-                                      <span>By: {currentBid.teams?.name}</span>
+                                      <span>By: {currentOffer.teams?.name}</span>
                                       <span className="flex items-center gap-1">
                                         <Clock className="h-3 w-3" />
-                                        {formatTimeRemaining(currentBid.bid_expires_at)}
+                                        {formatTimeRemaining(currentOffer.offer_expires_at)}
                                       </span>
                                     </div>
                                   </div>
@@ -2176,13 +2176,13 @@ const ManagementPage = () => {
 
                                 <div className="flex gap-2">
                                   <Button
-                                    onClick={() => handleBidClick(player)}
+                                    onClick={() => handleOfferClick(player)}
                                     className="flex-1 text-xs md:text-sm h-8 md:h-9"
                                     size="sm"
-                                    disabled={!canBid}
-                                    title={projectedRosterSize >= 15 ? "Roster limit reached with current bids" : ""}
+                                    disabled={!canOffer}
+                                    title={projectedRosterSize >= 15 ? "Roster limit reached with current offers" : ""}
                                   >
-                                    {currentBid && currentBid.team_id === teamData?.id ? "Extend Bid" : "Place Bid"}
+                                    {currentOffer && currentOffer.team_id === teamData?.id ? "Extend Offer" : "Make Offer"}
                                   </Button>
                                   <Button
                                     variant="outline"
@@ -3239,22 +3239,22 @@ const ManagementPage = () => {
         )}
       </motion.div>
 
-      {/* Bid Modal */}
+      {/* Transfer Offer Modal */}
       {selectedPlayer && (
-        <BidPlayerModal
+        <SignPlayerModal
           player={selectedPlayer}
           isOpen={isModalOpen}
           onClose={() => {
             setIsModalOpen(false)
             setSelectedPlayer(null)
           }}
-          onBidPlaced={() => {
-            // Refresh bids and free agents
-            fetchPlayerBids()
+          onOfferPlaced={() => {
+            // Refresh offers and free agents
+            fetchPlayerOffers()
             fetchData()
           }}
-          teamData={teamData}
-          currentBid={playerBids[selectedPlayer.id]}
+          userTeam={teamData}
+          currentOffer={playerOffers[selectedPlayer.id]}
           projectedSalary={projectedSalary}
           salaryCap={currentSalaryCap}
           projectedRosterSize={projectedRosterSize}
