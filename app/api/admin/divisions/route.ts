@@ -8,11 +8,20 @@ export async function GET() {
     // Check if user is authenticated
     const {
       data: { session },
+      error: sessionError
     } = await supabase.auth.getSession()
 
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+    if (sessionError) {
+      console.error("Session error:", sessionError)
+      return NextResponse.json({ error: "Session error", details: sessionError.message }, { status: 401 })
     }
+
+    if (!session) {
+      console.log("No session found")
+      return NextResponse.json({ error: "Unauthorized: No session" }, { status: 401 })
+    }
+
+    console.log("Session found for user:", session.user.id)
 
     // Check if user is an admin
     const { data: userRole, error: roleError } = await supabase
@@ -22,9 +31,17 @@ export async function GET() {
       .eq("role", "Admin")
       .single()
 
-    if (roleError || !userRole) {
+    if (roleError) {
+      console.error("Role error:", roleError)
+      return NextResponse.json({ error: "Role check failed", details: roleError.message }, { status: 403 })
+    }
+
+    if (!userRole) {
+      console.log("User is not an admin")
       return NextResponse.json({ error: "Forbidden: Not an admin" }, { status: 403 })
     }
+
+    console.log("Admin access granted")
 
     // Get all divisions with team counts using the division_standings view
     const { data: divisions, error: divisionsError } = await supabase
