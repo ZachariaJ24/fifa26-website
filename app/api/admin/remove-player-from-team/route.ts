@@ -46,20 +46,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Player not found" }, { status: 404 })
     }
 
-    // Cancel and finalize all active bids for the player
-    const { error: bidError } = await supabase
-      .from("player_bidding")
+    // Cancel all active transfer offers for the player
+    const { error: offerError } = await supabase
+      .from("player_transfer_offers")
       .update({
-        status: "cancelled_manual_removal",
-        processed: true,
-        finalized: true,
-        processed_at: new Date().toISOString(),
+        status: "cancelled",
+        updated_at: new Date().toISOString(),
       })
       .eq("player_id", playerId)
-      .eq("finalized", false)
+      .eq("status", "active")
 
-    if (bidError) {
-      console.error("Error cancelling bids:", bidError)
+    if (offerError) {
+      console.error("Error cancelling transfer offers:", offerError)
       // Don't throw an error, just log it
     }
 

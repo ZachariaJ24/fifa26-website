@@ -38,51 +38,8 @@ export interface TeamStanding {
   playoff_status?: "clinched" | "eliminated" | "active" // New field for playoff status
 }
 
-// Division assignment logic - Premier League style 3 divisions
-const premierDivisionTeams = [
-  "Manchester United FC",
-  "Real Madrid CF", 
-  "FC Barcelona",
-  "Bayern Munich",
-  "Liverpool FC",
-  "Chelsea FC",
-  "Arsenal FC",
-  "Paris Saint-Germain",
-]
-
-const championshipDivisionTeams = [
-  "AC Milan",
-  "Juventus FC",
-  "Inter Milan",
-  "Atletico Madrid",
-  "Borussia Dortmund",
-  "Tottenham Hotspur",
-  "Manchester City",
-  "Napoli",
-]
-
-const leagueOneTeams = [
-  "AS Roma",
-  "Lazio",
-  "Valencia CF",
-  "Sevilla FC",
-  "RB Leipzig",
-  "Bayer Leverkusen",
-  "Newcastle United",
-  "West Ham United",
-]
-
-const customDivisionTeams = [
-  "Skullmafia",
-  "SkullMafia",
-  "Big O Hooligans",
-  "Bulldogs",
-  "OuterBank Admirals",
-  "Outer Banks Admirals",
-  "Baltimore Bandits",
-  "Quebec Nordiques",
-  "Crossbar Cowboys",
-]
+// Division assignment logic - Now uses database divisions
+// Teams are assigned to divisions via the database division column
 
 const MAX_GAMES_PER_SEASON = 60
 // No playoffs in FIFA 26 - teams compete for league positions and promotion/relegation
@@ -720,37 +677,9 @@ export async function calculateStandings(seasonId: number): Promise<TeamStanding
         }
 
         // Assign division if it doesn't exist in the database (Premier League style)
-        let division = team.division
-        let conference = team.conference
-
-        if (!hasDivisionColumn) {
-          if (premierDivisionTeams.includes(team.name)) {
-            division = "Premier Division"
-            conference = "Premier Division"
-          } else if (championshipDivisionTeams.includes(team.name)) {
-            division = "Championship Division"
-            conference = "Championship Division"
-          } else if (leagueOneTeams.includes(team.name)) {
-            division = "League One"
-            conference = "League One"
-          } else if (customDivisionTeams.includes(team.name)) {
-            division = "League One"
-            conference = "League One"
-          } else {
-            // Default division assignment based on team order (split into 3 divisions)
-            const divisionIndex = Math.floor((index / teams.length) * 3)
-            if (divisionIndex === 0) {
-              division = "Premier Division"
-              conference = "Premier Division"
-            } else if (divisionIndex === 1) {
-              division = "Championship Division"
-              conference = "Championship Division"
-            } else {
-              division = "League One"
-              conference = "League One"
-            }
-          }
-        }
+        // Use division from database, fallback to "Unassigned" if not set
+        let division = team.division || "Unassigned"
+        let conference = team.conference || division
 
         // Use conference data from database if available, otherwise fall back to string
         const conferenceInfo = conferenceData[team.conference_id]

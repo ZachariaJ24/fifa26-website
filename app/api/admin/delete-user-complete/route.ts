@@ -73,7 +73,8 @@ export async function POST(request: Request) {
     if (dbUserFound && dbUserId) {
       // Delete related records first
       const tables = [
-        "player_bidding",
+        "player_transfer_offers",
+        "player_signings",
         "player_statistics",
         "team_managers",
         "lineups",

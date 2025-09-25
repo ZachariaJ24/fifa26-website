@@ -34,17 +34,18 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user has admin role
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
+    const { data: userRole, error: roleError } = await supabase
+      .from("user_roles")
       .select("role")
-      .eq("id", user.id)
+      .eq("user_id", user.id)
+      .eq("role", "Admin")
       .single()
 
-    if (profileError) {
+    if (roleError || !userRole) {
       return NextResponse.json({ error: "Failed to verify permissions" }, { status: 500 })
     }
 
-    const isAdmin = profile?.role === "admin" || profile?.role === "superadmin"
+    const isAdmin = userRole?.role === "Admin"
 
     // If not admin, check if user is a team manager
     let isTeamManager = false

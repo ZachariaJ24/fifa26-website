@@ -111,20 +111,18 @@ export async function POST(request: Request) {
       }
     }
 
-    // Finalize all bids for this player to prevent reprocessing
-    const { error: finalizeBidsError } = await supabase
-      .from("player_bidding")
+    // Cancel all active transfer offers for this player
+    const { error: cancelOffersError } = await supabase
+      .from("player_transfer_offers")
       .update({
-        finalized: true,
-        processed: true,
-        processed_at: new Date().toISOString(),
-        status: teamId === null ? "cancelled_manual_removal" : "completed",
+        status: "cancelled",
+        updated_at: new Date().toISOString(),
       })
       .eq("player_id", playerId)
-      .eq("finalized", false)
+      .eq("status", "active")
 
-    if (finalizeBidsError) {
-      console.error("Error finalizing bids:", finalizeBidsError)
+    if (cancelOffersError) {
+      console.error("Error cancelling transfer offers:", cancelOffersError)
       // Don't fail the whole operation for this
     }
 

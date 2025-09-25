@@ -113,17 +113,17 @@ export async function GET() {
     // Test 7: Check bidding table access
     try {
       const { data, error } = await supabase
-        .from("player_bidding")
-        .select("id, bid_amount")
+        .from("player_transfer_offers")
+        .select("id, offer_amount")
         .limit(5)
       
-      results.tests.player_bidding = {
+      results.tests.player_transfer_offers = {
         success: !error,
         count: data?.length || 0,
         error: error?.message
       }
     } catch (error: any) {
-      results.tests.player_bidding = { success: false, error: error.message }
+      results.tests.player_transfer_offers = { success: false, error: error.message }
     }
 
     // Test 8: Try to update system_settings
@@ -153,7 +153,7 @@ export async function GET() {
             tablename,
             rowsecurity as rls_enabled
           FROM pg_tables 
-          WHERE tablename IN ('system_settings', 'seasons', 'ip_logs', 'users', 'player_bidding')
+          WHERE tablename IN ('system_settings', 'seasons', 'ip_logs', 'users', 'player_transfer_offers', 'player_signings')
           AND schemaname = 'public'
         `
       })

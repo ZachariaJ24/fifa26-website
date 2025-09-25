@@ -146,12 +146,20 @@ export default function AdminDashboardPage() {
       color: "goal-red"
     },
     {
-      title: "Club Management",
-      description: "Manage clubs and rosters",
+      title: "League Management",
+      description: "Manage divisions, teams, and promotion/relegation",
       icon: <Trophy className="h-6 w-6" />,
-      href: "/admin/teams",
+      href: "/admin/league-management",
       category: "team",
       color: "assist-green"
+    },
+    {
+      title: "Club Management",
+      description: "Manage clubs and rosters",
+      icon: <Users className="h-6 w-6" />,
+      href: "/admin/teams",
+      category: "team",
+      color: "rink-blue"
     },
     {
       title: "Fixture Management",

@@ -60,7 +60,7 @@ export async function POST(request: Request) {
     console.log(`Found player ID: ${player.id}`)
 
     // Delete all transfer offers for this player
-    const { error: deleteError } = await supabase.from("player_transfers").delete().eq("player_id", player.id)
+    const { error: deleteError } = await supabase.from("player_transfer_offers").delete().eq("player_id", player.id)
 
     if (deleteError) {
       console.error("Error deleting transfer offers:", deleteError)
