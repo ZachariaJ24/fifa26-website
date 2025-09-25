@@ -1100,13 +1100,7 @@ const ManagementPage = () => {
     }
   }, [teamData?.id])
 
-  // Add this effect to load waivers when the tab changes to "waivers"
-  useEffect(() => {
-    if (activeTab === "waivers" && teamData?.id) {
-      console.log("Loading waivers data...")
-      loadWaiversData()
-    }
-  }, [activeTab, teamData?.id])
+  // Waiver functionality removed - replaced with team transfer system
 
   // Effect to reload free agents when switching to transfers tab
   useEffect(() => {
@@ -2008,7 +2002,7 @@ const ManagementPage = () => {
                             ) : waiverError ? (
                               <div className="text-center py-8">
                                 <p className="text-red-500">{waiverError}</p>
-                                <Button onClick={loadWaiversData} className="mt-4">
+                                <Button onClick={() => window.location.reload()} className="mt-4">
                                   Try Again
                                 </Button>
                               </div>
@@ -2123,7 +2117,7 @@ const ManagementPage = () => {
                           </div>
                         </div>
                         <div className="mt-4 text-center">
-                          <Button variant="outline" size="sm" onClick={loadWaiversData} disabled={loadingWaivers}>
+                          <Button variant="outline" size="sm" onClick={() => window.location.reload()} disabled={loadingWaivers}>
                             {loadingWaivers ? "Loading..." : "Refresh Waivers"}
                           </Button>
                         </div>
