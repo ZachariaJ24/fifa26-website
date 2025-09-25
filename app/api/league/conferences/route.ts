@@ -5,23 +5,9 @@ export async function GET() {
   try {
     const supabase = createAdminClient()
     
-    const { data: teams, error } = await supabase
-      .from("teams")
-      .select(`
-        id,
-        name,
-        logo_url,
-        conference_id,
-        is_active,
-        wins,
-        losses,
-        otl,
-        points,
-        goals_for,
-        goals_against,
-        games_played,
-        conferences!inner(name, color)
-      `)
+    const { data: conferences, error } = await supabase
+      .from("conferences")
+      .select("*")
       .eq("is_active", true)
       .order("name")
 
@@ -29,22 +15,20 @@ export async function GET() {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    return NextResponse.json(teams || [])
+    return NextResponse.json(conferences || [])
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
 
-export async function PUT(request: Request) {
+export async function POST(request: Request) {
   try {
     const supabase = createAdminClient()
     const body = await request.json()
-    const { teamId, conferenceId } = body
-
-    const { data: team, error } = await supabase
-      .from("teams")
-      .update({ conference_id: conferenceId })
-      .eq("id", teamId)
+    
+    const { data: conference, error } = await supabase
+      .from("conferences")
+      .insert(body)
       .select()
       .single()
 
@@ -52,7 +36,7 @@ export async function PUT(request: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    return NextResponse.json(team)
+    return NextResponse.json(conference)
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
   }

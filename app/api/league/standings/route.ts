@@ -1,50 +1,66 @@
 import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
+import { createAdminClient } from "@/lib/supabase/server"
 
 export async function GET() {
   try {
-    const supabase = createClient()
+    const supabase = createAdminClient()
     
-    // Get session
-    const { data: { session } } = await supabase.auth.getSession()
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
-    }
-
-    // Check admin role
-    const { data: userRole } = await supabase
-      .from("user_roles")
-      .select("role")
-      .eq("user_id", session.user.id)
-      .eq("role", "Admin")
-      .single()
-
-    if (!userRole) {
-      return NextResponse.json({ error: "Forbidden" }, { status: 403 })
-    }
-
-    // Get standings using the view
-    const { data: standings, error } = await supabase
-      .from("division_standings")
-      .select("*")
-      .order("tier")
+    // Get teams with conference info and calculate standings
+    const { data: teams, error } = await supabase
+      .from("teams")
+      .select(`
+        id,
+        name,
+        logo_url,
+        conference_id,
+        wins,
+        losses,
+        otl,
+        points,
+        goals_for,
+        goals_against,
+        games_played,
+        conferences!inner(name, color)
+      `)
+      .eq("is_active", true)
       .order("points", { ascending: false })
 
     if (error) {
-      return NextResponse.json({ error: "Failed to fetch standings" }, { status: 500 })
+      return NextResponse.json({ error: error.message }, { status: 500 })
     }
 
-    // Group by division
-    const standingsByDivision = standings?.reduce((acc: any, team: any) => {
-      if (!acc[team.division]) {
-        acc[team.division] = []
+    // Group teams by conference
+    const standingsByConference = teams?.reduce((acc: any, team: any) => {
+      const conferenceName = team.conferences?.name || "No Conference"
+      if (!acc[conferenceName]) {
+        acc[conferenceName] = {
+          conference: team.conferences,
+          teams: []
+        }
       }
-      acc[team.division].push(team)
+      
+      // Calculate goal differential
+      const goalDifferential = (team.goals_for || 0) - (team.goals_against || 0)
+      
+      acc[conferenceName].teams.push({
+        ...team,
+        goal_differential: goalDifferential
+      })
+      
       return acc
     }, {}) || {}
 
-    return NextResponse.json(standingsByDivision)
-  } catch (error) {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    // Sort teams within each conference by points, then wins, then goal differential
+    Object.keys(standingsByConference).forEach(conferenceName => {
+      standingsByConference[conferenceName].teams.sort((a: any, b: any) => {
+        if (b.points !== a.points) return b.points - a.points
+        if (b.wins !== a.wins) return b.wins - a.wins
+        return b.goal_differential - a.goal_differential
+      })
+    })
+
+    return NextResponse.json(standingsByConference)
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }

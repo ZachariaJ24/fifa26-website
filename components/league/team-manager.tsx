@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast"
 interface Team {
   id: string
   name: string
-  division?: string
+  conference_id?: string
   logo_url?: string
   is_active: boolean
   wins: number
@@ -22,18 +22,22 @@ interface Team {
   points: number
   goals_for: number
   goals_against: number
+  games_played: number
+  conferences?: {
+    name: string
+    color: string
+  }
 }
 
-interface Division {
+interface Conference {
   id: string
   name: string
-  tier: number
   color: string
 }
 
 export function TeamManager() {
   const [teams, setTeams] = useState<Team[]>([])
-  const [divisions, setDivisions] = useState<Division[]>([])
+  const [conferences, setConferences] = useState<Conference[]>([])
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
@@ -46,22 +50,22 @@ export function TeamManager() {
   const fetchData = async () => {
     try {
       setLoading(true)
-      const [teamsResponse, divisionsResponse] = await Promise.all([
+      const [teamsResponse, conferencesResponse] = await Promise.all([
         fetch("/api/league/teams"),
-        fetch("/api/league/divisions")
+        fetch("/api/league/conferences")
       ])
 
-      if (!teamsResponse.ok || !divisionsResponse.ok) {
+      if (!teamsResponse.ok || !conferencesResponse.ok) {
         throw new Error("Failed to fetch data")
       }
 
-      const [teamsData, divisionsData] = await Promise.all([
+      const [teamsData, conferencesData] = await Promise.all([
         teamsResponse.json(),
-        divisionsResponse.json()
+        conferencesResponse.json()
       ])
 
       setTeams(teamsData)
-      setDivisions(divisionsData)
+      setConferences(conferencesData)
     } catch (error) {
       console.error("Error fetching data:", error)
       toast({
@@ -74,7 +78,7 @@ export function TeamManager() {
     }
   }
 
-  const handleDivisionChange = async (teamId: string, division: string) => {
+  const handleConferenceChange = async (teamId: string, conferenceId: string) => {
     try {
       setSaving(true)
       const response = await fetch("/api/league/teams", {
@@ -82,7 +86,7 @@ export function TeamManager() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ teamId, division }),
+        body: JSON.stringify({ teamId, conferenceId }),
       })
 
       if (!response.ok) {
@@ -91,12 +95,12 @@ export function TeamManager() {
 
       // Update local state
       setTeams(teams.map(team => 
-        team.id === teamId ? { ...team, division } : team
+        team.id === teamId ? { ...team, conference_id: conferenceId } : team
       ))
 
       toast({
         title: "Success",
-        description: "Team division updated successfully",
+        description: "Team conference updated successfully",
       })
     } catch (error) {
       console.error("Error updating team:", error)
@@ -165,25 +169,26 @@ export function TeamManager() {
                     </span>
                     <span>{team.wins}-{team.losses}-{team.otl}</span>
                     <span>+{team.goals_for - team.goals_against}</span>
+                    <span>{team.games_played} GP</span>
                   </div>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <Label htmlFor={`division-${team.id}`}>Division:</Label>
+                  <Label htmlFor={`conference-${team.id}`}>Conference:</Label>
                   <Select
-                    value={team.division || ""}
-                    onValueChange={(value) => handleDivisionChange(team.id, value)}
+                    value={team.conference_id || ""}
+                    onValueChange={(value) => handleConferenceChange(team.id, value)}
                     disabled={saving}
                   >
                     <SelectTrigger className="w-48">
-                      <SelectValue placeholder="Select division" />
+                      <SelectValue placeholder="Select conference" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">No Division</SelectItem>
-                      {divisions.map((division) => (
-                        <SelectItem key={division.id} value={division.name}>
-                          {division.name} (Tier {division.tier})
+                      <SelectItem value="">No Conference</SelectItem>
+                      {conferences.map((conference) => (
+                        <SelectItem key={conference.id} value={conference.id}>
+                          {conference.name}
                         </SelectItem>
                       ))}
                     </SelectContent>

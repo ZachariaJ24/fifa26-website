@@ -9,20 +9,32 @@ import { useToast } from "@/hooks/use-toast"
 interface TeamStanding {
   id: string
   name: string
-  division: string
-  tier: number
-  division_color: string
+  conference_id?: string
+  logo_url?: string
   wins: number
   losses: number
   otl: number
   points: number
   goals_for: number
   goals_against: number
+  games_played: number
   goal_differential: number
+  conferences?: {
+    name: string
+    color: string
+  }
+}
+
+interface ConferenceStandings {
+  conference: {
+    name: string
+    color: string
+  }
+  teams: TeamStanding[]
 }
 
 interface StandingsData {
-  [division: string]: TeamStanding[]
+  [conferenceName: string]: ConferenceStandings
 }
 
 export function StandingsViewer() {
@@ -83,26 +95,31 @@ export function StandingsViewer() {
 
   return (
     <div className="space-y-6">
-      {Object.entries(standings).map(([division, teams]) => (
-        <Card key={division}>
+      {Object.entries(standings).map(([conferenceName, conferenceData]) => (
+        <Card key={conferenceName}>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Trophy className="h-5 w-5" />
-              {division}
-              <Badge variant="secondary">Tier {teams[0]?.tier || 1}</Badge>
+              {conferenceName}
+              <Badge 
+                variant="secondary"
+                style={{ backgroundColor: conferenceData.conference.color + '20', color: conferenceData.conference.color }}
+              >
+                {conferenceData.teams.length} Teams
+              </Badge>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
-              {teams.map((team, index) => {
-                const prStatus = getPromotionRelegationStatus(team, index + 1, teams.length)
+              {conferenceData.teams.map((team, index) => {
+                const prStatus = getPromotionRelegationStatus(team, index + 1, conferenceData.teams.length)
                 const PrIcon = prStatus.icon
                 
                 return (
                   <div
                     key={team.id}
                     className="flex items-center justify-between p-3 border rounded-lg"
-                    style={{ borderLeftColor: team.division_color, borderLeftWidth: "4px" }}
+                    style={{ borderLeftColor: conferenceData.conference.color, borderLeftWidth: "4px" }}
                   >
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2">
@@ -113,19 +130,25 @@ export function StandingsViewer() {
                           <PrIcon className={`h-4 w-4 ${prStatus.color}`} />
                         )}
                       </div>
-                      <div>
-                        <h3 className="font-semibold">{team.name}</h3>
-                        <div className="flex items-center gap-4 text-sm text-gray-600">
-                          <span>{team.wins}-{team.losses}-{team.otl}</span>
-                          <span>{team.points} pts</span>
-                          <span className={team.goal_differential >= 0 ? "text-green-600" : "text-red-600"}>
-                            {team.goal_differential >= 0 ? "+" : ""}{team.goal_differential}
-                          </span>
+                      <div className="flex items-center gap-3">
+                        {team.logo_url && (
+                          <img src={team.logo_url} alt={team.name} className="h-8 w-8 rounded-full" />
+                        )}
+                        <div>
+                          <h3 className="font-semibold">{team.name}</h3>
+                          <div className="flex items-center gap-4 text-sm text-gray-600">
+                            <span>{team.wins}-{team.losses}-{team.otl}</span>
+                            <span>{team.points} pts</span>
+                            <span className={team.goal_differential >= 0 ? "text-green-600" : "text-red-600"}>
+                              {team.goal_differential >= 0 ? "+" : ""}{team.goal_differential}
+                            </span>
+                            <span>{team.games_played} GP</span>
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="font-semibold">{team.points}</div>
+                      <div className="font-semibold text-lg">{team.points}</div>
                       <div className="text-sm text-gray-600">points</div>
                     </div>
                   </div>
