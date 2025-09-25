@@ -298,10 +298,10 @@ export default function AdminFeaturedGamesPage() {
               <Gamepad2 className="h-8 w-8 text-ice-blue-600 dark:text-ice-blue-400" />
             </div>
             <h3 className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-2">
-              Loading Featured Games
+              Loading Featured Fixtures
             </h3>
             <p className="text-hockey-silver-600 dark:text-hockey-silver-400">
-              Initializing featured games management interface...
+              Initializing featured fixtures management interface...
             </p>
             <div className="mt-6">
               <div className="animate-spin h-8 w-8 border-4 border-ice-blue-500 border-t-transparent rounded-full mx-auto"></div>
@@ -363,11 +363,11 @@ export default function AdminFeaturedGamesPage() {
         <div className="container mx-auto text-center relative z-10">
           <div>
             <h1 className="hockey-title mb-6">
-              Featured Games Management
+              Featured Fixtures Management
             </h1>
             <p className="hockey-subtitle mx-auto mb-12">
-              Manage featured games and highlight important matches for the league. 
-              Control which games are prominently displayed on the home page to showcase key matchups.
+              Manage featured fixtures and highlight important matches for the league. 
+              Control which fixtures are prominently displayed on the home page to showcase key matchups.
             </p>
             
             {/* Enhanced Stats Cards */}
@@ -381,7 +381,7 @@ export default function AdminFeaturedGamesPage() {
                     {matches.length}
                   </div>
                   <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
-                    Total Games
+                    Total Fixtures
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
                 </div>
@@ -396,7 +396,7 @@ export default function AdminFeaturedGamesPage() {
                     {matches.filter(m => m.featured).length}
                   </div>
                   <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
-                    Featured Games
+                    Featured Fixtures
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-rink-blue-500 to-ice-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
                 </div>
@@ -441,10 +441,10 @@ export default function AdminFeaturedGamesPage() {
         {/* Enhanced Header */}
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-4">
-            Featured Games Control Center
+            Featured Fixtures Control Center
           </h2>
           <p className="text-xl text-hockey-silver-600 dark:text-hockey-silver-400 max-w-3xl mx-auto">
-            Manage which games are featured on the home page. Featured games will be displayed prominently 
+            Manage which fixtures are featured on the home page. Featured fixtures will be displayed prominently 
             and shown in order of their scheduled date to highlight key matchups.
           </p>
         </div>

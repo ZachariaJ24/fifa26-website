@@ -157,7 +157,8 @@ const getPositionColor = (position: string): string => {
 
 const tabs = [
   { id: "overview", label: "Overview", icon: Home },
-  { id: "offers", label: "Offers", icon: Gavel },
+  { id: "transfers", label: "Transfers", icon: Gavel },
+  { id: "signings", label: "Signings", icon: DollarSign },
   { id: "lineups", label: "Lineups", icon: Users },
   { id: "availability", label: "Availability", icon: Calendar },
 ]
@@ -178,16 +179,17 @@ const ManagementPage = () => {
   const [filteredFreeAgents, setFilteredFreeAgents] = useState<any[]>([])
   const [positionFilter, setPositionFilter] = useState<string>("all")
   const [nameFilter, setNameFilter] = useState<string>("")
-  const [playerBids, setPlayerBids] = useState<Record<string, any>>({})
-  const [myOffers, setMyOffers] = useState<any[]>([])
+  const [playerOffers, setPlayerOffers] = useState<Record<string, any>>({})
+  const [myTransferOffers, setMyTransferOffers] = useState<any[]>([])
+  const [mySignings, setMySignings] = useState<any[]>([])
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [selectedPlayer, setSelectedPlayer] = useState<any>(null)
   const [isModalOpen, setIsModalOpen] = useState<any>(false)
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState<any>(false)
   const [historyPlayer, setHistoryPlayer] = useState<any>(null)
   const [now, setNow] = useState(new Date())
-  const [activeOffersCount, setActiveOffersCount] = useState(0)
-  const [outbidCount, setOutbidCount] = useState(0)
+  const [activeTransferOffersCount, setActiveTransferOffersCount] = useState(0)
+  const [activeSigningsCount, setActiveSigningsCount] = useState(0)
   const [freeAgentsError, setFreeAgentsError] = useState<string | null>(null)
   const [freeAgentsLoading, setFreeAgentsLoading] = useState(false)
 
@@ -661,9 +663,10 @@ const ManagementPage = () => {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="roster">Roster</TabsTrigger>
             <TabsTrigger value="transfers">Transfer Market</TabsTrigger>
+            <TabsTrigger value="signings">Direct Signings</TabsTrigger>
             <TabsTrigger value="my-offers">My Offers</TabsTrigger>
             <TabsTrigger value="team-transfers">Team Transfers</TabsTrigger>
             <TabsTrigger value="schedule">Schedule</TabsTrigger>
@@ -733,7 +736,7 @@ const ManagementPage = () => {
             <Card>
               <CardHeader>
                 <CardTitle>Transfer Market</CardTitle>
-                <CardDescription>Browse and make offers for available players</CardDescription>
+                <CardDescription>Browse and make transfer offers for available players</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -870,6 +873,103 @@ const ManagementPage = () => {
                     No transfer offers placed yet
                   </div>
                 )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* Direct Signings Tab Content */}
+          <TabsContent value="signings">
+            <Card>
+              <CardHeader>
+                <CardTitle>Direct Player Signings</CardTitle>
+                <CardDescription>Sign players directly without transfer offers</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="flex gap-4">
+                    <Select value={positionFilter} onValueChange={setPositionFilter}>
+                      <SelectTrigger className="w-48">
+                        <SelectValue placeholder="Filter by position" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Positions</SelectItem>
+                        <SelectItem value="goalie">Goalie</SelectItem>
+                        <SelectItem value="center">Center</SelectItem>
+                        <SelectItem value="left wing">Left Wing</SelectItem>
+                        <SelectItem value="right wing">Right Wing</SelectItem>
+                        <SelectItem value="left defense">Left Defense</SelectItem>
+                        <SelectItem value="right defense">Right Defense</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <Input
+                      placeholder="Search by name..."
+                      value={nameFilter}
+                      onChange={(e) => setNameFilter(e.target.value)}
+                      className="flex-1"
+                    />
+                  </div>
+
+                  {freeAgentsLoading ? (
+                    <div className="space-y-4">
+                      {Array(3).fill(0).map((_, i) => (
+                        <Skeleton key={i} className="h-20 w-full" />
+                      ))}
+                    </div>
+                  ) : freeAgentsError ? (
+                    <div className="text-center py-8 text-red-500">
+                      {freeAgentsError}
+                    </div>
+                  ) : filteredFreeAgents.length === 0 ? (
+                    <div className="text-center py-8 text-muted-foreground">
+                      No free agents available for direct signing
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {filteredFreeAgents.map((player) => (
+                        <div
+                          key={player.id}
+                          className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 cursor-pointer"
+                          onClick={() => handlePlayerSelect(player)}
+                        >
+                          <div className="flex items-center gap-4">
+                            {player.users?.avatar_url && (
+                              <Image
+                                src={player.users.avatar_url}
+                                alt={player.users.gamer_tag_id}
+                                width={40}
+                                height={40}
+                                className="rounded-full"
+                              />
+                            )}
+                            <div>
+                              <h3 className="font-medium">{player.users?.gamer_tag_id}</h3>
+                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                <span className={getPositionColor(player.users?.primary_position)}>
+                                  {getPositionAbbreviation(player.users?.primary_position)}
+                                </span>
+                                {player.users?.secondary_position && (
+                                  <>
+                                    <span>•</span>
+                                    <span className={getPositionColor(player.users?.secondary_position)}>
+                                      {getPositionAbbreviation(player.users?.secondary_position)}
+                                    </span>
+                                  </>
+                                )}
+                                <span>•</span>
+                                <span>{player.users?.console}</span>
+                                <span>•</span>
+                                <span>${(player.salary / 1000000).toFixed(2)}M</span>
+                              </div>
+                            </div>
+                          </div>
+                          <Button size="sm" variant="outline">
+                            Sign Player
+                          </Button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </CardContent>
             </Card>
           </TabsContent>

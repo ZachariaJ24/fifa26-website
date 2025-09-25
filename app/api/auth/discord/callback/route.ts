@@ -69,6 +69,7 @@ export async function GET(request: Request) {
             error: errorText,
             redirectUri: DISCORD_REDIRECT_URI,
             clientId: DISCORD_CLIENT_ID,
+            hasClientSecret: !!DISCORD_CLIENT_SECRET,
           })
           return NextResponse.redirect(`${SITE_URL}/register?discord_error=token_failed`)
         }
@@ -170,10 +171,10 @@ export async function GET(request: Request) {
       const discordUser = await userResponse.json()
       console.log("Discord user connected:", { id: discordUser.id, username: discordUser.username })
 
-      return NextResponse.redirect(`${SITE_URL}/settings?discord_connected=true`)
+      image.png      return NextResponse.redirect(`${SITE_URL}/register?discord_connected=true`)
     } catch (error) {
       console.error("Error in settings flow:", error)
-      return NextResponse.redirect(`${SITE_URL}/settings?discord_error=settings_flow_failed`)
+      return NextResponse.redirect(`${SITE_URL}/register?discord_error=settings_flow_failed`)
     }
   } catch (error: any) {
     console.error("Discord callback error:", error)

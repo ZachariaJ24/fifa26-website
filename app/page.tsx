@@ -556,7 +556,7 @@ export default function Home() {
             <div className="h-1 w-24 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-8"></div>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
               icon: Users,
@@ -572,13 +572,9 @@ export default function Home() {
             },
             {
               icon: Calendar,
-              label: "Matches",
+              label: "Fixtures",
               value: stats.totalMatches,
               color: "bg-pitch-blue-500",
-            },
-            {
-              icon: TrendingUp,
-              color: "bg-goal-orange-500",
             },
           ].map((stat, index) => (
             <motion.div

@@ -158,13 +158,29 @@ export async function POST(request: Request) {
       // If match is being completed or updated while already completed, update team standings
       if (isCompletingMatch || status === "Completed") {
         try {
+          console.log("Updating team and player statistics for completed match...")
+          
+          // Import the sync functions
+          const { updateTeamStatistics } = await import("../../../lib/standings-calculator")
+          const { syncEaStatsToPlayerStatistics } = await import("../../../lib/sync-ea-stats-to-player-statistics")
+          const { syncTeamsFromMatch } = await import("../../../lib/team-stats-calculator")
+
           // Update team statistics for the season
-          // await updateTeamStatistics(match.season_id)
+          await updateTeamStatistics(match.season_id)
+          
+          // Sync team stats from this specific match
+          await syncTeamsFromMatch(matchId)
 
           // If the match has EA data, update player statistics
           if (match.ea_match_id) {
-            // await updatePlayerStatistics(supabase, matchId, match.season_id)
+            console.log("Syncing EA player statistics...")
+            const syncResult = await syncEaStatsToPlayerStatistics(matchId)
+            if (!syncResult.success) {
+              console.error("Failed to sync player statistics:", syncResult.message)
+            }
           }
+          
+          console.log("Statistics sync completed successfully")
         } catch (statsError) {
           console.error("Error updating statistics:", statsError)
           // Continue with the response even if stats update fails

@@ -274,10 +274,10 @@ export default function TeamAvailabilityPage() {
               <Users className="h-10 w-10 text-white" />
             </div>
             <h1 className="hockey-title mb-6">
-              Team Availability
+              Club Availability
             </h1>
             <p className="hockey-subtitle mx-auto mb-8 max-w-3xl">
-              Comprehensive team roster management and player availability tracking. Monitor game participation, injury reserves, and team statistics.
+              Comprehensive club roster management and player availability tracking. Monitor fixture participation, injury reserves, and club statistics.
             </p>
             
             {/* Feature Highlights */}

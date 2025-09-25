@@ -1,7 +1,7 @@
 import { BiddingRecap } from "@/components/admin/bidding-recap"
 import { Trophy, Award, Medal, Star, Shield, Database, Settings, Zap, Target, Users, CheckCircle, XCircle, AlertTriangle, DollarSign, TrendingUp, Activity, BarChart3 } from "lucide-react"
 
-export default function BiddingRecapPage() {
+export default function TransferRecapPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
       {/* Enhanced Hero Header Section */}
@@ -19,17 +19,17 @@ export default function BiddingRecapPage() {
           </div>
           
           <h1 className="hockey-title mb-4">
-            Bidding Recap
+            Transfer Recap
           </h1>
           <p className="hockey-subtitle mb-8">
-            Comprehensive overview of all free agency bidding activity and team acquisitions
+            Comprehensive overview of all transfer activity and club acquisitions
           </p>
           
           {/* Feature Highlights */}
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             <div className="flex items-center gap-2 bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-4 py-2 rounded-full border border-ice-blue-200/50 dark:border-rink-blue-700/50">
               <Trophy className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Team Statistics</span>
+              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Club Statistics</span>
             </div>
             <div className="flex items-center gap-2 bg-gradient-to-r from-assist-green-100/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 px-4 py-2 rounded-full border border-assist-green-200/50 dark:border-assist-green-700/50">
               <Users className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
@@ -41,7 +41,7 @@ export default function BiddingRecapPage() {
             </div>
             <div className="flex items-center gap-2 bg-gradient-to-r from-hockey-silver-100/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 px-4 py-2 rounded-full border border-hockey-silver-200/50 dark:border-hockey-silver-700/50">
               <Activity className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Bid History</span>
+              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Transfer History</span>
             </div>
           </div>
         </div>

@@ -146,16 +146,16 @@ export default function AdminDashboardPage() {
       color: "goal-red"
     },
     {
-      title: "Team Management",
-      description: "Manage teams and rosters",
+      title: "Club Management",
+      description: "Manage clubs and rosters",
       icon: <Trophy className="h-6 w-6" />,
       href: "/admin/teams",
       category: "team",
       color: "assist-green"
     },
     {
-      title: "Schedule Management",
-      description: "Manage game schedule and results",
+      title: "Fixture Management",
+      description: "Manage fixture schedule and results",
       icon: <Calendar className="h-6 w-6" />,
       href: "/admin/schedule",
       category: "game",
@@ -178,18 +178,18 @@ export default function AdminDashboardPage() {
       color: "ice-blue"
     },
     {
-      title: "Team Availability",
-      description: "View player availability and games played by week",
+      title: "Club Availability",
+      description: "View player availability and fixtures played by week",
       icon: <Calendar className="h-6 w-6" />,
       href: "/admin/team-avail",
       category: "team",
       color: "assist-green"
     },
     {
-      title: "Bidding Recap",
-      description: "View comprehensive bidding statistics and player bid history",
+      title: "Transfer Recap",
+      description: "View comprehensive transfer statistics and player transfer history",
       icon: <DollarSign className="h-6 w-6" />,
-      href: "/admin/bidding-recap",
+      href: "/admin/transfer-recap",
       category: "finance",
       color: "goal-red"
     },
@@ -258,8 +258,8 @@ export default function AdminDashboardPage() {
       color: "rink-blue"
     },
     {
-      title: "Team Logos",
-      description: "Manage team logos and branding",
+      title: "Club Logos",
+      description: "Manage club logos and branding",
       icon: <ImageIcon className="h-6 w-6" />,
       href: "/admin/team-logos",
       category: "team",
@@ -394,8 +394,8 @@ export default function AdminDashboardPage() {
       color: "rink-blue"
     },
     {
-      title: "Featured Games",
-      description: "Manage featured games on homepage",
+      title: "Featured Fixtures",
+      description: "Manage featured fixtures on homepage",
       icon: <Trophy className="h-6 w-6" />,
       href: "/admin/featured-games",
       category: "content",

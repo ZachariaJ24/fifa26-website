@@ -5,11 +5,11 @@ export async function GET() {
   try {
     const supabase = createClient()
 
-    // Get the saved bidding recap data
+    // Get the saved transfer recap data
     const { data, error } = await supabase
       .from("system_settings")
       .select("value")
-      .eq("key", "bidding_recap_data")
+      .eq("key", "transfer_recap_data")
       .single()
 
     if (error || !data) {
@@ -18,7 +18,7 @@ export async function GET() {
 
     return NextResponse.json(data.value)
   } catch (error) {
-    console.error("Error fetching bidding recap:", error)
+    console.error("Error fetching transfer recap:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

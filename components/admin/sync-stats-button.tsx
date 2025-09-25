@@ -2,35 +2,38 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { useToast } from "@/components/ui/use-toast"
+import { useToast } from "@/hooks/use-toast"
+import { useSupabase } from "@/hooks/use-supabase"
 import { RefreshCw } from "lucide-react"
 
 interface SyncStatsButtonProps {
   seasonId: number
-  onSuccess?: () => void
+  className?: string
 }
 
-export function SyncStatsButton({ seasonId, onSuccess }: SyncStatsButtonProps) {
-  const [isSyncing, setIsSyncing] = useState(false)
+export function SyncStatsButton({ seasonId, className }: SyncStatsButtonProps) {
+  const [syncing, setSyncing] = useState(false)
   const { toast } = useToast()
+  const { session } = useSupabase()
 
   const handleSync = async () => {
-    if (!seasonId) {
+    if (!session?.access_token) {
       toast({
         title: "Error",
-        description: "Please select a season first",
+        description: "You must be logged in to sync statistics",
         variant: "destructive",
       })
       return
     }
 
     try {
-      setIsSyncing(true)
+      setSyncing(true)
 
-      const response = await fetch("/api/admin/sync-season-stats", {
+      const response = await fetch("/api/admin/sync-all-stats", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${session.access_token}`,
         },
         body: JSON.stringify({ seasonId }),
       })
@@ -38,33 +41,46 @@ export function SyncStatsButton({ seasonId, onSuccess }: SyncStatsButtonProps) {
       const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || "Failed to sync statistics")
+        throw new Error(data.error || "Failed to sync statistics")
       }
 
-      toast({
-        title: "Statistics synchronized",
-        description: `Successfully synced stats for ${data.stats.players} players and ${data.stats.goalies} goalies.`,
-      })
-
-      if (onSuccess) {
-        onSuccess()
+      if (data.success) {
+        toast({
+          title: "Success",
+          description: "All statistics have been synced successfully",
+        })
+      } else {
+        toast({
+          title: "Partial Success",
+          description: "Some statistics were synced, but some failed. Check the details.",
+          variant: "destructive",
+        })
       }
+
+      // Log detailed results
+      console.log("Sync results:", data.results)
+
     } catch (error: any) {
-      console.error("Error syncing statistics:", error)
+      console.error("Error syncing stats:", error)
       toast({
-        title: "Sync failed",
-        description: error.message || "An error occurred while syncing statistics",
+        title: "Error",
+        description: error.message || "Failed to sync statistics",
         variant: "destructive",
       })
     } finally {
-      setIsSyncing(false)
+      setSyncing(false)
     }
   }
 
   return (
-    <Button onClick={handleSync} disabled={isSyncing} variant="outline">
-      <RefreshCw className={`mr-2 h-4 w-4 ${isSyncing ? "animate-spin" : ""}`} />
-      {isSyncing ? "Syncing..." : "Sync Statistics"}
+    <Button
+      onClick={handleSync}
+      disabled={syncing}
+      className={className}
+      variant="outline"
+    >
+      <RefreshCw className={`mr-2 h-4 w-4 ${syncing ? "animate-spin" : ""}`} />
+      {syncing ? "Syncing..." : "Sync All Stats"}
     </Button>
   )
 }

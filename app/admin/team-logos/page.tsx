@@ -397,10 +397,10 @@ export default function AdminTeamLogosPage() {
               <ImageIcon className="h-10 w-10 text-white" />
             </div>
             <h1 className="hockey-title mb-6">
-              Team Logo Management
+              Club Logo Management
             </h1>
             <p className="hockey-subtitle mx-auto mb-8 max-w-3xl">
-              Comprehensive team logo management and storage system. Upload, update, and manage team logos with advanced storage integration and debugging tools.
+              Comprehensive club logo management and storage system. Upload, update, and manage club logos with advanced storage integration and debugging tools.
             </p>
             
             {/* Feature Highlights */}
