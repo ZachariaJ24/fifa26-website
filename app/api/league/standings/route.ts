@@ -5,7 +5,6 @@ export async function GET() {
   try {
     const supabase = createAdminClient()
     
-    // Get teams with conference info and calculate standings
     const { data: teams, error } = await supabase
       .from("teams")
       .select(`
@@ -20,7 +19,7 @@ export async function GET() {
         goals_for,
         goals_against,
         games_played,
-        conferences!inner(name, color)
+        conferences(name, color)
       `)
       .eq("is_active", true)
       .order("points", { ascending: false })
@@ -34,7 +33,7 @@ export async function GET() {
       const conferenceName = team.conferences?.name || "No Conference"
       if (!acc[conferenceName]) {
         acc[conferenceName] = {
-          conference: team.conferences,
+          conference: team.conferences || { name: conferenceName, color: "#6B7280" },
           teams: []
         }
       }
