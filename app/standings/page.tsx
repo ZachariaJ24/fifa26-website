@@ -78,16 +78,16 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-        <Card className="hockey-card hockey-card-hover border-2 border-assist-green-200/50 dark:border-assist-green-700/50 shadow-2xl shadow-assist-green-500/20 overflow-hidden">
-          <CardHeader className="relative bg-gradient-to-r from-assist-green-500/20 to-assist-green-500/20 border-b-2 border-assist-green-200/50 dark:border-assist-green-700/50">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-assist-green-100 to-assist-green-100 dark:from-assist-green-900/30 dark:to-assist-green-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
+        <Card className="fifa-card fifa-card-hover border-2 border-field-green-200/50 dark:border-field-green-700/50 shadow-2xl shadow-field-green-500/20 overflow-hidden">
+          <CardHeader className="relative bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 border-b-2 border-field-green-200/50 dark:border-field-green-700/50">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-field-green-100 to-field-green-100 dark:from-field-green-900/30 dark:to-field-green-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
             <CardTitle className="flex items-center gap-4 relative z-10">
-              <div className="w-12 h-12 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-assist-green-500/25">
+              <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-field-green-500/25">
                 <Crown className="h-6 w-6 text-white" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-ice-blue-800 dark:text-ice-blue-200">Playoff Teams</div>
-                <div className="text-lg text-ice-blue-600 dark:text-ice-blue-400">Top 8 Teams - 4 from Each Conference</div>
+                <div className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Playoff Clubs</div>
+                <div className="text-lg text-pitch-blue-600 dark:text-pitch-blue-400">Top 8 Clubs - 4 from Each Conference</div>
               </div>
             </CardTitle>
           </CardHeader>
@@ -99,13 +99,13 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.1 * index }}
-                  className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-assist-green-500/10 to-assist-green-500/10 border border-assist-green-400/20 hover:border-assist-green-400/40 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                  className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-field-green-500/10 to-field-green-500/10 border border-field-green-400/20 hover:border-field-green-400/40 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                 >
                   <div className="flex items-center gap-4">
                     <div className="relative">
                       <Badge
                         variant="outline"
-                        className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-assist-green-500/30 to-assist-green-500/30 border-assist-green-400/50 text-assist-green-200"
+                        className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-field-green-500/30 to-field-green-500/30 border-field-green-400/50 text-field-green-200"
                       >
                         {index + 1}
                       </Badge>
@@ -119,10 +119,10 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
                       )}
                     </div>
                     <div className="flex items-center gap-3">
-                      <span className="font-semibold text-ice-blue-800 dark:text-ice-blue-200 text-lg">{team.name}</span>
+                      <span className="font-semibold text-pitch-blue-800 dark:text-pitch-blue-200 text-lg">{team.name}</span>
                       <Badge
                         variant="default"
-                        className="bg-gradient-to-r from-assist-green-500 to-assist-green-600 text-white text-xs px-3 py-1 shadow-lg"
+                        className="bg-gradient-to-r from-field-green-500 to-field-green-600 text-white text-xs px-3 py-1 shadow-lg"
                         title="Playoff Qualifier"
                       >
                         <Trophy className="h-3 w-3 mr-1" />
@@ -130,23 +130,23 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
                       </Badge>
                       <Badge
                         variant="secondary"
-                        className="bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 text-white text-xs px-3 py-1 shadow-lg"
+                        className="bg-gradient-to-r from-pitch-blue-500 to-field-green-600 text-white text-xs px-3 py-1 shadow-lg"
                         title="Conference"
                       >
-                        {easternPlayoffTeams.includes(team) ? "Eastern Elites" : "Western Warriors"}
+                        {easternPlayoffTeams.includes(team) ? "Eastern Conference" : "Western Conference"}
                         </Badge>
                     </div>
                   </div>
                   <div className="flex items-center gap-6 text-sm">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-assist-green-600 dark:text-assist-green-400">{team.points}</div>
-                      <div className="text-assist-green-500 dark:text-assist-green-500 text-xs">PTS</div>
+                      <div className="text-2xl font-bold text-field-green-600 dark:text-field-green-400">{team.points}</div>
+                      <div className="text-field-green-500 dark:text-field-green-500 text-xs">PTS</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-lg font-semibold text-ice-blue-800 dark:text-ice-blue-200">
+                      <div className="text-lg font-semibold text-pitch-blue-800 dark:text-pitch-blue-200">
                         {team.wins}-{team.losses}-{team.otl}
                       </div>
-                      <div className="text-assist-green-500 dark:text-assist-green-500 text-xs">RECORD</div>
+                      <div className="text-field-green-500 dark:text-field-green-500 text-xs">RECORD</div>
                     </div>
                   </div>
                 </motion.div>
@@ -164,16 +164,16 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <Card className="hockey-card hockey-card-hover border-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50 shadow-2xl shadow-hockey-silver-500/20 overflow-hidden">
-            <CardHeader className="relative bg-gradient-to-r from-hockey-silver-500/20 to-hockey-silver-500/20 border-b-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-hockey-silver-100 to-hockey-silver-100 dark:from-hockey-silver-900/30 dark:to-hockey-silver-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
+          <Card className="fifa-card fifa-card-hover border-2 border-assist-white-200/50 dark:border-assist-white-700/50 shadow-2xl shadow-assist-white-500/20 overflow-hidden">
+            <CardHeader className="relative bg-gradient-to-r from-assist-white-500/20 to-assist-white-500/20 border-b-2 border-assist-white-200/50 dark:border-assist-white-700/50">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-assist-white-100 to-assist-white-100 dark:from-assist-white-900/30 dark:to-assist-white-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
               <CardTitle className="flex items-center gap-4 relative z-10">
-                <div className="w-12 h-12 bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 rounded-xl flex items-center justify-center shadow-lg shadow-hockey-silver-500/25">
+                <div className="w-12 h-12 bg-gradient-to-r from-assist-white-500 to-assist-white-600 rounded-xl flex items-center justify-center shadow-lg shadow-assist-white-500/25">
                   <Flame className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-ice-blue-800 dark:text-ice-blue-200">Bubble Teams</div>
-                  <div className="text-lg text-ice-blue-600 dark:text-ice-blue-400">Fighting for Playoff Spots (5th & 6th Place in Each Conference)</div>
+                  <div className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Bubble Clubs</div>
+                  <div className="text-lg text-pitch-blue-600 dark:text-pitch-blue-400">Fighting for Playoff Spots (5th & 6th Place in Each Conference)</div>
                 </div>
               </CardTitle>
             </CardHeader>
@@ -185,53 +185,53 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 * index }}
-                    className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-hockey-silver-500/10 to-hockey-silver-500/10 border border-hockey-silver-400/20 hover:border-hockey-silver-400/40 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                    className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-assist-white-500/10 to-assist-white-500/10 border border-assist-white-400/20 hover:border-assist-white-400/40 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     <div className="flex items-center gap-4">
                       <Badge
                         variant="outline"
-                        className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-hockey-silver-500/30 to-hockey-silver-500/30 border-hockey-silver-400/50 text-hockey-silver-200"
+                        className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-assist-white-500/30 to-assist-white-500/30 border-assist-white-400/50 text-assist-white-200"
                       >
                         {easternBubbleTeams.includes(team) ? 5 + easternBubbleTeams.indexOf(team) : 5 + westernBubbleTeams.indexOf(team)}
                         </Badge>
                       <div className="flex items-center gap-3">
-                        <span className="font-semibold text-ice-blue-800 dark:text-ice-blue-200 text-lg">{team.name}</span>
+                        <span className="font-semibold text-pitch-blue-800 dark:text-pitch-blue-200 text-lg">{team.name}</span>
                         <Badge
                           variant="secondary"
-                          className="bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 text-white text-xs px-3 py-1 shadow-lg"
-                          title="Bubble Team"
+                          className="bg-gradient-to-r from-assist-white-500 to-assist-white-600 text-white text-xs px-3 py-1 shadow-lg"
+                          title="Bubble Club"
                         >
                           <Target className="h-3 w-3 mr-1" />
                           BUBBLE
                         </Badge>
                         <Badge
                           variant="outline"
-                          className="bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 text-white text-xs px-3 py-1 shadow-lg"
+                          className="bg-gradient-to-r from-pitch-blue-500 to-field-green-600 text-white text-xs px-3 py-1 shadow-lg"
                           title="Conference"
                         >
-                          {easternBubbleTeams.includes(team) ? "Eastern Elites" : "Western Warriors"}
+                          {easternBubbleTeams.includes(team) ? "Eastern Conference" : "Western Conference"}
                           </Badge>
                       </div>
                     </div>
                     <div className="flex items-center gap-6 text-sm">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-hockey-silver-600 dark:text-hockey-silver-400">{team.points}</div>
-                        <div className="text-hockey-silver-500 dark:text-hockey-silver-500 text-xs">PTS</div>
+                        <div className="text-2xl font-bold text-assist-white-600 dark:text-assist-white-400">{team.points}</div>
+                        <div className="text-assist-white-500 dark:text-assist-white-500 text-xs">PTS</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-lg font-semibold text-ice-blue-800 dark:text-ice-blue-200">
+                        <div className="text-lg font-semibold text-pitch-blue-800 dark:text-pitch-blue-200">
                           {team.wins}-{team.losses}-{team.otl}
                         </div>
-                        <div className="text-hockey-silver-500 dark:text-hockey-silver-500 text-xs">RECORD</div>
+                        <div className="text-assist-white-500 dark:text-assist-white-500 text-xs">RECORD</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-lg font-bold text-hockey-silver-600 dark:text-hockey-silver-400">
+                        <div className="text-lg font-bold text-assist-white-600 dark:text-assist-white-400">
                           {easternBubbleTeams.includes(team) 
                             ? easternPlayoffTeams[3]?.points - team.points
                             : westernPlayoffTeams[3]?.points - team.points
                           }
                         </div>
-                        <div className="text-hockey-silver-500 dark:text-hockey-silver-500 text-xs">PTS BACK</div>
+                        <div className="text-assist-white-500 dark:text-assist-white-500 text-xs">PTS BACK</div>
                       </div>
                     </div>
                   </motion.div>
@@ -269,7 +269,7 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
                   
                   {/* Eastern Quarterfinals */}
                   <div className="space-y-3">
-                    <div className="text-xs text-blue-300 font-medium mb-2 text-center">Eastern Elites</div>
+                    <div className="text-xs text-blue-300 font-medium mb-2 text-center">Eastern Conference</div>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between p-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-lg border border-blue-400/20">
                         <div className="flex items-center gap-2">
@@ -306,7 +306,7 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
 
                   {/* Western Quarterfinals */}
                   <div className="space-y-3 mt-4">
-                    <div className="text-xs text-purple-300 font-medium mb-2 text-center">Western Warriors</div>
+                    <div className="text-xs text-purple-300 font-medium mb-2 text-center">Western Conference</div>
                     <div className="space-y-2">
                       <div className="flex items-center justify-between p-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg border border-purple-400/20">
                         <div className="flex items-center gap-2">
@@ -348,7 +348,7 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
                   
                   {/* Eastern Semifinal */}
                   <div className="space-y-3">
-                    <div className="text-xs text-blue-300 font-medium mb-2 text-center">Eastern Elites</div>
+                    <div className="text-xs text-blue-300 font-medium mb-2 text-center">Eastern Conference</div>
                     <div className="h-20 flex items-center justify-center">
                       <div className="p-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-lg border border-blue-400/20 min-w-[120px] text-center">
                         <span className="text-white text-sm font-medium">Winner 1v4</span>
@@ -360,7 +360,7 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
 
                   {/* Western Semifinal */}
                   <div className="space-y-3 mt-4">
-                    <div className="text-xs text-purple-300 font-medium mb-2 text-center">Western Warriors</div>
+                    <div className="text-xs text-purple-300 font-medium mb-2 text-center">Western Conference</div>
                     <div className="h-20 flex items-center justify-center">
                       <div className="p-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg border border-purple-400/20 min-w-[120px] text-center">
                         <span className="text-white text-sm font-medium">Winner 1v4</span>
@@ -377,7 +377,7 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
                   
                   {/* Eastern Final */}
                   <div className="space-y-3">
-                    <div className="text-xs text-blue-300 font-medium mb-2 text-center">Eastern Elites</div>
+                    <div className="text-xs text-blue-300 font-medium mb-2 text-center">Eastern Conference</div>
                     <div className="h-20 flex items-center justify-center">
                       <div className="p-2 bg-gradient-to-r from-blue-500/10 to-cyan-500/10 rounded-lg border border-blue-400/20 min-w-[120px] text-center">
                         <span className="text-white text-sm font-medium">Eastern Champion</span>
@@ -387,7 +387,7 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
 
                   {/* Western Final */}
                   <div className="space-y-3 mt-4">
-                    <div className="text-xs text-purple-300 font-medium mb-2 text-center">Western Warriors</div>
+                    <div className="text-xs text-purple-300 font-medium mb-2 text-center">Western Conference</div>
                     <div className="h-20 flex items-center justify-center">
                       <div className="p-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-lg border border-purple-400/20 min-w-[120px] text-center">
                         <span className="text-white text-sm font-medium">Western Champion</span>
@@ -431,16 +431,16 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
         >
-          <Card className="hockey-card hockey-card-hover border-2 border-goal-red-200/50 dark:border-goal-red-700/50 shadow-2xl shadow-goal-red-500/20 overflow-hidden">
-            <CardHeader className="relative bg-gradient-to-r from-goal-red-500/20 to-goal-red-500/20 border-b-2 border-goal-red-200/50 dark:border-goal-red-700/50">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-goal-red-100 to-goal-red-100 dark:from-goal-red-900/30 dark:to-goal-red-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
+          <Card className="fifa-card fifa-card-hover border-2 border-goal-orange-200/50 dark:border-goal-orange-700/50 shadow-2xl shadow-goal-orange-500/20 overflow-hidden">
+            <CardHeader className="relative bg-gradient-to-r from-goal-orange-500/20 to-goal-orange-500/20 border-b-2 border-goal-orange-200/50 dark:border-goal-orange-700/50">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-goal-orange-100 to-goal-orange-100 dark:from-goal-orange-900/30 dark:to-goal-orange-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
               <CardTitle className="flex items-center gap-4 relative z-10">
-                <div className="w-12 h-12 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-xl flex items-center justify-center shadow-lg shadow-goal-red-500/25">
+                <div className="w-12 h-12 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-xl flex items-center justify-center shadow-lg shadow-goal-orange-500/25">
                   <Minus className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-ice-blue-800 dark:text-ice-blue-200">Eliminated Teams</div>
-                  <div className="text-lg text-ice-blue-600 dark:text-ice-blue-400">Bottom 2 Teams from Each Conference</div>
+                  <div className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Eliminated Clubs</div>
+                  <div className="text-lg text-pitch-blue-600 dark:text-pitch-blue-400">Bottom 2 Clubs from Each Conference</div>
                 </div>
               </CardTitle>
             </CardHeader>
@@ -452,12 +452,12 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.1 * index }}
-                    className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-goal-red-500/10 to-goal-red-500/10 border border-goal-red-400/20 hover:border-goal-red-400/40 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+                    className="group flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-goal-orange-500/10 to-goal-orange-500/10 border border-goal-orange-400/20 hover:border-goal-orange-400/40 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
                   >
                     <div className="flex items-center gap-4">
                       <Badge
                         variant="outline"
-                        className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-goal-red-500/30 to-goal-red-500/30 border-goal-red-400/50 text-goal-red-200"
+                        className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold bg-gradient-to-r from-goal-orange-500/30 to-goal-orange-500/30 border-goal-orange-400/50 text-goal-orange-200"
                       >
                         {easternEliminatedTeams.includes(team) 
                           ? sortedEastern.length - 1 + easternEliminatedTeams.indexOf(team)
@@ -465,10 +465,10 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
                         }
                       </Badge>
                       <div className="flex items-center gap-3">
-                        <span className="font-semibold text-ice-blue-800 dark:text-ice-blue-200 text-lg">{team.name}</span>
+                        <span className="font-semibold text-pitch-blue-800 dark:text-pitch-blue-200 text-lg">{team.name}</span>
                         <Badge
                           variant="destructive"
-                          className="bg-gradient-to-r from-goal-red-500 to-goal-red-600 text-white text-xs px-3 py-1 shadow-lg"
+                          className="bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 text-white text-xs px-3 py-1 shadow-lg"
                           title="Eliminated from Playoffs"
                         >
                           <Minus className="h-3 w-3 mr-1" />
@@ -476,23 +476,23 @@ function PlayoffPicture({ standings }: { standings: TeamStanding[] }) {
                         </Badge>
                         <Badge
                           variant="outline"
-                          className="bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 text-white text-xs px-3 py-1 shadow-lg"
+                          className="bg-gradient-to-r from-pitch-blue-500 to-field-green-600 text-white text-xs px-3 py-1 shadow-lg"
                           title="Conference"
                         >
-                          {easternEliminatedTeams.includes(team) ? "Eastern Elites" : "Western Warriors"}
+                          {easternEliminatedTeams.includes(team) ? "Eastern Conference" : "Western Conference"}
                         </Badge>
                       </div>
                     </div>
                     <div className="flex items-center gap-6 text-sm">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-goal-red-600 dark:text-goal-red-400">{team.points}</div>
-                        <div className="text-goal-red-500 dark:text-goal-red-500 text-xs">PTS</div>
+                        <div className="text-2xl font-bold text-goal-orange-600 dark:text-goal-orange-400">{team.points}</div>
+                        <div className="text-goal-orange-500 dark:text-goal-orange-500 text-xs">PTS</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-lg font-semibold text-ice-blue-800 dark:text-ice-blue-200">
+                        <div className="text-lg font-semibold text-pitch-blue-800 dark:text-pitch-blue-200">
                           {team.wins}-{team.losses}-{team.otl}
                         </div>
-                        <div className="text-goal-red-500 dark:text-goal-red-500 text-xs">RECORD</div>
+                        <div className="text-goal-orange-500 dark:text-goal-orange-500 text-xs">RECORD</div>
                       </div>
                     </div>
                   </motion.div>
@@ -554,7 +554,7 @@ function ConferenceStandings({ standings }: { standings: TeamStanding[] }) {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2 }}
       >
-        <Card className="hockey-card hockey-card-hover h-full group border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20 overflow-hidden">
+        <Card className="fifa-card fifa-card-hover h-full group border-2 border-field-green-200/50 dark:border-pitch-blue-700/50 shadow-2xl shadow-field-green-500/20 overflow-hidden">
           <CardHeader className="pb-4 relative">
             <div 
               className="absolute top-0 right-0 w-24 h-24 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"
@@ -573,8 +573,8 @@ function ConferenceStandings({ standings }: { standings: TeamStanding[] }) {
                 <Users className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-bold text-ice-blue-800 dark:text-ice-blue-200">{conference1Name}</div>
-                <div className="text-sm sm:text-lg text-ice-blue-600 dark:text-ice-blue-400">{conference1Teams.length} teams</div>
+                <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">{conference1Name}</div>
+                <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{conference1Teams.length} clubs</div>
               </div>
             </CardTitle>
           </CardHeader>
@@ -589,7 +589,7 @@ function ConferenceStandings({ standings }: { standings: TeamStanding[] }) {
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.4 }}
       >
-        <Card className="hockey-card hockey-card-hover h-full group border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20 overflow-hidden">
+        <Card className="fifa-card fifa-card-hover h-full group border-2 border-field-green-200/50 dark:border-pitch-blue-700/50 shadow-2xl shadow-field-green-500/20 overflow-hidden">
           <CardHeader className="pb-4 relative">
             <div 
               className="absolute top-0 right-0 w-24 h-24 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"
@@ -608,8 +608,8 @@ function ConferenceStandings({ standings }: { standings: TeamStanding[] }) {
                 <Award className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
               <div>
-                <div className="text-xl sm:text-2xl font-bold text-ice-blue-800 dark:text-ice-blue-200">{conference2Name}</div>
-                <div className="text-sm sm:text-lg text-ice-blue-600 dark:text-ice-blue-400">{conference2Teams.length} teams</div>
+                <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">{conference2Name}</div>
+                <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{conference2Teams.length} clubs</div>
               </div>
             </CardTitle>
           </CardHeader>
@@ -857,16 +857,16 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-pitch-blue-50 via-white to-field-green-50 dark:from-assist-white-900 dark:via-assist-white-800 dark:to-field-green-900/30">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
+        <div className="absolute inset-0 bg-fifa-pattern opacity-5"></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-br from-hockey-silver-200/20 to-ice-blue-200/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-stadium-gold-200/30 to-goal-orange-200/30 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-pitch-blue-200/30 to-field-green-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-gradient-to-br from-assist-white-200/20 to-pitch-blue-200/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
 
         <div className="relative z-10 max-w-7xl mx-auto">
           <motion.div 
@@ -912,24 +912,24 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
               transition={{ delay: 0.4 }}
             >
               <Tabs defaultValue="overall" className="space-y-8">
-                <TabsList className="grid w-full grid-cols-3 bg-gradient-to-r from-ice-blue-100/80 to-rink-blue-100/80 dark:from-hockey-silver-800/80 dark:to-rink-blue-800/80 backdrop-blur-sm border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 p-2 rounded-2xl shadow-lg shadow-ice-blue-500/20">
+                <TabsList className="grid w-full grid-cols-3 bg-gradient-to-r from-pitch-blue-100/80 to-field-green-100/80 dark:from-assist-white-800/80 dark:to-field-green-800/80 backdrop-blur-sm border-2 border-pitch-blue-200/50 dark:border-field-green-700/50 p-2 rounded-2xl shadow-lg shadow-pitch-blue-500/20">
                   <TabsTrigger 
                     value="overall" 
-                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-ice-blue-500/30 transition-all duration-300 hover:scale-105 rounded-xl font-semibold"
+                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pitch-blue-500 data-[state=active]:to-field-green-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-pitch-blue-500/30 transition-all duration-300 hover:scale-105 rounded-xl font-semibold"
                   >
                     <Trophy className="h-4 w-4 mr-2" />
                     Overall Standings
                   </TabsTrigger>
                   <TabsTrigger 
                     value="conference" 
-                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-hockey-silver-500 data-[state=active]:to-ice-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-hockey-silver-500/30 transition-all duration-300 hover:scale-105 rounded-xl font-semibold"
+                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-assist-white-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-assist-white-500/30 transition-all duration-300 hover:scale-105 rounded-xl font-semibold"
                   >
                     <Users className="h-4 w-4 mr-2" />
                     Conference
                   </TabsTrigger>
                   <TabsTrigger 
                     value="playoffs" 
-                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-goal-red-500 data-[state=active]:to-assist-green-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-goal-red-500/30 transition-all duration-300 hover:scale-105 rounded-xl font-semibold"
+                    className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-goal-orange-500 data-[state=active]:to-stadium-gold-600 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=active]:shadow-goal-orange-500/30 transition-all duration-300 hover:scale-105 rounded-xl font-semibold"
                   >
                     <Crown className="h-4 w-4 mr-2" />
                     Playoff Picture
@@ -942,35 +942,35 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6 }}
                   >
-                    <Card className="hockey-card hockey-card-hover border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20 overflow-hidden">
-                      <CardHeader className="relative bg-gradient-to-r from-ice-blue-500/20 to-rink-blue-500/20 border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
-                        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-assist-green-100 to-goal-red-100 dark:from-assist-green-900/30 dark:to-goal-red-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
+                    <Card className="fifa-card fifa-card-hover border-2 border-field-green-200/50 dark:border-pitch-blue-700/50 shadow-2xl shadow-field-green-500/20 overflow-hidden">
+                      <CardHeader className="relative bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 border-b-2 border-field-green-200/50 dark:border-pitch-blue-700/50">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-stadium-gold-100 to-goal-orange-100 dark:from-stadium-gold-900/30 dark:to-goal-orange-900/30 rounded-full -mr-6 -mt-6 opacity-60"></div>
                         <CardTitle className="flex items-center gap-4 relative z-10">
-                          <div className="w-12 h-12 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-ice-blue-500/25">
+                          <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-field-green-500/25">
                             <ArrowUpDown className="h-6 w-6 text-white" />
                           </div>
                           <div>
-                            <div className="text-2xl font-bold text-ice-blue-800 dark:text-ice-blue-200">League Standings</div>
-                            <div className="text-lg text-ice-blue-600 dark:text-ice-blue-400">
-                              Complete standings for all teams in the league
+                            <div className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">League Standings</div>
+                            <div className="text-lg text-pitch-blue-600 dark:text-pitch-blue-400">
+                              Complete standings for all clubs in the league
                     </div>
                   </div>
                         </CardTitle>
-                        <CardDescription className="text-ice-blue-700 dark:text-ice-blue-300 relative z-10">
+                        <CardDescription className="text-pitch-blue-700 dark:text-pitch-blue-300 relative z-10">
                           <div className="flex items-center gap-6 mt-4 text-sm">
                             <div className="flex items-center gap-2">
-                              <Badge variant="default" className="bg-gradient-to-r from-assist-green-500 to-assist-green-600 text-white text-xs px-3 py-1 shadow-lg">
+                              <Badge variant="default" className="bg-gradient-to-r from-field-green-500 to-field-green-600 text-white text-xs px-3 py-1 shadow-lg">
                                 <Trophy className="h-3 w-3 mr-1" />
                                 CLINCHED
                               </Badge>
-                              <span className="text-ice-blue-600 dark:text-ice-blue-400">Clinched Playoff Spot</span>
+                              <span className="text-pitch-blue-600 dark:text-pitch-blue-400">Clinched Playoff Spot</span>
                             </div>
                             <div className="flex items-center gap-2">
-                              <Badge variant="destructive" className="bg-gradient-to-r from-goal-red-500 to-goal-red-600 text-white text-xs px-3 py-1 shadow-lg">
+                              <Badge variant="destructive" className="bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 text-white text-xs px-3 py-1 shadow-lg">
                                 <Minus className="h-3 w-3 mr-1" />
                                 ELIMINATED
                               </Badge>
-                              <span className="text-ice-blue-600 dark:text-ice-blue-400">Eliminated from Playoffs</span>
+                              <span className="text-pitch-blue-600 dark:text-pitch-blue-400">Eliminated from Playoffs</span>
                 </div>
             </div>
                         </CardDescription>

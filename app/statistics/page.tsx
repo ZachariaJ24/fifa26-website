@@ -128,12 +128,12 @@ const PlayerCard = ({
 
   // Format position display
   let displayPosition = stat.position
-  if (stat.position === "0") displayPosition = "G"
-  else if (stat.position === "1") displayPosition = "RD"
-  else if (stat.position === "2") displayPosition = "LD"
+  if (stat.position === "0") displayPosition = "GK"
+  else if (stat.position === "1") displayPosition = "RB"
+  else if (stat.position === "2") displayPosition = "LB"
   else if (stat.position === "3") displayPosition = "RW"
   else if (stat.position === "4") displayPosition = "LW"
-  else if (stat.position === "5") displayPosition = "C"
+  else if (stat.position === "5") displayPosition = "CM"
 
   // Calculate faceoff stats
   const faceoffWins = stat.faceoffs_won || 0
@@ -163,7 +163,7 @@ const PlayerCard = ({
           <CollapsibleTrigger className="w-full">
             <div className="grid grid-cols-2 gap-2">
               <div className="text-xs">
-                Team: <span className="font-semibold">{stat.team_name || "Free Agent"}</span>
+                Club: <span className="font-semibold">{stat.team_name || "Free Agent"}</span>
               </div>
               <div className="text-xs">
                 Position: <span className="font-semibold">{displayPosition}</span>
@@ -184,22 +184,22 @@ const PlayerCard = ({
                 +/-: <span className="font-semibold">{stat.plus_minus || 0}</span>
               </div>
               <div className="text-xs">
-                SOG: <span className="font-semibold">{stat.shots || 0}</span>
+                Shots: <span className="font-semibold">{stat.shots || 0}</span>
               </div>
               <div className="text-xs">
-                PIM: <span className="font-semibold">{stat.pim || 0}</span>
+                Fouls: <span className="font-semibold">{stat.pim || 0}</span>
               </div>
               <div className="text-xs">
                 Blocks: <span className="font-semibold">{stat.blocks || 0}</span>
               </div>
               <div className="text-xs">
-                GVA: <span className="font-semibold">{stat.giveaways || 0}</span>
+                Turnovers: <span className="font-semibold">{stat.giveaways || 0}</span>
               </div>
               <div className="text-xs">
-                TKA: <span className="font-semibold">{stat.takeaways || 0}</span>
+                Tackles: <span className="font-semibold">{stat.takeaways || 0}</span>
               </div>
               <div className="text-xs">
-                INT: <span className="font-semibold">{stat.interceptions || 0}</span>
+                Interceptions: <span className="font-semibold">{stat.interceptions || 0}</span>
               </div>
               <div className="text-xs">
                 Pass%: <span className="font-semibold">{passPercentage}%</span>
@@ -210,10 +210,10 @@ const PlayerCard = ({
               {!isDefense && (
                 <>
                   <div className="text-xs">
-                    FOW: <span className="font-semibold">{faceoffWins}</span>
+                    Possession Won: <span className="font-semibold">{faceoffWins}</span>
                   </div>
                   <div className="text-xs">
-                    FO%: <span className="font-semibold">{faceoffPct}%</span>
+                    Possession%: <span className="font-semibold">{faceoffPct}%</span>
                   </div>
                 </>
               )}
@@ -259,7 +259,7 @@ const GoalieCard = ({ stat, rank, isMobile }: { stat: any; rank: number; isMobil
           <CollapsibleTrigger className="w-full">
             <div className="grid grid-cols-2 gap-2">
               <div className="text-xs">
-                Team: <span className="font-semibold">{stat.team_name || "Free Agent"}</span>
+                Club: <span className="font-semibold">{stat.team_name || "Free Agent"}</span>
               </div>
               <div className="text-xs">
                 GP: <span className="font-semibold">{stat.games_played || 0}</span>
@@ -268,13 +268,13 @@ const GoalieCard = ({ stat, rank, isMobile }: { stat: any; rank: number; isMobil
                 Saves: <span className="font-semibold">{stat.saves || 0}</span>
               </div>
               <div className="text-xs">
-                GA: <span className="font-semibold">{stat.goals_against || 0}</span>
+                Goals Conceded: <span className="font-semibold">{stat.goals_against || 0}</span>
               </div>
               <div className="text-xs">
-                SV%: <span className="font-semibold">{savesPct}%</span>
+                Save%: <span className="font-semibold">{savesPct}%</span>
               </div>
               <div className="text-xs">
-                GAA: <span className="font-semibold">{gaa}</span>
+                Goals/Game: <span className="font-semibold">{gaa}</span>
               </div>
               <div className="text-xs">
                 Record:{" "}
@@ -283,7 +283,7 @@ const GoalieCard = ({ stat, rank, isMobile }: { stat: any; rank: number; isMobil
                 </span>
               </div>
               <div className="text-xs">
-                Shots: <span className="font-semibold">{(stat.saves || 0) + (stat.goals_against || 0)}</span>
+                Shots Faced: <span className="font-semibold">{(stat.saves || 0) + (stat.goals_against || 0)}</span>
               </div>
             </div>
           </CollapsibleTrigger>
@@ -1370,7 +1370,7 @@ export default function StatisticsPage() {
               <TableRow>
                 <TableHead className="text-xs md:text-sm min-w-[40px]">Rank</TableHead>
                 <TableHead className="text-xs md:text-sm min-w-[100px]">Player</TableHead>
-                <TableHead className="text-xs md:text-sm min-w-[80px]">Team</TableHead>
+                <TableHead className="text-xs md:text-sm min-w-[80px]">Club</TableHead>
                 <TableHead className="text-xs md:text-sm min-w-[40px]">Pos</TableHead>
                 <TableHead
                   className="text-right text-xs md:text-sm min-w-[40px] cursor-pointer hover:bg-muted/50"
@@ -1431,7 +1431,7 @@ export default function StatisticsPage() {
                   onClick={() => handleSort("shots")}
                 >
                   <div className="flex items-center justify-end">
-                    SOG
+                    Shots
                     {getSortIcon("shots")}
                   </div>
                 </TableHead>
@@ -1440,7 +1440,7 @@ export default function StatisticsPage() {
                   onClick={() => handleSort("hits")}
                 >
                   <div className="flex items-center justify-end">
-                    Hits
+                    Challenges
                     {getSortIcon("hits")}
                   </div>
                 </TableHead>
@@ -1449,7 +1449,7 @@ export default function StatisticsPage() {
                   onClick={() => handleSort("pim")}
                 >
                   <div className="flex items-center justify-end">
-                    PIM
+                    Fouls
                     {getSortIcon("pim")}
                   </div>
                 </TableHead>
@@ -1467,7 +1467,7 @@ export default function StatisticsPage() {
                   onClick={() => handleSort("takeaways")}
                 >
                   <div className="flex items-center justify-end">
-                    TKA
+                    Tackles
                     {getSortIcon("takeaways")}
                   </div>
                 </TableHead>
@@ -1476,7 +1476,7 @@ export default function StatisticsPage() {
                   onClick={() => handleSort("giveaways")}
                 >
                   <div className="flex items-center justify-end">
-                    GVA
+                    Turnovers
                     {getSortIcon("giveaways")}
                   </div>
                 </TableHead>
@@ -1514,7 +1514,7 @@ export default function StatisticsPage() {
                       onClick={() => handleSort("faceoffs_won")}
                     >
                       <div className="flex items-center justify-end">
-                        FOW
+                        Possession Won
                         {getSortIcon("faceoffs_won")}
                       </div>
                     </TableHead>
@@ -1523,7 +1523,7 @@ export default function StatisticsPage() {
                       onClick={() => handleSort("faceoff_pct")}
                     >
                       <div className="flex items-center justify-end">
-                        FO%
+                        Possession%
                         {getSortIcon("faceoff_pct")}
                       </div>
                     </TableHead>
@@ -1538,12 +1538,12 @@ export default function StatisticsPage() {
 
                 // Format position display
                 let displayPosition = stat.position
-                if (stat.position === "0") displayPosition = "G"
-                else if (stat.position === "1") displayPosition = "RD"
-                else if (stat.position === "2") displayPosition = "LD"
+                if (stat.position === "0") displayPosition = "GK"
+                else if (stat.position === "1") displayPosition = "RB"
+                else if (stat.position === "2") displayPosition = "LB"
                 else if (stat.position === "3") displayPosition = "RW"
                 else if (stat.position === "4") displayPosition = "LW"
-                else if (stat.position === "5") displayPosition = "C"
+                else if (stat.position === "5") displayPosition = "CM"
 
                 // Calculate faceoff stats
                 const faceoffWins = stat.faceoffs_won || 0
@@ -1646,7 +1646,7 @@ export default function StatisticsPage() {
               <TableRow>
                 <TableHead className="text-xs md:text-sm min-w-[40px]">Rank</TableHead>
                 <TableHead className="text-xs md:text-sm min-w-[100px]">Player</TableHead>
-                <TableHead className="text-xs md:text-sm min-w-[80px]">Team</TableHead>
+                <TableHead className="text-xs md:text-sm min-w-[80px]">Club</TableHead>
                 <TableHead
                   className="text-right text-xs md:text-sm min-w-[40px] cursor-pointer hover:bg-muted/50"
                   onClick={() => handleSort("games_played")}
@@ -1670,7 +1670,7 @@ export default function StatisticsPage() {
                   onClick={() => handleSort("goals_against")}
                 >
                   <div className="flex items-center justify-end">
-                    GA
+                    Goals Conceded
                     {getSortIcon("goals_against")}
                   </div>
                 </TableHead>
@@ -1679,7 +1679,7 @@ export default function StatisticsPage() {
                   onClick={() => handleSort("save_pct")}
                 >
                   <div className="flex items-center justify-end">
-                    SV%
+                    Save%
                     {getSortIcon("save_pct")}
                   </div>
                 </TableHead>
@@ -1688,7 +1688,7 @@ export default function StatisticsPage() {
                   onClick={() => handleSort("gaa")}
                 >
                   <div className="flex items-center justify-end">
-                    GAA
+                    Goals/Game
                     {getSortIcon("gaa")}
                   </div>
                 </TableHead>
@@ -1698,7 +1698,7 @@ export default function StatisticsPage() {
                   onClick={() => handleSort("total_shots_faced")}
                 >
                   <div className="flex items-center justify-end">
-                    Shots
+                    Shots Faced
                     {getSortIcon("total_shots_faced")}
                   </div>
                 </TableHead>
@@ -1772,20 +1772,20 @@ export default function StatisticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/20">
+    <div className="min-h-screen bg-gradient-to-br from-pitch-blue-50 via-white to-field-green-50 dark:from-assist-white-900 dark:via-assist-white-800 dark:to-field-green-900/30">
       {/* Header Section */}
       <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
         <div className="container mx-auto px-6 py-12">
           <div className="text-center">
             <div className="inline-flex items-center gap-4 mb-6">
-              <div className="p-4 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-xl shadow-lg">
+              <div className="p-4 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl shadow-lg">
                 <BarChart3 className="h-10 w-10 text-white" />
               </div>
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-ice-blue-600 to-rink-blue-700 dark:from-ice-blue-400 dark:to-rink-blue-500 bg-clip-text text-transparent">
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-700 dark:from-field-green-400 dark:to-pitch-blue-500 bg-clip-text text-transparent">
                 Player Statistics
               </h1>
             </div>
-            <div className="h-1 w-32 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full mx-auto mb-8" />
+            <div className="h-1 w-32 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mb-8" />
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
               Comprehensive player performance data across all seasons and positions
             </p>
@@ -1798,7 +1798,7 @@ export default function StatisticsPage() {
         <div className="grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-4 mb-6 sm:mb-8">
           <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <CardContent className="p-4 sm:p-6 text-center">
-              <div className="p-2 sm:p-3 bg-gradient-to-r from-ice-blue-500 to-ice-blue-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
+              <div className="p-2 sm:p-3 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                 <BarChart3 className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
               <div className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-slate-200 mb-1">
@@ -1812,42 +1812,42 @@ export default function StatisticsPage() {
 
           <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <CardContent className="p-4 sm:p-6 text-center">
-              <div className="p-2 sm:p-3 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
+              <div className="p-2 sm:p-3 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                 <Target className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
               <div className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-slate-200 mb-1">
                 {forwards.length}
               </div>
               <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-                Forwards
+                Attackers
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <CardContent className="p-4 sm:p-6 text-center">
-              <div className="p-2 sm:p-3 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
+              <div className="p-2 sm:p-3 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                 <Shield className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
               <div className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-slate-200 mb-1">
                 {defensemen.length}
               </div>
               <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-                Defensemen
+                Defenders
               </div>
             </CardContent>
           </Card>
 
           <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <CardContent className="p-4 sm:p-6 text-center">
-              <div className="p-2 sm:p-3 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
+              <div className="p-2 sm:p-3 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                 <Trophy className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </div>
               <div className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-slate-200 mb-1">
                 {goalieStats.length}
               </div>
               <div className="text-xs sm:text-sm text-slate-600 dark:text-slate-400">
-                Goalies
+                Goalkeepers
               </div>
             </CardContent>
           </Card>
@@ -1859,9 +1859,9 @@ export default function StatisticsPage() {
         <div className="space-y-8">
           {/* Filters */}
           <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg">
-            <CardHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-ice-blue-900/30 dark:to-rink-blue-900/30 border-b border-slate-200 dark:border-slate-700">
+            <CardHeader className="bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 border-b border-slate-200 dark:border-slate-700">
               <CardTitle className="text-lg sm:text-xl text-slate-800 dark:text-slate-200 flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+                <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
                   <Activity className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                 </div>
                 Filters & Settings
@@ -1908,14 +1908,14 @@ export default function StatisticsPage() {
 
                 <div>
                   <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
-                    Team
+                    Club
                   </label>
                   <Select value={selectedTeam} onValueChange={handleTeamChange}>
                     <SelectTrigger className="border-slate-300 dark:border-slate-600">
-                      <SelectValue placeholder="Select team" />
+                      <SelectValue placeholder="Select club" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Teams</SelectItem>
+                      <SelectItem value="all">All Clubs</SelectItem>
                       {teams.map((team) => (
                         <SelectItem key={team.id} value={team.id}>
                           {team.name}
@@ -1933,45 +1933,45 @@ export default function StatisticsPage() {
             <TabsList className="grid w-full grid-cols-4 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
               <TabsTrigger 
                 value="total" 
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 hover:scale-105"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 hover:scale-105"
               >
                 <BarChart3 className="h-4 w-4 mr-2" />
                 Total
               </TabsTrigger>
               <TabsTrigger 
                 value="offense" 
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-assist-green-500 data-[state=active]:to-assist-green-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 hover:scale-105"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-stadium-gold-500 data-[state=active]:to-stadium-gold-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 hover:scale-105"
               >
                 <Target className="h-4 w-4 mr-2" />
-                Offense
+                Attackers
               </TabsTrigger>
               <TabsTrigger 
                 value="defense" 
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-rink-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 hover:scale-105"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pitch-blue-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 hover:scale-105"
               >
                 <Shield className="h-4 w-4 mr-2" />
-                Defense
+                Defenders
               </TabsTrigger>
               <TabsTrigger 
                 value="goalies" 
-                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-goal-red-500 data-[state=active]:to-goal-red-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 hover:scale-105"
+                className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-goal-orange-500 data-[state=active]:to-goal-orange-600 data-[state=active]:text-white data-[state=active]:shadow-lg transition-all duration-200 hover:scale-105"
               >
                 <Trophy className="h-4 w-4 mr-2" />
-                Goalies
+                Goalkeepers
               </TabsTrigger>
             </TabsList>
 
             <TabsContent value="total" className="space-y-4 mt-6">
               <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-ice-blue-900/30 dark:to-rink-blue-900/30 border-b border-slate-200 dark:border-slate-700">
+                <CardHeader className="bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 border-b border-slate-200 dark:border-slate-700">
                   <CardTitle className="text-xl text-slate-800 dark:text-slate-200 flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+                    <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
                       <BarChart3 className="h-5 w-5 text-white" />
                     </div>
                     All Players
                   </CardTitle>
                   <CardDescription className="text-slate-600 dark:text-slate-400">
-                    Combined statistics for all skaters (excludes goalies)
+                    Combined statistics for all outfield players (excludes goalkeepers)
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-6">{renderPlayerStatsTable(totalPlayers, false, totalPage, setTotalPage)}</CardContent>
@@ -1980,15 +1980,15 @@ export default function StatisticsPage() {
 
             <TabsContent value="offense" className="space-y-4 mt-6">
               <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-assist-green-50 to-assist-green-100 dark:from-assist-green-900/30 dark:to-assist-green-800/30 border-b border-slate-200 dark:border-slate-700">
+                <CardHeader className="bg-gradient-to-r from-stadium-gold-50 to-stadium-gold-100 dark:from-stadium-gold-900/30 dark:to-stadium-gold-800/30 border-b border-slate-200 dark:border-slate-700">
                   <CardTitle className="text-xl text-slate-800 dark:text-slate-200 flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
+                    <div className="p-2 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg">
                       <Target className="h-5 w-5 text-white" />
                     </div>
-                    Forwards
+                    Attackers
                   </CardTitle>
                   <CardDescription className="text-slate-600 dark:text-slate-400">
-                    Statistics for centers, left wings, and right wings
+                    Statistics for forwards, wingers, and attacking midfielders
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-6">{renderPlayerStatsTable(forwards, false, offensePage, setOffensePage)}</CardContent>
@@ -1997,15 +1997,15 @@ export default function StatisticsPage() {
 
             <TabsContent value="defense" className="space-y-4 mt-6">
               <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-rink-blue-50 to-rink-blue-100 dark:from-rink-blue-900/30 dark:to-rink-blue-800/30 border-b border-slate-200 dark:border-slate-700">
+                <CardHeader className="bg-gradient-to-r from-pitch-blue-50 to-pitch-blue-100 dark:from-pitch-blue-900/30 dark:to-pitch-blue-800/30 border-b border-slate-200 dark:border-slate-700">
                   <CardTitle className="text-xl text-slate-800 dark:text-slate-200 flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg">
+                    <div className="p-2 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg">
                       <Shield className="h-5 w-5 text-white" />
                     </div>
-                    Defensemen
+                    Defenders
                   </CardTitle>
                   <CardDescription className="text-slate-600 dark:text-slate-400">
-                    Statistics for left and right defensemen
+                    Statistics for defenders and defensive midfielders
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-6">{renderPlayerStatsTable(defensemen, true, defensePage, setDefensePage)}</CardContent>
@@ -2014,15 +2014,15 @@ export default function StatisticsPage() {
 
             <TabsContent value="goalies" className="space-y-4 mt-6">
               <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg">
-                <CardHeader className="bg-gradient-to-r from-goal-red-50 to-goal-red-100 dark:from-goal-red-900/30 dark:to-goal-red-800/30 border-b border-slate-200 dark:border-slate-700">
+                <CardHeader className="bg-gradient-to-r from-goal-orange-50 to-goal-orange-100 dark:from-goal-orange-900/30 dark:to-goal-orange-800/30 border-b border-slate-200 dark:border-slate-700">
                   <CardTitle className="text-xl text-slate-800 dark:text-slate-200 flex items-center gap-3">
-                    <div className="p-2 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
+                    <div className="p-2 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg">
                       <Trophy className="h-5 w-5 text-white" />
                     </div>
-                    Goalies
+                    Goalkeepers
                   </CardTitle>
                   <CardDescription className="text-slate-600 dark:text-slate-400">
-                    Statistics for goaltenders
+                    Statistics for goalkeepers
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-6">{renderGoalieStatsTable(goalieStats, goaliePage, setGoaliePage)}</CardContent>

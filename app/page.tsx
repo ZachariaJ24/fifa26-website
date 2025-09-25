@@ -74,7 +74,7 @@ function FloatingParticles() {
       {[...Array(30)].map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-1 h-1 bg-ice-blue-500/30 rounded-full"
+          className="absolute w-1 h-1 bg-field-green-500/30 rounded-full"
           initial={{
             x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
             y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
@@ -137,7 +137,7 @@ export default function Home() {
     {
       url: "https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200",
       title: "Welcome to FIFA 26 League",
-      subtitle: "The premier FIFA 26 competitive gaming league with advanced stat tracking",
+      subtitle: "The premier FIFA 26 competitive football league with advanced stat tracking",
     },
     {
       url: "https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200",
@@ -173,7 +173,7 @@ export default function Home() {
               url:
                 img.url && typeof img.url === "string" && img.url.trim() !== ""
                   ? img.url
-                  : `/https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200&query=${encodeURIComponent(img.title || "NHL 26 hockey league")}`,
+                  : `/https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200&query=${encodeURIComponent(img.title || "FIFA 26 football league")}`,
             }))
             setHeroImages(validatedImages)
           }
@@ -562,23 +562,23 @@ export default function Home() {
               icon: Users,
               label: "Active Players",
               value: stats.totalPlayers,
-              color: "bg-blue-500",
+              color: "bg-field-green-500",
             },
             {
               icon: Trophy,
-              label: "Teams",
+              label: "Clubs",
               value: stats.totalTeams,
-              color: "bg-emerald-500",
+              color: "bg-stadium-gold-500",
             },
             {
               icon: Calendar,
               label: "Matches",
               value: stats.totalMatches,
-              color: "bg-indigo-500",
+              color: "bg-pitch-blue-500",
             },
             {
               icon: TrendingUp,
-              color: "bg-red-500",
+              color: "bg-goal-orange-500",
             },
           ].map((stat, index) => (
             <motion.div
@@ -662,15 +662,15 @@ export default function Home() {
                       <div className="space-y-4">
                         {/* Home Team */}
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                          <div className="w-8 h-8 bg-field-green-500 rounded-full flex items-center justify-center">
                             <span className="text-white font-bold text-sm">
                               {game.home_team?.name?.charAt(0) || "H"}
                             </span>
                           </div>
                           <span className="font-semibold text-slate-800 dark:text-slate-200 flex-1">
-                            {game.home_team?.name || "Home Team"}
+                            {game.home_team?.name || "Home Club"}
                           </span>
-                          <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
+                          <span className="text-2xl font-bold text-field-green-600 dark:text-field-green-400">
                             {game.home_score || 0}
                           </span>
                         </div>
@@ -682,15 +682,15 @@ export default function Home() {
 
                         {/* Away Team */}
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                          <div className="w-8 h-8 bg-pitch-blue-500 rounded-full flex items-center justify-center">
                             <span className="text-white font-bold text-sm">
                               {game.away_team?.name?.charAt(0) || "A"}
                             </span>
                           </div>
                           <span className="font-semibold text-slate-800 dark:text-slate-200 flex-1">
-                            {game.away_team?.name || "Away Team"}
+                            {game.away_team?.name || "Away Club"}
                           </span>
-                          <span className="text-2xl font-bold text-red-600 dark:text-red-400">
+                          <span className="text-2xl font-bold text-pitch-blue-600 dark:text-pitch-blue-400">
                             {game.away_score || 0}
                           </span>
                         </div>
@@ -765,7 +765,7 @@ export default function Home() {
             <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
               <CardContent className="p-8">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-blue-500 rounded-lg">
+                  <div className="p-3 bg-field-green-500 rounded-lg">
                     <GamepadIcon className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">
@@ -775,11 +775,11 @@ export default function Home() {
                 <div className="space-y-4">
                   <p className="text-slate-600 dark:text-slate-400">
                     The FIFA 26 League is the most competitive and professionally organized FIFA 26
-                    gaming league available today. We provide a complete football simulation experience with structured
+                    football league available today. We provide a complete football simulation experience with structured
                     seasons, playoffs, and championship tournaments that mirror real football operations.
                   </p>
                   <p className="text-slate-600 dark:text-slate-400">
-                    We provide a comprehensive football experience with multiple divisions and in-depth team management. 
+                    We provide a comprehensive football experience with multiple divisions and in-depth club management. 
                     Players can engage in a full range of league activities, 
                     from transfers to a complete statistical system that tracks every detail of on-pitch performance.
                   </p>
@@ -797,7 +797,7 @@ export default function Home() {
             <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
               <CardContent className="p-8">
                 <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-emerald-500 rounded-lg">
+                  <div className="p-3 bg-stadium-gold-500 rounded-lg">
                     <Users className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">
@@ -832,7 +832,7 @@ export default function Home() {
           <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
             <CardContent className="p-12">
               <div className="max-w-4xl mx-auto">
-                <div className="p-4 bg-red-500 rounded-full w-fit mx-auto mb-6">
+                <div className="p-4 bg-goal-orange-500 rounded-full w-fit mx-auto mb-6">
                   <Trophy className="h-12 w-12 text-white" />
                 </div>
                 <h3 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-6">
@@ -857,8 +857,8 @@ export default function Home() {
                       transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
                       viewport={{ once: true }}
                     >
-                      <div className="p-3 bg-red-500/20 rounded-lg w-fit mx-auto mb-3">
-                        <item.icon className="h-6 w-6 text-red-600 dark:text-red-400" />
+                      <div className="p-3 bg-goal-orange-500/20 rounded-lg w-fit mx-auto mb-3">
+                        <item.icon className="h-6 w-6 text-goal-orange-600 dark:text-goal-orange-400" />
                       </div>
                       <h4 className="font-semibold text-slate-800 dark:text-slate-200 mb-1">
                         {item.label}
@@ -902,7 +902,7 @@ export default function Home() {
             <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-blue-500 rounded-lg">
+                  <div className="p-3 bg-pitch-blue-500 rounded-lg">
                     <BarChart3 className="h-8 w-8 text-white" />
                   </div>
                   <CardTitle className="text-xl font-bold text-slate-800 dark:text-slate-200">
@@ -918,20 +918,20 @@ export default function Home() {
                   </p>
                   <ul className="text-slate-600 dark:text-slate-400 space-y-3">
                     <li className="flex items-center gap-3">
-                      <div className="p-1 bg-blue-500/20 rounded-md">
-                        <ChartBar className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                      <div className="p-1 bg-pitch-blue-500/20 rounded-md">
+                        <ChartBar className="h-5 w-5 text-pitch-blue-600 dark:text-pitch-blue-400" />
                       </div>
                       Real-time match statistics
                     </li>
                     <li className="flex items-center gap-3">
-                      <div className="p-1 bg-blue-500/20 rounded-md">
-                        <Activity className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                      <div className="p-1 bg-pitch-blue-500/20 rounded-md">
+                        <Activity className="h-5 w-5 text-pitch-blue-600 dark:text-pitch-blue-400" />
                       </div>
                       Advanced player analytics
                     </li>
                     <li className="flex items-center gap-3">
-                      <div className="p-1 bg-blue-500/20 rounded-md">
-                        <Database className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                      <div className="p-1 bg-pitch-blue-500/20 rounded-md">
+                        <Database className="h-5 w-5 text-pitch-blue-600 dark:text-pitch-blue-400" />
                       </div>
                       Historical performance data
                     </li>
@@ -950,7 +950,7 @@ export default function Home() {
             <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-emerald-500 rounded-lg">
+                  <div className="p-3 bg-stadium-gold-500 rounded-lg">
                     <Coins className="h-8 w-8 text-white" />
                   </div>
                   <CardTitle className="text-xl font-bold text-slate-800 dark:text-slate-200">
@@ -966,20 +966,20 @@ export default function Home() {
                   </p>
                   <ul className="text-slate-600 dark:text-slate-400 space-y-3">
                     <li className="flex items-center gap-3">
-                      <div className="p-1 bg-emerald-500/20 rounded-md">
-                        <Gift className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                      <div className="p-1 bg-stadium-gold-500/20 rounded-md">
+                        <Gift className="h-5 w-5 text-stadium-gold-600 dark:text-stadium-gold-400" />
                       </div>
                       Free prize redemption
                     </li>
                     <li className="flex items-center gap-3">
-                      <div className="p-1 bg-emerald-500/20 rounded-md">
-                        <Medal className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                      <div className="p-1 bg-stadium-gold-500/20 rounded-md">
+                        <Medal className="h-5 w-5 text-stadium-gold-600 dark:text-stadium-gold-400" />
                       </div>
                       Achievement rewards
                     </li>
                     <li className="flex items-center gap-3">
-                      <div className="p-1 bg-emerald-500/20 rounded-md">
-                        <Star className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                      <div className="p-1 bg-stadium-gold-500/20 rounded-md">
+                        <Star className="h-5 w-5 text-stadium-gold-600 dark:text-stadium-gold-400" />
                       </div>
                       Exclusive league perks
                     </li>
@@ -998,7 +998,7 @@ export default function Home() {
             <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
               <CardHeader>
                 <div className="flex items-center gap-4">
-                  <div className="p-3 bg-indigo-500 rounded-lg">
+                  <div className="p-3 bg-assist-white-500 rounded-lg">
                     <Shield className="h-8 w-8 text-white" />
                   </div>
                   <CardTitle className="text-xl font-bold text-slate-800 dark:text-slate-200">
@@ -1014,20 +1014,20 @@ export default function Home() {
                   </p>
                   <ul className="text-slate-600 dark:text-slate-400 space-y-3">
                     <li className="flex items-center gap-3">
-                      <div className="p-1 bg-indigo-500/20 rounded-md">
-                        <TrendingUp className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                      <div className="p-1 bg-assist-white-500/20 rounded-md">
+                        <TrendingUp className="h-5 w-5 text-assist-white-600 dark:text-assist-white-400" />
                       </div>
-                      Advanced team management
+                      Advanced club management
                     </li>
                     <li className="flex items-center gap-3">
-                      <div className="p-1 bg-indigo-500/20 rounded-md">
-                        <Clock className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                      <div className="p-1 bg-assist-white-500/20 rounded-md">
+                        <Clock className="h-5 w-5 text-assist-white-600 dark:text-assist-white-400" />
                       </div>
                       Scheduled seasons
                     </li>
                     <li className="flex items-center gap-3">
-                      <div className="p-1 bg-indigo-500/20 rounded-md">
-                        <Award className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                      <div className="p-1 bg-assist-white-500/20 rounded-md">
+                        <Award className="h-5 w-5 text-assist-white-600 dark:text-assist-white-400" />
                       </div>
                       Championship playoffs
                     </li>
@@ -1067,14 +1067,14 @@ export default function Home() {
         ) : (
           <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
             <CardContent className="p-12 text-center">
-              <div className="p-4 bg-blue-500 rounded-full w-fit mx-auto mb-6">
+              <div className="p-4 bg-pitch-blue-500 rounded-full w-fit mx-auto mb-6">
                 <Calendar className="h-16 w-16 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">
                 No Upcoming Matches
               </h3>
               <p className="text-slate-600 dark:text-slate-400 text-lg max-w-md mx-auto">
-                Check back soon for the next round of competitive FIFA 26 games with live streaming and real-time statistics!
+                Check back soon for the next round of competitive FIFA 26 matches with live streaming and real-time statistics!
               </p>
             </CardContent>
           </Card>
@@ -1130,7 +1130,7 @@ export default function Home() {
               <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
                 <CardHeader className="pb-4">
                   <CardTitle className="flex items-center gap-3">
-                    <div className="p-2 bg-blue-500 rounded-lg">
+                    <div className="p-2 bg-field-green-500 rounded-lg">
                       <Trophy className="h-6 w-6 text-white" />
                     </div>
                     <div>
@@ -1138,7 +1138,7 @@ export default function Home() {
                         Recent Match Results
                       </div>
                       <div className="text-sm text-slate-600 dark:text-slate-400">
-                        Latest completed games with final scores and statistics
+                        Latest completed matches with final scores and statistics
                       </div>
                     </div>
                   </CardTitle>
@@ -1150,8 +1150,8 @@ export default function Home() {
             ) : (
               <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg text-center p-12">
                 <CardContent className="pt-6">
-                  <div className="p-4 bg-blue-500/20 rounded-full w-fit mx-auto mb-6">
-                    <Trophy className="h-16 w-16 text-blue-600 dark:text-blue-400" />
+                  <div className="p-4 bg-field-green-500/20 rounded-full w-fit mx-auto mb-6">
+                    <Trophy className="h-16 w-16 text-field-green-600 dark:text-field-green-400" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-3">
                     No Completed Matches Yet
@@ -1181,7 +1181,7 @@ export default function Home() {
               <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
                 <CardHeader className="pb-4">
                   <CardTitle className="flex items-center gap-3">
-                    <div className="p-2 bg-indigo-500 rounded-lg">
+                    <div className="p-2 bg-pitch-blue-500 rounded-lg">
                       <Target className="h-6 w-6 text-white" />
                     </div>
                     <div>
@@ -1189,23 +1189,23 @@ export default function Home() {
                         League Standings
                       </div>
                       <div className="text-sm text-slate-600 dark:text-slate-400">
-                        Current team rankings and playoff race positions
+                        Current club rankings and playoff race positions
                       </div>
                     </div>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="mb-6 p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl border border-emerald-200 dark:border-emerald-700">
+                  <div className="mb-6 p-4 bg-field-green-50 dark:bg-field-green-900/20 rounded-xl border border-field-green-200 dark:border-field-green-700">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 bg-emerald-500 rounded-lg">
+                      <div className="p-2 bg-field-green-500 rounded-lg">
                         <TrendingUp className="h-5 w-5 text-white" />
                       </div>
-                      <h4 className="font-semibold text-emerald-800 dark:text-emerald-200">
+                      <h4 className="font-semibold text-field-green-800 dark:text-field-green-200">
                         Playoff Race Update
                       </h4>
                     </div>
-                    <p className="text-sm text-emerald-700 dark:text-emerald-300">
-                      Top 8 teams qualify for playoffs. Current standings show {standings.slice(0, 8).length} teams in playoff positions.
+                    <p className="text-sm text-field-green-700 dark:text-field-green-300">
+                      Top 8 clubs qualify for playoffs. Current standings show {standings.slice(0, 8).length} clubs in playoff positions.
                     </p>
                   </div>
                   <TeamStandings teams={standings} />
@@ -1214,8 +1214,8 @@ export default function Home() {
             ) : (
               <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg text-center p-12">
                 <CardContent className="pt-6">
-                  <div className="p-4 bg-indigo-500/20 rounded-full w-fit mx-auto mb-6">
-                    <Trophy className="h-16 w-16 text-indigo-600 dark:text-indigo-400" />
+                  <div className="p-4 bg-pitch-blue-500/20 rounded-full w-fit mx-auto mb-6">
+                    <Trophy className="h-16 w-16 text-pitch-blue-600 dark:text-pitch-blue-400" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-3">
                     Standings Not Available
@@ -1240,7 +1240,7 @@ export default function Home() {
       >
         <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
           <CardContent className="p-16 text-center">
-            <div className="p-4 bg-red-500 rounded-full w-fit mx-auto mb-8">
+            <div className="p-4 bg-goal-orange-500 rounded-full w-fit mx-auto mb-8">
               <Crown className="h-16 w-16 text-white" />
             </div>
 
@@ -1262,7 +1262,7 @@ export default function Home() {
               <Button
                 asChild
                 size="lg"
-                className="bg-blue-500 hover:bg-blue-600 text-white text-lg px-8 py-4"
+                className="bg-field-green-500 hover:bg-field-green-600 text-white text-lg px-8 py-4"
               >
                 <Link href="/register" className="flex items-center gap-3">
                   <Zap className="h-6 w-6" />
@@ -1294,9 +1294,9 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
               {[
-                { value: "100%", label: "Free to Play", icon: Gift, color: "bg-emerald-500" },
-                { value: "24/7", label: "Stat Tracking", icon: Activity, color: "bg-blue-500" },
-                { value: "Real", label: "Prize Rewards", icon: Trophy, color: "bg-red-500" }
+                { value: "100%", label: "Free to Play", icon: Gift, color: "bg-field-green-500" },
+                { value: "24/7", label: "Stat Tracking", icon: Activity, color: "bg-pitch-blue-500" },
+                { value: "Real", label: "Prize Rewards", icon: Trophy, color: "bg-goal-orange-500" }
               ].map((stat, index) => (
                 <div key={stat.label} className="text-center">
                   <div className={`p-4 ${stat.color} rounded-full w-fit mx-auto mb-4`}>
@@ -1369,7 +1369,7 @@ export default function Home() {
         ) : (
           <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg text-center p-16">
             <CardContent className="pt-6">
-              <div className="p-4 bg-red-500 rounded-full w-fit mx-auto mb-8">
+              <div className="p-4 bg-stadium-gold-500 rounded-full w-fit mx-auto mb-8">
                 <Star className="h-16 w-16 text-white" />
               </div>
               <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">
