@@ -1,42 +1,191 @@
 import { NextResponse } from "next/server"
-import { calculateStandings, getCurrentSeasonId } from "@/lib/standings-calculator"
+import { createClient } from "@/lib/supabase/server"
+import { cookies } from "next/headers"
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    console.log("=== STANDINGS API CALLED ===")
-    
-    // Get season ID from query params or use current season
-    const url = new URL(request.url)
-    const seasonId = url.searchParams.get("seasonId")
+    const cookieStore = cookies()
+    const supabase = createClient(cookieStore)
 
-    let seasonIdNumber: number
+    // Get current active season
+    const { data: seasonData, error: seasonError } = await supabase
+      .from("seasons")
+      .select("id, name")
+      .eq("is_active", true)
+      .single()
 
-    if (seasonId) {
-      seasonIdNumber = Number.parseInt(seasonId, 10)
-      if (isNaN(seasonIdNumber)) {
-        console.log("Invalid season ID provided:", seasonId)
-        return NextResponse.json({ error: "Invalid season ID" }, { status: 400 })
-      }
-    } else {
-      // Get current season ID
-      console.log("Getting current season ID...")
-      seasonIdNumber = await getCurrentSeasonId()
-      console.log("Current season ID:", seasonIdNumber)
+    if (seasonError) {
+      return NextResponse.json({ error: "No active season found" }, { status: 404 })
     }
 
-    console.log(`Fetching standings for season ${seasonIdNumber}`)
+    // Get teams with conference data
+    const { data: teamsData, error: teamsError } = await supabase
+      .from("teams")
+      .select(`
+        id,
+        name,
+        logo_url,
+        conference_id,
+        division,
+        wins,
+        losses,
+        otl,
+        points,
+        goals_for,
+        goals_against,
+        games_played,
+        conferences(
+          id,
+          name,
+          color,
+          description
+        )
+      `)
+      .eq("is_active", true)
 
-    // Calculate standings
-    const standings = await calculateStandings(seasonIdNumber)
+    if (teamsError) {
+      return NextResponse.json({ error: teamsError.message }, { status: 500 })
+    }
 
-    console.log(`Returning ${standings.length} team standings`)
-    console.log("Standings data:", standings)
-    console.log("=== END STANDINGS API ===")
+    // Get completed matches for the current season
+    const { data: matchesData, error: matchesError } = await supabase
+      .from("matches")
+      .select(`
+        id,
+        home_team_id,
+        away_team_id,
+        home_score,
+        away_score,
+        status,
+        overtime,
+        has_overtime
+      `)
+      .eq("season_id", seasonData.id)
+      .eq("status", "completed")
 
-    return NextResponse.json({ standings, seasonId: seasonIdNumber })
+    if (matchesError) {
+      return NextResponse.json({ error: matchesError.message }, { status: 500 })
+    }
+
+    // Calculate standings for each team
+    const calculatedStandings = teamsData.map((team: any) => {
+      let wins = 0
+      let losses = 0
+      let otl = 0
+      let goalsFor = 0
+      let goalsAgainst = 0
+
+      // Calculate stats from matches
+      matchesData.forEach((match: any) => {
+        if (match.home_team_id === team.id) {
+          goalsFor += match.home_score || 0
+          goalsAgainst += match.away_score || 0
+          
+          if (match.home_score > match.away_score) {
+            wins++
+          } else if (match.home_score < match.away_score) {
+            if (match.overtime || match.has_overtime) {
+              otl++
+            } else {
+              losses++
+            }
+          } else {
+            // Tie counts as loss if no overtime/shootout
+            losses++
+          }
+        } else if (match.away_team_id === team.id) {
+          goalsFor += match.away_score || 0
+          goalsAgainst += match.home_score || 0
+          
+          if (match.away_score > match.home_score) {
+            wins++
+          } else if (match.away_score < match.home_score) {
+            if (match.overtime || match.has_overtime) {
+              otl++
+            } else {
+              losses++
+            }
+          } else {
+            // Tie counts as loss if no overtime/shootout
+            losses++
+          }
+        }
+      })
+
+      const gamesPlayed = wins + losses + otl
+      const points = wins * 3 + otl * 1 // 3 points for win, 1 for OTL
+      const goalDifferential = goalsFor - goalsAgainst
+
+      return {
+        id: team.id,
+        name: team.name,
+        logo_url: team.logo_url,
+        wins,
+        losses,
+        otl,
+        games_played: gamesPlayed,
+        points,
+        goals_for: goalsFor,
+        goals_against: goalsAgainst,
+        goal_differential: goalDifferential,
+        division: team.division,
+        conference: team.conferences?.name || "No Conference",
+        conference_id: team.conference_id,
+        conference_color: team.conferences?.color || "#6B7280",
+        conferences: team.conferences
+      }
+    })
+
+    // Sort by points (descending), then by wins (descending), then by goal differential (descending)
+    calculatedStandings.sort((a, b) => {
+      if (b.points !== a.points) return b.points - a.points
+      if (b.wins !== a.wins) return b.wins - a.wins
+      return b.goal_differential - a.goal_differential
+    })
+
+    // Group teams by conference
+    const standingsByConference = calculatedStandings.reduce((acc: any, team: any) => {
+      const conference = team.conferences
+      
+      // Handle teams without conferences
+      const conferenceName = conference ? conference.name : "No Conference"
+      const conferenceData = conference || {
+        id: "no-conference",
+        name: "No Conference",
+        color: "#6B7280",
+        description: "Teams not assigned to any conference"
+      }
+      
+      if (!acc[conferenceName]) {
+        acc[conferenceName] = {
+          conference: conferenceData,
+          teams: []
+        }
+      }
+      
+      acc[conferenceName].teams.push(team)
+      
+      return acc
+    }, {})
+
+    // Sort teams within each conference by points, then wins, then goal differential
+    Object.keys(standingsByConference).forEach(conferenceName => {
+      standingsByConference[conferenceName].teams.sort((a: any, b: any) => {
+        if (b.points !== a.points) return b.points - a.points
+        if (b.wins !== a.wins) return b.wins - a.wins
+        return b.goal_differential - a.goal_differential
+      })
+    })
+
+    return NextResponse.json({
+      season: seasonData.name,
+      standings: calculatedStandings,
+      standingsByConference: Object.values(standingsByConference),
+      totalTeams: calculatedStandings.length,
+      completedMatches: matchesData.length
+    })
   } catch (error: any) {
-    console.error("Error in standings API:", error)
-    console.error("Error stack:", error.stack)
-    return NextResponse.json({ error: `Error fetching standings: ${error.message}` }, { status: 500 })
+    console.error("Error fetching standings:", error)
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

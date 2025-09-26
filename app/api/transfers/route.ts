@@ -1,262 +1,311 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { createClient } from "@supabase/supabase-js"
+import { NextResponse } from "next/server"
+import { createClient } from "@/lib/supabase/server"
+import { cookies } from "next/headers"
 
-// Create admin client to bypass RLS
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-
-if (!supabaseUrl || !supabaseServiceKey) {
-  console.error("Missing Supabase environment variables")
-  console.error("NEXT_PUBLIC_SUPABASE_URL:", !!supabaseUrl)
-  console.error("SUPABASE_SERVICE_ROLE_KEY:", !!supabaseServiceKey)
-}
-
-const adminClient = supabaseUrl && supabaseServiceKey 
-  ? createClient(supabaseUrl, supabaseServiceKey)
-  : null
-
-// Create regular client for session validation
-const createRouteHandlerClient = () => {
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  if (!supabaseUrl || !anonKey) {
-    throw new Error("Missing Supabase environment variables for client creation")
-  }
-  return createClient(supabaseUrl, anonKey)
-}
-
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   try {
-    console.log("Free agents API called")
+    const cookieStore = cookies()
+    const supabase = createClient(cookieStore)
 
-    // Get query parameters to determine if we should filter by approval status
     const { searchParams } = new URL(request.url)
-    const approvedOnly = searchParams.get('approved_only') === 'true'
-    
-    console.log("Approved only filter:", approvedOnly)
+    const type = searchParams.get("type") || "offers" // offers, signings, completed
+    const status = searchParams.get("status")
+    const team_id = searchParams.get("team_id")
 
-    // Check if admin client is available
-    if (!adminClient) {
-      console.error("Admin client not available - missing environment variables")
-      return NextResponse.json(
-        {
-          freeAgents: [],
-          error: "Server configuration error - missing environment variables",
-          debug: {
-            message: "Admin client not available",
-            hasSupabaseUrl: !!supabaseUrl,
-            hasServiceKey: !!supabaseServiceKey,
-          },
-        },
-        { status: 500 }
-      )
-    }
+    let query
 
-    // Optional authentication - don't require it for public viewing
-    let authenticatedUser = null
-    const authHeader = request.headers.get("authorization")
+    if (type === "offers") {
+      query = supabase
+        .from("player_transfer_offers")
+        .select(`
+          id,
+          player_id,
+          from_team_id,
+          to_team_id,
+          offer_amount,
+          status,
+          expires_at,
+          created_at,
+          updated_at,
+          player:players(
+            id,
+            name,
+            position,
+            overall_rating,
+            salary
+          ),
+          from_team:teams!from_team_id(
+            id,
+            name,
+            logo_url,
+            conferences(
+              id,
+              name,
+              color
+            )
+          ),
+          to_team:teams!to_team_id(
+            id,
+            name,
+            logo_url,
+            conferences(
+              id,
+              name,
+              color
+            )
+          )
+        `)
 
-    if (authHeader) {
-      try {
-        const supabase = createRouteHandlerClient()
-        const token = authHeader.replace("Bearer ", "")
-        const {
-          data: { user },
-          error: authError,
-        } = await supabase.auth.getUser(token)
-
-        if (!authError && user) {
-          authenticatedUser = user
-          console.log("User authenticated:", user.id)
-        } else {
-          console.log("Auth validation failed, but continuing as public:", authError?.message)
-        }
-      } catch (authError) {
-        console.log("Auth error, but continuing as public:", authError)
+      if (status) {
+        query = query.eq("status", status)
       }
-    } else {
-      console.log("No auth header provided, serving public data")
+
+      if (team_id) {
+        query = query.or(`from_team_id.eq.${team_id},to_team_id.eq.${team_id}`)
+      }
+
+      const { data: offers, error } = await query
+        .order("created_at", { ascending: false })
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      return NextResponse.json(offers)
     }
 
-    console.log("Fetching free agents using admin client...")
+    if (type === "signings") {
+      query = supabase
+        .from("player_signings")
+        .select(`
+          id,
+          player_id,
+          team_id,
+          signing_amount,
+          contract_length,
+          status,
+          created_at,
+          updated_at,
+          player:players(
+            id,
+            name,
+            position,
+            overall_rating,
+            salary
+          ),
+          team:teams(
+            id,
+            name,
+            logo_url,
+            conferences(
+              id,
+              name,
+              color
+            )
+          )
+        `)
 
-    // First, get the active season
-    const { data: activeSeason, error: seasonError } = await adminClient
-      .from("seasons")
-      .select("id")
-      .eq("is_active", true)
-      .single()
+      if (status) {
+        query = query.eq("status", status)
+      }
 
-    if (seasonError || !activeSeason) {
-      console.error("Error fetching active season:", seasonError)
-      return NextResponse.json({
-        freeAgents: [],
-        debug: {
-          message: "No active season found",
-          error: seasonError?.message,
-        },
-      })
+      if (team_id) {
+        query = query.eq("team_id", team_id)
+      }
+
+      const { data: signings, error } = await query
+        .order("created_at", { ascending: false })
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      return NextResponse.json(signings)
     }
 
-    console.log("Active season ID:", activeSeason.id)
+    if (type === "completed") {
+      query = supabase
+        .from("player_transfers")
+        .select(`
+          id,
+          player_id,
+          from_team_id,
+          to_team_id,
+          transfer_amount,
+          transfer_date,
+          created_at,
+          player:players(
+            id,
+            name,
+            position,
+            overall_rating
+          ),
+          from_team:teams!from_team_id(
+            id,
+            name,
+            logo_url,
+            conferences(
+              id,
+              name,
+              color
+            )
+          ),
+          to_team:teams!to_team_id(
+            id,
+            name,
+            logo_url,
+            conferences(
+              id,
+              name,
+              color
+            )
+          )
+        `)
 
-    // Get season registrations for the active season (for enhanced data)
-    // Filter by approval status if requested
-    let registrationsQuery = adminClient
-      .from("season_registrations")
-      .select(`
-        user_id,
-        primary_position,
-        secondary_position,
-        gamer_tag,
-        console,
-        status
-      `)
-      .eq("season_id", activeSeason.id)
-    
-    if (approvedOnly) {
-      registrationsQuery = registrationsQuery.eq("status", "Approved")
-    }
-    
-    const { data: allRegistrations, error: registrationsError } = await registrationsQuery
+      if (team_id) {
+        query = query.or(`from_team_id.eq.${team_id},to_team_id.eq.${team_id}`)
+      }
 
-    if (registrationsError) {
-      console.error("Error fetching season registrations:", registrationsError)
-      throw registrationsError
-    }
+      const { data: transfers, error } = await query
+        .order("transfer_date", { ascending: false })
 
-    console.log(`Found ${allRegistrations?.length || 0} season registrations${approvedOnly ? ' (approved only)' : ''}`)
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
 
-    if (!allRegistrations || allRegistrations.length === 0) {
-      return NextResponse.json({
-        freeAgents: [],
-        authenticated: !!authenticatedUser,
-        debug: {
-          message: approvedOnly ? "No approved registrations found for active season" : "No season registrations found for active season",
-          seasonId: activeSeason.id,
-          approvedOnly,
-        },
-      })
-    }
-
-    // Get the user IDs from all registrations
-    const registeredUserIds = allRegistrations.map((reg) => reg.user_id)
-
-    // Get players without teams who have season registrations
-    const { data: playersWithoutTeams, error: playersError } = await adminClient
-      .from("players")
-      .select("id, salary, user_id")
-      .is("team_id", null)
-      .in("user_id", registeredUserIds)
-
-    if (playersError) {
-      console.error("Error fetching players without teams:", playersError)
-      throw playersError
+      return NextResponse.json(transfers)
     }
 
-    console.log(`Found ${playersWithoutTeams?.length || 0} free agent players with season registrations`)
-
-    if (!playersWithoutTeams || playersWithoutTeams.length === 0) {
-      return NextResponse.json({
-        freeAgents: [],
-        authenticated: !!authenticatedUser,
-        debug: {
-          message: "No free agent players found with season registrations",
-          totalRegistrations: allRegistrations.length,
-        },
-      })
-    }
-
-    // Get user data for the free agent players
-    const playerUserIds = playersWithoutTeams.map((p) => p.user_id)
-    const { data: users, error: usersError } = await adminClient
-      .from("users")
-      .select(`
-        id,
-        gamer_tag_id,
-        primary_position,
-        secondary_position,
-        console,
-        avatar_url
-      `)
-      .in("id", playerUserIds)
-
-    if (usersError) {
-      console.error("Error fetching users:", usersError)
-      throw usersError
-    }
-
-    console.log(`Found ${users?.length || 0} user records`)
-
-    // Combine the data, prioritizing registration data over user data
-    const enhancedFreeAgents = playersWithoutTeams
-      .map((player) => {
-        const user = users?.find((u) => u.id === player.user_id)
-        const registration = allRegistrations?.find((reg) => reg.user_id === player.user_id)
-
-        if (!user || !registration) {
-          console.log(`Missing data for player ${player.id}: user=${!!user}, registration=${!!registration}`)
-          return null
-        }
-
-        return {
-          ...player,
-          users: {
-            id: user.id,
-            gamer_tag_id: registration.gamer_tag || user.gamer_tag_id || "Unknown Player",
-            primary_position: registration.primary_position || user.primary_position || "Unknown",
-            secondary_position: registration.secondary_position || user.secondary_position,
-            console: registration.console || user.console || "Unknown",
-            avatar_url: user.avatar_url,
-          },
-          registration_status: registration.status, // Include registration status
-        }
-      })
-      .filter(Boolean)
-      .sort((a, b) => (b?.salary || 0) - (a?.salary || 0))
-
-    console.log(`Final enhanced free agents count: ${enhancedFreeAgents.length}`)
-    
-    // Debug: Count positions to see what we have
-    const positionCounts = enhancedFreeAgents.reduce((acc, player) => {
-      const position = player.users?.primary_position?.toLowerCase() || 'unknown'
-      acc[position] = (acc[position] || 0) + 1
-      return acc
-    }, {} as Record<string, number>)
-    
-    console.log("Position counts:", positionCounts)
-    
-    // Debug: Count goalies specifically
-    const goalies = enhancedFreeAgents.filter(player => 
-      player.users?.primary_position?.toLowerCase().includes('goalie') || 
-      player.users?.primary_position?.toLowerCase().includes('goalkeeper') ||
-      player.users?.primary_position?.toLowerCase() === 'g'
-    )
-    console.log(`Goalies found: ${goalies.length}`)
-
-    return NextResponse.json({
-      freeAgents: enhancedFreeAgents,
-      authenticated: !!authenticatedUser,
-      debug: {
-        message: approvedOnly ? "Successfully fetched approved free agents" : "Successfully fetched free agents with season registrations",
-        seasonId: activeSeason.id,
-        totalRegistrations: allRegistrations.length,
-        playersWithoutTeams: playersWithoutTeams.length,
-        usersCount: users?.length || 0,
-        finalCount: enhancedFreeAgents.length,
-        approvedOnly,
-      },
-    })
+    return NextResponse.json({ error: "Invalid type parameter" }, { status: 400 })
   } catch (error: any) {
-    console.error("Error in free agents API:", error)
-    return NextResponse.json(
-      {
-        error: error.message || "Failed to fetch free agents",
-        debug: {
-          message: "API error occurred",
-          error: error.message,
-        },
-      },
-      { status: 500 },
-    )
+    console.error("Error fetching transfers:", error)
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const cookieStore = cookies()
+    const supabase = createClient(cookieStore)
+
+    // Check if user is authenticated
+    const {
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser()
+
+    if (userError || !user) {
+      return NextResponse.json({ error: "Authentication required" }, { status: 401 })
+    }
+
+    const body = await request.json()
+    const { type, player_id, team_id, amount, contract_length } = body
+
+    if (!type || !player_id || !team_id) {
+      return NextResponse.json({ error: "Type, player_id, and team_id are required" }, { status: 400 })
+    }
+
+    if (type === "signing") {
+      // Create direct signing
+      const { data: signing, error } = await supabase
+        .from("player_signings")
+        .insert({
+          player_id,
+          team_id,
+          signing_amount: amount || 0,
+          contract_length: contract_length || 1,
+          status: "active"
+        })
+        .select(`
+          id,
+          player_id,
+          team_id,
+          signing_amount,
+          contract_length,
+          status,
+          player:players(
+            id,
+            name,
+            position,
+            overall_rating
+          ),
+          team:teams(
+            id,
+            name,
+            logo_url
+          )
+        `)
+        .single()
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      // Update player's team
+      const { error: updateError } = await supabase
+        .from("players")
+        .update({ team_id })
+        .eq("id", player_id)
+
+      if (updateError) {
+        return NextResponse.json({ error: updateError.message }, { status: 500 })
+      }
+
+      return NextResponse.json(signing, { status: 201 })
+    }
+
+    if (type === "offer") {
+      // Create transfer offer
+      const expiresAt = new Date()
+      expiresAt.setDate(expiresAt.getDate() + 7) // 7 days from now
+
+      const { data: offer, error } = await supabase
+        .from("player_transfer_offers")
+        .insert({
+          player_id,
+          from_team_id: body.from_team_id,
+          to_team_id: team_id,
+          offer_amount: amount || 0,
+          status: "pending",
+          expires_at: expiresAt.toISOString()
+        })
+        .select(`
+          id,
+          player_id,
+          from_team_id,
+          to_team_id,
+          offer_amount,
+          status,
+          expires_at,
+          player:players(
+            id,
+            name,
+            position,
+            overall_rating
+          ),
+          from_team:teams!from_team_id(
+            id,
+            name,
+            logo_url
+          ),
+          to_team:teams!to_team_id(
+            id,
+            name,
+            logo_url
+          )
+        `)
+        .single()
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 })
+      }
+
+      return NextResponse.json(offer, { status: 201 })
+    }
+
+    return NextResponse.json({ error: "Invalid type parameter" }, { status: 400 })
+  } catch (error: any) {
+    console.error("Error creating transfer:", error)
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
   }
 }

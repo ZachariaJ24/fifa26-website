@@ -370,10 +370,14 @@ export default function Home() {
           console.log("=== STARTING STANDINGS FETCH ===")
           console.log("Fetching standings using unified calculation...")
           
-          // Import the unified standings calculator
-          const { calculateUnifiedStandingsClient } = await import("@/lib/standings-calculator-unified")
-          
-          const { standings } = await calculateUnifiedStandingsClient(supabase)
+        // Use the new unified standings API
+        const response = await fetch('/api/standings')
+        if (!response.ok) {
+          throw new Error('Failed to fetch standings')
+        }
+        
+        const data = await response.json()
+        const standings = data.standings
 
           console.log(`Calculated standings for ${standings.length} teams`)
           console.log("Sample standings data:", standings.slice(0, 2))

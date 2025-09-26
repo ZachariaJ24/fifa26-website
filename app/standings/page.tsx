@@ -157,12 +157,14 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
         setLoading(true)
         setError(null)
 
-        // Import the unified standings calculator
-        const { calculateUnifiedStandingsClient } = await import("@/lib/standings-calculator-unified")
+        // Use the new unified standings API
+        const response = await fetch('/api/standings')
+        if (!response.ok) {
+          throw new Error('Failed to fetch standings')
+        }
         
-        const { standings } = await calculateUnifiedStandingsClient(supabase)
-
-        setStandings(standings)
+        const data = await response.json()
+        setStandings(data.standings)
       } catch (err) {
         console.error("Error in fetchStandings:", err)
         setError("An unexpected error occurred")

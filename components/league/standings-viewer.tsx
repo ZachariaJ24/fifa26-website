@@ -54,10 +54,14 @@ export function StandingsViewer() {
       setLoading(true)
       setError(null)
 
-      // Import the unified standings calculator
-      const { calculateUnifiedStandingsClient } = await import("@/lib/standings-calculator-unified")
+      // Use the new unified standings API
+      const response = await fetch('/api/standings')
+      if (!response.ok) {
+        throw new Error('Failed to fetch standings')
+      }
       
-      const { standingsByConference } = await calculateUnifiedStandingsClient(supabase)
+      const data = await response.json()
+      const standingsByConference = data.standingsByConference
 
       setStandings(standingsByConference)
     } catch (error: any) {
