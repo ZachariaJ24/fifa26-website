@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Search, Users, Trophy } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { createClient } from "@/lib/supabase/client"
+import { useSupabase } from "@/lib/supabase/client"
 
 interface Team {
   id: string
@@ -43,11 +43,11 @@ export function TeamManager() {
   const [saving, setSaving] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const { toast } = useToast()
-  const supabase = createClient()
+  const { supabase } = useSupabase()
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [supabase])
 
   const fetchData = async () => {
     try {

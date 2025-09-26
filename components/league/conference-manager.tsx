@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Plus, Edit, Trash2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { createClient } from "@/lib/supabase/client"
+import { useSupabase } from "@/lib/supabase/client"
 
 interface Conference {
   id: string
@@ -29,11 +29,11 @@ export function ConferenceManager() {
     color: "#3B82F6"
   })
   const { toast } = useToast()
-  const supabase = createClient()
+  const { supabase } = useSupabase()
 
   useEffect(() => {
     fetchConferences()
-  }, [])
+  }, [supabase])
 
   const fetchConferences = async () => {
     try {

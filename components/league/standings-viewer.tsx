@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Trophy, TrendingUp, TrendingDown } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { createClient } from "@/lib/supabase/client"
+import { useSupabase } from "@/lib/supabase/client"
 
 interface TeamStanding {
   id: string
@@ -43,11 +43,11 @@ export function StandingsViewer() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const { toast } = useToast()
-  const supabase = createClient()
+  const { supabase } = useSupabase()
 
   useEffect(() => {
     fetchStandings()
-  }, [])
+  }, [supabase])
 
   const fetchStandings = async () => {
     try {
