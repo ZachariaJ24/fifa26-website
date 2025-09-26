@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Plus, Edit, Trash2 } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { createClient } from "@/lib/supabase/client"
 
 interface Conference {
   id: string
@@ -28,6 +29,7 @@ export function ConferenceManager() {
     color: "#3B82F6"
   })
   const { toast } = useToast()
+  const supabase = createClient()
 
   useEffect(() => {
     fetchConferences()
@@ -36,19 +38,23 @@ export function ConferenceManager() {
   const fetchConferences = async () => {
     try {
       setLoading(true)
-      const response = await fetch("/api/league/conferences")
       
-      if (!response.ok) {
-        throw new Error("Failed to fetch conferences")
+      const { data, error } = await supabase
+        .from("conferences")
+        .select("*")
+        .eq("is_active", true)
+        .order("name")
+
+      if (error) {
+        throw error
       }
 
-      const data = await response.json()
-      setConferences(data)
-    } catch (error) {
+      setConferences(data || [])
+    } catch (error: any) {
       console.error("Error fetching conferences:", error)
       toast({
         title: "Error",
-        description: "Failed to fetch conferences",
+        description: error.message || "Failed to fetch conferences",
         variant: "destructive",
       })
     } finally {
@@ -59,20 +65,18 @@ export function ConferenceManager() {
   const handleCreateConference = async () => {
     try {
       setSaving(true)
-      const response = await fetch("/api/league/conferences", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
+      
+      const { data, error } = await supabase
+        .from("conferences")
+        .insert(formData)
+        .select()
+        .single()
 
-      if (!response.ok) {
-        throw new Error("Failed to create conference")
+      if (error) {
+        throw error
       }
 
-      const newConference = await response.json()
-      setConferences([...conferences, newConference])
+      setConferences([...conferences, data])
       setFormData({ name: "", description: "", color: "#3B82F6" })
       setShowForm(false)
       
@@ -80,11 +84,11 @@ export function ConferenceManager() {
         title: "Success",
         description: "Conference created successfully",
       })
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error creating conference:", error)
       toast({
         title: "Error",
-        description: "Failed to create conference",
+        description: error.message || "Failed to create conference",
         variant: "destructive",
       })
     } finally {

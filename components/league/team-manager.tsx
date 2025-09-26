@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Search, Users, Trophy } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { createClient } from "@/lib/supabase/client"
 
 interface Team {
   id: string
@@ -42,6 +43,7 @@ export function TeamManager() {
   const [saving, setSaving] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const { toast } = useToast()
+  const supabase = createClient()
 
   useEffect(() => {
     fetchData()
@@ -50,27 +52,48 @@ export function TeamManager() {
   const fetchData = async () => {
     try {
       setLoading(true)
-      const [teamsResponse, conferencesResponse] = await Promise.all([
-        fetch("/api/league/teams"),
-        fetch("/api/league/conferences")
+      
+      const [teamsResult, conferencesResult] = await Promise.all([
+        supabase
+          .from("teams")
+          .select(`
+            id,
+            name,
+            logo_url,
+            conference_id,
+            is_active,
+            wins,
+            losses,
+            otl,
+            points,
+            goals_for,
+            goals_against,
+            games_played,
+            conferences(name, color)
+          `)
+          .eq("is_active", true)
+          .order("name"),
+        supabase
+          .from("conferences")
+          .select("*")
+          .eq("is_active", true)
+          .order("name")
       ])
 
-      if (!teamsResponse.ok || !conferencesResponse.ok) {
-        throw new Error("Failed to fetch data")
+      if (teamsResult.error) {
+        throw teamsResult.error
+      }
+      if (conferencesResult.error) {
+        throw conferencesResult.error
       }
 
-      const [teamsData, conferencesData] = await Promise.all([
-        teamsResponse.json(),
-        conferencesResponse.json()
-      ])
-
-      setTeams(teamsData)
-      setConferences(conferencesData)
-    } catch (error) {
+      setTeams(teamsResult.data || [])
+      setConferences(conferencesResult.data || [])
+    } catch (error: any) {
       console.error("Error fetching data:", error)
       toast({
         title: "Error",
-        description: "Failed to fetch data",
+        description: error.message || "Failed to fetch data",
         variant: "destructive",
       })
     } finally {
@@ -81,32 +104,35 @@ export function TeamManager() {
   const handleConferenceChange = async (teamId: string, conferenceId: string) => {
     try {
       setSaving(true)
-      const response = await fetch("/api/league/teams", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ teamId, conferenceId }),
-      })
+      
+      // Convert "none" to null for database
+      const actualConferenceId = conferenceId === "none" ? null : conferenceId
+      
+      const { data, error } = await supabase
+        .from("teams")
+        .update({ conference_id: actualConferenceId })
+        .eq("id", teamId)
+        .select()
+        .single()
 
-      if (!response.ok) {
-        throw new Error("Failed to update team")
+      if (error) {
+        throw error
       }
 
       // Update local state
       setTeams(teams.map(team => 
-        team.id === teamId ? { ...team, conference_id: conferenceId } : team
+        team.id === teamId ? { ...team, conference_id: actualConferenceId } : team
       ))
 
       toast({
         title: "Success",
         description: "Team conference updated successfully",
       })
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error updating team:", error)
       toast({
         title: "Error",
-        description: "Failed to update team",
+        description: error.message || "Failed to update team",
         variant: "destructive",
       })
     } finally {
@@ -177,7 +203,7 @@ export function TeamManager() {
                 <div className="flex items-center gap-2">
                   <Label htmlFor={`conference-${team.id}`}>Conference:</Label>
                   <Select
-                    value={team.conference_id || ""}
+                    value={team.conference_id || "none"}
                     onValueChange={(value) => handleConferenceChange(team.id, value)}
                     disabled={saving}
                   >
@@ -185,7 +211,7 @@ export function TeamManager() {
                       <SelectValue placeholder="Select conference" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">No Conference</SelectItem>
+                      <SelectItem value="none">No Conference</SelectItem>
                       {conferences.map((conference) => (
                         <SelectItem key={conference.id} value={conference.id}>
                           {conference.name}

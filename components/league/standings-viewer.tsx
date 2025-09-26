@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Trophy, TrendingUp, TrendingDown } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
+import { createClient } from "@/lib/supabase/client"
 
 interface TeamStanding {
   id: string
@@ -41,6 +42,7 @@ export function StandingsViewer() {
   const [standings, setStandings] = useState<StandingsData>({})
   const [loading, setLoading] = useState(true)
   const { toast } = useToast()
+  const supabase = createClient()
 
   useEffect(() => {
     fetchStandings()
@@ -49,19 +51,66 @@ export function StandingsViewer() {
   const fetchStandings = async () => {
     try {
       setLoading(true)
-      const response = await fetch("/api/league/standings")
       
-      if (!response.ok) {
-        throw new Error("Failed to fetch standings")
+      const { data: teams, error } = await supabase
+        .from("teams")
+        .select(`
+          id,
+          name,
+          logo_url,
+          conference_id,
+          wins,
+          losses,
+          otl,
+          points,
+          goals_for,
+          goals_against,
+          games_played,
+          conferences(name, color)
+        `)
+        .eq("is_active", true)
+        .order("points", { ascending: false })
+
+      if (error) {
+        throw error
       }
 
-      const data = await response.json()
-      setStandings(data)
-    } catch (error) {
+      // Group teams by conference
+      const standingsByConference = teams?.reduce((acc: any, team: any) => {
+        const conferenceName = team.conferences?.name || "No Conference"
+        if (!acc[conferenceName]) {
+          acc[conferenceName] = {
+            conference: team.conferences || { name: conferenceName, color: "#6B7280" },
+            teams: []
+          }
+        }
+        
+        // Calculate goal differential
+        const goalDifferential = (team.goals_for || 0) - (team.goals_against || 0)
+        
+        acc[conferenceName].teams.push({
+          ...team,
+          goal_differential: goalDifferential
+        })
+        
+        return acc
+      }, {}) || {}
+
+      // Sort teams within each conference by points, then wins, then goal differential
+      Object.keys(standingsByConference).forEach(conferenceName => {
+        standingsByConference[conferenceName].teams.sort((a: any, b: any) => {
+          if (b.points !== a.points) return b.points - a.points
+          if (b.wins !== a.wins) return b.wins - a.wins
+          return b.goal_differential - a.goal_differential
+        })
+      })
+
+      setStandings(standingsByConference)
+    } catch (error: any) {
       console.error("Error fetching standings:", error)
       toast({
         title: "Error",
-        description: "Failed to fetch standings",
+        description: error.message || "Failed to fetch standings",
         variant: "destructive",
       })
     } finally {
@@ -94,69 +143,126 @@ export function StandingsViewer() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {Object.entries(standings).map(([conferenceName, conferenceData]) => (
-        <Card key={conferenceName}>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Trophy className="h-5 w-5" />
-              {conferenceName}
-              <Badge 
-                variant="secondary"
-                style={{ backgroundColor: conferenceData.conference.color + '20', color: conferenceData.conference.color }}
-              >
-                {conferenceData.teams.length} Teams
-              </Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {conferenceData.teams.map((team, index) => {
-                const prStatus = getPromotionRelegationStatus(team, index + 1, conferenceData.teams.length)
-                const PrIcon = prStatus.icon
-                
-                return (
-                  <div
-                    key={team.id}
-                    className="flex items-center justify-between p-3 border rounded-lg"
-                    style={{ borderLeftColor: conferenceData.conference.color, borderLeftWidth: "4px" }}
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-lg w-8 text-center">
-                          {index + 1}
-                        </span>
-                        {PrIcon && (
-                          <PrIcon className={`h-4 w-4 ${prStatus.color}`} />
-                        )}
-                      </div>
-                      <div className="flex items-center gap-3">
-                        {team.logo_url && (
-                          <img src={team.logo_url} alt={team.name} className="h-8 w-8 rounded-full" />
-                        )}
-                        <div>
-                          <h3 className="font-semibold">{team.name}</h3>
-                          <div className="flex items-center gap-4 text-sm text-gray-600">
-                            <span>{team.wins}-{team.losses}-{team.otl}</span>
-                            <span>{team.points} pts</span>
-                            <span className={team.goal_differential >= 0 ? "text-green-600" : "text-red-600"}>
+        <div key={conferenceName} className="space-y-4">
+          {/* Conference Header */}
+          <div 
+            className="relative overflow-hidden rounded-2xl p-6 text-white shadow-xl"
+            style={{ 
+              background: `linear-gradient(135deg, ${conferenceData.conference.color} 0%, ${conferenceData.conference.color}CC 100%)`
+            }}
+          >
+            <div className="absolute inset-0 bg-black/10"></div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="p-3 bg-white/20 rounded-full backdrop-blur-sm">
+                    <Trophy className="h-8 w-8" />
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-bold">{conferenceName}</h2>
+                    <p className="text-white/80 text-lg">Conference Standings</p>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-2xl font-bold">{conferenceData.teams.length}</div>
+                  <div className="text-white/80">Teams</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Teams Table */}
+          <Card className="overflow-hidden">
+            <CardContent className="p-0">
+              <div className="overflow-x-auto">
+                <table className="w-full">
+                  <thead className="bg-gray-50 dark:bg-gray-800">
+                    <tr>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">#</th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Team</th>
+                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">GP</th>
+                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">W</th>
+                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">L</th>
+                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">OTL</th>
+                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">GF</th>
+                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">GA</th>
+                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">GD</th>
+                      <th className="px-6 py-4 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Pts</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                    {conferenceData.teams.map((team, index) => {
+                      const prStatus = getPromotionRelegationStatus(team, index + 1, conferenceData.teams.length)
+                      const PrIcon = prStatus.icon
+                      
+                      return (
+                        <tr 
+                          key={team.id} 
+                          className={`hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors ${
+                            index < 2 ? 'bg-green-50 dark:bg-green-900/20' : 
+                            index >= conferenceData.teams.length - 2 ? 'bg-red-50 dark:bg-red-900/20' : ''
+                          }`}
+                        >
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center gap-2">
+                              <span className="text-lg font-bold">{index + 1}</span>
+                              {PrIcon && (
+                                <PrIcon className={`h-4 w-4 ${prStatus.color}`} />
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap">
+                            <div className="flex items-center gap-3">
+                              {team.logo_url && (
+                                <img src={team.logo_url} alt={team.name} className="h-10 w-10 rounded-full object-cover" />
+                              )}
+                              <div>
+                                <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{team.name}</div>
+                                <div className="text-sm text-gray-500 dark:text-gray-400">
+                                  {prStatus.status === 'promotion' && 'Promotion Zone'}
+                                  {prStatus.status === 'relegation' && 'Relegation Zone'}
+                                  {prStatus.status === 'safe' && 'Safe Zone'}
+                                </div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                            {team.games_played}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                            {team.wins}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                            {team.losses}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                            {team.otl}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                            {team.goals_for}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                            {team.goals_against}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
+                            <span className={team.goal_differential >= 0 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
                               {team.goal_differential >= 0 ? "+" : ""}{team.goal_differential}
                             </span>
-                            <span>{team.games_played} GP</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <div className="font-semibold text-lg">{team.points}</div>
-                      <div className="text-sm text-gray-600">points</div>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </CardContent>
-        </Card>
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right">
+                            <span className="text-lg font-bold text-gray-900 dark:text-gray-100">{team.points}</span>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       ))}
     </div>
   )
