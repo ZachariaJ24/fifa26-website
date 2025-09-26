@@ -171,10 +171,30 @@ export async function GET(request: Request) {
       const discordUser = await userResponse.json()
       console.log("Discord user connected:", { id: discordUser.id, username: discordUser.username })
 
-      return NextResponse.redirect(`${SITE_URL}/register?discord_connected=true`)
+      // For settings flow, send message to parent window and close popup
+      const html = `
+        <!DOCTYPE html>
+        <html>
+        <body>
+          <script>
+            if (window.opener) {
+              window.opener.postMessage({
+                type: 'discord_connected',
+                discord_id: '${discordUser.id}',
+                discord_username: '${discordUser.username}'
+              }, window.location.origin);
+              window.close();
+            } else {
+              window.location.href = '${SITE_URL}/settings?discord_connected=true';
+            }
+          </script>
+        </body>
+        </html>
+      `
+      return new NextResponse(html, { headers: { "Content-Type": "text/html" } })
     } catch (error) {
       console.error("Error in settings flow:", error)
-      return NextResponse.redirect(`${SITE_URL}/register?discord_error=settings_flow_failed`)
+      return NextResponse.redirect(`${SITE_URL}/settings?discord_error=settings_flow_failed`)
     }
   } catch (error: any) {
     console.error("Discord callback error:", error)

@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
 import { MessageSquare, Loader2, AlertTriangle } from "lucide-react"
+import { useSupabase } from "@/lib/supabase/client"
 
 interface DiscordConnectButtonProps {
   userId: string
@@ -21,6 +22,23 @@ export default function DiscordConnectButton({
   const [connecting, setConnecting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const { toast } = useToast()
+  const { supabase } = useSupabase()
+
+  const updateUserDiscordInfo = async (discordId: string, discordUsername: string) => {
+    try {
+      // TODO: Update user Discord info in database
+      // This requires the users table to have discord_id and discord_username columns
+      console.log("Discord info received:", { discordId, discordUsername, userId })
+      
+      // For now, just show success message
+      toast({
+        title: "Discord Connected!",
+        description: `Successfully connected to Discord as ${discordUsername}`,
+      })
+    } catch (error) {
+      console.error("Error updating Discord info:", error)
+    }
+  }
 
   const connectDiscord = async () => {
     try {
@@ -71,11 +89,13 @@ export default function DiscordConnectButton({
           clearInterval(checkClosed)
           popup?.close()
           setConnecting(false)
+          
+          // Update the user's Discord info in the database
+          updateUserDiscordInfo(event.data.discord_id, event.data.discord_username)
+          
           if (onSuccess) {
             onSuccess(event.data.discord_id, event.data.discord_username)
           }
-          // Refresh the page to show updated Discord connection
-          window.location.reload()
         }
       }
 
