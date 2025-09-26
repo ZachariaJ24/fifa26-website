@@ -1,5 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
-import { Database } from "@/types/supabase"
+import { createClient } from "@/lib/supabase/browser-client"
 
 export type AuditLogSearchParams = {
   searchText?: string
