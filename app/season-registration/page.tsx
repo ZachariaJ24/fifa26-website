@@ -702,7 +702,6 @@ export default function SeasonRegistrationPage() {
                 .
               </div>
             </div>
-          </div>
         </div>
       </div>
     </div>
