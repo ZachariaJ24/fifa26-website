@@ -5,7 +5,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { MantineProviderWrapper } from "@/components/providers/mantine-provider"
-import Navbar from "@/components/navbar"
+import Navigation from "@/components/navigation"
 import Footer from "@/components/footer"
 import PlayerCard from "@/components/player-card"
 import { Toaster } from "@/components/ui/toaster"
@@ -60,11 +60,18 @@ export default function RootLayout({
           <MantineProviderWrapper>
             <SupabaseProvider>
               <MobileScalingProvider>
-                <div className="relative flex min-h-dvh flex-col bg-background">
-                  <Navbar />
-                  <PlayerCard />
-                  <main className="flex-1">{children}</main>
-                  <Footer />
+                <div className="flex min-h-screen w-full">
+                  <Navigation />
+                  {/* Main content area */}
+                  <div className="flex-1 flex flex-col md:ml-72 mobile-content w-full">
+                    <PlayerCard />
+                    <Suspense>
+                      <main className="flex-1 p-6 fifa-scrollbar w-full">
+                        {children}
+                      </main>
+                    </Suspense>
+                    <Footer />
+                  </div>
                 </div>
                 <Toaster />
                 <BannedUserModal />

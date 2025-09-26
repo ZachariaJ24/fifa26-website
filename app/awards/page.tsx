@@ -118,10 +118,10 @@ export default function AwardsPage() {
   )
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900 fifa-scrollbar">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-teal-600/20 to-cyan-600/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-field-green-600/20 via-pitch-blue-600/20 to-stadium-gold-600/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -129,39 +129,40 @@ export default function AwardsPage() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-6">
+            <h1 className="fifa-title-enhanced mb-6">
               Awards Hall of Fame
             </h1>
-            <p className="text-xl md:text-2xl text-emerald-700 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-field-green-700 dark:text-field-green-300 mb-8 max-w-3xl mx-auto">
               Celebrating excellence and achievement in our competitive league.
             </p>
             <div className="flex justify-center gap-4">
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl px-4 py-2">
-                <Trophy className="h-5 w-5 text-emerald-600" />
-                <span className="text-emerald-800 font-semibold">Team Awards</span>
+              <div className="flex items-center gap-2 fifa-card-hover-enhanced px-4 py-2">
+                <Trophy className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
+                <span className="text-field-green-800 dark:text-field-green-200 font-semibold">Team Awards</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl px-4 py-2">
-                <Star className="h-5 w-5 text-teal-600" />
-                <span className="text-teal-800 font-semibold">Player Awards</span>
+              <div className="flex items-center gap-2 fifa-card-hover-enhanced px-4 py-2">
+                <Star className="h-5 w-5 text-pitch-blue-600 dark:text-pitch-blue-400" />
+                <span className="text-pitch-blue-800 dark:text-pitch-blue-200 font-semibold">Player Awards</span>
               </div>
             </div>
+            <div className="fifa-section-divider"></div>
           </motion.div>
         </div>
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="team-awards" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 max-w-lg mx-auto bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl p-2 mb-8">
+          <TabsList className="grid w-full grid-cols-2 max-w-lg mx-auto fifa-tabs-list mb-8">
             <TabsTrigger 
               value="team-awards" 
-              className="py-3 rounded-lg text-lg font-semibold text-emerald-700 data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
+              className="fifa-tab-trigger py-3 rounded-lg text-lg font-semibold"
             >
               <Trophy className="h-5 w-5 mr-2" />
               Team Awards
             </TabsTrigger>
             <TabsTrigger 
               value="player-awards" 
-              className="py-3 rounded-lg text-lg font-semibold text-emerald-700 data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
+              className="fifa-tab-trigger py-3 rounded-lg text-lg font-semibold"
             >
               <Star className="h-5 w-5 mr-2" />
               Player Awards
@@ -172,8 +173,8 @@ export default function AwardsPage() {
             {loading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6">
-                    <Skeleton className="h-48 w-full rounded-xl bg-emerald-100" />
+                  <div key={i} className="fifa-card-hover-enhanced p-6">
+                    <Skeleton className="h-48 w-full rounded-xl bg-field-green-100 dark:bg-field-green-800" />
                   </div>
                 ))}
               </div>
@@ -186,12 +187,12 @@ export default function AwardsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: typeIndex * 0.1 }}
                   >
-                    <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6 mb-6">
-                      <h3 className="text-2xl font-bold text-emerald-800 mb-2 flex items-center gap-2">
-                        <Crown className="h-6 w-6 text-yellow-600" />
+                    <div className="fifa-card-hover-enhanced p-6 mb-6">
+                      <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2 flex items-center gap-2">
+                        <Crown className="h-6 w-6 text-stadium-gold-600 dark:text-stadium-gold-400" />
                         {awardType}
                       </h3>
-                      <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full"></div>
+                      <div className="fifa-section-divider"></div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {awards.map((award, index) => (
@@ -203,7 +204,7 @@ export default function AwardsPage() {
                           whileHover={{ y: -4, scale: 1.02 }}
                         >
                           <Link href={`/teams/${award.team_id}`}>
-                            <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                            <div className="fifa-card-hover-enhanced overflow-hidden h-full">
                               <div className="p-6">
                                 <div className="flex flex-col items-center">
                                   <div className="relative h-24 w-24 mb-4">
@@ -215,15 +216,15 @@ export default function AwardsPage() {
                                         className="object-contain rounded-xl"
                                       />
                                     ) : (
-                                      <div className="w-24 h-24 bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-xl font-bold text-white rounded-xl">
+                                      <div className="w-24 h-24 bg-gradient-to-br from-field-green-500 to-pitch-blue-500 flex items-center justify-center text-xl font-bold text-white rounded-xl">
                                         {award.team_name.substring(0, 2)}
                                       </div>
                                     )}
                                   </div>
-                                  <h3 className="text-lg font-bold mb-2 text-emerald-800 text-center">{award.team_name}</h3>
-                                  <div className="text-sm text-emerald-600 mb-3 text-center font-medium">Season {award.season_number} • {award.year}</div>
+                                  <h3 className="text-lg font-bold mb-2 text-field-green-800 dark:text-field-green-200 text-center">{award.team_name}</h3>
+                                  <div className="text-sm text-field-green-600 dark:text-field-green-400 mb-3 text-center font-medium">Season {award.season_number} • {award.year}</div>
                                   {award.description && (
-                                    <p className="text-sm text-emerald-700 text-center">{award.description}</p>
+                                    <p className="text-sm text-field-green-700 dark:text-field-green-300 text-center">{award.description}</p>
                                   )}
                                 </div>
                               </div>
@@ -242,8 +243,8 @@ export default function AwardsPage() {
             {loading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
-                  <div key={i} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6">
-                    <Skeleton className="h-48 w-full rounded-xl bg-emerald-100" />
+                  <div key={i} className="fifa-card-hover-enhanced p-6">
+                    <Skeleton className="h-48 w-full rounded-xl bg-field-green-100 dark:bg-field-green-800" />
                   </div>
                 ))}
               </div>
@@ -256,12 +257,12 @@ export default function AwardsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: typeIndex * 0.1 }}
                   >
-                    <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6 mb-6">
-                      <h3 className="text-2xl font-bold text-emerald-800 mb-2 flex items-center gap-2">
-                        <Medal className="h-6 w-6 text-yellow-600" />
+                    <div className="fifa-card-hover-enhanced p-6 mb-6">
+                      <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2 flex items-center gap-2">
+                        <Medal className="h-6 w-6 text-stadium-gold-600 dark:text-stadium-gold-400" />
                         {awardType}
                       </h3>
-                      <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full"></div>
+                      <div className="fifa-section-divider"></div>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {awards.map((award, index) => (
@@ -273,18 +274,18 @@ export default function AwardsPage() {
                           whileHover={{ y: -4, scale: 1.02 }}
                         >
                           <Link href={`/players/${award.player_id}`}>
-                            <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                            <div className="fifa-card-hover-enhanced overflow-hidden h-full">
                               <div className="p-6">
                                 <div className="flex flex-col items-center">
-                                  <div className="w-24 h-24 bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center text-xl font-bold text-white rounded-xl mb-4">
+                                  <div className="w-24 h-24 bg-gradient-to-br from-pitch-blue-500 to-stadium-gold-500 flex items-center justify-center text-xl font-bold text-white rounded-xl mb-4">
                                     <Zap className="h-8 w-8" />
                                   </div>
-                                  <div className="text-xl font-bold text-emerald-800 mb-2">{award.gamer_tag_id}</div>
-                                  <div className="text-sm text-emerald-600 mb-2 text-center font-medium">
+                                  <div className="text-xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">{award.gamer_tag_id}</div>
+                                  <div className="text-sm text-field-green-600 dark:text-field-green-400 mb-2 text-center font-medium">
                                     {award.team_name && `${award.team_name} • `}Season {award.season_number} • {award.year}
                                   </div>
                                   {award.description && (
-                                    <p className="text-sm text-emerald-700 text-center">{award.description}</p>
+                                    <p className="text-sm text-field-green-700 dark:text-field-green-300 text-center">{award.description}</p>
                                   )}
                                 </div>
                               </div>

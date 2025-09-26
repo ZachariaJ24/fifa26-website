@@ -192,20 +192,20 @@ export default function MatchesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900 flex items-center justify-center fifa-scrollbar">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
-          <p className="text-emerald-700 font-medium">Loading matches...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-field-green-600 mx-auto mb-4"></div>
+          <p className="text-field-green-700 dark:text-field-green-300 font-medium">Loading matches...</p>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900 fifa-scrollbar">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-teal-600/20 to-cyan-600/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-field-green-600/20 via-pitch-blue-600/20 to-stadium-gold-600/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -213,12 +213,13 @@ export default function MatchesPage() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-6">
+            <h1 className="fifa-title-enhanced mb-6">
               Matches
             </h1>
-            <p className="text-xl md:text-2xl text-emerald-700 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-field-green-700 dark:text-field-green-300 mb-8 max-w-3xl mx-auto">
               Follow all the action from our competitive league matches.
             </p>
+            <div className="fifa-section-divider"></div>
           </motion.div>
         </div>
       </div>
@@ -232,9 +233,9 @@ export default function MatchesPage() {
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 0.6 }}
             >
-              <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6 mb-6">
-                <h2 className="text-2xl font-bold text-emerald-800 mb-2">{date}</h2>
-                <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full"></div>
+              <div className="fifa-card-hover-enhanced p-6 mb-6">
+                <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">{date}</h2>
+                <div className="fifa-section-divider"></div>
               </div>
               <div className="grid gap-6 md:grid-cols-2">
                 {dateMatches.map((match, index) => {
@@ -251,10 +252,10 @@ export default function MatchesPage() {
                       className="group cursor-pointer"
                       onClick={() => router.push(`/matches/${match.id}`)}
                     >
-                      <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                      <div className="fifa-card-hover-enhanced overflow-hidden h-full">
                         <div className="p-6">
                           <div className="flex justify-between items-center mb-4">
-                            <div className="flex items-center gap-2 text-sm text-emerald-600">
+                            <div className="flex items-center gap-2 text-sm text-field-green-600 dark:text-field-green-400">
                               <Clock className="h-4 w-4" />
                               <span className="font-medium">{formattedDate.time}</span>
                             </div>
@@ -262,10 +263,10 @@ export default function MatchesPage() {
                               variant={getStatusBadgeVariant(match.status)}
                               className={`${
                                 match.status === "Completed" 
-                                  ? "bg-emerald-100 text-emerald-800 border-emerald-200" 
+                                  ? "bg-field-green-100 text-field-green-800 border-field-green-200 dark:bg-field-green-800 dark:text-field-green-200 dark:border-field-green-600" 
                                   : match.status === "In Progress"
-                                  ? "bg-teal-100 text-teal-800 border-teal-200"
-                                  : "bg-cyan-100 text-cyan-800 border-cyan-200"
+                                  ? "bg-pitch-blue-100 text-pitch-blue-800 border-pitch-blue-200 dark:bg-pitch-blue-800 dark:text-pitch-blue-200 dark:border-pitch-blue-600"
+                                  : "bg-stadium-gold-100 text-stadium-gold-800 border-stadium-gold-200 dark:bg-stadium-gold-800 dark:text-stadium-gold-200 dark:border-stadium-gold-600"
                               }`}
                             >
                               {match.status}
@@ -274,13 +275,13 @@ export default function MatchesPage() {
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-3">
                               <TeamLogo teamName={match.home_team.name} logoUrl={match.home_team.logo_url} size="sm" />
-                              <span className="font-bold text-lg text-emerald-800">{match.home_team.name}</span>
+                              <span className="font-bold text-lg text-field-green-800 dark:text-field-green-200">{match.home_team.name}</span>
                             </div>
-                            <div className="font-bold text-2xl text-emerald-700">
+                            <div className="font-bold text-2xl text-field-green-700 dark:text-field-green-300">
                               {isCompleted ? `${match.home_score} - ${match.away_score}` : 'vs'}
                             </div>
                             <div className="flex items-center gap-3">
-                              <span className="font-bold text-lg text-emerald-800">{match.away_team.name}</span>
+                              <span className="font-bold text-lg text-field-green-800 dark:text-field-green-200">{match.away_team.name}</span>
                               <TeamLogo teamName={match.away_team.name} logoUrl={match.away_team.logo_url} size="sm" />
                             </div>
                           </div>

@@ -35,10 +35,10 @@ export default function NewsPage() {
   }, [supabase])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900 fifa-scrollbar">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-teal-600/20 to-cyan-600/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-field-green-600/20 via-pitch-blue-600/20 to-stadium-gold-600/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -46,22 +46,21 @@ export default function NewsPage() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-6">
-              League News
-            </h1>
-            <p className="text-xl md:text-2xl text-emerald-700 mb-8 max-w-3xl mx-auto">
+            <h1 className="fifa-title-enhanced mb-6">League News</h1>
+            <p className="text-xl md:text-2xl text-field-green-700 dark:text-field-green-300 mb-8 max-w-3xl mx-auto">
               Stay up-to-date with the latest news, announcements, and updates from the FIFA 26 League.
             </p>
             <div className="flex justify-center gap-4">
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl px-4 py-2">
-                <Newspaper className="h-5 w-5 text-emerald-600" />
-                <span className="text-emerald-800 font-semibold">Latest Updates</span>
+              <div className="flex items-center gap-2 fifa-card-hover-enhanced px-4 py-2">
+                <Newspaper className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
+                <span className="text-field-green-800 dark:text-field-green-200 font-semibold">Latest Updates</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl px-4 py-2">
-                <TrendingUp className="h-5 w-5 text-teal-600" />
-                <span className="text-teal-800 font-semibold">Trending Stories</span>
+              <div className="flex items-center gap-2 fifa-card-hover-enhanced px-4 py-2">
+                <TrendingUp className="h-5 w-5 text-pitch-blue-600 dark:text-pitch-blue-400" />
+                <span className="text-pitch-blue-800 dark:text-pitch-blue-200 font-semibold">Trending Stories</span>
               </div>
             </div>
+            <div className="fifa-section-divider"></div>
           </motion.div>
         </div>
       </div>
@@ -75,11 +74,11 @@ export default function NewsPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.1 }}
-                className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6"
+                className="fifa-card-hover-enhanced p-6"
               >
-                <Skeleton className="h-48 w-full rounded-xl bg-emerald-100 mb-4" />
-                <Skeleton className="h-4 w-3/4 bg-emerald-100 mb-2" />
-                <Skeleton className="h-4 w-1/2 bg-emerald-100" />
+                <Skeleton className="h-48 w-full rounded-xl bg-field-green-100 dark:bg-field-green-800 mb-4" />
+                <Skeleton className="h-4 w-3/4 bg-field-green-100 dark:bg-field-green-800 mb-2" />
+                <Skeleton className="h-4 w-1/2 bg-field-green-100 dark:bg-field-green-800" />
               </motion.div>
             ))}
           </div>
@@ -101,10 +100,10 @@ export default function NewsPage() {
         
         {!loading && news.length === 0 && (
           <div className="text-center py-12">
-            <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-12">
-              <Newspaper className="h-12 w-12 mx-auto text-emerald-400 mb-4" />
-              <h3 className="text-xl font-bold text-emerald-800 mb-2">No News Yet</h3>
-              <p className="text-emerald-600">News articles will appear here once they are published.</p>
+            <div className="fifa-card-hover-enhanced p-12">
+              <Newspaper className="h-12 w-12 mx-auto text-field-green-400 dark:text-field-green-500 mb-4" />
+              <h3 className="text-xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">No News Yet</h3>
+              <p className="text-field-green-600 dark:text-field-green-400">News articles will appear here once they are published.</p>
             </div>
           </div>
         )}

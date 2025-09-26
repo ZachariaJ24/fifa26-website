@@ -44,16 +44,16 @@ export default function StandingsPage() {
   }, [toast])
 
   const conferenceColors = [
-    'from-emerald-500 to-emerald-600',
-    'from-teal-500 to-teal-600',
-    'from-cyan-500 to-cyan-600',
+    'from-field-green-500 to-field-green-600',
+    'from-pitch-blue-500 to-pitch-blue-600',
+    'from-stadium-gold-500 to-stadium-gold-600',
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900 fifa-scrollbar">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-teal-600/20 to-cyan-600/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-field-green-600/20 via-pitch-blue-600/20 to-stadium-gold-600/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -61,12 +61,13 @@ export default function StandingsPage() {
             transition={{ duration: 0.8 }}
             className="text-center"
           >
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-6">
+            <h1 className="fifa-title-enhanced mb-6">
               League Standings
             </h1>
-            <p className="text-xl md:text-2xl text-emerald-700 mb-8 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-field-green-700 dark:text-field-green-300 mb-8 max-w-3xl mx-auto">
               Track the performance of every club across all our competitive conferences.
             </p>
+            <div className="fifa-section-divider"></div>
           </motion.div>
         </div>
       </div>
@@ -75,12 +76,12 @@ export default function StandingsPage() {
         {loading ? (
           <div className="space-y-12">
             {[...Array(3)].map((_, i) => (
-              <div key={i} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg">
+              <div key={i} className="fifa-card-hover-enhanced">
                 <div className="p-6">
-                  <Skeleton className="h-8 w-1/2 mx-auto bg-emerald-100" />
+                  <Skeleton className="h-8 w-1/2 mx-auto bg-field-green-100 dark:bg-field-green-800" />
                 </div>
                 <div className="p-6">
-                  <Skeleton className="h-96 w-full bg-emerald-100 rounded-xl" />
+                  <Skeleton className="h-96 w-full bg-field-green-100 dark:bg-field-green-800 rounded-xl" />
                 </div>
               </div>
             ))}
@@ -94,7 +95,7 @@ export default function StandingsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
               >
-                <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl overflow-hidden shadow-2xl shadow-emerald-500/10">
+                <div className="fifa-card-hover-enhanced overflow-hidden shadow-2xl shadow-field-green-500/10">
                   <div className={`p-6 bg-gradient-to-r ${conferenceColors[index % conferenceColors.length]}`}>
                     <h2 className="text-2xl md:text-3xl font-bold text-center text-white flex items-center justify-center gap-3">
                       <Trophy className="h-8 w-8" />
