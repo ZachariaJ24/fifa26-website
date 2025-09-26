@@ -1,4 +1,3 @@
-// Midnight Studios INTl - All rights reserved
 "use client"
 
 import Link from "next/link"
@@ -20,18 +19,8 @@ import {
   Heart,
   Star,
   Zap,
-  Target,
-  Home,
-  Calendar,
-  Handshake,
-  Award,
-  Crown,
-  Globe,
-  Phone,
-  MapPin,
-  UserPlus
+  Target
 } from "lucide-react"
-import { motion } from "framer-motion"
 
 export default function Footer() {
   const [user, setUser] = useState<any>(null)
@@ -58,168 +47,296 @@ export default function Footer() {
   }, [supabase.auth])
 
   return (
-    <footer className="relative bg-background border-t border-border text-foreground overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-field-green-900 via-pitch-blue-900 to-stadium-gold-900 text-white overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5" style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-      }}></div>
-      
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }} />
+      </div>
+
+      {/* Main Footer Content */}
       <div className="relative z-10">
+        {/* Top Section */}
         <div className="container mx-auto px-4 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            {/* Brand Section */}
-            <motion.div 
-              className="space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
+            
+            {/* FIFA 26 League Section */}
+            <div className="space-y-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl shadow-lg">
+                <div className="p-3 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl">
                   <Trophy className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-2xl bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-stadium-gold-600 bg-clip-text text-transparent">FIFA 26 League</h3>
-                  <div className="h-1 w-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-500 rounded-full"></div>
+                  <h3 className="font-bold text-2xl text-white">FIFA 26 League</h3>
+                  <div className="h-1 w-16 bg-gradient-to-r from-field-green-400 to-pitch-blue-500 rounded-full"></div>
                 </div>
               </div>
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                The premier competitive FIFA 26 league, powered by Midnight Studios. Join the most exciting football gaming community.
-              </p>
-              <div className="flex items-center gap-4">
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  className="p-2 bg-card/50 backdrop-blur-sm border border-border rounded-lg"
-                >
-                  <Heart className="h-5 w-5 text-red-500" />
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  className="p-2 bg-card/50 backdrop-blur-sm border border-border rounded-lg"
-                >
-                  <Star className="h-5 w-5 text-yellow-500" />
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  className="p-2 bg-card/50 backdrop-blur-sm border border-border rounded-lg"
-                >
-                  <Zap className="h-5 w-5 text-primary" />
-                </motion.div>
-              </div>
-            </motion.div>
-
-            {/* Quick Links */}
-            <motion.div 
-              className="space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <h3 className="font-bold text-xl text-foreground flex items-center gap-2">
-                <Home className="h-5 w-5 text-primary" />
-                Quick Links
-              </h3>
-              <ul className="space-y-3">
-                <li><Link href="/" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Home className="h-4 w-4" />Home</Link></li>
-                <li><Link href="/standings" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Trophy className="h-4 w-4" />Standings</Link></li>
-                <li><Link href="/stats" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><BarChart3 className="h-4 w-4" />Statistics</Link></li>
-                <li><Link href="/teams" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Users className="h-4 w-4" />Teams</Link></li>
-                <li><Link href="/matches" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Calendar className="h-4 w-4" />Matches</Link></li>
-                <li><Link href="/transfers" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Handshake className="h-4 w-4" />Transfers</Link></li>
-                <li><Link href="/awards" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Award className="h-4 w-4" />Awards</Link></li>
-              </ul>
-            </motion.div>
-
-            {/* Resources */}
-            <motion.div 
-              className="space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <h3 className="font-bold text-xl text-foreground flex items-center gap-2">
-                <FileText className="h-5 w-5 text-primary" />
-                Resources
-              </h3>
-              <ul className="space-y-3">
-                <li><Link href="/rules" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Shield className="h-4 w-4" />Rules</Link></li>
-                <li><Link href="/faq" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><HelpCircle className="h-4 w-4" />FAQ</Link></li>
-                <li><Link href="/privacy" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Shield className="h-4 w-4" />Privacy Policy</Link></li>
-                <li><Link href="/disclaimer" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><FileText className="h-4 w-4" />Disclaimer</Link></li>
-                <li><Link href="/contact" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Mail className="h-4 w-4" />Contact Us</Link></li>
-                <li><Link href="/forum" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><MessageSquare className="h-4 w-4" />Forum</Link></li>
-              </ul>
-            </motion.div>
-
-            {/* User Panel */}
-            <motion.div 
-              className="space-y-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-            >
-              <h3 className="font-bold text-xl text-foreground flex items-center gap-2">
-                <User className="h-5 w-5 text-primary" />
-                User Panel
-              </h3>
-              {user ? (
-                <ul className="space-y-3">
-                  <li><Link href="/management" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Settings className="h-4 w-4" />Management</Link></li>
-                  <li><Link href="/admin" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><Crown className="h-4 w-4" />Admin Panel</Link></li>
-                </ul>
-              ) : (
-                <ul className="space-y-3">
-                  <li><Link href="/login" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><LogIn className="h-4 w-4" />Sign In</Link></li>
-                  <li><Link href="/register" className="text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-2"><UserPlus className="h-4 w-4" />Sign Up</Link></li>
-                </ul>
-              )}
               
-              {/* Contact Info */}
-              <div className="pt-4 border-t border-border">
-                <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-                  <Globe className="h-4 w-4" />
-                  Connect With Us
-                </h4>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4" />
-                    <span>contact@fifa26league.com</span>
+              <p className="text-slate-300 leading-relaxed mb-6">
+                The premier competitive FIFA 26 league for elite console players across North America, powered by Midnight Studios.
+              </p>
+              
+              <Link
+                href="https://discord.gg/fifa26league"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-discord-500 to-discord-600 hover:from-discord-600 hover:to-discord-700 text-white rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-lg group"
+              >
+                <img
+                  src="https://scexchiemhvhtjarnrrx.supabase.co/storage/v1/object/public/media/photos/general/Discord-removebg-preview.png"
+                  alt="Discord"
+                  className="h-5 w-5 transition-transform duration-200 group-hover:scale-110"
+                />
+                <span className="font-medium">Join our Discord</span>
+                <ExternalLink className="h-4 w-4 opacity-70 group-hover:opacity-100 transition-opacity duration-200" />
+              </Link>
+            </div>
+
+            {/* Quick Links Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg">
+                  <Target className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="font-bold text-xl text-white">Quick Links</h3>
+              </div>
+              
+              <ul className="space-y-3">
+                <li>
+                  <Link 
+                    href="/" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-field-green-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    Home
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/standings" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-field-green-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    Standings
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/statistics" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-field-green-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    Statistics
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/teams" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-field-green-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    Teams
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/matches" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-field-green-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    Matches
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/forum" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-field-green-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    Forum
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Resources Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg">
+                  <Shield className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="font-bold text-xl text-white">Resources</h3>
+              </div>
+              
+              <ul className="space-y-3">
+                <li>
+                  <Link 
+                    href="/rules" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-stadium-gold-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    Rules
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/faq" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-stadium-gold-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    FAQ
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/privacy" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-stadium-gold-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    Privacy Policy
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/disclaimer" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-stadium-gold-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    Disclaimer
+                  </Link>
+                </li>
+                <li>
+                  <Link 
+                    href="/contact" 
+                    className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                  >
+                    <div className="w-1 h-1 bg-stadium-gold-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                    Contact Us
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Enhanced User Panel Section */}
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg">
+                  <User className="h-5 w-5 text-white" />
+                </div>
+                <h3 className="font-bold text-xl text-white">User Panel</h3>
+              </div>
+              
+              {user ? (
+                <div className="space-y-4">
+                  {/* User Info Card */}
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">
+                          {user.email?.charAt(0).toUpperCase() || 'U'}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="text-white font-medium text-sm">
+                          {user.email?.split('@')[0] || 'User'}
+                        </p>
+                        <p className="text-goal-orange-200 text-xs">Active Member</p>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-300">Status</span>
+                        <span className="text-field-green-400 font-medium">Online</span>
+                      </div>
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="text-slate-300">Member Since</span>
+                        <span className="text-slate-300">
+                          {new Date(user.created_at).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4" />
-                    <span>+1 (555) 123-4567</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    <span>Global Community</span>
+
+                  {/* Quick Actions */}
+                  <div className="space-y-2">
+                    <h4 className="text-sm font-semibold text-slate-300 mb-3">Quick Actions</h4>
+                    <ul className="space-y-2">
+                      <li>
+                        <Link 
+                          href="/management" 
+                          className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                        >
+                          <div className="w-1 h-1 bg-field-green-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                          Management
+                        </Link>
+                      </li>
+                      <li>
+                        <Link 
+                          href="/admin" 
+                          className="inline-flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 hover:translate-x-1 group"
+                        >
+                          <div className="w-1 h-1 bg-goal-orange-400 rounded-full group-hover:bg-white transition-colors duration-200"></div>
+                          Admin Panel
+                        </Link>
+                      </li>
+                    </ul>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              ) : (
+                <div className="space-y-4">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20 text-center">
+                    <User className="h-8 w-8 text-slate-400 mx-auto mb-3" />
+                    <p className="text-slate-300 text-sm mb-4">Join the community to access all features</p>
+                    <div className="space-y-2">
+                      <Link 
+                        href="/login" 
+                        className="block w-full bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 hover:from-goal-orange-600 hover:to-goal-orange-700 text-white text-center py-2 px-4 rounded-lg transition-all duration-200 hover:scale-105"
+                      >
+                        Sign In
+                      </Link>
+                      <Link 
+                        href="/register" 
+                        className="block w-full border border-white/30 hover:border-white/50 text-white text-center py-2 px-4 rounded-lg transition-all duration-200 hover:bg-white/10"
+                      >
+                        Register
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="border-t border-border bg-card/50 backdrop-blur-sm">
+        <div className="border-t border-slate-700/30 bg-gradient-to-r from-field-green-900/50 to-pitch-blue-900/50">
           <div className="container mx-auto px-4 py-8">
             <div className="text-center space-y-4">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="flex justify-center items-center gap-2 mb-4"
-              >
-                <div className="h-1 w-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-500 rounded-full"></div>
-                <div className="h-1 w-8 bg-gradient-to-r from-pitch-blue-500 to-stadium-gold-500 rounded-full"></div>
-                <div className="h-1 w-12 bg-gradient-to-r from-stadium-gold-500 to-field-green-500 rounded-full"></div>
-              </motion.div>
-              <p className="text-muted-foreground leading-relaxed">
+              {/* Copyright Text */}
+              <p className="text-slate-400 leading-relaxed">
                 &copy; {currentYear} FIFA 26 League. All rights reserved.
                 <br className="hidden sm:inline" />
                 In official partnership with Midnight Studios.
                 <br className="hidden sm:inline" />
                 This site is an independent entity and is not affiliated with or endorsed by EA Sports.
               </p>
+              
+              {/* Additional Info */}
+              <div className="flex items-center justify-center gap-6 text-sm text-slate-500">
+                <div className="flex items-center gap-2">
+                  <Heart className="h-4 w-4 text-goal-orange-400" />
+                  <span>Made with passion for football</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Star className="h-4 w-4 text-field-green-400" />
+                  <span>Elite gaming community</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-pitch-blue-400" />
+                  <span>Powered by Midnight Studios</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

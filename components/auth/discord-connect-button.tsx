@@ -127,24 +127,31 @@ export default function DiscordConnectButton({
   }
 
   return (
-    <Button 
-      type="button"
-      onClick={connectDiscord} 
-      disabled={connecting} 
-      className={`${className} cursor-pointer`}
-      style={{ pointerEvents: 'auto' }}
-    >
-      {connecting ? (
-        <>
-          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-          Connecting...
-        </>
-      ) : (
-        <>
-          <MessageSquare className="mr-2 h-4 w-4" />
-          Connect Discord
-        </>
-      )}
-    </Button>
+    <div className="w-full">
+      <Button 
+        type="button"
+        onClick={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          console.log("Button clicked!", { userId, source, connecting })
+          connectDiscord()
+        }} 
+        disabled={connecting} 
+        className={`${className} cursor-pointer w-full`}
+        style={{ pointerEvents: 'auto', zIndex: 10 }}
+      >
+        {connecting ? (
+          <>
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            Connecting...
+          </>
+        ) : (
+          <>
+            <MessageSquare className="mr-2 h-4 w-4" />
+            Connect Discord
+          </>
+        )}
+      </Button>
+    </div>
   )
 }

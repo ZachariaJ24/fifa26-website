@@ -2,32 +2,28 @@ import { PageHeader } from "@/components/ui/page-header"
 import { 
   AlertTriangle, 
   Shield, 
-  Gavel, 
-  Users, 
-  GamepadIcon, 
-  FileText, 
+  Info, 
   ExternalLink, 
-  Target, 
-  Settings, 
-  Globe, 
-  Clock, 
-  MessageSquare, 
-  Mail, 
-  CheckCircle, 
-  XCircle, 
-  Star, 
-  Zap, 
-  Heart, 
+  FileText, 
+  Users, 
+  Trophy, 
+  Target,
+  Clock,
+  CheckCircle,
+  XCircle,
+  Star,
+  Zap,
+  Heart,
   Award,
   BookOpen,
-  Info,
-  Lock,
-  Eye
+  Settings,
+  MessageSquare,
+  Mail
 } from "lucide-react"
 
 export default function DisclaimerPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
       {/* Hero Header Section */}
       <div className="hockey-header relative py-16 px-4">
         <div className="container mx-auto text-center">
@@ -36,56 +32,56 @@ export default function DisclaimerPage() {
               Legal Disclaimer
             </h1>
             <p className="hockey-subtitle mb-8">
-              Important legal information and terms regarding the use of SCS services
+              Important legal information about the FIFA 26 League
             </p>
             
             {/* Disclaimer Overview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-8">
-              <div className="hockey-stat-item bg-gradient-to-br from-goal-red-100 to-goal-red-200 dark:from-goal-red-900/30 dark:to-goal-red-800/20">
-                <div className="p-2 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg mb-3 mx-auto w-fit">
-                  <AlertTriangle className="h-6 w-6 text-white" />
-                </div>
-                <div className="text-2xl font-bold text-goal-red-700 dark:text-goal-red-300">
-                  Legal
-                </div>
-                <div className="text-xs text-goal-red-600 dark:text-goal-red-400 font-medium uppercase tracking-wide">
-                  Notice
-                </div>
-              </div>
-              
-              <div className="hockey-stat-item bg-gradient-to-br from-ice-blue-100 to-ice-blue-200 dark:from-ice-blue-900/30 dark:to-ice-blue-800/20">
-                <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-ice-blue-600 rounded-lg mb-3 mx-auto w-fit">
+              <div className="hockey-stat-item bg-gradient-to-br from-field-green-100 to-field-green-200 dark:from-field-green-900/30 dark:to-field-green-800/20">
+                <div className="p-2 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg mb-3 mx-auto w-fit">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-ice-blue-700 dark:text-ice-blue-300">
-                  User
+                <div className="text-2xl font-bold text-field-green-700 dark:text-field-green-300">
+                  Legal
                 </div>
-                <div className="text-xs text-ice-blue-600 dark:text-ice-blue-400 font-medium uppercase tracking-wide">
+                <div className="text-xs text-field-green-600 dark:text-field-green-400 font-medium uppercase tracking-wide">
                   Protection
                 </div>
               </div>
               
-              <div className="hockey-stat-item bg-gradient-to-br from-assist-green-100 to-assist-green-200 dark:from-assist-green-900/30 dark:to-assist-green-800/20">
-                <div className="p-2 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg mb-3 mx-auto w-fit">
-                  <Gavel className="h-6 w-6 text-white" />
+              <div className="hockey-stat-item bg-gradient-to-br from-pitch-blue-100 to-pitch-blue-200 dark:from-pitch-blue-900/30 dark:to-pitch-blue-800/20">
+                <div className="p-2 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg mb-3 mx-auto w-fit">
+                  <AlertTriangle className="h-6 w-6 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-assist-green-700 dark:text-assist-green-300">
+                <div className="text-2xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300">
+                  Important
+                </div>
+                <div className="text-xs text-pitch-blue-600 dark:text-pitch-blue-400 font-medium uppercase tracking-wide">
+                  Notices
+                </div>
+              </div>
+              
+              <div className="hockey-stat-item bg-gradient-to-br from-stadium-gold-100 to-stadium-gold-200 dark:from-stadium-gold-900/30 dark:to-stadium-gold-800/20">
+                <div className="p-2 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg mb-3 mx-auto w-fit">
+                  <FileText className="h-6 w-6 text-white" />
+                </div>
+                <div className="text-2xl font-bold text-stadium-gold-700 dark:text-stadium-gold-300">
                   Terms &
                 </div>
-                <div className="text-xs text-assist-green-600 dark:text-assist-green-400 font-medium uppercase tracking-wide">
+                <div className="text-xs text-stadium-gold-600 dark:text-stadium-gold-400 font-medium uppercase tracking-wide">
                   Conditions
                 </div>
               </div>
               
-              <div className="hockey-stat-item bg-gradient-to-br from-rink-blue-100 to-rink-blue-200 dark:from-rink-blue-900/30 dark:to-rink-blue-800/20">
-                <div className="p-2 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg mb-3 mx-auto w-fit">
-                  <Info className="h-6 w-6 text-white" />
+              <div className="hockey-stat-item bg-gradient-to-br from-goal-orange-100 to-goal-orange-200 dark:from-goal-orange-900/30 dark:to-goal-orange-800/20">
+                <div className="p-2 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg mb-3 mx-auto w-fit">
+                  <ExternalLink className="h-6 w-6 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-rink-blue-700 dark:text-rink-blue-300">
-                  Important
+                <div className="text-2xl font-bold text-goal-orange-700 dark:text-goal-orange-300">
+                  Third Party
                 </div>
-                <div className="text-xs text-rink-blue-600 dark:text-rink-blue-400 font-medium uppercase tracking-wide">
-                  Information
+                <div className="text-xs text-goal-orange-600 dark:text-goal-orange-400 font-medium uppercase tracking-wide">
+                  Services
                 </div>
               </div>
             </div>
@@ -97,434 +93,328 @@ export default function DisclaimerPage() {
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-6xl mx-auto space-y-8">
           
-          {/* Last Updated Notice */}
-          <div className="hockey-card border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/50 dark:from-hockey-silver-900 dark:to-hockey-silver-800/20">
+          {/* Important Notice */}
+          <div className="fifa-card-hover-enhanced border-goal-orange-200/50 dark:border-goal-orange-700/50 bg-gradient-to-br from-goal-orange-50 to-goal-orange-100 dark:from-goal-orange-900/20 dark:to-goal-orange-800/20">
             <div className="p-6">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="p-2 bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 rounded-lg">
-                  <Clock className="h-5 w-5 text-white" />
-                </div>
-                <p className="text-hockey-silver-700 dark:text-hockey-silver-300">
-                  <strong>Last Updated:</strong> July 1, 2025
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* General Disclaimer Section */}
-          <div className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg flex-shrink-0">
                   <AlertTriangle className="h-6 w-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  1. General Disclaimer
-                </h2>
+                <div>
+                  <h2 className="text-xl font-bold text-goal-orange-800 dark:text-goal-orange-200 mb-3">
+                    Important Legal Notice
+                  </h2>
+                  <p className="text-goal-orange-700 dark:text-goal-orange-300 leading-relaxed">
+                    Please read this disclaimer carefully before using the FIFA 26 League website and services. By accessing or using our services, you agree to be bound by the terms and conditions outlined in this disclaimer.
+                  </p>
+                </div>
               </div>
-              <p className="text-hockey-silver-700 dark:text-hockey-silver-300 leading-relaxed">
-                The information contained on the Secret Chel Society (SCS) website is for general information
-                purposes only. While we endeavor to keep the information up to date and correct, we make no representations
-                or warranties of any kind, express or implied, about the completeness, accuracy, reliability, suitability,
-                or availability of the website or the information, products, services, or related graphics contained on the
-                website for any purpose.
-              </p>
             </div>
           </div>
 
-          {/* EA Sports Non-Affiliation Section */}
-          <div className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
+          {/* No Affiliation Section */}
+          <div className="fifa-card-hover-enhanced border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-slate-900 dark:to-field-green-900/20">
             <div className="p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-ice-blue-500 to-ice-blue-600 rounded-lg">
+                <div className="p-3 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  2. EA Sports Non-Affiliation
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+                  1. No Official Affiliation
                 </h2>
               </div>
-              <div className="bg-gradient-to-r from-ice-blue-50 to-ice-blue-100 dark:from-ice-blue-900/20 dark:to-ice-blue-800/20 p-4 rounded-lg border-l-4 border-ice-blue-500 mb-4">
-                <p className="text-ice-blue-800 dark:text-ice-blue-200 font-semibold mb-3">
-                  <strong>IMPORTANT:</strong> Secret Chel Society (SCS) is an independent gaming community and is NOT
-                  affiliated with, endorsed by, or connected to EA Sports, Electronic Arts Inc., or the National Hockey League
-                  (NHL).
+              
+              <div className="space-y-4 text-slate-700 dark:text-slate-300">
+                <p className="leading-relaxed">
+                  The FIFA 26 League is an independent, community-driven organization and is not affiliated with, endorsed by, or sponsored by:
+                </p>
+                
+                <div className="bg-gradient-to-r from-field-green-50 to-field-green-100 dark:from-field-green-900/20 dark:to-field-green-800/20 p-4 rounded-lg border-l-4 border-field-green-500">
+                  <ul className="list-disc pl-6 space-y-2 text-field-green-700 dark:text-field-green-300">
+                    <li>EA Sports or Electronic Arts Inc.</li>
+                    <li>FIFA or the Fédération Internationale de Football Association</li>
+                    <li>FIFA 26 or any official FIFA video game</li>
+                    <li>Any professional football leagues or organizations</li>
+                    <li>Any official gaming tournaments or competitions</li>
+                  </ul>
+                </div>
+                
+                <p className="leading-relaxed">
+                  All trademarks, service marks, and trade names are the property of their respective owners. The use of any such marks does not imply endorsement or affiliation.
                 </p>
               </div>
-              <div className="bg-gradient-to-r from-ice-blue-50 to-ice-blue-100 dark:from-ice-blue-900/20 dark:to-ice-blue-800/20 p-4 rounded-lg border-l-4 border-ice-blue-500">
-                <ul className="list-disc pl-6 space-y-1 text-ice-blue-700 dark:text-ice-blue-300">
-                  <li>We are not an official EA Sports league or tournament</li>
-                  <li>We do not represent EA Sports in any capacity</li>
-                  <li>EA Sports has not sponsored, approved, or endorsed our activities</li>
-                  <li>
-                    All EA Sports and NHL trademarks, logos, and game content remain the property of their respective owners
-                  </li>
-                  <li>Our use of game statistics and data is for informational and competitive purposes only</li>
-                </ul>
+            </div>
+          </div>
+
+          {/* Service Disclaimer Section */}
+          <div className="fifa-card-hover-enhanced border-pitch-blue-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-pitch-blue-50/50 dark:from-slate-900 dark:to-pitch-blue-900/20">
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg">
+                  <Info className="h-6 w-6 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+                  2. Service Disclaimer
+                </h2>
+              </div>
+              
+              <div className="space-y-4 text-slate-700 dark:text-slate-300">
+                <div className="bg-gradient-to-r from-pitch-blue-50 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-800/20 p-4 rounded-lg border-l-4 border-pitch-blue-500">
+                  <h4 className="font-semibold text-pitch-blue-800 dark:text-pitch-blue-200 mb-2">2.1 "As Is" Service</h4>
+                  <p>The FIFA 26 League website and services are provided "as is" without any warranties, express or implied. We make no representations or warranties regarding the accuracy, reliability, or completeness of the information provided.</p>
+                </div>
+                
+                <div className="bg-gradient-to-r from-pitch-blue-50 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-800/20 p-4 rounded-lg border-l-4 border-pitch-blue-500">
+                  <h4 className="font-semibold text-pitch-blue-800 dark:text-pitch-blue-200 mb-2">2.2 Service Availability</h4>
+                  <p>We do not guarantee that our services will be available at all times. The website may be temporarily unavailable due to maintenance, technical issues, or other factors beyond our control.</p>
+                </div>
+                
+                <div className="bg-gradient-to-r from-pitch-blue-50 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-800/20 p-4 rounded-lg border-l-4 border-pitch-blue-500">
+                  <h4 className="font-semibold text-pitch-blue-800 dark:text-pitch-blue-200 mb-2">2.3 User-Generated Content</h4>
+                  <p>We are not responsible for user-generated content, including but not limited to forum posts, comments, and user profiles. Users are solely responsible for their own content and interactions.</p>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Limitation of Liability Section */}
-          <div className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
+          <div className="fifa-card-hover-enhanced border-stadium-gold-200/50 dark:border-stadium-gold-700/50 bg-gradient-to-br from-white to-stadium-gold-50/50 dark:from-slate-900 dark:to-stadium-gold-900/20">
             <div className="p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
-                  <Gavel className="h-6 w-6 text-white" />
+                <div className="p-3 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg">
+                  <Shield className="h-6 w-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
                   3. Limitation of Liability
                 </h2>
               </div>
-              <p className="text-hockey-silver-700 dark:text-hockey-silver-300 mb-4">
-                In no event will SCS, its administrators, moderators, or affiliates be liable for any loss or damage
-                including without limitation, indirect or consequential loss or damage, or any loss or damage whatsoever
-                arising from:
-              </p>
-              <div className="bg-gradient-to-r from-goal-red-50 to-goal-red-100 dark:from-goal-red-900/20 dark:to-goal-red-800/20 p-4 rounded-lg border-l-4 border-goal-red-500">
-                <ul className="list-disc pl-6 space-y-1 text-goal-red-700 dark:text-goal-red-300">
-                  <li>Loss of data or profits arising out of or in connection with the use of this website</li>
-                  <li>Technical issues, server downtime, or website unavailability</li>
-                  <li>Disputes between players or teams</li>
-                  <li>
-                    Game-related issues, including but not limited to connection problems, game crashes, or EA Sports server
-                    issues
-                  </li>
-                  <li>Any decisions made by league administrators or moderators</li>
-                  <li>Third-party content or external links</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* User Responsibility Section */}
-          <div className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20">
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
-                  <Users className="h-6 w-6 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  4. User Responsibility
-                </h2>
-              </div>
-              <p className="text-hockey-silver-700 dark:text-hockey-silver-300 mb-4">By participating in SCS activities, users acknowledge and agree that:</p>
-              <div className="bg-gradient-to-r from-assist-green-50 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-800/20 p-4 rounded-lg border-l-4 border-assist-green-500">
-                <ul className="list-disc pl-6 space-y-1 text-assist-green-700 dark:text-assist-green-300">
-                  <li>They participate at their own risk and responsibility</li>
-                  <li>They must comply with all applicable laws and regulations</li>
-                  <li>They are responsible for their own gaming equipment and internet connection</li>
-                  <li>They must follow SCS rules and code of conduct</li>
-                  <li>They are responsible for maintaining the confidentiality of their account information</li>
-                  <li>They must respect other players and maintain good sportsmanship</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Game-Related Disclaimers Section */}
-          <div className="hockey-card border-rink-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-rink-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg">
-                  <GamepadIcon className="h-6 w-6 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  5. Game-Related Disclaimers
-                </h2>
-              </div>
               
-              <div className="space-y-4">
-                <div className="bg-gradient-to-r from-rink-blue-50 to-rink-blue-100 dark:from-rink-blue-900/20 dark:to-rink-blue-800/20 p-4 rounded-lg border-l-4 border-rink-blue-500">
-                  <h3 className="text-lg font-semibold mb-2 text-rink-blue-800 dark:text-rink-blue-200">5.1 Game Performance</h3>
-                  <p className="text-rink-blue-700 dark:text-rink-blue-300 mb-2">SCS cannot guarantee:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-rink-blue-700 dark:text-rink-blue-300">
-                    <li>Stable game connections during matches</li>
-                    <li>Absence of game bugs or glitches</li>
-                    <li>EA Sports server availability</li>
-                    <li>Consistent game performance across all platforms</li>
+              <div className="space-y-4 text-slate-700 dark:text-slate-300">
+                <p className="leading-relaxed">
+                  To the fullest extent permitted by law, the FIFA 26 League and its operators shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or relating to:
+                </p>
+                
+                <div className="bg-gradient-to-r from-stadium-gold-50 to-stadium-gold-100 dark:from-stadium-gold-900/20 dark:to-stadium-gold-800/20 p-4 rounded-lg border-l-4 border-stadium-gold-500">
+                  <ul className="list-disc pl-6 space-y-1 text-stadium-gold-700 dark:text-stadium-gold-300">
+                    <li>Use of our website or services</li>
+                    <li>Inability to access or use our services</li>
+                    <li>Any errors or omissions in our content</li>
+                    <li>Any loss of data or information</li>
+                    <li>Any interruption of service</li>
+                    <li>Any damages resulting from third-party services</li>
                   </ul>
                 </div>
                 
-                <div className="bg-gradient-to-r from-rink-blue-50 to-rink-blue-100 dark:from-rink-blue-900/20 dark:to-rink-blue-800/20 p-4 rounded-lg border-l-4 border-rink-blue-500">
-                  <h3 className="text-lg font-semibold mb-2 text-rink-blue-800 dark:text-rink-blue-200">5.2 Statistics and Data</h3>
-                  <p className="text-rink-blue-700 dark:text-rink-blue-300 mb-2">While we strive for accuracy in recording game statistics and results:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-rink-blue-700 dark:text-rink-blue-300">
-                    <li>Statistics are dependent on EA Sports API availability and accuracy</li>
-                    <li>Data may be subject to delays or temporary unavailability</li>
-                    <li>We reserve the right to correct statistical errors</li>
-                    <li>Historical data may be subject to change due to corrections or updates</li>
-                  </ul>
-                </div>
+                <p className="leading-relaxed">
+                  This limitation of liability applies regardless of the legal theory on which the claim is based, whether in contract, tort, or otherwise.
+                </p>
               </div>
             </div>
           </div>
 
-          {/* Content Disclaimer Section */}
-          <div className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
+          {/* Third-Party Services Section */}
+          <div className="fifa-card-hover-enhanced border-goal-orange-200/50 dark:border-goal-orange-700/50 bg-gradient-to-br from-white to-goal-orange-50/50 dark:from-slate-900 dark:to-goal-orange-900/20">
             <div className="p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-ice-blue-500 to-ice-blue-600 rounded-lg">
-                  <FileText className="h-6 w-6 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  6. Content Disclaimer
-                </h2>
-              </div>
-              <p className="text-hockey-silver-700 dark:text-hockey-silver-300 mb-4">
-                The content on this website, including but not limited to text, graphics, images, and other material, is for
-                informational purposes only. The material on this site is provided on an "as is" basis without any
-                warranties of any kind.
-              </p>
-              
-              <div className="bg-gradient-to-r from-ice-blue-50 to-ice-blue-100 dark:from-ice-blue-900/20 dark:to-ice-blue-800/20 p-4 rounded-lg border-l-4 border-ice-blue-500">
-                <h3 className="text-lg font-semibold mb-2 text-ice-blue-800 dark:text-ice-blue-200">6.1 User-Generated Content</h3>
-                <p className="text-ice-blue-700 dark:text-ice-blue-300 mb-2">SCS is not responsible for:</p>
-                <ul className="list-disc pl-6 space-y-1 text-ice-blue-700 dark:text-ice-blue-300">
-                  <li>Content posted by users in forums, chat, or other interactive areas</li>
-                  <li>Accuracy of user-submitted information</li>
-                  <li>Offensive or inappropriate content posted by users</li>
-                  <li>Copyright infringement by users</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* External Links Section */}
-          <div className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20">
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
+                <div className="p-3 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg">
                   <ExternalLink className="h-6 w-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  7. External Links Disclaimer
-                </h2>
-              </div>
-              <p className="text-hockey-silver-700 dark:text-hockey-silver-300 leading-relaxed">
-                Our website may contain links to external websites that are not provided or maintained by SCS. We do not
-                guarantee the accuracy, relevance, timeliness, or completeness of any information on these external
-                websites. The inclusion of any links does not necessarily imply a recommendation or endorse the views
-                expressed within them.
-              </p>
-            </div>
-          </div>
-
-          {/* Competitive Integrity Section */}
-          <div className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
-                  <Target className="h-6 w-6 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  8. Competitive Integrity
-                </h2>
-              </div>
-              <p className="text-hockey-silver-700 dark:text-hockey-silver-300 mb-4">While SCS strives to maintain fair and competitive gameplay:</p>
-              <div className="bg-gradient-to-r from-goal-red-50 to-goal-red-100 dark:from-goal-red-900/20 dark:to-goal-red-800/20 p-4 rounded-lg border-l-4 border-goal-red-500">
-                <ul className="list-disc pl-6 space-y-1 text-goal-red-700 dark:text-goal-red-300">
-                  <li>We cannot guarantee the absence of cheating or unsportsmanlike conduct</li>
-                  <li>Disciplinary decisions are made at the discretion of league administrators</li>
-                  <li>Appeals processes are available but decisions may be final</li>
-                  <li>Rule interpretations and enforcement may evolve over time</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Technical Disclaimers Section */}
-          <div className="hockey-card border-rink-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-rink-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg">
-                  <Settings className="h-6 w-6 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  9. Technical Disclaimers
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+                  4. Third-Party Services
                 </h2>
               </div>
               
-              <div className="space-y-4">
-                <div className="bg-gradient-to-r from-rink-blue-50 to-rink-blue-100 dark:from-rink-blue-900/20 dark:to-rink-blue-800/20 p-4 rounded-lg border-l-4 border-rink-blue-500">
-                  <h3 className="text-lg font-semibold mb-2 text-rink-blue-800 dark:text-rink-blue-200">9.1 Website Availability</h3>
-                  <p className="text-rink-blue-700 dark:text-rink-blue-300 mb-2">We do not warrant that:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-rink-blue-700 dark:text-rink-blue-300">
-                    <li>The website will be constantly available or uninterrupted</li>
-                    <li>The website will be free from errors, viruses, or other harmful components</li>
-                    <li>Defects will be corrected immediately</li>
-                    <li>The website will meet your specific requirements</li>
+              <div className="space-y-4 text-slate-700 dark:text-slate-300">
+                <p className="leading-relaxed">
+                  Our website may integrate with third-party services, including but not limited to:
+                </p>
+                
+                <div className="bg-gradient-to-r from-goal-orange-50 to-goal-orange-100 dark:from-goal-orange-900/20 dark:to-goal-orange-800/20 p-4 rounded-lg border-l-4 border-goal-orange-500">
+                  <ul className="list-disc pl-6 space-y-1 text-goal-orange-700 dark:text-goal-orange-300">
+                    <li>Discord for community communication</li>
+                    <li>Supabase for data storage and authentication</li>
+                    <li>Vercel for website hosting</li>
+                    <li>Various analytics and monitoring services</li>
                   </ul>
                 </div>
                 
-                <div className="bg-gradient-to-r from-rink-blue-50 to-rink-blue-100 dark:from-rink-blue-900/20 dark:to-rink-blue-800/20 p-4 rounded-lg border-l-4 border-rink-blue-500">
-                  <h3 className="text-lg font-semibold mb-2 text-rink-blue-800 dark:text-rink-blue-200">9.2 Data Security</h3>
-                  <p className="text-rink-blue-700 dark:text-rink-blue-300 mb-2">While we implement security measures to protect user data:</p>
-                  <ul className="list-disc pl-6 space-y-1 text-rink-blue-700 dark:text-rink-blue-300">
-                    <li>No system is completely secure</li>
-                    <li>Users are responsible for maintaining the security of their accounts</li>
-                    <li>We cannot guarantee absolute protection against all security threats</li>
+                <p className="leading-relaxed">
+                  We are not responsible for the privacy practices, terms of service, or content of these third-party services. Users should review the privacy policies and terms of service of any third-party services they interact with.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* User Responsibilities Section */}
+          <div className="fifa-card-hover-enhanced border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-slate-900 dark:to-field-green-900/20">
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg">
+                  <Users className="h-6 w-6 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+                  5. User Responsibilities
+                </h2>
+              </div>
+              
+              <div className="space-y-4 text-slate-700 dark:text-slate-300">
+                <p className="leading-relaxed">
+                  By using our services, you agree to:
+                </p>
+                
+                <div className="bg-gradient-to-r from-field-green-50 to-field-green-100 dark:from-field-green-900/20 dark:to-field-green-800/20 p-4 rounded-lg border-l-4 border-field-green-500">
+                  <ul className="list-disc pl-6 space-y-1 text-field-green-700 dark:text-field-green-300">
+                    <li>Comply with all applicable laws and regulations</li>
+                    <li>Respect the rights and privacy of other users</li>
+                    <li>Not engage in any illegal or harmful activities</li>
+                    <li>Not attempt to gain unauthorized access to our systems</li>
+                    <li>Not use our services for any commercial purposes without permission</li>
+                    <li>Report any violations of our terms of service</li>
                   </ul>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Additional Sections Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Modification of Services Section */}
-            <div className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20">
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
-                    <Settings className="h-5 w-5 text-white" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-assist-green-800 dark:text-assist-green-200">
-                    10. Modification of Services
-                  </h3>
+          {/* Indemnification Section */}
+          <div className="fifa-card-hover-enhanced border-pitch-blue-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-pitch-blue-50/50 dark:from-slate-900 dark:to-pitch-blue-900/20">
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg">
+                  <Shield className="h-6 w-6 text-white" />
                 </div>
-                <p className="text-assist-green-700 dark:text-assist-green-300 mb-3">
-                  SCS reserves the right to modify, suspend, or discontinue any aspect of our services at any time without
-                  prior notice. This includes but is not limited to:
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+                  6. Indemnification
+                </h2>
+              </div>
+              
+              <div className="space-y-4 text-slate-700 dark:text-slate-300">
+                <p className="leading-relaxed">
+                  You agree to indemnify and hold harmless the FIFA 26 League, its operators, and affiliates from any claims, damages, losses, or expenses (including reasonable attorney's fees) arising out of or relating to:
                 </p>
-                <ul className="list-disc pl-6 space-y-1 text-assist-green-700 dark:text-assist-green-300">
-                  <li>League formats and structures</li>
-                  <li>Rules and regulations</li>
-                  <li>Website features and functionality</li>
-                  <li>Scoring systems and statistics tracking</li>
-                </ul>
+                
+                <div className="bg-gradient-to-r from-pitch-blue-50 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-800/20 p-4 rounded-lg border-l-4 border-pitch-blue-500">
+                  <ul className="list-disc pl-6 space-y-1 text-pitch-blue-700 dark:text-pitch-blue-300">
+                    <li>Your use of our services</li>
+                    <li>Your violation of these terms</li>
+                    <li>Your violation of any third-party rights</li>
+                    <li>Any content you submit or transmit through our services</li>
+                  </ul>
+                </div>
               </div>
             </div>
+          </div>
 
-            {/* Governing Law Section */}
-            <div className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-ice-blue-600 rounded-lg">
-                    <Globe className="h-5 w-5 text-white" />
-                  </div>
-                  <h3 className="text-lg font-semibold text-ice-blue-800 dark:text-ice-blue-200">
-                    11. Governing Law
-                  </h3>
+          {/* Governing Law Section */}
+          <div className="fifa-card-hover-enhanced border-stadium-gold-200/50 dark:border-stadium-gold-700/50 bg-gradient-to-br from-white to-stadium-gold-50/50 dark:from-slate-900 dark:to-stadium-gold-900/20">
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg">
+                  <FileText className="h-6 w-6 text-white" />
                 </div>
-                <p className="text-ice-blue-700 dark:text-ice-blue-300">
-                  This disclaimer and any disputes arising out of or related to it shall be governed by and construed in
-                  accordance with applicable local laws. Any legal action or proceeding arising under this disclaimer will be
-                  brought exclusively in the appropriate courts.
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+                  7. Governing Law and Jurisdiction
+                </h2>
+              </div>
+              
+              <div className="space-y-4 text-slate-700 dark:text-slate-300">
+                <p className="leading-relaxed">
+                  This disclaimer shall be governed by and construed in accordance with the laws of the jurisdiction in which the FIFA 26 League operates, without regard to conflict of law principles.
+                </p>
+                
+                <p className="leading-relaxed">
+                  Any disputes arising out of or relating to this disclaimer or our services shall be subject to the exclusive jurisdiction of the courts in the applicable jurisdiction.
                 </p>
               </div>
             </div>
           </div>
 
           {/* Changes to Disclaimer Section */}
-          <div className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20">
+          <div className="fifa-card-hover-enhanced border-goal-orange-200/50 dark:border-goal-orange-700/50 bg-gradient-to-br from-white to-goal-orange-50/50 dark:from-slate-900 dark:to-goal-orange-900/20">
             <div className="p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
-                  <AlertTriangle className="h-6 w-6 text-white" />
+                <div className="p-3 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg">
+                  <Clock className="h-6 w-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  12. Changes to This Disclaimer
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+                  8. Changes to This Disclaimer
                 </h2>
               </div>
-              <p className="text-hockey-silver-700 dark:text-hockey-silver-300 leading-relaxed">
-                We reserve the right to update or modify this disclaimer at any time without prior notice. Changes will be
-                effective immediately upon posting to the website. Your continued use of our services after any such changes
-                constitutes acceptance of the new disclaimer.
-              </p>
+              
+              <div className="space-y-4 text-slate-700 dark:text-slate-300">
+                <p className="leading-relaxed">
+                  We reserve the right to modify this disclaimer at any time. We will notify users of any material changes by posting the updated disclaimer on our website and updating the "Last Updated" date.
+                </p>
+                
+                <p className="leading-relaxed">
+                  Your continued use of our services after such changes constitutes acceptance of the updated disclaimer. If you do not agree to the changes, you must discontinue use of our services.
+                </p>
+              </div>
             </div>
           </div>
 
-          {/* Contact Information Section */}
-          <div className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
+          {/* Contact Section */}
+          <div className="fifa-card-hover-enhanced border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-slate-900 dark:to-field-green-900/20">
             <div className="p-6">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-ice-blue-500 to-ice-blue-600 rounded-lg">
+                <div className="p-3 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg">
                   <MessageSquare className="h-6 w-6 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  13. Contact Information
+                <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200">
+                  9. Contact Information
                 </h2>
               </div>
-              <p className="text-hockey-silver-700 dark:text-hockey-silver-300 mb-4">If you have any questions about this disclaimer or need clarification on any points, please contact us:</p>
-              <div className="bg-gradient-to-r from-ice-blue-50 to-ice-blue-100 dark:from-ice-blue-900/20 dark:to-ice-blue-800/20 p-6 rounded-lg border border-ice-blue-200 dark:border-ice-blue-700">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3">
-                    <Mail className="h-5 w-5 text-ice-blue-600" />
-                    <p className="text-hockey-silver-700 dark:text-hockey-silver-300">
-                      <strong>Email:</strong>{" "}
-                      <a href="mailto:lispdoge@gmail.com" className="text-ice-blue-600 dark:text-ice-blue-400 hover:text-ice-blue-700 dark:hover:text-ice-blue-300 font-medium underline decoration-2 underline-offset-2 hover:decoration-ice-blue-500 transition-all duration-200">
-                        lispdoge@gmail.com
-                      </a>
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <MessageSquare className="h-5 w-5 text-ice-blue-600" />
-                    <p className="text-hockey-silver-700 dark:text-hockey-silver-300">
-                      <strong>Discord:</strong>{" "}
-                      <a
-                        href="https://discord.gg/scs"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-ice-blue-600 dark:text-ice-blue-400 hover:text-ice-blue-700 dark:hover:text-ice-blue-300 font-medium underline decoration-2 underline-offset-2 hover:decoration-ice-blue-500 transition-all duration-200"
-                      >
-                        SCS Discord Server
-                      </a>
-                    </p>
+              
+              <div className="space-y-4 text-slate-700 dark:text-slate-300">
+                <p className="leading-relaxed">
+                  If you have any questions about this disclaimer or our services, please contact us at:
+                </p>
+                
+                <div className="bg-gradient-to-r from-field-green-50 to-field-green-100 dark:from-field-green-900/20 dark:to-field-green-800/20 p-6 rounded-lg border border-field-green-200 dark:border-field-green-700">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <Mail className="h-5 w-5 text-field-green-600" />
+                      <p className="text-slate-700 dark:text-slate-300">
+                        <strong>Email:</strong>{" "}
+                        <a href="mailto:midnightstudiosintl@outlook.com" className="text-field-green-600 dark:text-field-green-400 hover:text-field-green-700 dark:hover:text-field-green-300 font-medium underline decoration-2 underline-offset-2 hover:decoration-field-green-500 transition-all duration-200">
+                          midnightstudiosintl@outlook.com
+                        </a>
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <MessageSquare className="h-5 w-5 text-field-green-600" />
+                      <p className="text-slate-700 dark:text-slate-300">
+                        <strong>Discord:</strong>{" "}
+                        <a
+                          href="https://discord.gg/fifa26league"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-field-green-600 dark:text-field-green-400 hover:text-field-green-700 dark:hover:text-field-green-300 font-medium underline decoration-2 underline-offset-2 hover:decoration-field-green-500 transition-all duration-200"
+                        >
+                          FIFA 26 League Discord Server
+                        </a>
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Acknowledgment Section */}
-          <div className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
-            <div className="p-6">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
-                  <CheckCircle className="h-6 w-6 text-white" />
-                </div>
-                <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  14. Acknowledgment
-                </h2>
-              </div>
-              <p className="text-hockey-silver-700 dark:text-hockey-silver-300 leading-relaxed">
-                By using the SCS website and services, you acknowledge that you have read, understood, and agree to be
-                bound by this disclaimer. If you do not agree with any part of this disclaimer, please discontinue use of
-                our services immediately.
-              </p>
             </div>
           </div>
 
           {/* Footer Note */}
-          <div className="hockey-card border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/50 dark:from-hockey-silver-900 dark:to-hockey-silver-800/20">
+          <div className="fifa-card-hover-enhanced border-slate-200/50 dark:border-slate-700/50 bg-gradient-to-br from-white to-slate-50/50 dark:from-slate-900 dark:to-slate-800/20">
             <div className="p-6 text-center">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="p-2 bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 rounded-lg">
-                  <AlertTriangle className="h-5 w-5 text-white" />
+                <div className="p-2 bg-gradient-to-r from-slate-500 to-slate-600 rounded-lg">
+                  <Info className="h-5 w-5 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  Important Legal Notice
+                <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">
+                  Last Updated: July 1, 2025
                 </h3>
               </div>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400 mb-4">
-                Please read this disclaimer carefully. By using our services, you agree to these terms and conditions.
+              <p className="text-slate-600 dark:text-slate-400">
+                This disclaimer is effective as of the date listed above and applies to all users of the FIFA 26 League website and services.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <a 
-                  href="/contact" 
-                  className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 text-white rounded-lg hover:from-ice-blue-600 hover:to-rink-blue-700 transition-all duration-200 hover:scale-105 hover:shadow-lg font-medium"
-                >
-                  <MessageSquare className="h-4 w-4" />
-                  Contact Us
-                </a>
-                <a 
-                  href="/rules" 
-                  className="inline-flex items-center gap-2 px-6 py-3 border border-ice-blue-200 dark:border-rink-blue-700 text-ice-blue-700 dark:text-ice-blue-300 rounded-lg hover:bg-ice-blue-50 dark:hover:bg-rink-blue-900/20 hover:border-ice-blue-300 dark:hover:border-rink-blue-600 transition-all duration-200 font-medium"
-                >
-                  <BookOpen className="h-4 w-4" />
-                  View Rules
-                </a>
-              </div>
             </div>
           </div>
         </div>
