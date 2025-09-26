@@ -542,91 +542,103 @@ const ManagementPage = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+      {/* Hero Header Section */}
+      <div className="hockey-header relative py-16 px-4">
+        <div className="container mx-auto text-center">
+          <div className="flex items-center justify-center gap-6 mb-8">
             {teamData.logo_url && (
               <Image
                 src={teamData.logo_url}
                 alt={teamData.name}
-                width={64}
-                height={64}
-                className="rounded-lg"
+                width={80}
+                height={80}
+                className="rounded-xl shadow-lg"
               />
             )}
             <div>
-              <h1 className="text-3xl font-bold">{teamData.name}</h1>
-              <p className="text-muted-foreground">Team Management</p>
+              <h1 className="hockey-title mb-2">
+                {teamData.name}
+              </h1>
+              <p className="hockey-subtitle">
+                Team Management Dashboard
+              </p>
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card>
-            <CardContent className="p-4">
+      {/* Main Content */}
+      <div className="container mx-auto px-4 pb-20">
+
+        {/* Overview Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          <Card className="fifa-card-hover-enhanced">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Roster Size</p>
-                  <p className="text-2xl font-bold">
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Roster Size</p>
+                  <p className="text-3xl font-bold text-slate-800 dark:text-slate-200">
                     {teamPlayers.length}
                     {projectedRosterSize !== teamPlayers.length && (
-                      <span className="text-lg text-ice-blue-500 ml-1">→ {projectedRosterSize}</span>
+                      <span className="text-lg text-pitch-blue-500 ml-1">→ {projectedRosterSize}</span>
                     )}
                   </p>
                 </div>
-                <Users className="h-8 w-8 text-muted-foreground" />
+                <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Users className="h-6 w-6 text-white" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="p-4">
+          <Card className="fifa-card-hover-enhanced">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Salary Cap</p>
-                  <p className="text-2xl font-bold">
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Salary Cap</p>
+                  <p className="text-3xl font-bold text-slate-800 dark:text-slate-200">
                     ${(currentTeamSalary / 1000000).toFixed(1)}M
                     {projectedSalary !== currentTeamSalary && (
-                      <span className="text-lg text-assist-green-500 ml-1">
+                      <span className="text-lg text-stadium-gold-500 ml-1">
                         → ${(projectedSalary / 1000000).toFixed(1)}M
                       </span>
                     )}
                   </p>
                 </div>
-                <DollarSign className="h-8 w-8 text-muted-foreground" />
+                <div className="w-12 h-12 bg-gradient-to-r from-stadium-gold-500 to-goal-orange-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <DollarSign className="h-6 w-6 text-white" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="p-4">
+          <Card className="fifa-card-hover-enhanced">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Record</p>
-                  <p className="text-2xl font-bold">
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Record</p>
+                  <p className="text-3xl font-bold text-slate-800 dark:text-slate-200">
                     {teamData.wins}-{teamData.losses}-{teamData.otl}
                   </p>
                 </div>
-                <Trophy className="h-8 w-8 text-muted-foreground" />
+                <div className="w-12 h-12 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Trophy className="h-6 w-6 text-white" />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          <Card>
-            <CardContent className="p-4">
+          <Card className="fifa-card-hover-enhanced">
+            <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-muted-foreground">Points</p>
-                  <p className="text-2xl font-bold">{teamData.points}</p>
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Points</p>
+                  <p className="text-3xl font-bold text-slate-800 dark:text-slate-200">{teamData.points}</p>
                 </div>
-                <Trophy className="h-8 w-8 text-muted-foreground" />
+                <div className="w-12 h-12 bg-gradient-to-r from-goal-orange-500 to-stadium-gold-600 rounded-xl flex items-center justify-center shadow-lg">
+                  <Trophy className="h-6 w-6 text-white" />
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -634,21 +646,21 @@ const ManagementPage = () => {
 
         {/* Main Content */}
         <Tabs value={activeTab} onValueChange={handleTabChange} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-6">
-            <TabsTrigger value="roster">Roster</TabsTrigger>
-            <TabsTrigger value="transfers">Transfer Market</TabsTrigger>
-            <TabsTrigger value="signings">Direct Signings</TabsTrigger>
-            <TabsTrigger value="my-offers">My Offers</TabsTrigger>
-            <TabsTrigger value="team-transfers">Team Transfers</TabsTrigger>
-            <TabsTrigger value="schedule">Schedule</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-6 fifa-tabs-list">
+            <TabsTrigger value="roster" className="fifa-tab-trigger">Roster</TabsTrigger>
+            <TabsTrigger value="transfers" className="fifa-tab-trigger">Transfer Market</TabsTrigger>
+            <TabsTrigger value="signings" className="fifa-tab-trigger">Direct Signings</TabsTrigger>
+            <TabsTrigger value="my-offers" className="fifa-tab-trigger">My Offers</TabsTrigger>
+            <TabsTrigger value="team-transfers" className="fifa-tab-trigger">Team Transfers</TabsTrigger>
+            <TabsTrigger value="schedule" className="fifa-tab-trigger">Schedule</TabsTrigger>
           </TabsList>
 
           {/* Roster Tab Content */}
           <TabsContent value="roster">
-            <Card>
+            <Card className="fifa-card-hover-enhanced">
               <CardHeader>
-                <CardTitle>Team Roster</CardTitle>
-                <CardDescription>Manage your team's players and roles</CardDescription>
+                <CardTitle className="text-2xl text-slate-800 dark:text-slate-200">Team Roster</CardTitle>
+                <CardDescription className="text-slate-600 dark:text-slate-400">Manage your team's players and roles</CardDescription>
               </CardHeader>
               <CardContent>
                 {teamPlayers.length > 0 ? (
@@ -656,7 +668,7 @@ const ManagementPage = () => {
                     {teamPlayers.map((player) => (
                       <div
                         key={player.id}
-                        className="flex items-center justify-between p-4 border rounded-lg"
+                        className="flex items-center justify-between p-4 border border-field-green-200 dark:border-field-green-700 rounded-lg bg-gradient-to-r from-field-green-50/50 to-pitch-blue-50/50 dark:from-field-green-900/50 dark:to-pitch-blue-900/50"
                       >
                         <div className="flex items-center gap-4">
                           {player.users?.avatar_url && (
@@ -694,7 +706,7 @@ const ManagementPage = () => {
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-8 text-muted-foreground">
+                  <div className="text-center py-8 text-slate-600 dark:text-slate-400">
                     No players on this team
                   </div>
                 )}
@@ -704,10 +716,10 @@ const ManagementPage = () => {
 
           {/* Transfer Market Tab Content */}
           <TabsContent value="transfers">
-            <Card>
+            <Card className="fifa-card-hover-enhanced">
               <CardHeader>
-                <CardTitle>Transfer Market</CardTitle>
-                <CardDescription>Browse and make transfer offers for available players</CardDescription>
+                <CardTitle className="text-2xl text-slate-800 dark:text-slate-200">Transfer Market</CardTitle>
+                <CardDescription className="text-slate-600 dark:text-slate-400">Browse and make transfer offers for available players</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">

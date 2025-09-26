@@ -556,7 +556,7 @@ export default function AdminDashboardPage() {
                 <div className="w-12 h-12 bg-gradient-to-r from-slate-500 to-field-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-field-green-500/25">
                   <Wrench className="h-6 w-6 text-white" />
                 </div>
-                System Diagnostics & Monitoring
+                System Diagnostics
               </CardTitle>
               <CardDescription className="text-lg relative z-10">
                 Real-time system health monitoring and diagnostic tools for administrators
