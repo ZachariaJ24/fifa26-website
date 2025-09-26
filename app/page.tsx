@@ -68,33 +68,6 @@ function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; d
   )
 }
 
-// Floating particles background
-function FloatingParticles() {
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {[...Array(30)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-field-green-500/30 rounded-full"
-          initial={{
-            x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
-            y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
-          }}
-          animate={{
-            x: Math.random() * (typeof window !== "undefined" ? window.innerWidth : 1200),
-            y: Math.random() * (typeof window !== "undefined" ? window.innerHeight : 800),
-          }}
-          transition={{
-            duration: Math.random() * 25 + 15,
-            repeat: Number.POSITIVE_INFINITY,
-            repeatType: "reverse",
-          }}
-        />
-      ))}
-    </div>
-  )
-}
-
 export default function Home() {
   const { supabase } = useSupabase()
   const { toast } = useToast()
@@ -152,62 +125,26 @@ export default function Home() {
     },
   ])
 
-  const { scrollY } = useScroll()
-  const y1 = useTransform(scrollY, [0, 300], [0, 50])
-  const y2 = useTransform(scrollY, [0, 300], [0, -50])
-
   useEffect(() => {
     async function fetchData() {
       try {
-        console.log("=== HOME PAGE DATA FETCHING STARTED ===")
-        // Fetch carousel images
-        try {
-          console.log("Fetching carousel images...")
-          const { data: carouselData, error: carouselError } = await supabase
-            .from("carousel_images")
-            .select("*")
-            .order("order", { ascending: true })
-
-          if (!carouselError && carouselData && carouselData.length > 0) {
-            const validatedImages = (carouselData as any[]).map((img: any) => {
-              const url = typeof img?.url === "string" && img.url.trim() !== ""
-                ? img.url
-                : `https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200&query=${encodeURIComponent(String(img?.title || "SFS League"))}`
-              return {
-                url,
-                title: String(img?.title || "Secret Football Society"),
-                subtitle: String(img?.subtitle || "Premier FC 26 competitive football with advanced stat tracking"),
-              }
-            })
-            setHeroImages(validatedImages)
-          }
-        } catch (carouselError) {
-          console.error("Error fetching carousel images:", carouselError)
-        }
-
         // Fetch stats
-        try {
-          console.log("Fetching stats...")
-          const [playersRes, teamsRes, matchesRes] = await Promise.all([
-            supabase.from("users").select("id", { count: "exact" }),
-            supabase
-              .from("teams")
-              .select("id", { count: "exact" })
-              .eq("is_active", true), // Only active teams
-            supabase.from("matches").select("id", { count: "exact" }),
-          ])
+        const [playersRes, teamsRes, matchesRes] = await Promise.all([
+          supabase.from("users").select("id", { count: "exact" }),
+          supabase
+            .from("teams")
+            .select("id", { count: "exact" })
+            .eq("is_active", true),
+          supabase.from("matches").select("id", { count: "exact" }),
+        ])
 
-          setStats({
-            totalPlayers: playersRes.count || 0,
-            totalTeams: teamsRes.count || 0,
-            totalMatches: matchesRes.count || 0,
-          })
-        } catch (error) {
-          console.error("Error fetching stats:", error)
-        }
+        setStats({
+          totalPlayers: playersRes.count || 0,
+          totalTeams: teamsRes.count || 0,
+          totalMatches: matchesRes.count || 0,
+        })
 
         // Fetch latest news
-        console.log("Fetching news...")
         const { data: newsData, error: newsError } = await supabase
           .from("news")
           .select("*")
@@ -219,195 +156,49 @@ export default function Home() {
         setNews(newsData || [])
         setLoading((prev) => ({ ...prev, news: false }))
 
-        // Get current season (same logic as matches page)
-        let currentSeason = null
-        
-        // Try to get active season from seasons table
-        const { data: seasonsData, error: seasonsError } = await supabase
-          .from("seasons")
-          .select("*")
-          .order("created_at", { ascending: false })
-
-        if (!seasonsError && seasonsData && seasonsData.length > 0) {
-          // Find active season
-          const activeSeason = (seasonsData as any[]).find((s: any) => s?.is_active === true)
-          if (activeSeason) {
-            console.log("Found active season for home page:", activeSeason)
-            currentSeason = activeSeason
-          } else {
-            // Default to first season
-            console.log("No active season, using first season for home page:", seasonsData[0])
-            currentSeason = seasonsData[0]
-          }
-        } else {
-          // Try to get current season from system_settings
-          const { data: settingsData, error: settingsError } = await supabase
-            .from("system_settings")
-            .select("value")
-            .eq("key", "current_season")
-            .single()
-
-          if (!settingsError && settingsData && (settingsData as any).value) {
-            const seasonNumber = Number.parseInt(String((settingsData as any).value), 10)
-            if (!isNaN(seasonNumber)) {
-              currentSeason = {
-                id: seasonNumber.toString(),
-                number: seasonNumber,
-                name: `Season ${seasonNumber}`,
-                is_active: true,
-              }
-              console.log("Using season from system_settings for home page:", currentSeason)
-            }
-          }
-        }
-
-        if (!currentSeason) {
-          // Default to season 1
-          currentSeason = {
-            id: "1",
-            number: 1,
-            name: "Season 1",
-            is_active: true,
-          }
-          console.log("Using default season for home page:", currentSeason)
-        }
-
-        // Fetch upcoming games using current season (like matches page)
-        const { data: upcomingData, error: upcomingError } = await supabase
-          .from("matches")
-          .select(`
-            id, 
-            match_date, 
-            status,
-            home_team:home_team_id(id, name, logo_url),
-            away_team:away_team_id(id, name, logo_url)
-          `)
-          .eq("season_name", currentSeason.name)
-          .eq("status", "Scheduled")
-          .gte("match_date", new Date().toISOString())
-          .order("match_date", { ascending: true })
-          .limit(10)
-
-        if (upcomingError) throw upcomingError
-        setUpcomingGames(upcomingData || [])
-
-        // Fetch completed games using current season (like matches page)
-        const { data: completedData, error: completedError } = await supabase
-          .from("matches")
-          .select(`
-            id, 
-            match_date, 
-            status,
-            home_score,
-            away_score,
-            home_team:home_team_id(id, name, logo_url),
-            away_team:away_team_id(id, name, logo_url)
-          `)
-          .eq("season_name", currentSeason.name)
-          .eq("status", "Completed")
-          .order("match_date", { ascending: false })
-          .limit(10)
-
-        if (completedError) throw completedError
-        setCompletedGames(completedData || [])
-
-        // Fetch featured games from admin-selected matches
-        console.log("Fetching admin-selected featured games...")
-        try {
-          const { data: featuredData, error: featuredError } = await supabase
-            .from("matches")
-            .select(`
-              id, 
-              match_date, 
-              status,
-              home_score,
-              away_score,
-              featured,
-              home_team:home_team_id(id, name, logo_url),
-              away_team:away_team_id(id, name, logo_url)
-            `)
-            .eq("featured", true)
-            .order("match_date", { ascending: false })
-            .limit(6)
-
-          if (featuredError) {
-            console.error("Error fetching featured games:", featuredError)
-            // If featured column doesn't exist, fall back to recent completed matches
-            console.log("Featured column not available, falling back to recent completed matches")
-            const { data: fallbackData, error: fallbackError } = await supabase
-              .from("matches")
-              .select(`
-                id, 
-                match_date, 
-                status,
-                home_score,
-                away_score,
-                home_team:home_team_id(id, name, logo_url),
-                away_team:away_team_id(id, name, logo_url)
-              `)
-              .eq("status", "Completed")
-              .order("match_date", { ascending: false })
-              .limit(6)
-            
-            if (fallbackError) {
-              console.error("Fallback featured games query also failed:", fallbackError)
-              setFeaturedGames([])
-            } else {
-              console.log("Using fallback featured games data")
-              setFeaturedGames(fallbackData || [])
-            }
-          } else {
-            console.log(`Found ${featuredData?.length || 0} admin-selected featured games`)
-            setFeaturedGames(featuredData || [])
-          }
-        } catch (featuredError) {
-          console.error("Exception in featured games fetch:", featuredError)
-          setFeaturedGames([])
-        }
-        
-        setLoading((prev) => ({ ...prev, featured: false }))
-
-        setLoading((prev) => ({ ...prev, games: false }))
-
-        // Fetch team standings using unified calculation
-        try {
-          console.log("=== STARTING STANDINGS FETCH ===")
-          console.log("Fetching standings using unified calculation...")
-          
-        // Use the new unified standings API
+        // Fetch games and standings
         const response = await fetch('/api/standings')
         if (!response.ok) {
           throw new Error('Failed to fetch standings')
         }
-        
         const data = await response.json()
-        const standings = data.standings
+        setStandings(data.standings)
+        setLoading((prev) => ({ ...prev, standings: false }))
 
-          console.log(`Calculated standings for ${standings.length} teams`)
-          console.log("Sample standings data:", standings.slice(0, 2))
-          setStandings(standings)
-          setLoading((prev) => ({ ...prev, standings: false }))
-        } catch (error) {
-          console.error("Error fetching standings:", error)
-          // Don't show toast for standings error, just log it and continue
-          console.log("Standings not available - continuing without standings data")
-          setStandings([]) // Set empty array so component doesn't break
-          setLoading((prev) => ({ ...prev, standings: false }))
-        }
-        
-        console.log("=== HOME PAGE DATA FETCHING COMPLETED ===")
+        const { data: upcomingData, error: upcomingError } = await supabase
+          .from("matches")
+          .select(`*, home_team:home_team_id(name, logo_url), away_team:away_team_id(name, logo_url)`)
+          .eq("status", "Scheduled")
+          .order("match_date", { ascending: true })
+          .limit(6)
+        if(upcomingError) throw upcomingError
+        setUpcomingGames(upcomingData || [])
+
+        const { data: completedData, error: completedError } = await supabase
+          .from("matches")
+          .select(`*, home_team:home_team_id(name, logo_url), away_team:away_team_id(name, logo_url)`)
+          .eq("status", "Completed")
+          .order("match_date", { ascending: false })
+          .limit(6)
+        if(completedError) throw completedError
+        setCompletedGames(completedData || [])
+        setLoading((prev) => ({ ...prev, games: false }))
+
+        const { data: featuredData, error: featuredError } = await supabase
+          .from("matches")
+          .select(`*, home_team:home_team_id(name, logo_url), away_team:away_team_id(name, logo_url)`)
+          .eq("featured", true)
+          .order("match_date", { ascending: false })
+          .limit(3)
+        if(featuredError) throw featuredError
+        setFeaturedGames(featuredData || [])
+        setLoading((prev) => ({ ...prev, featured: false }))
+
       } catch (err) {
-        console.error("=== ERROR IN HOME PAGE DATA FETCHING ===", err)
         toast({
           title: "Error loading data",
           description: err instanceof Error ? err.message : "Failed to load content. Please try again.",
           variant: "destructive",
-        })
-        setLoading({
-          news: false,
-          games: false,
-          standings: false,
-          featured: false,
         })
       }
     }
@@ -416,861 +207,313 @@ export default function Home() {
   }, [supabase, toast])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/20">
+    <div className="min-h-screen bg-background">
       <BannedUserModal />
-      
-      {/* Hero Section */}
-      <div className="relative">
+      <main>
         <HeroCarousel images={heroImages} />
-      </div>
 
-      {/* League Selector */}
-      <section className="container mx-auto px-4 mt-6">
-        <div className="flex items-center justify-between gap-4">
-          <h2 className="text-xl font-semibold">Select League</h2>
-          <LeagueSelector />
-        </div>
-      </section>
-
-      {/* League Statistics Section */}
-      <motion.section
-        className="py-20 px-4"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-field-green-800 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-field-green-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">
-              League Statistics
-            </h2>
-            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto">
-              Real-time data from our advanced tracking system
-            </p>
-            <div className="h-1 w-24 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-8"></div>
+        {/* League Selector */}
+        <section className="container mx-auto px-4 mt-6">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-xl font-semibold">Select League</h2>
+            <LeagueSelector />
           </div>
+        </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              icon: Users,
-              label: "Active Players",
-              value: stats.totalPlayers,
-              color: "bg-field-green-500",
-            },
-            {
-              icon: Trophy,
-              label: "Clubs",
-              value: stats.totalTeams,
-              color: "bg-stadium-gold-500",
-            },
-            {
-              icon: Calendar,
-              label: "Fixtures",
-              value: stats.totalMatches,
-              color: "bg-pitch-blue-500",
-            },
-          ].map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <div className="flex items-center gap-4">
-                <div className={`p-3 ${stat.color} rounded-xl shadow-lg`}>
-                  <stat.icon className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <div className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-2">
-                    <AnimatedCounter end={stat.value} />
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">{stat.label}</div>
-                </div>
+        {/* League Statistics Section */}
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:max-w-none">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Trusted by the Best Teams</h2>
+                <p className="mt-4 text-lg leading-8 text-muted-foreground">Our platform is the choice for top-tier teams and players.</p>
               </div>
-            </motion.div>
-          ))}
+              <dl className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 text-center lg:grid-cols-3">
+                <div className="mx-auto flex max-w-xs flex-col gap-y-4">
+                  <dt className="text-base leading-7 text-muted-foreground">Active Players</dt>
+                  <dd className="order-first text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                    <AnimatedCounter end={stats.totalPlayers} />
+                  </dd>
+                </div>
+                <div className="mx-auto flex max-w-xs flex-col gap-y-4">
+                  <dt className="text-base leading-7 text-muted-foreground">Clubs</dt>
+                  <dd className="order-first text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                    <AnimatedCounter end={stats.totalTeams} />
+                  </dd>
+                </div>
+                <div className="mx-auto flex max-w-xs flex-col gap-y-4">
+                  <dt className="text-base leading-7 text-muted-foreground">Fixtures</dt>
+                  <dd className="order-first text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
+                    <AnimatedCounter end={stats.totalMatches} />
+                  </dd>
+                </div>
+              </dl>
+            </div>
           </div>
-        </div>
-      </motion.section>
+        </section>
 
-      {/* Featured Games Section */}
-      <motion.section
-        className="py-20 px-4"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-field-green-800 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-field-green-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">
-              Featured Matches
-            </h2>
-            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-3xl mx-auto">
-              Don't miss these highlighted matches from our competitive league
-            </p>
-            <div className="h-1 w-24 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-8"></div>
-          </div>
-
-        {loading.featured ? (
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="space-y-3">
-                <Skeleton className="w-full h-32 rounded-2xl" />
-                <Skeleton className="w-3/4 h-4 rounded-xl" />
-                <Skeleton className="w-1/2 h-3 rounded-xl" />
+        {/* Featured Games Section */}
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:max-w-none">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Featured Matches</h2>
+                <p className="mt-4 text-lg leading-8 text-muted-foreground">Don't miss these highlighted matches from our competitive league.</p>
               </div>
-            ))}
-          </div>
-        ) : featuredGames.length > 0 ? (
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {featuredGames.map((game, index) => (
-              <motion.div
-                key={game.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="transition-all duration-300 ease-out hover:scale-105 hover:-translate-y-2 hover:shadow-2xl"
-              >
-                <Link href={`/matches/${game.id}`}>
-                  <Card className="h-full cursor-pointer">
-                    <CardContent className="p-6">
-                      <div className="flex items-center justify-between mb-4">
-                        <div className="flex items-center gap-2">
-                          <Star className="h-5 w-5 text-yellow-500" />
-                          <span className="text-sm font-semibold text-yellow-600 dark:text-yellow-400">
-                            Featured Match
-                          </span>
-                        </div>
-                        <span className="text-xs text-slate-500 dark:text-slate-400">
-                          {new Date(game.match_date).toLocaleDateString()}
-                        </span>
-                      </div>
-                      
-                      <div className="space-y-4">
-                        {/* Home Team */}
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-field-green-500 rounded-full flex items-center justify-center">
-                            <span className="text-white font-bold text-sm">
-                              {game.home_team?.name?.charAt(0) || "H"}
-                            </span>
-                          </div>
-                          <span className="font-semibold text-slate-800 dark:text-slate-200 flex-1">
-                            {game.home_team?.name || "Home Club"}
-                          </span>
-                          <span className="text-2xl font-bold text-field-green-600 dark:text-field-green-400">
-                            {game.home_score || 0}
-                          </span>
-                        </div>
-
-                        {/* VS */}
-                        <div className="text-center">
-                          <span className="text-sm font-medium text-slate-500 dark:text-slate-400">VS</span>
-                        </div>
-
-                        {/* Away Team */}
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-pitch-blue-500 rounded-full flex items-center justify-center">
-                            <span className="text-white font-bold text-sm">
-                              {game.away_team?.name?.charAt(0) || "A"}
-                            </span>
-                          </div>
-                          <span className="font-semibold text-slate-800 dark:text-slate-200 flex-1">
-                            {game.away_team?.name || "Away Club"}
-                          </span>
-                          <span className="text-2xl font-bold text-pitch-blue-600 dark:text-pitch-blue-400">
-                            {game.away_score || 0}
-                          </span>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700">
-                        <div className="flex items-center justify-between">
-                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            game.status === 'Completed' 
-                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                              : game.status === 'Scheduled'
-                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
-                              : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                          }`}>
-                            {game.status}
-                          </span>
-                          <span className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 transition-colors">
-                            View Details →
-                          </span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </Link>
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-            <CardContent className="p-12 text-center">
-              <div className="flex flex-col items-center gap-4">
-                <div className="p-4 bg-slate-100 dark:bg-slate-700 rounded-full">
-                  <Star className="h-8 w-8 text-slate-400" />
-                </div>
-                <h3 className="text-xl font-semibold text-slate-800 dark:text-slate-200">
-                  No Featured Games Yet
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400 max-w-md">
-                  Check back soon for highlighted matches from our competitive league.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-        </div>
-      </motion.section>
-
-      {/* About SCS Section */}
-      <motion.section
-        className="container mx-auto px-4 py-16"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            About Secret Football Society (SFS)
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Discover what makes SFS the premier destination for competitive football gaming
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-          >
-            <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-field-green-500 rounded-lg">
-                    <GamepadIcon className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">
-                    Premier SFS League
-                  </h3>
-                </div>
-                <div className="space-y-4">
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Secret Football Society (SFS) is a competitive and professionally organized FC 26
-                    football league. We provide a complete football simulation experience with structured
-                    seasons, playoffs, and championship tournaments that mirror real football operations.
-                  </p>
-                  <p className="text-slate-600 dark:text-slate-400">
-                    We offer a comprehensive football experience with multiple divisions and in-depth club management. 
-                    Players can engage in a full range of league activities, 
-                    from transfers to a complete statistical system that tracks every detail of on-pitch performance.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-              <CardContent className="p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 bg-stadium-gold-500 rounded-lg">
-                    <Users className="h-8 w-8 text-white" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">
-                    Professional Community
-                  </h3>
-                </div>
-                <div className="space-y-4">
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Connect with hundreds of dedicated FIFA 26 players in a top-tier competitive environment. 
-                    Our community consists of seasoned gamers and 
-                    football enthusiasts who are passionate about strategic play and sportsmanship.
-                  </p>
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Competitive integrity is at the heart of our community. 
-                    Our dedicated team of moderators enforces a robust rule set, 
-                    fostering an environment where every match is played with sportsmanship and professionalism.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-
-        {/* Why Choose SCS */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-            <CardContent className="p-12">
-              <div className="max-w-4xl mx-auto">
-                <div className="p-4 bg-goal-orange-500 rounded-full w-fit mx-auto mb-6">
-                  <Trophy className="h-12 w-12 text-white" />
-                </div>
-                <h3 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-6">
-                  Why Choose Secret Football Society?
-                </h3>
-                <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-                  Join players who have made SFS their home for competitive football. 
-                  Experience the perfect blend of professional league management, cutting-edge technology, 
-                  and a passionate community that shares your love for football.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {[
-                    { icon: Shield, label: "Fair Play", desc: "Strict anti-cheat measures" },
-                    { icon: Clock, label: "24/7 Support", desc: "Always here to help" },
-                    { icon: Star, label: "Excellence", desc: "Premium gaming experience" }
-                  ].map((item, index) => (
-                    <motion.div
-                      key={item.label}
-                      className="text-center"
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
-                      viewport={{ once: true }}
-                    >
-                      <div className="p-3 bg-goal-orange-500/20 rounded-lg w-fit mx-auto mb-3">
-                        <item.icon className="h-6 w-6 text-goal-orange-600 dark:text-goal-orange-400" />
-                      </div>
-                      <h4 className="font-semibold text-slate-800 dark:text-slate-200 mb-1">
-                        {item.label}
-                      </h4>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
-                        {item.desc}
-                      </p>
-                    </motion.div>
+              {loading.featured ? (
+                <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="flex flex-col gap-y-4">
+                      <Skeleton className="h-48 w-full rounded-lg" />
+                      <Skeleton className="h-4 w-3/4" />
+                      <Skeleton className="h-4 w-1/2" />
+                    </div>
                   ))}
                 </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      </motion.section>
-
-      {/* Advanced League Features Section */}
-      <motion.section
-        className="container mx-auto px-4 py-16"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            Advanced League Features
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Discover the cutting-edge features that make FIFA 26 League the most advanced football league platform
-          </p>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            viewport={{ once: true }}
-          >
-            <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-pitch-blue-500 rounded-lg">
-                    <BarChart3 className="h-8 w-8 text-white" />
-                  </div>
-                  <CardTitle className="text-xl font-bold text-slate-800 dark:text-slate-200">
-                    Custom API Statistics
-                  </CardTitle>
+              ) : featuredGames.length > 0 ? (
+                <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+                  {featuredGames.map((game) => (
+                    <Link key={game.id} href={`/matches/${game.id}`} className="flex flex-col gap-y-4">
+                      <div className="relative">
+                        <div className="absolute inset-0 rounded-lg bg-gradient-to-t from-black/50 to-transparent" />
+                        <img
+                          src={`https://source.unsplash.com/random/800x600?soccer,${game.id}`}
+                          alt={`${game.home_team?.name} vs ${game.away_team?.name}`}
+                          className="h-48 w-full rounded-lg object-cover"
+                        />
+                        <div className="absolute bottom-4 left-4 text-white">
+                          <h3 className="text-lg font-semibold">{`${game.home_team?.name} vs ${game.away_team?.name}`}</h3>
+                          <p className="text-sm">{new Date(game.match_date).toLocaleDateString()}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <p className="text-sm font-medium text-muted-foreground">{game.status}</p>
+                        <p className="text-sm font-medium text-primary hover:underline">View Details</p>
+                      </div>
+                    </Link>
+                  ))}
                 </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Our proprietary API system provides detailed statistical tracking and analysis for every aspect of FIFA 26 gameplay. 
-                    It automatically records all key metrics, from goals and assists to advanced analytics like possession and passing accuracy.
-                  </p>
-                  <ul className="text-slate-600 dark:text-slate-400 space-y-3">
-                    <li className="flex items-center gap-3">
-                      <div className="p-1 bg-pitch-blue-500/20 rounded-md">
-                        <ChartBar className="h-5 w-5 text-pitch-blue-600 dark:text-pitch-blue-400" />
-                      </div>
-                      Real-time match statistics
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <div className="p-1 bg-pitch-blue-500/20 rounded-md">
-                        <Activity className="h-5 w-5 text-pitch-blue-600 dark:text-pitch-blue-400" />
-                      </div>
-                      Advanced player analytics
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <div className="p-1 bg-pitch-blue-500/20 rounded-md">
-                        <Database className="h-5 w-5 text-pitch-blue-600 dark:text-pitch-blue-400" />
-                      </div>
-                      Historical performance data
-                    </li>
-                  </ul>
+              ) : (
+                <div className="mt-16 text-center">
+                  <p className="text-lg text-muted-foreground">No featured matches yet. Check back soon!</p>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-          >
-            <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-stadium-gold-500 rounded-lg">
-                    <Coins className="h-8 w-8 text-white" />
-                  </div>
-                  <CardTitle className="text-xl font-bold text-slate-800 dark:text-slate-200">
-                    Token Reward System
-                  </CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Earn FIFA 26 League tokens completely free by participating in matches, achieving milestones, and contributing
-                    to the community. Redeem tokens for exclusive prizes, merchandise, and special league privileges.
-                  </p>
-                  <ul className="text-slate-600 dark:text-slate-400 space-y-3">
-                    <li className="flex items-center gap-3">
-                      <div className="p-1 bg-stadium-gold-500/20 rounded-md">
-                        <Gift className="h-5 w-5 text-stadium-gold-600 dark:text-stadium-gold-400" />
-                      </div>
-                      Free prize redemption
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <div className="p-1 bg-stadium-gold-500/20 rounded-md">
-                        <Medal className="h-5 w-5 text-stadium-gold-600 dark:text-stadium-gold-400" />
-                      </div>
-                      Achievement rewards
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <div className="p-1 bg-stadium-gold-500/20 rounded-md">
-                        <Star className="h-5 w-5 text-stadium-gold-600 dark:text-stadium-gold-400" />
-                      </div>
-                      Exclusive league perks
-                    </li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            viewport={{ once: true }}
-          >
-            <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <div className="p-3 bg-assist-white-500 rounded-lg">
-                    <Shield className="h-8 w-8 text-white" />
-                  </div>
-                  <CardTitle className="text-xl font-bold text-slate-800 dark:text-slate-200">
-                    Professional Management
-                  </CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <p className="text-slate-600 dark:text-slate-400">
-                    Complete team management system with transfer budgets, contract negotiations, and
-                    scouting systems that create an authentic football club experience.
-                  </p>
-                  <ul className="text-slate-600 dark:text-slate-400 space-y-3">
-                    <li className="flex items-center gap-3">
-                      <div className="p-1 bg-assist-white-500/20 rounded-md">
-                        <TrendingUp className="h-5 w-5 text-assist-white-600 dark:text-assist-white-400" />
-                      </div>
-                      Advanced club management
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <div className="p-1 bg-assist-white-500/20 rounded-md">
-                        <Clock className="h-5 w-5 text-assist-white-600 dark:text-assist-white-400" />
-                      </div>
-                      Scheduled seasons
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <div className="p-1 bg-assist-white-500/20 rounded-md">
-                        <Award className="h-5 w-5 text-assist-white-600 dark:text-assist-white-400" />
-                      </div>
-                      Championship playoffs
-                    </li>
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-      </motion.section>
-
-      {/* Upcoming Matches Section */}
-      <motion.section
-        className="container mx-auto px-4 py-16"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            Upcoming FIFA 26 Matches
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Live-streamed competitive games with real-time statistics and professional commentary
-          </p>
-        </div>
-
-        {loading.games ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(3)].map((_, i) => (
-              <Skeleton key={i} className="w-full h-48 rounded-xl" />
-            ))}
+              )}
+            </div>
           </div>
-        ) : upcomingGames.length > 0 ? (
-          <UpcomingGames games={upcomingGames} />
-        ) : (
-          <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-            <CardContent className="p-12 text-center">
-              <div className="p-4 bg-pitch-blue-500 rounded-full w-fit mx-auto mb-6">
-                <Calendar className="h-16 w-16 text-white" />
+        </section>
+
+        {/* About SFS Section */}
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:max-w-none">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">About Secret Football Society (SFS)</h2>
+                <p className="mt-4 text-lg leading-8 text-muted-foreground">Discover what makes SFS the premier destination for competitive football gaming.</p>
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-                No Upcoming Matches
-              </h3>
-              <p className="text-slate-600 dark:text-slate-400 text-lg max-w-md mx-auto">
-                Check back soon for the next round of competitive FIFA 26 matches with live streaming and real-time statistics!
-              </p>
-            </CardContent>
-          </Card>
-        )}
-        </motion.section>
-
-
-      {/* Match Results & Standings Section */}
-      <motion.section
-        className="container mx-auto px-4 py-16"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            Match Results & Standings
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Track recent match outcomes and current league standings in real-time with comprehensive statistics
-          </p>
-        </div>
-
-        <Tabs defaultValue="completed" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 mb-6 md:mb-8 h-auto">
-            <TabsTrigger value="completed" className="text-xs md:text-sm px-2 md:px-4 py-2">
-              <span className="hidden md:inline">Recent Match Results</span>
-              <span className="md:hidden">Results</span>
-            </TabsTrigger>
-            <TabsTrigger value="standings" className="text-xs md:text-sm px-2 md:px-4 py-2">
-              <span className="hidden md:inline">League Standings</span>
-              <span className="md:hidden">Standings</span>
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="completed" className="space-y-6">
-            {loading.games ? (
-              <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-                <CardContent className="p-8">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[...Array(6)].map((_, i) => (
-                      <div key={i} className="space-y-3">
-                        <Skeleton className="w-full h-32 rounded-xl" />
-                        <Skeleton className="w-3/4 h-4 rounded" />
-                        <Skeleton className="w-1/2 h-3 rounded" />
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ) : completedGames.length > 0 ? (
-              <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3">
-                    <div className="p-2 bg-field-green-500 rounded-lg">
-                      <Trophy className="h-6 w-6 text-white" />
+              <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-2">
+                <div className="flex flex-col gap-y-4">
+                  <div className="flex items-center gap-x-4">
+                    <div className="flex-none rounded-lg bg-primary p-3">
+                      <GamepadIcon className="h-8 w-8 text-primary-foreground" />
                     </div>
-                    <div>
-                      <div className="text-xl font-bold text-slate-800 dark:text-slate-200">
-                        Recent Match Results
-                      </div>
-                      <div className="text-sm text-slate-600 dark:text-slate-400">
-                        Latest completed matches with final scores and statistics
-                      </div>
+                    <h3 className="text-xl font-semibold leading-7 text-foreground">Premier SFS League</h3>
+                  </div>
+                  <p className="text-base leading-7 text-muted-foreground">Secret Football Society (SFS) is a competitive and professionally organized FC 26 football league. We provide a complete football simulation experience with structured seasons, playoffs, and championship tournaments that mirror real football operations.</p>
+                </div>
+                <div className="flex flex-col gap-y-4">
+                  <div className="flex items-center gap-x-4">
+                    <div className="flex-none rounded-lg bg-primary p-3">
+                      <Users className="h-8 w-8 text-primary-foreground" />
                     </div>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CompletedGames games={completedGames} />
-                </CardContent>
-              </Card>
-            ) : (
-              <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg text-center p-12">
-                <CardContent className="pt-6">
-                  <div className="p-4 bg-field-green-500/20 rounded-full w-fit mx-auto mb-6">
-                    <Trophy className="h-16 w-16 text-field-green-600 dark:text-field-green-400" />
+                    <h3 className="text-xl font-semibold leading-7 text-foreground">Professional Community</h3>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-3">
-                    No Completed Matches Yet
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-                    Matches will appear here once they're completed. Check back soon for the latest results!
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-          </TabsContent>
-
-          <TabsContent value="standings" className="space-y-6">
-            {loading.standings ? (
-              <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-                <CardContent className="p-8">
-                  <div className="space-y-4">
-                    <Skeleton className="w-full h-12 rounded-lg" />
-                    {[...Array(8)].map((_, i) => (
-                      <Skeleton key={i} className="w-full h-16 rounded-lg" />
-                    ))}
+                  <p className="text-base leading-7 text-muted-foreground">Connect with hundreds of dedicated FIFA 26 players in a top-tier competitive environment. Our community consists of seasoned gamers and football enthusiasts who are passionate about strategic play and sportsmanship.</p>
+                </div>
+              </div>
+              <div className="mt-16 text-center">
+                <h3 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Why Choose Secret Football Society?</h3>
+                <p className="mt-4 text-lg leading-8 text-muted-foreground">Join players who have made SFS their home for competitive football. Experience the perfect blend of professional league management, cutting-edge technology, and a passionate community that shares your love for football.</p>
+                <div className="mt-8 flex justify-center gap-x-8">
+                  <div className="flex items-center gap-x-2">
+                    <Shield className="h-6 w-6 text-primary" />
+                    <span className="text-base font-medium text-muted-foreground">Fair Play</span>
                   </div>
-                </CardContent>
-              </Card>
-            ) : standings.length > 0 ? (
-              <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-                <CardHeader className="pb-4">
-                  <CardTitle className="flex items-center gap-3">
-                    <div className="p-2 bg-pitch-blue-500 rounded-lg">
-                      <Target className="h-6 w-6 text-white" />
-                    </div>
-                    <div>
-                      <div className="text-xl font-bold text-slate-800 dark:text-slate-200">
-                        League Standings
-                      </div>
-                      <div className="text-sm text-slate-600 dark:text-slate-400">
-                        Current club rankings and playoff race positions
-                      </div>
-                    </div>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="mb-6 p-4 bg-field-green-50 dark:bg-field-green-900/20 rounded-xl border border-field-green-200 dark:border-field-green-700">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 bg-field-green-500 rounded-lg">
-                        <TrendingUp className="h-5 w-5 text-white" />
-                      </div>
-                      <h4 className="font-semibold text-field-green-800 dark:text-field-green-200">
-                        Playoff Race Update
-                      </h4>
-                    </div>
-                    <p className="text-sm text-field-green-700 dark:text-field-green-300">
-                      Top 8 clubs qualify for playoffs. Current standings show {standings.slice(0, 8).length} clubs in playoff positions.
-                    </p>
+                  <div className="flex items-center gap-x-2">
+                    <Clock className="h-6 w-6 text-primary" />
+                    <span className="text-base font-medium text-muted-foreground">24/7 Support</span>
                   </div>
-                  <TeamStandings teams={standings} />
-                </CardContent>
-              </Card>
-            ) : (
-              <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg text-center p-12">
-                <CardContent className="pt-6">
-                  <div className="p-4 bg-pitch-blue-500/20 rounded-full w-fit mx-auto mb-6">
-                    <Trophy className="h-16 w-16 text-pitch-blue-600 dark:text-pitch-blue-400" />
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-3">
-                    Standings Not Available
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-                    League standings will appear here once the season begins. Check back soon for current rankings!
-                  </p>
-                </CardContent>
-              </Card>
-            )}
-          </TabsContent>
-        </Tabs>
-      </motion.section>
-
-      {/* Join the Premier NHL 26 League */}
-      <motion.section
-        className="container mx-auto px-4 py-16"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-          <CardContent className="p-16 text-center">
-            <div className="p-4 bg-goal-orange-500 rounded-full w-fit mx-auto mb-8">
-              <Crown className="h-16 w-16 text-white" />
-            </div>
-
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-800 dark:text-slate-200 mb-6">
-              Join the Premier FIFA 26 League
-            </h2>
-
-            <div className="mb-8 max-w-4xl mx-auto">
-              <p className="text-xl mb-4 leading-relaxed text-slate-600 dark:text-slate-400">
-                Experience the most competitive FIFA 26 gaming environment with professional-grade statistics tracking,
-                free token rewards, and authentic football league management.
-              </p>
-              <p className="text-lg text-slate-600 dark:text-slate-400 font-medium">
-                No entry fees, no pay-to-win mechanics - just pure competitive football gaming with real rewards!
-              </p>
-            </div>
-
-            <div className="flex flex-wrap justify-center gap-6 mb-12">
-              <Button
-                asChild
-                size="lg"
-                className="bg-field-green-500 hover:bg-field-green-600 text-white text-lg px-8 py-4"
-              >
-                <Link href="/register" className="flex items-center gap-3">
-                  <Zap className="h-6 w-6" />
-                  Register for Season 1
-                </Link>
-              </Button>
-
-              <Button
-                variant="outline"
-                size="lg"
-                asChild
-                className="border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 text-lg px-8 py-4"
-              >
-                <Link
-                  href="https://discord.gg/secretchelsociety"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3"
-                >
-                  <img
-                    src="https://scexchiemhvhtjarnrrx.supabase.co/storage/v1/object/public/media/photos/general/Discord-removebg-preview.png"
-                    alt="Discord"
-                    className="h-6 w-6"
-                  />
-                  Join Discord Community
-                </Link>
-              </Button>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-3xl mx-auto">
-              {[
-                { value: "100%", label: "Free to Play", icon: Gift, color: "bg-field-green-500" },
-                { value: "24/7", label: "Stat Tracking", icon: Activity, color: "bg-pitch-blue-500" },
-                { value: "Real", label: "Prize Rewards", icon: Trophy, color: "bg-goal-orange-500" }
-              ].map((stat, index) => (
-                <div key={stat.label} className="text-center">
-                  <div className={`p-4 ${stat.color} rounded-full w-fit mx-auto mb-4`}>
-                    <stat.icon className="h-8 w-8 text-white" />
-                  </div>
-                  <div className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">
-                    {stat.value}
-                  </div>
-                  <div className="text-slate-600 dark:text-slate-400">
-                    {stat.label}
+                  <div className="flex items-center gap-x-2">
+                    <Star className="h-6 w-6 text-primary" />
+                    <span className="text-base font-medium text-muted-foreground">Excellence</span>
                   </div>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </motion.section>
-
-      {/* Latest SCS News */}
-      <motion.section
-        className="container mx-auto px-4 py-16"
-        initial={{ opacity: 0, y: 50 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        viewport={{ once: true }}
-      >
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            Latest FIFA 26 League News
-          </h2>
-          <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-8">
-            Stay updated with the latest league announcements, player highlights, and community updates
-          </p>
-          <Button 
-            variant="outline" 
-            size="lg"
-            asChild 
-            className="border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 text-lg px-8 py-4"
-          >
-            <Link href="/news" className="flex items-center gap-3">
-              <Star className="h-5 w-5" />
-              View All News
-            </Link>
-          </Button>
-        </div>
-
-        {loading.news ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(3)].map((_, i) => (
-              <Skeleton key={i} className="w-full h-80 rounded-xl" />
-            ))}
-          </div>
-        ) : news.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {news.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                viewport={{ once: true }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
-                  <NewsCard news={item} />
-                </Card>
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg text-center p-16">
-            <CardContent className="pt-6">
-              <div className="p-4 bg-stadium-gold-500 rounded-full w-fit mx-auto mb-8">
-                <Star className="h-16 w-16 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-                No News Articles Yet
-              </h3>
-              <p className="text-slate-600 dark:text-slate-400 text-lg max-w-md mx-auto">
-                Check back soon for the latest league updates, player highlights, and community announcements!
-              </p>
-            </CardContent>
-          </Card>
-        )}
-      </motion.section>
+            </div>
+          </div>
+        </section>
+
+        {/* Advanced League Features Section */}
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:max-w-none">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Advanced League Features</h2>
+                <p className="mt-4 text-lg leading-8 text-muted-foreground">Discover the cutting-edge features that make FIFA 26 League the most advanced football league platform.</p>
+              </div>
+              <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+                <div className="flex flex-col gap-y-4">
+                  <div className="flex items-center gap-x-4">
+                    <div className="flex-none rounded-lg bg-primary p-3">
+                      <TrendingUp className="h-8 w-8 text-primary-foreground" />
+                    </div>
+                    <h3 className="text-xl font-semibold leading-7 text-foreground">Advanced Stat Tracking</h3>
+                  </div>
+                  <p className="text-base leading-7 text-muted-foreground">Our platform provides in-depth player and team statistics, including advanced metrics to track performance and identify areas for improvement.</p>
+                </div>
+                <div className="flex flex-col gap-y-4">
+                  <div className="flex items-center gap-x-4">
+                    <div className="flex-none rounded-lg bg-primary p-3">
+                      <Zap className="h-8 w-8 text-primary-foreground" />
+                    </div>
+                    <h3 className="text-xl font-semibold leading-7 text-foreground">Live Match Streaming</h3>
+                  </div>
+                  <p className="text-base leading-7 text-muted-foreground">Watch live matches with real-time statistics and commentary. Our streaming service provides a professional broadcast experience for all league games.</p>
+                </div>
+                <div className="flex flex-col gap-y-4">
+                  <div className="flex items-center gap-x-4">
+                    <div className="flex-none rounded-lg bg-primary p-3">
+                      <Target className="h-8 w-8 text-primary-foreground" />
+                    </div>
+                    <h3 className="text-xl font-semibold leading-7 text-foreground">Comprehensive Club Management</h3>
+                  </div>
+                  <p className="text-base leading-7 text-muted-foreground">Manage your club with a full suite of tools, including transfers, player contracts, and team finances. Our platform provides a realistic and immersive management experience.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Games and Standings Section */}
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:max-w-none">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Games & Standings</h2>
+                <p className="mt-4 text-lg leading-8 text-muted-foreground">Stay up-to-date with the latest match results and league standings.</p>
+              </div>
+              <Tabs defaultValue="upcoming" className="mt-16">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
+                  <TabsTrigger value="completed">Completed</TabsTrigger>
+                  <TabsTrigger value="standings">Standings</TabsTrigger>
+                </TabsList>
+                <TabsContent value="upcoming" className="mt-8">
+                  {loading.games ? (
+                    <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="flex flex-col gap-y-4">
+                          <Skeleton className="h-48 w-full rounded-lg" />
+                          <Skeleton className="h-4 w-3/4" />
+                          <Skeleton className="h-4 w-1/2" />
+                        </div>
+                      ))}
+                    </div>
+                  ) : upcomingGames.length > 0 ? (
+                    <UpcomingGames games={upcomingGames} />
+                  ) : (
+                    <div className="text-center">
+                      <p className="text-lg text-muted-foreground">No upcoming games scheduled.</p>
+                    </div>
+                  )}
+                </TabsContent>
+                <TabsContent value="completed" className="mt-8">
+                  {loading.games ? (
+                    <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+                      {[...Array(3)].map((_, i) => (
+                        <div key={i} className="flex flex-col gap-y-4">
+                          <Skeleton className="h-48 w-full rounded-lg" />
+                          <Skeleton className="h-4 w-3/4" />
+                          <Skeleton className="h-4 w-1/2" />
+                        </div>
+                      ))}
+                    </div>
+                  ) : completedGames.length > 0 ? (
+                    <CompletedGames games={completedGames} />
+                  ) : (
+                    <div className="text-center">
+                      <p className="text-lg text-muted-foreground">No completed games found.</p>
+                    </div>
+                  )}
+                </TabsContent>
+                <TabsContent value="standings" className="mt-8">
+                  {loading.standings ? (
+                    <Skeleton className="h-96 w-full rounded-lg" />
+                  ) : standings.length > 0 ? (
+                    <TeamStandings teams={standings} />
+                  ) : (
+                    <div className="text-center">
+                      <p className="text-lg text-muted-foreground">Standings are not available yet.</p>
+                    </div>
+                  )}
+                </TabsContent>
+              </Tabs>
+            </div>
+          </div>
+        </section>
+
+        {/* Latest News Section */}
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:max-w-none">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Latest News</h2>
+                <p className="mt-4 text-lg leading-8 text-muted-foreground">Stay informed with the latest updates and announcements from the league.</p>
+              </div>
+              {loading.news ? (
+                <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className="flex flex-col gap-y-4">
+                      <Skeleton className="h-48 w-full rounded-lg" />
+                      <Skeleton className="h-4 w-3/4" />
+                      <Skeleton className="h-4 w-1/2" />
+                    </div>
+                  ))}
+                </div>
+              ) : news.length > 0 ? (
+                <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+                  {news.map((item) => (
+                    <NewsCard key={item.id} news={item} />
+                  ))}
+                </div>
+              ) : (
+                <div className="mt-16 text-center">
+                  <p className="text-lg text-muted-foreground">No news articles found.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </section>
+
+        {/* Call to Action Section */}
+        <section className="py-16 sm:py-20">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:max-w-none">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Ready to Join the Action?</h2>
+                <p className="mt-4 text-lg leading-8 text-muted-foreground">Register now to join the most competitive FIFA 26 league and showcase your skills.</p>
+                <div className="mt-8 flex justify-center gap-x-4">
+                  <Button asChild>
+                    <Link href="/register">Register Now</Link>
+                  </Button>
+                  <Button asChild variant="outline">
+                    <Link href="/login">Login</Link>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
   )
 }

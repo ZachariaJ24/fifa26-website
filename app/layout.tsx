@@ -5,8 +5,8 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { MantineProviderWrapper } from "@/components/providers/mantine-provider"
-import Navigation from "@/components/navigation"
-import Footer from "@/components/footer"
+import SiteHeader from "@/components/public/SiteHeader"
+import SiteFooter from "@/components/public/SiteFooter"
 import { Toaster } from "@/components/ui/toaster"
 import SupabaseProvider from "@/lib/supabase/client"
 // import { Analytics } from "@vercel/analytics/next" // Temporarily disabled
@@ -55,21 +55,14 @@ export default function RootLayout({
           <MantineProviderWrapper>
             <SupabaseProvider>
               <MobileScalingProvider>
-              <div className="flex min-h-screen w-full">
-                <Navigation />
-                {/* Main content area */}
-                <div className="flex-1 flex flex-col md:ml-72 mobile-content w-full">
-                  <Suspense>
-                    <main className="flex-1 p-6 fifa-scrollbar w-full">
-                      {children}
-                    </main>
-                  </Suspense>
-                  <Footer />
+                <div className="relative flex min-h-dvh flex-col bg-background">
+                  <SiteHeader />
+                  <main className="flex-1">{children}</main>
+                  <SiteFooter />
                 </div>
-              </div>
-              <Toaster />
-              <BannedUserModal />
-              {/* <Analytics /> */}
+                <Toaster />
+                <BannedUserModal />
+                {/* <Analytics /> */}
               </MobileScalingProvider>
             </SupabaseProvider>
           </MantineProviderWrapper>
