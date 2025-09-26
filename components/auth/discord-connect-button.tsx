@@ -46,17 +46,10 @@ export default function DiscordConnectButton({
       setConnecting(true)
       setError(null)
 
-      // For registration flow, redirect directly
-      if (source === "register") {
-        const authUrl = `/api/auth/discord?user_id=registration&state=register`
-        console.log("Redirecting to Discord OAuth:", authUrl)
-        window.location.href = authUrl
-        return
-      }
+      // Use popup for both registration and settings flows
+      const finalUserId = source === "register" ? "registration" : userId
+      const state = source === "register" ? "register" : `${userId}:${source}`
 
-      // For settings flow, use popup
-      const finalUserId = userId
-      const state = `${userId}:${source}`
 
       // Store the source in localStorage so we can handle the callback properly
       localStorage.setItem("discord_connect_source", source)
