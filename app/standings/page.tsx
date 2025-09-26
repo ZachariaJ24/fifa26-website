@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
-import { createCustomClient } from "@/lib/supabase/client"
+import { createCustomClient } from "@/lib/supabase/custom-client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Trophy } from "lucide-react"

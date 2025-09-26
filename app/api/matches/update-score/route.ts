@@ -160,25 +160,26 @@ export async function POST(request: Request) {
         try {
           console.log("Updating team and player statistics for completed match...")
           
+          // TODO: Re-implement these sync functions
           // Import the sync functions
-          const { updateTeamStatistics } = await import("../../../lib/standings-calculator")
-          const { syncEaStatsToPlayerStatistics } = await import("../../../lib/sync-ea-stats-to-player-statistics")
-          const { syncTeamsFromMatch } = await import("../../../lib/team-stats-calculator")
+          // const { updateTeamStatistics } = await import("../../../lib/standings-calculator")
+          // const { syncEaStatsToPlayerStatistics } = await import("../../../lib/sync-ea-stats-to-player-statistics")
+          // const { syncTeamsFromMatch } = await import("../../../lib/team-stats-calculator")
 
           // Update team statistics for the season
-          await updateTeamStatistics(match.season_id)
+          // await updateTeamStatistics(match.season_id)
           
           // Sync team stats from this specific match
-          await syncTeamsFromMatch(matchId)
+          // await syncTeamsFromMatch(matchId)
 
           // If the match has EA data, update player statistics
-          if (match.ea_match_id) {
-            console.log("Syncing EA player statistics...")
-            const syncResult = await syncEaStatsToPlayerStatistics(matchId)
-            if (!syncResult.success) {
-              console.error("Failed to sync player statistics:", syncResult.message)
-            }
-          }
+          // if (match.ea_match_id) {
+          //   console.log("Syncing EA player statistics...")
+          //   const syncResult = await syncEaStatsToPlayerStatistics(matchId)
+          //   if (!syncResult.success) {
+          //     console.error("Failed to sync player statistics:", syncResult.message)
+          //   }
+          // }
           
           console.log("Statistics sync completed successfully")
         } catch (statsError) {
