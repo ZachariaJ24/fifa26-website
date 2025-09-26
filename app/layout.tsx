@@ -25,13 +25,17 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "FIFA 26 League",
   description: "Official website for the FIFA 26 Competitive League",
-  viewport: "width=device-width, initial-scale=1",
   generator: "v0.dev",
   icons: {
     icon: "/favicon.ico",
     shortcut: "/favicon.ico",
     apple: "/favicon.ico",
   },
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({

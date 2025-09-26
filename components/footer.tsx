@@ -28,7 +28,8 @@ import {
   Crown,
   Globe,
   Phone,
-  MapPin
+  MapPin,
+  UserPlus
 } from "lucide-react"
 import { motion } from "framer-motion"
 
