@@ -177,11 +177,11 @@ export function TransferMarket() {
       case 'rejected':
         return 'bg-red-100 text-red-800'
       case 'expired':
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-field-green-100 text-field-green-800'
       case 'active':
         return 'bg-blue-100 text-blue-800'
       default:
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-field-green-100 text-field-green-800'
     }
   }
 
@@ -228,7 +228,7 @@ export function TransferMarket() {
           {offers.length === 0 ? (
             <Card>
               <CardContent className="p-6">
-                <p className="text-gray-600">No transfer offers found</p>
+                <p className="text-field-green-600">No transfer offers found</p>
               </CardContent>
             </Card>
           ) : (
@@ -250,21 +250,21 @@ export function TransferMarket() {
                   <CardContent className="pt-0">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">From:</span>
+                        <span className="text-sm text-field-green-600">From:</span>
                         <span className="font-medium">{offer.from_team.name}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">To:</span>
+                        <span className="text-sm text-field-green-600">To:</span>
                         <span className="font-medium">{offer.to_team.name}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Offer:</span>
+                        <span className="text-sm text-field-green-600">Offer:</span>
                         <span className="font-bold text-green-600">
                           {formatCurrency(offer.offer_amount)}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Expires:</span>
+                        <span className="text-sm text-field-green-600">Expires:</span>
                         <span className="text-sm">
                           {formatDate(offer.expires_at)}
                         </span>
@@ -281,7 +281,7 @@ export function TransferMarket() {
           {signings.length === 0 ? (
             <Card>
               <CardContent className="p-6">
-                <p className="text-gray-600">No signings found</p>
+                <p className="text-field-green-600">No signings found</p>
               </CardContent>
             </Card>
           ) : (
@@ -303,21 +303,21 @@ export function TransferMarket() {
                   <CardContent className="pt-0">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Team:</span>
+                        <span className="text-sm text-field-green-600">Team:</span>
                         <span className="font-medium">{signing.team.name}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Amount:</span>
+                        <span className="text-sm text-field-green-600">Amount:</span>
                         <span className="font-bold text-green-600">
                           {formatCurrency(signing.signing_amount)}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Contract:</span>
+                        <span className="text-sm text-field-green-600">Contract:</span>
                         <span className="text-sm">{signing.contract_length} years</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Date:</span>
+                        <span className="text-sm text-field-green-600">Date:</span>
                         <span className="text-sm">{formatDate(signing.created_at)}</span>
                       </div>
                     </div>
@@ -332,7 +332,7 @@ export function TransferMarket() {
           {transfers.length === 0 ? (
             <Card>
               <CardContent className="p-6">
-                <p className="text-gray-600">No completed transfers found</p>
+                <p className="text-field-green-600">No completed transfers found</p>
               </CardContent>
             </Card>
           ) : (
@@ -349,21 +349,21 @@ export function TransferMarket() {
                   <CardContent className="pt-0">
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">From:</span>
+                        <span className="text-sm text-field-green-600">From:</span>
                         <span className="font-medium">{transfer.from_team.name}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">To:</span>
+                        <span className="text-sm text-field-green-600">To:</span>
                         <span className="font-medium">{transfer.to_team.name}</span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Amount:</span>
+                        <span className="text-sm text-field-green-600">Amount:</span>
                         <span className="font-bold text-green-600">
                           {formatCurrency(transfer.transfer_amount)}
                         </span>
                       </div>
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">Date:</span>
+                        <span className="text-sm text-field-green-600">Date:</span>
                         <span className="text-sm">{formatDate(transfer.transfer_date)}</span>
                       </div>
                     </div>

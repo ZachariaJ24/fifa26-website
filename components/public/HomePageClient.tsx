@@ -534,12 +534,20 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
       </section>
 
       {/* Join League CTA Section */}
-      <section className="py-20 px-4 bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-stadium-gold-600 text-white">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative py-20 px-4 overflow-hidden">
+        {/* Background with overlay for better text contrast */}
+        <div className="absolute inset-0 bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-stadium-gold-600"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
+        
+        <div className="relative z-10 max-w-4xl mx-auto text-center">
           <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">Join the FIFA 26 League Today!</h2>
-            <p className="text-xl mb-12 opacity-90 max-w-2xl mx-auto">Your journey to becoming a FIFA legend starts now. Register for the upcoming season and write your own story.</p>
-            <Button asChild size="lg" className="bg-white text-field-green-600 hover:bg-gray-100 px-8 py-4 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white drop-shadow-2xl" style={{ textShadow: '2px 2px 4px rgba(0,0,0,0.8)' }}>
+              Join the FIFA 26 League Today!
+            </h2>
+            <p className="text-xl mb-12 text-white/95 max-w-2xl mx-auto drop-shadow-lg" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
+              Your journey to becoming a FIFA legend starts now. Register for the upcoming season and write your own story.
+            </p>
+            <Button asChild size="lg" className="bg-white text-field-green-600 hover:bg-field-green-50 px-8 py-4 text-lg font-semibold rounded-2xl shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-white/20">
               <Link href="/register" className="flex items-center gap-3"><Play className="w-6 h-6" /> GET STARTED</Link>
             </Button>
           </motion.div>

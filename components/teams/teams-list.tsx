@@ -100,7 +100,7 @@ export function TeamsList({ conference, limit }: TeamsListProps) {
     return (
       <Card>
         <CardContent className="p-6">
-          <p className="text-gray-600">No teams found</p>
+          <p className="text-field-green-600">No teams found</p>
         </CardContent>
       </Card>
     )
@@ -119,8 +119,8 @@ export function TeamsList({ conference, limit }: TeamsListProps) {
                   className="w-12 h-12 rounded-full object-cover"
                 />
               ) : (
-                <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center">
-                  <span className="text-lg font-bold text-gray-600">
+                <div className="w-12 h-12 rounded-full bg-field-green-300 flex items-center justify-center">
+                  <span className="text-lg font-bold text-field-green-600">
                     {team.name.charAt(0)}
                   </span>
                 </div>
@@ -160,7 +160,7 @@ export function TeamsList({ conference, limit }: TeamsListProps) {
               </div>
             </div>
             <div className="mt-4 pt-4 border-t">
-              <div className="flex justify-between text-sm text-gray-600">
+              <div className="flex justify-between text-sm text-field-green-600">
                 <span>Games: {team.games_played}</span>
                 <span>GF: {team.goals_for}</span>
                 <span>GA: {team.goals_against}</span>

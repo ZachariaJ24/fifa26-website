@@ -109,7 +109,7 @@ export function MatchesList({ status, conference, limit }: MatchesListProps) {
       case 'cancelled':
         return 'bg-red-100 text-red-800'
       default:
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-field-green-100 text-field-green-800'
     }
   }
 
@@ -137,7 +137,7 @@ export function MatchesList({ status, conference, limit }: MatchesListProps) {
     return (
       <Card>
         <CardContent className="p-6">
-          <p className="text-gray-600">No matches found</p>
+          <p className="text-field-green-600">No matches found</p>
         </CardContent>
       </Card>
     )
@@ -160,8 +160,8 @@ export function MatchesList({ status, conference, limit }: MatchesListProps) {
                       className="w-10 h-10 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-                      <span className="text-sm font-bold text-gray-600">
+                    <div className="w-10 h-10 rounded-full bg-field-green-300 flex items-center justify-center">
+                      <span className="text-sm font-bold text-field-green-600">
                         {match.home_team.name.charAt(0)}
                       </span>
                     </div>
@@ -224,8 +224,8 @@ export function MatchesList({ status, conference, limit }: MatchesListProps) {
                       className="w-10 h-10 rounded-full object-cover"
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center">
-                      <span className="text-sm font-bold text-gray-600">
+                    <div className="w-10 h-10 rounded-full bg-field-green-300 flex items-center justify-center">
+                      <span className="text-sm font-bold text-field-green-600">
                         {match.away_team.name.charAt(0)}
                       </span>
                     </div>
@@ -239,19 +239,19 @@ export function MatchesList({ status, conference, limit }: MatchesListProps) {
                   {match.status}
                 </Badge>
                 {match.match_date && (
-                  <div className="flex items-center gap-1 text-sm text-gray-600">
+                  <div className="flex items-center gap-1 text-sm text-field-green-600">
                     <Calendar className="h-4 w-4" />
                     {formatDate(match.match_date)}
                   </div>
                 )}
                 {match.venue && (
-                  <div className="flex items-center gap-1 text-sm text-gray-600">
+                  <div className="flex items-center gap-1 text-sm text-field-green-600">
                     <MapPin className="h-4 w-4" />
                     {match.venue}
                   </div>
                 )}
                 {match.attendance && (
-                  <div className="flex items-center gap-1 text-sm text-gray-600">
+                  <div className="flex items-center gap-1 text-sm text-field-green-600">
                     <Users className="h-4 w-4" />
                     {match.attendance.toLocaleString()}
                   </div>

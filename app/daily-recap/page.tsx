@@ -60,12 +60,73 @@ export default function DailyRecapPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900 fifa-scrollbar">
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="fifa-title-enhanced mb-6">Daily Recap</h1>
-          <p className="mt-4 text-lg text-field-green-600 dark:text-field-green-400 max-w-3xl mx-auto">A snapshot of all league activities for {new Date().toLocaleDateString()}</p>
-          <div className="fifa-section-divider"></div>
+      {/* Hero Header Section */}
+      <div className="relative py-16 px-4">
+        <div className="container mx-auto text-center">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-stadium-gold-600 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-stadium-gold-400 bg-clip-text text-transparent leading-tight tracking-tight mb-6">
+              Daily Recap
+            </h1>
+            <p className="text-xl md:text-2xl text-field-green-700 dark:text-field-green-300 leading-relaxed max-w-3xl mx-auto mb-8">
+              Comprehensive analysis of recent matches and team performances
+            </p>
+            
+            {/* Daily Recap Overview Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-8">
+              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-field-green-200/50 dark:border-field-green-700/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
+                <div className="p-2 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg mb-3 mx-auto w-fit">
+                  <Calendar className="h-6 w-6 text-white" />
+                </div>
+                <div className="text-2xl font-bold text-field-green-700 dark:text-field-green-300">
+                  24h
+                </div>
+                <div className="text-xs text-field-green-600 dark:text-field-green-400 font-medium uppercase tracking-wide">
+                  Time Window
+                </div>
+              </div>
+              
+              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-pitch-blue-200/50 dark:border-pitch-blue-700/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
+                <div className="p-2 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg mb-3 mx-auto w-fit">
+                  <Shirt className="h-6 w-6 text-white" />
+                </div>
+                <div className="text-2xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300">
+                  Top
+                </div>
+                <div className="text-xs text-pitch-blue-600 dark:text-pitch-blue-400 font-medium uppercase tracking-wide">
+                  Performers
+                </div>
+              </div>
+              
+              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-stadium-gold-200/50 dark:border-stadium-gold-700/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
+                <div className="p-2 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg mb-3 mx-auto w-fit">
+                  <Calendar className="h-6 w-6 text-white" />
+                </div>
+                <div className="text-2xl font-bold text-stadium-gold-700 dark:text-stadium-gold-300">
+                  AI
+                </div>
+                <div className="text-xs text-stadium-gold-600 dark:text-stadium-gold-400 font-medium uppercase tracking-wide">
+                  Analysis
+                </div>
+              </div>
+              
+              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-goal-orange-200/50 dark:border-goal-orange-700/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
+                <div className="p-2 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg mb-3 mx-auto w-fit">
+                  <ArrowRight className="h-6 w-6 text-white" />
+                </div>
+                <div className="text-2xl font-bold text-goal-orange-700 dark:text-goal-orange-300">
+                  Real-time
+                </div>
+                <div className="text-xs text-goal-orange-600 dark:text-goal-orange-400 font-medium uppercase tracking-wide">
+                  Insights
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
 
         {loading ? (
           <div className="space-y-8">

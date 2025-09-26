@@ -53,17 +53,17 @@ const FormBadge = ({ result }: { result: string }) => {
     case 'L':
       return <div className={`${baseClasses} bg-red-500`}>L</div>;
     case 'D':
-      return <div className={`${baseClasses} bg-gray-500`}>D</div>;
+      return <div className={`${baseClasses} bg-stadium-gold-500`}>D</div>;
     default:
       return null;
   }
 };
 
 const StreakBadge = ({ streak }: { streak: string }) => {
-  if (!streak) return <span className="text-gray-400">-</span>;
+  if (!streak) return <span className="text-field-green-400">-</span>;
   const type = streak.slice(-1);
   const count = streak.slice(0, -1);
-  let color = "bg-gray-500";
+  let color = "bg-stadium-gold-500";
   if (type === 'W') color = "bg-green-500";
   if (type === 'L') color = "bg-red-500";
   return <Badge className={`${color} text-white font-bold`}>{`${count} ${type}`} </Badge>;
@@ -71,35 +71,35 @@ const StreakBadge = ({ streak }: { streak: string }) => {
 
 export default function TeamStandings({ teams }: TeamStandingsProps) {
   if (!teams || teams.length === 0) {
-    return <div className="text-center py-8 text-gray-400">No teams found.</div>;
+    return <div className="text-center py-8 text-field-green-400">No teams found.</div>;
   }
 
   return (
     <div className="overflow-x-auto">
       <Table className="w-full text-white">
         <TableHeader>
-          <TableRow className="border-b border-gray-700">
-            <TableHead className="w-12 text-center font-bold text-gray-300">#</TableHead>
-            <TableHead className="min-w-[220px] font-bold text-gray-300">Team</TableHead>
-            <TableHead className="text-center font-bold text-gray-300">GP</TableHead>
-            <TableHead className="text-center font-bold text-gray-300">W</TableHead>
-            <TableHead className="text-center font-bold text-gray-300">D</TableHead>
-            <TableHead className="text-center font-bold text-gray-300">L</TableHead>
-            <TableHead className="text-center font-bold text-gray-300">GF</TableHead>
-            <TableHead className="text-center font-bold text-gray-300">GA</TableHead>
-            <TableHead className="text-center font-bold text-gray-300">GD</TableHead>
-            <TableHead className="text-center font-bold text-gray-300">Form</TableHead>
-            <TableHead className="text-center font-bold text-gray-300">Streak</TableHead>
-            <TableHead className="text-center font-bold text-gray-300">PTS</TableHead>
+          <TableRow className="border-b border-field-green-700">
+            <TableHead className="w-12 text-center font-bold text-field-green-300">#</TableHead>
+            <TableHead className="min-w-[220px] font-bold text-field-green-300">Team</TableHead>
+            <TableHead className="text-center font-bold text-field-green-300">GP</TableHead>
+            <TableHead className="text-center font-bold text-field-green-300">W</TableHead>
+            <TableHead className="text-center font-bold text-field-green-300">D</TableHead>
+            <TableHead className="text-center font-bold text-field-green-300">L</TableHead>
+            <TableHead className="text-center font-bold text-field-green-300">GF</TableHead>
+            <TableHead className="text-center font-bold text-field-green-300">GA</TableHead>
+            <TableHead className="text-center font-bold text-field-green-300">GD</TableHead>
+            <TableHead className="text-center font-bold text-field-green-300">Form</TableHead>
+            <TableHead className="text-center font-bold text-field-green-300">Streak</TableHead>
+            <TableHead className="text-center font-bold text-field-green-300">PTS</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {teams.map((team, index) => (
             <TableRow 
               key={team.id} 
-              className="border-b border-gray-800 hover:bg-gray-700/50 transition-colors duration-200"
+              className="border-b border-field-green-800 hover:bg-field-green-700/50 transition-colors duration-200"
             >
-              <TableCell className="font-bold text-center text-lg text-gray-300">{index + 1}</TableCell>
+              <TableCell className="font-bold text-center text-lg text-field-green-300">{index + 1}</TableCell>
               <TableCell>
                 <Link href={`/teams/${team.id}`} className="flex items-center gap-3 hover:underline group">
                   <TeamLogo teamName={team.name} logoUrl={team.logo_url} size="sm" />
@@ -107,12 +107,12 @@ export default function TeamStandings({ teams }: TeamStandingsProps) {
                   {getPlayoffStatusIndicator(team.playoff_status)}
                 </Link>
               </TableCell>
-              <TableCell className="text-center font-medium text-gray-300">{team.games_played}</TableCell>
+              <TableCell className="text-center font-medium text-field-green-300">{team.games_played}</TableCell>
               <TableCell className="text-center font-bold text-green-400">{team.wins}</TableCell>
-              <TableCell className="text-center font-bold text-gray-300">{team.draws}</TableCell>
+              <TableCell className="text-center font-bold text-stadium-gold-300">{team.draws}</TableCell>
               <TableCell className="text-center font-bold text-red-400">{team.losses}</TableCell>
-              <TableCell className="text-center font-medium text-gray-300">{team.goals_for}</TableCell>
-              <TableCell className="text-center font-medium text-gray-300">{team.goals_against}</TableCell>
+              <TableCell className="text-center font-medium text-field-green-300">{team.goals_for}</TableCell>
+              <TableCell className="text-center font-medium text-field-green-300">{team.goals_against}</TableCell>
               <TableCell className="text-center font-bold text-lg">
                 <span className={`${team.goal_difference >= 0 ? "text-green-400" : "text-red-400"}`}>
                   {team.goal_difference >= 0 ? "+" : ""}{team.goal_difference}

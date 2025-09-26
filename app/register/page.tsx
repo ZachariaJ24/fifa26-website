@@ -260,7 +260,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900 fifa-scrollbar">
-      {/* Hero Section */}
+      {/* Enhanced Hero Header Section */}
       <motion.div 
         className="relative overflow-hidden py-12 px-4"
         initial={{ opacity: 0, y: -50 }}
@@ -268,9 +268,7 @@ export default function RegisterPage() {
         transition={{ duration: 0.8 }}
       >
         {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2316a34a' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }}></div>
+        <div className="absolute inset-0 bg-fifa-pattern opacity-5"></div>
         
         {/* Floating Elements */}
         <motion.div 
@@ -286,7 +284,7 @@ export default function RegisterPage() {
           }}
         />
         <motion.div 
-          className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-pitch-blue-200/30 to-stadium-gold-200/30 rounded-full blur-3xl"
+          className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-stadium-gold-200/30 to-goal-orange-200/30 rounded-full blur-3xl"
           animate={{ 
             y: [20, -20, 20],
             x: [10, -10, 10]
@@ -315,7 +313,7 @@ export default function RegisterPage() {
                   <UserPlus className="h-8 w-8 text-white" />
                 </div>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-stadium-gold-600 bg-clip-text text-transparent">
+              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-stadium-gold-600 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-stadium-gold-400 bg-clip-text text-transparent">
                 Join the FIFA 26 League
               </h1>
             </motion.div>
@@ -347,52 +345,54 @@ export default function RegisterPage() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="w-full max-w-2xl"
           >
-            <div className="fifa-card-hover-enhanced overflow-hidden shadow-xl">
-              <div className="bg-gradient-to-r from-field-green-600 to-pitch-blue-600 text-white p-6 relative overflow-hidden">
+            <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 overflow-hidden shadow-2xl">
+              <CardHeader className="bg-gradient-to-r from-field-green-500 to-pitch-blue-600 text-white relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20" />
                 <div className="relative flex items-center gap-4">
                   <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
                     <UserPlus className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-white text-xl font-bold">Create Your Account</h2>
-                    <p className="text-field-green-100 text-base">
-                      Join the FIFA 26 League community and start your journey
-                    </p>
+                    <CardTitle className="text-white text-xl font-bold">Create Your Account</CardTitle>
+                    <CardDescription className="text-field-green-100 text-base">
+                      Join the FIFA 26 League community and start your football journey
+                    </CardDescription>
                   </div>
                 </div>
-              </div>
+              </CardHeader>
               
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="space-y-6 p-6">
+                <CardContent className="space-y-6 p-6">
                   {registrationError && (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-6 rounded-xl">
-                        <div className="flex items-center gap-4">
-                          <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                            <AlertTriangle className="h-6 w-6 text-white" />
-                          </div>
-                          <div>
-                            <h3 className="text-lg font-semibold text-white">Registration Error</h3>
-                            <p className="text-red-100 text-sm">{registrationError}</p>
-                            {discordConfigError && (
-                              <p className="text-red-100 text-sm mt-2">
-                                This appears to be a configuration issue. The Discord OAuth integration needs to be set up by an administrator.
-                              </p>
-                            )}
-                            {registrationDetails && (
-                              <details className="mt-3 text-sm">
-                                <summary className="text-red-100 cursor-pointer hover:text-white transition-colors">Technical Details</summary>
-                                <pre className="mt-2 whitespace-pre-wrap text-xs text-red-100 bg-white/10 p-2 rounded">{JSON.stringify(registrationDetails, null, 2)}</pre>
-                              </details>
-                            )}
+                      <Card className="fifa-card-hover-enhanced border-2 border-goal-orange-200/60 dark:border-goal-orange-700/60 overflow-hidden">
+                        <div className="bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 text-white p-6">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                              <AlertTriangle className="h-6 w-6 text-white" />
+                            </div>
+                            <div>
+                              <h3 className="text-lg font-semibold text-white">Registration Error</h3>
+                              <p className="text-goal-orange-100 text-sm">{registrationError}</p>
+                              {discordConfigError && (
+                                <p className="text-goal-orange-100 text-sm mt-2">
+                                  This appears to be a configuration issue. The Discord OAuth integration needs to be set up by an administrator.
+                                </p>
+                              )}
+                              {registrationDetails && (
+                                <details className="mt-3 text-sm">
+                                  <summary className="text-goal-orange-100 cursor-pointer hover:text-white transition-colors">Technical Details</summary>
+                                  <pre className="mt-2 whitespace-pre-wrap text-xs text-goal-orange-100 bg-white/10 p-2 rounded">{JSON.stringify(registrationDetails, null, 2)}</pre>
+                                </details>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
+                      </Card>
                     </motion.div>
                   )}
 
@@ -401,19 +401,21 @@ export default function RegisterPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
                   >
-                    <div className="bg-gradient-to-r from-field-green-500 to-pitch-blue-500 text-white p-6 rounded-xl">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                          <Info className="h-6 w-6 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-white">Important Information</h3>
-                          <p className="text-field-green-100 text-sm">
-                            You must connect your Discord account to register. This is required for league communications and team coordination.
-                          </p>
+                    <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 overflow-hidden">
+                      <div className="bg-gradient-to-r from-field-green-500 to-pitch-blue-600 text-white p-6">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                            <Info className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-white">Important Information</h3>
+                            <p className="text-field-green-100 text-sm">
+                              You must connect your Discord account to register. This is required for league communications and team coordination.
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    </Card>
                   </motion.div>
 
                   {/* Discord Connection Section */}
@@ -422,63 +424,65 @@ export default function RegisterPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
-                    <div className="bg-gradient-to-r from-pitch-blue-500 to-stadium-gold-500 text-white p-6 rounded-xl">
-                      <div className="flex items-center gap-4 mb-4">
-                        <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                          <MessageSquare className="h-6 w-6 text-white" />
+                    <Card className="fifa-card-hover-enhanced border-2 border-pitch-blue-200/60 dark:border-pitch-blue-700/60 overflow-hidden">
+                      <div className="bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 text-white p-6">
+                        <div className="flex items-center gap-4 mb-4">
+                          <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                            <MessageSquare className="h-6 w-6 text-white" />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-white">Step 1: Connect Discord</h3>
+                            <p className="text-pitch-blue-100 text-sm">
+                              Discord connection is required for FIFA 26 League communication and team coordination
+                            </p>
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-white">Step 1: Connect Discord</h3>
-                          <p className="text-pitch-blue-100 text-sm">
-                            Discord connection is required for league communication and team coordination
-                          </p>
-                        </div>
+                        
+                        {discordConnected ? (
+                          <div className="space-y-4">
+                            <div className="flex items-center space-x-3 text-white bg-white/10 p-4 rounded-lg">
+                              <CheckCircle2 className="h-6 w-6 text-pitch-blue-200" />
+                              <span className="text-lg font-medium">Discord Connected: {discordUsername || "User"}</span>
+                            </div>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="lg"
+                              onClick={resetDiscordConnection}
+                              className="w-full border-white/30 text-white hover:bg-white/10 text-lg py-3"
+                            >
+                              Disconnect & Try Again
+                            </Button>
+                          </div>
+                        ) : discordConfigError ? (
+                          <div className="space-y-4">
+                            <div className="flex items-center space-x-3 text-white bg-white/10 p-4 rounded-lg">
+                              <Settings className="h-6 w-6 text-goal-orange-200" />
+                              <span className="text-lg font-medium">Discord OAuth Not Configured</span>
+                            </div>
+                            <p className="text-sm text-pitch-blue-100">
+                              The Discord integration needs to be configured by an administrator before registration can proceed.
+                            </p>
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="lg"
+                              onClick={resetDiscordConnection}
+                              className="w-full border-white/30 text-white hover:bg-white/10 text-lg py-3"
+                            >
+                              Try Again
+                            </Button>
+                          </div>
+                        ) : (
+                          <DiscordConnectButton
+                            userId="registration"
+                            source="register"
+                            className="w-full text-lg py-4"
+                            onSuccess={handleDiscordConnect}
+                          />
+                        )}
                       </div>
-                      
-                      {discordConnected ? (
-                        <div className="space-y-4">
-                          <div className="flex items-center space-x-3 text-white bg-white/10 p-4 rounded-lg">
-                            <CheckCircle2 className="h-6 w-6 text-teal-200" />
-                            <span className="text-lg font-medium">Discord Connected: {discordUsername || "User"}</span>
-                          </div>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="lg"
-                            onClick={resetDiscordConnection}
-                            className="w-full border-white/30 text-white hover:bg-white/10 text-lg py-3"
-                          >
-                            Disconnect & Try Again
-                          </Button>
-                        </div>
-                      ) : discordConfigError ? (
-                        <div className="space-y-4">
-                          <div className="flex items-center space-x-3 text-white bg-white/10 p-4 rounded-lg">
-                            <Settings className="h-6 w-6 text-red-200" />
-                            <span className="text-lg font-medium">Discord OAuth Not Configured</span>
-                          </div>
-                          <p className="text-sm text-teal-100">
-                            The Discord integration needs to be configured by an administrator before registration can proceed.
-                          </p>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="lg"
-                            onClick={resetDiscordConnection}
-                            className="w-full border-white/30 text-white hover:bg-white/10 text-lg py-3"
-                          >
-                            Try Again
-                          </Button>
-                        </div>
-                      ) : (
-                        <DiscordConnectButton
-                          userId="registration"
-                          source="register"
-                          className="w-full text-lg py-4"
-                          onSuccess={handleDiscordConnect}
-                        />
-                      )}
-                    </div>
+                    </Card>
                   </motion.div>
 
                   <motion.div
@@ -488,7 +492,7 @@ export default function RegisterPage() {
                     className="space-y-6"
                   >
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-8 h-8 bg-gradient-to-r from-field-green-500 to-pitch-blue-500 rounded-lg flex items-center justify-center">
+                      <div className="w-8 h-8 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg flex items-center justify-center">
                         <User className="h-4 w-4 text-white" />
                       </div>
                       <h3 className="text-xl font-bold text-field-green-800 dark:text-field-green-200">
@@ -499,7 +503,7 @@ export default function RegisterPage() {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <Label htmlFor="email" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
-                          <Mail className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+                          <Mail className="h-4 w-4 text-field-green-600" />
                           Email Address
                         </Label>
                         <Input 
@@ -507,9 +511,9 @@ export default function RegisterPage() {
                           type="email" 
                           placeholder="your.email@example.com" 
                           {...register("email")} 
-                          className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300"
+                          className="fifa-search"
                         />
-                        {errors.email && <p className="text-sm text-red-600 flex items-center gap-2">
+                        {errors.email && <p className="text-sm text-goal-orange-600 dark:text-goal-orange-400 flex items-center gap-2">
                           <AlertCircle className="h-4 w-4" />
                           {errors.email.message}
                         </p>}
@@ -517,7 +521,7 @@ export default function RegisterPage() {
 
                       <div className="space-y-4">
                         <Label htmlFor="password" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
-                          <Lock className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
+                          <Lock className="h-4 w-4 text-pitch-blue-600" />
                           Password
                         </Label>
                         <Input 
@@ -525,9 +529,9 @@ export default function RegisterPage() {
                           type="password" 
                           placeholder="••••••••" 
                           {...register("password")} 
-                          className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300"
+                          className="fifa-search"
                         />
-                        {errors.password && <p className="text-sm text-red-600 flex items-center gap-2">
+                        {errors.password && <p className="text-sm text-goal-orange-600 dark:text-goal-orange-400 flex items-center gap-2">
                           <AlertCircle className="h-4 w-4" />
                           {errors.password.message}
                         </p>}
@@ -536,7 +540,7 @@ export default function RegisterPage() {
 
                     <div className="space-y-4">
                       <Label htmlFor="gamerTag" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
-                        <Gamepad2 className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+                        <Gamepad2 className="h-4 w-4 text-stadium-gold-600" />
                         Gamer Tag
                       </Label>
                       <p className="text-sm text-field-green-600 dark:text-field-green-400">Your Xbox or PSN name (2-50 characters)</p>
@@ -544,9 +548,9 @@ export default function RegisterPage() {
                         id="gamerTag" 
                         placeholder="Your in-game name" 
                         {...register("gamerTag")} 
-                        className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300"
+                        className="fifa-search"
                       />
-                      {errors.gamerTag && <p className="text-sm text-red-600 flex items-center gap-2">
+                      {errors.gamerTag && <p className="text-sm text-goal-orange-600 dark:text-goal-orange-400 flex items-center gap-2">
                         <AlertCircle className="h-4 w-4" />
                         {errors.gamerTag.message}
                       </p>}
@@ -555,32 +559,22 @@ export default function RegisterPage() {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <Label htmlFor="primaryPosition" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
-                          <Target className="h-4 w-4 text-goal-orange-600 dark:text-goal-orange-400" />
+                          <Target className="h-4 w-4 text-goal-orange-600" />
                           Primary Position
                         </Label>
                         <select
                           id="primaryPosition"
-                          className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300 rounded-md px-3 py-2"
+                          className="fifa-search"
                           {...register("primaryPosition")}
                         >
                           <option value="">Select position</option>
-                          <option value="ST">Striker (ST)</option>
-                          <option value="CF">Center Forward (CF)</option>
-                          <option value="LW">Left Winger (LW)</option>
-                          <option value="RW">Right Winger (RW)</option>
-                          <option value="CAM">Attacking Midfielder (CAM)</option>
-                          <option value="CM">Central Midfielder (CM)</option>
-                          <option value="CDM">Defensive Midfielder (CDM)</option>
-                          <option value="LM">Left Midfielder (LM)</option>
-                          <option value="RM">Right Midfielder (RM)</option>
-                          <option value="CB">Center Back (CB)</option>
-                          <option value="LB">Left Back (LB)</option>
-                          <option value="RB">Right Back (RB)</option>
-                          <option value="LWB">Left Wing Back (LWB)</option>
-                          <option value="RWB">Right Wing Back (RWB)</option>
-                          <option value="GK">Goalkeeper (GK)</option>
+                          <option value="Goalkeeper">Goalkeeper (GK)</option>
+                          <option value="Defender">Defender (CB/LB/RB)</option>
+                          <option value="Midfielder">Midfielder (CM/CDM/CAM)</option>
+                          <option value="Winger">Winger (LW/RW)</option>
+                          <option value="Forward">Forward (ST/CF)</option>
                         </select>
-                        {errors.primaryPosition && <p className="text-sm text-red-600 flex items-center gap-2">
+                        {errors.primaryPosition && <p className="text-sm text-goal-orange-600 dark:text-goal-orange-400 flex items-center gap-2">
                           <AlertCircle className="h-4 w-4" />
                           {errors.primaryPosition.message}
                         </p>}
@@ -588,32 +582,22 @@ export default function RegisterPage() {
 
                       <div className="space-y-4">
                         <Label htmlFor="secondaryPosition" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
-                          <Target className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+                          <Target className="h-4 w-4 text-field-green-600" />
                           Secondary Position (Optional)
                         </Label>
                         <select
                           id="secondaryPosition"
-                          className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300 rounded-md px-3 py-2"
+                          className="fifa-search"
                           {...register("secondaryPosition")}
                         >
                           <option value="">None</option>
-                          <option value="ST">Striker (ST)</option>
-                          <option value="CF">Center Forward (CF)</option>
-                          <option value="LW">Left Winger (LW)</option>
-                          <option value="RW">Right Winger (RW)</option>
-                          <option value="CAM">Attacking Midfielder (CAM)</option>
-                          <option value="CM">Central Midfielder (CM)</option>
-                          <option value="CDM">Defensive Midfielder (CDM)</option>
-                          <option value="LM">Left Midfielder (LM)</option>
-                          <option value="RM">Right Midfielder (RM)</option>
-                          <option value="CB">Center Back (CB)</option>
-                          <option value="LB">Left Back (LB)</option>
-                          <option value="RB">Right Back (RB)</option>
-                          <option value="LWB">Left Wing Back (LWB)</option>
-                          <option value="RWB">Right Wing Back (RWB)</option>
-                          <option value="GK">Goalkeeper (GK)</option>
+                          <option value="Goalkeeper">Goalkeeper (GK)</option>
+                          <option value="Defender">Defender (CB/LB/RB)</option>
+                          <option value="Midfielder">Midfielder (CM/CDM/CAM)</option>
+                          <option value="Winger">Winger (LW/RW)</option>
+                          <option value="Forward">Forward (ST/CF)</option>
                         </select>
-                        {errors.secondaryPosition && <p className="text-sm text-red-600 flex items-center gap-2">
+                        {errors.secondaryPosition && <p className="text-sm text-goal-orange-600 dark:text-goal-orange-400 flex items-center gap-2">
                           <AlertCircle className="h-4 w-4" />
                           {errors.secondaryPosition.message}
                         </p>}
@@ -622,27 +606,27 @@ export default function RegisterPage() {
 
                     <div className="space-y-4">
                       <Label htmlFor="console" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
-                        <Gamepad2 className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
+                        <Gamepad2 className="h-4 w-4 text-pitch-blue-600" />
                         Console
                       </Label>
                       <select
                         id="console"
-                        className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300 rounded-md px-3 py-2"
+                        className="fifa-search"
                         {...register("console")}
                       >
                         <option value="">Select console</option>
                         <option value="PS5">PlayStation 5</option>
                         <option value="Xbox">Xbox Series X</option>
                       </select>
-                      {errors.console && <p className="text-sm text-red-600 flex items-center gap-2">
+                      {errors.console && <p className="text-sm text-goal-orange-600 dark:text-goal-orange-400 flex items-center gap-2">
                         <AlertCircle className="h-4 w-4" />
                         {errors.console.message}
                       </p>}
                     </div>
                   </motion.div>
-                </div>
+                </CardContent>
                 
-                <div className="flex flex-col space-y-4 p-6 pt-0">
+                <CardFooter className="flex flex-col space-y-4 p-6 pt-0">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -650,7 +634,7 @@ export default function RegisterPage() {
                   >
                     <Button 
                       type="submit" 
-                      className="w-full fifa-button-enhanced text-white font-semibold text-lg py-3 hover:scale-105 transition-all duration-200" 
+                      className="w-full fifa-button-enhanced text-lg py-3" 
                       disabled={isLoading || !discordConnected || discordConfigError}
                     >
                       {isLoading ? (
@@ -677,15 +661,15 @@ export default function RegisterPage() {
                       Already have an account?{" "}
                       <Link 
                         href="/login" 
-                        className="text-field-green-600 dark:text-field-green-400 hover:text-field-green-700 dark:hover:text-field-green-300 font-semibold hover:underline transition-colors duration-200"
+                        className="text-field-green-600 hover:text-field-green-700 dark:text-field-green-400 dark:hover:text-field-green-300 font-semibold hover:underline transition-colors duration-200"
                       >
                         Sign In
                       </Link>
                     </p>
                   </motion.div>
-                </div>
+                </CardFooter>
               </form>
-            </div>
+            </Card>
           </motion.div>
         </div>
       </div>
