@@ -30,50 +30,52 @@ import {
 } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { TeamLogo } from "@/components/team-logo"
-import { getAllTeamStats, getCurrentSeasonId } from "@/lib/team-utils"
 
 // Maximum roster size constant
 const MAX_ROSTER_SIZE = 15
 
+interface Team {
+  id: string
+  name: string
+  logo_url?: string
+  wins: number
+  losses: number
+  otl: number
+  points: number
+  goals_for: number
+  goals_against: number
+  games_played: number
+  player_count: number
+  total_salary: number
+  conference?: {
+    id: string
+    name: string
+    color: string
+    description: string
+  }
+  awards?: any[]
+}
+
 export default function TeamsPage() {
   const { toast } = useToast()
-  const [teams, setTeams] = useState<any[]>([])
+  const [teams, setTeams] = useState<Team[]>([])
   const [loading, setLoading] = useState(true)
   const [searchQuery, setSearchQuery] = useState("")
-  const [currentSeason, setCurrentSeason] = useState<number | null>(null)
+  const [conferenceFilter, setConferenceFilter] = useState<string>("all")
 
   useEffect(() => {
     async function fetchTeams() {
       try {
         setLoading(true)
 
-        // Get current season ID
-        const seasonId = await getCurrentSeasonId()
-        setCurrentSeason(seasonId)
-
-        // Get team stats
-        const teamStats = await getAllTeamStats(seasonId)
-
-        // Get team awards
-        const response = await fetch("/api/teams/awards")
-        const { awards } = await response.json()
-
-        // Group awards by team
-        const awardsByTeam: Record<string, any[]> = {}
-        awards?.forEach((award: any) => {
-          if (!awardsByTeam[award.team_id]) {
-            awardsByTeam[award.team_id] = []
-          }
-          awardsByTeam[award.team_id].push(award)
-        })
-
-        // Combine team stats with awards
-        const teamsWithAwards = teamStats.map((team) => ({
-          ...team,
-          awards: awardsByTeam[team.id] || [],
-        }))
-
-        setTeams(teamsWithAwards)
+        // Use the new unified teams API
+        const response = await fetch('/api/teams')
+        if (!response.ok) {
+          throw new Error('Failed to fetch teams')
+        }
+        
+        const teamsData = await response.json()
+        setTeams(teamsData)
       } catch (error: any) {
         toast({
           title: "Error loading teams",
@@ -88,8 +90,18 @@ export default function TeamsPage() {
     fetchTeams()
   }, [toast])
 
-  // Filter teams based on search query
-  const filteredTeams = teams.filter((team) => team.name.toLowerCase().includes(searchQuery.toLowerCase()))
+  // Filter teams based on search query and conference
+  const filteredTeams = teams.filter((team) => {
+    const matchesSearch = team.name.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesConference = conferenceFilter === "all" || 
+      (conferenceFilter === "no-conference" && !team.conference) ||
+      (team.conference && team.conference.name === conferenceFilter)
+    
+    return matchesSearch && matchesConference
+  })
+
+  // Get unique conferences for filter
+  const conferences = Array.from(new Set(teams.map(team => team.conference?.name).filter(Boolean)))
 
   // Calculate league statistics for the header
   const totalTeams = teams.length
@@ -97,7 +109,7 @@ export default function TeamsPage() {
   const totalSalary = teams.reduce((sum, team) => sum + (team.total_salary || 0), 0)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/20">
+    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
       {/* Header Section */}
       <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
         <div className="container mx-auto px-6 py-12">
@@ -110,13 +122,11 @@ export default function TeamsPage() {
                 <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-700 dark:from-field-green-400 dark:to-pitch-blue-500 bg-clip-text text-transparent">
                   Elite Club Directory
                 </h1>
-                {currentSeason && (
-                  <div className="mt-2">
-                     <Badge className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 text-white px-4 py-2 text-lg font-semibold">
-                       FIFA 26 League Season 1
-                     </Badge>
-                  </div>
-                )}
+                <div className="mt-2">
+                   <Badge className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 text-white px-4 py-2 text-lg font-semibold">
+                     FIFA 26 League Season 1
+                   </Badge>
+                </div>
               </div>
             </div>
             <div className="h-1 w-32 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mb-8" />
@@ -177,7 +187,7 @@ export default function TeamsPage() {
       {/* Main Content */}
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="space-y-8">
-          {/* Search Section */}
+          {/* Search and Filter Section */}
           <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg">
             <CardHeader className="bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 border-b border-slate-200 dark:border-slate-700">
               <CardTitle className="text-lg sm:text-xl text-slate-800 dark:text-slate-200 flex items-center gap-3">
@@ -188,7 +198,8 @@ export default function TeamsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="p-4 sm:p-6">
-              <div className="max-w-2xl mx-auto">
+              <div className="max-w-4xl mx-auto space-y-4">
+                {/* Search Input */}
                 <div className="relative">
                   <Search className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-slate-400" />
                   <Input
@@ -198,8 +209,38 @@ export default function TeamsPage() {
                     className="pl-10 sm:pl-12 pr-4 sm:pr-6 py-2 sm:py-3 text-base sm:text-lg border-slate-300 dark:border-slate-600 focus:border-field-green-500 dark:focus:border-field-green-500 focus:ring-2 focus:ring-field-green-500/20 transition-all duration-300"
                   />
                 </div>
-                {searchQuery && (
-                  <div className="text-center mt-4">
+
+                {/* Conference Filter */}
+                <div className="flex flex-wrap gap-2">
+                  <Badge 
+                    variant={conferenceFilter === "all" ? "default" : "outline"}
+                    className="cursor-pointer hover:bg-field-green-100 dark:hover:bg-field-green-900/30"
+                    onClick={() => setConferenceFilter("all")}
+                  >
+                    All Conferences ({teams.length})
+                  </Badge>
+                  {conferences.map(conference => (
+                    <Badge 
+                      key={conference}
+                      variant={conferenceFilter === conference ? "default" : "outline"}
+                      className="cursor-pointer hover:bg-field-green-100 dark:hover:bg-field-green-900/30"
+                      onClick={() => setConferenceFilter(conference)}
+                    >
+                      {conference} ({teams.filter(t => t.conference?.name === conference).length})
+                    </Badge>
+                  ))}
+                  <Badge 
+                    variant={conferenceFilter === "no-conference" ? "default" : "outline"}
+                    className="cursor-pointer hover:bg-field-green-100 dark:hover:bg-field-green-900/30"
+                    onClick={() => setConferenceFilter("no-conference")}
+                  >
+                    No Conference ({teams.filter(t => !t.conference).length})
+                  </Badge>
+                </div>
+
+                {/* Results Count */}
+                {(searchQuery || conferenceFilter !== "all") && (
+                  <div className="text-center">
                     <span className="text-slate-600 dark:text-slate-400 text-sm sm:text-base">
                       Found <span className="font-semibold text-field-green-600 dark:text-field-green-400">{filteredTeams.length}</span> club{filteredTeams.length !== 1 ? 's' : ''}
                     </span>
@@ -241,11 +282,14 @@ export default function TeamsPage() {
                           )}
                         </div>
                         
-                        {/* Achievement Badge */}
-                        {team.awards && team.awards.length > 0 && (
+                        {/* Conference Badge */}
+                        {team.conference && (
                           <div className="absolute top-2 sm:top-4 right-2 sm:right-4">
-                            <div className="bg-gradient-to-r from-goal-orange-500 to-stadium-gold-500 text-white p-2 rounded-full shadow-lg">
-                              <Medal className="h-3 w-3 sm:h-4 sm:w-4" />
+                            <div 
+                              className="text-white p-2 rounded-full shadow-lg text-xs font-semibold"
+                              style={{ backgroundColor: team.conference.color }}
+                            >
+                              {team.conference.name.split(' ')[0]}
                             </div>
                           </div>
                         )}
@@ -258,6 +302,18 @@ export default function TeamsPage() {
                           {team.name}
                         </h3>
                         
+                        {/* Conference */}
+                        {team.conference && (
+                          <div className="flex justify-center mb-3 sm:mb-4">
+                            <Badge 
+                              className="text-white text-sm"
+                              style={{ backgroundColor: team.conference.color }}
+                            >
+                              {team.conference.name}
+                            </Badge>
+                          </div>
+                        )}
+                        
                         {/* Record */}
                         <div className="flex justify-center mb-3 sm:mb-4">
                           <Badge className="bg-gradient-to-r from-field-green-100 to-pitch-blue-100 text-field-green-800 border-field-green-300 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 dark:text-field-green-200 dark:border-field-green-600 text-sm sm:text-base">
@@ -265,34 +321,6 @@ export default function TeamsPage() {
                             {team.wins}-{team.losses}-{team.otl}
                           </Badge>
                         </div>
-
-                        {/* Club Awards */}
-                        {team.awards && team.awards.length > 0 && (
-                          <div className="flex flex-wrap justify-center gap-1 sm:gap-2 mb-3 sm:mb-4">
-                            {team.awards.slice(0, 2).map((award: any) => (
-                              <Badge
-                                key={award.id}
-                                className={`flex items-center gap-1 px-2 py-1 text-xs ${
-                                  award.award_type === "FIFA 26 Cup"
-                                    ? "bg-gradient-to-r from-goal-orange-100 to-goal-orange-200 text-goal-orange-800 border-goal-orange-300 dark:from-goal-orange-900/30 dark:to-goal-orange-800/30 dark:text-goal-orange-200 dark:border-goal-orange-600"
-                                    : "bg-gradient-to-r from-stadium-gold-100 to-stadium-gold-200 text-stadium-gold-800 border-stadium-gold-300 dark:from-stadium-gold-900/30 dark:to-stadium-gold-800/30 dark:text-stadium-gold-200 dark:border-stadium-gold-600"
-                                }`}
-                              >
-                                {award.award_type === "FIFA 26 Cup" ? (
-                                  <Crown className="h-3 w-3" />
-                                ) : (
-                                  <Award className="h-3 w-3" />
-                                )}
-                                {award.award_type === "FIFA 26 Cup" ? "Cup" : "Trophy"} {award.year}
-                              </Badge>
-                            ))}
-                            {team.awards.length > 2 && (
-                              <Badge variant="outline" className="text-slate-600 dark:text-slate-400 text-xs">
-                                +{team.awards.length - 2} more
-                              </Badge>
-                            )}
-                          </div>
-                        )}
 
                         {/* Club Statistics */}
                         <div className="grid grid-cols-2 gap-3 sm:gap-4">
@@ -307,10 +335,10 @@ export default function TeamsPage() {
                           
                           <div className="text-center">
                             <div className="text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-200">
-                              ${(team.total_salary / 1000000).toFixed(1)}M
+                              {team.games_played}
                             </div>
                             <div className="text-xs text-slate-600 dark:text-slate-400">
-                              Salary
+                              Games
                             </div>
                           </div>
                         </div>
@@ -338,11 +366,14 @@ export default function TeamsPage() {
                       Try adjusting your search terms or browse all available clubs.
                     </p>
                     <button 
-                      onClick={() => setSearchQuery("")}
+                      onClick={() => {
+                        setSearchQuery("")
+                        setConferenceFilter("all")
+                      }}
                       className="inline-flex items-center gap-2 text-field-green-600 dark:text-field-green-400 hover:text-field-green-700 dark:hover:text-field-green-300 font-medium transition-colors duration-200 text-sm sm:text-base"
                     >
                       <Shield className="h-4 w-4" />
-                      Clear Search
+                      Clear Filters
                     </button>
                   </div>
                 </div>
