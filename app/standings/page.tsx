@@ -1,13 +1,13 @@
 // Midnight Studios INTl - All rights reserved
 "use client"
 
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useToast } from "@/components/ui/use-toast"
 import TeamStandings, { type TeamStanding } from "@/components/team-standings"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Trophy, BarChart3, Users, ShieldCheck } from "lucide-react"
+import { Trophy, BarChart3, Users } from "lucide-react"
+import { motion } from "framer-motion"
 
 interface Conference {
   id: string;
@@ -43,80 +43,71 @@ export default function StandingsPage() {
     fetchStandingsData()
   }, [toast])
 
-  const overallStandings = useMemo(() => {
-    const allTeams = conferences.flatMap(c => c.standings);
-    return allTeams.sort((a, b) => {
-      if (b.points !== a.points) return b.points - a.points;
-      if (b.goal_difference !== a.goal_difference) return b.goal_difference - a.goal_difference;
-      return b.goals_for - a.goals_for;
-    });
-  }, [conferences]);
+  const conferenceColors = [
+    'from-blue-500 to-cyan-400',
+    'from-green-500 to-emerald-400',
+    'from-purple-500 to-pink-400',
+  ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20">
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="container mx-auto px-6 py-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-green-500 dark:from-blue-400 dark:to-green-400 bg-clip-text text-transparent">League Standings</h1>
-          <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">Track the performance of every club across all our competitive conferences.</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900/30 text-white">
+      <div 
+        className="py-20 px-6 text-center bg-cover bg-center bg-no-repeat relative"
+        style={{ backgroundImage: "url('/images/stadium-background.jpg')" }}
+      >
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+        <div className="relative">
+          <motion.h1 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent tracking-tight"
+          >
+            League Standings
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mt-4 text-lg text-gray-300 max-w-3xl mx-auto"
+          >
+            Track the performance of every club across all our competitive conferences.
+          </motion.p>
         </div>
       </div>
 
-      <main className="container mx-auto px-6 py-8">
+      <main className="container mx-auto px-6 py-12">
         {loading ? (
-          <div className="space-y-8">
-            <Skeleton className="h-12 w-full max-w-lg mx-auto bg-gray-200 dark:bg-gray-700" />
-            <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-lg">
-              <CardHeader><Skeleton className="h-8 w-1/2 bg-gray-200 dark:bg-gray-600" /></CardHeader>
-              <CardContent><Skeleton className="h-96 w-full bg-gray-200 dark:bg-gray-600" /></CardContent>
-            </Card>
+          <div className="space-y-12">
+            {[...Array(3)].map((_, i) => (
+              <Card key={i} className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm">
+                <CardHeader><Skeleton className="h-8 w-1/2 mx-auto bg-gray-700" /></CardHeader>
+                <CardContent><Skeleton className="h-96 w-full bg-gray-700" /></CardContent>
+              </Card>
+            ))}
           </div>
         ) : (
-          <Tabs defaultValue="conference" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 max-w-lg mx-auto bg-gray-100 dark:bg-gray-800 p-1 rounded-lg">
-              <TabsTrigger value="conference">Conference</TabsTrigger>
-              <TabsTrigger value="overall">Overall</TabsTrigger>
-              <TabsTrigger value="playoffs">Playoff Picture</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="conference" className="mt-8">
-              <div className="space-y-12">
-                {conferences.map((conference) => (
-                  <Card key={conference.id} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-green-500/20 transition-shadow duration-300">
-                    <CardHeader>
-                      <CardTitle className="text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent">{conference.name}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <TeamStandings teams={conference.standings} />
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </TabsContent>
-
-            <TabsContent value="overall" className="mt-8">
-                <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-2xl">
-                    <CardHeader>
-                      <CardTitle className="text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent">Overall League Standings</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <TeamStandings teams={overallStandings} />
-                    </CardContent>
+          <div className="space-y-16">
+            {conferences.map((conference, index) => (
+              <motion.div
+                key={conference.id}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.2 }}
+              >
+                <Card className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm overflow-hidden shadow-2xl shadow-blue-500/10">
+                  <CardHeader className={`p-4 bg-gradient-to-r ${conferenceColors[index % conferenceColors.length]}`}>
+                    <CardTitle className="text-2xl md:text-3xl font-bold text-center text-white flex items-center justify-center gap-3">
+                      <Trophy /> {conference.name}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-0">
+                    <TeamStandings teams={conference.standings} />
+                  </CardContent>
                 </Card>
-            </TabsContent>
-
-            <TabsContent value="playoffs" className="mt-8">
-                <Card className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-2xl">
-                    <CardHeader>
-                      <CardTitle className="text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent">Playoff Picture</CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-center py-16">
-                        <ShieldCheck className="h-16 w-16 mx-auto text-gray-400 mb-4" />
-                        <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">Coming Soon</h3>
-                        <p className="text-gray-600 dark:text-gray-400">The playoff picture will be available as the season progresses.</p>
-                    </CardContent>
-                </Card>
-            </TabsContent>
-          </Tabs>
+              </motion.div>
+            ))}
+          </div>
         )}
       </main>
     </div>
