@@ -23,6 +23,7 @@ export function ConferenceManager() {
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [showForm, setShowForm] = useState(false)
+  const [editingConference, setEditingConference] = useState<Conference | null>(null)
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -96,6 +97,95 @@ export function ConferenceManager() {
     }
   }
 
+  const handleEditConference = (conference: Conference) => {
+    setEditingConference(conference)
+    setFormData({
+      name: conference.name,
+      description: conference.description || "",
+      color: conference.color
+    })
+    setShowForm(true)
+  }
+
+  const handleUpdateConference = async () => {
+    if (!editingConference) return
+
+    try {
+      setSaving(true)
+      
+      const { data, error } = await supabase
+        .from("conferences")
+        .update(formData)
+        .eq("id", editingConference.id)
+        .select()
+        .single()
+
+      if (error) {
+        throw error
+      }
+
+      setConferences(conferences.map(c => c.id === editingConference.id ? data : c))
+      setFormData({ name: "", description: "", color: "#3B82F6" })
+      setShowForm(false)
+      setEditingConference(null)
+      
+      toast({
+        title: "Success",
+        description: "Conference updated successfully",
+      })
+    } catch (error: any) {
+      console.error("Error updating conference:", error)
+      toast({
+        title: "Error",
+        description: error.message || "Failed to update conference",
+        variant: "destructive",
+      })
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleDeleteConference = async (conference: Conference) => {
+    if (!confirm(`Are you sure you want to delete "${conference.name}"? This action cannot be undone.`)) {
+      return
+    }
+
+    try {
+      setSaving(true)
+      
+      const { error } = await supabase
+        .from("conferences")
+        .delete()
+        .eq("id", conference.id)
+
+      if (error) {
+        throw error
+      }
+
+      setConferences(conferences.filter(c => c.id !== conference.id))
+      
+      toast({
+        title: "Success",
+        description: "Conference deleted successfully",
+      })
+    } catch (error: any) {
+      console.error("Error deleting conference:", error)
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete conference",
+        variant: "destructive",
+      })
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleCancelEdit = () => {
+    setFormData({ name: "", description: "", color: "#3B82F6" })
+    setShowForm(false)
+    setEditingConference(null)
+  }
+
   if (loading) {
     return (
       <Card>
@@ -153,10 +243,13 @@ export function ConferenceManager() {
               />
             </div>
             <div className="flex gap-2">
-              <Button onClick={handleCreateConference} disabled={saving || !formData.name}>
-                {saving ? "Creating..." : "Create Conference"}
+              <Button 
+                onClick={editingConference ? handleUpdateConference : handleCreateConference} 
+                disabled={saving || !formData.name}
+              >
+                {saving ? (editingConference ? "Updating..." : "Creating...") : (editingConference ? "Update Conference" : "Create Conference")}
               </Button>
-              <Button variant="outline" onClick={() => setShowForm(false)}>
+              <Button variant="outline" onClick={handleCancelEdit}>
                 Cancel
               </Button>
             </div>
@@ -180,11 +273,20 @@ export function ConferenceManager() {
                 <p className="text-sm text-gray-600">{conference.description}</p>
               )}
               <div className="flex gap-2">
-                <Button size="sm" variant="outline">
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => handleEditConference(conference)}
+                >
                   <Edit className="h-3 w-3 mr-1" />
                   Edit
                 </Button>
-                <Button size="sm" variant="outline" className="text-red-600">
+                <Button 
+                  size="sm" 
+                  variant="outline" 
+                  className="text-red-600"
+                  onClick={() => handleDeleteConference(conference)}
+                >
                   <Trash2 className="h-3 w-3 mr-1" />
                   Delete
                 </Button>

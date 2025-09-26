@@ -19,7 +19,7 @@ export async function GET() {
         goals_for,
         goals_against,
         games_played,
-        conferences!inner(
+        conferences(
           id,
           name,
           color,
@@ -36,17 +36,19 @@ export async function GET() {
     // Group teams by conference
     const standingsByConference = teams?.reduce((acc: any, team: any) => {
       const conference = team.conferences
-      if (!conference) return acc // Skip teams without conferences
       
-      const conferenceName = conference.name
+      // Handle teams without conferences
+      const conferenceName = conference ? conference.name : "No Conference"
+      const conferenceData = conference || {
+        id: "no-conference",
+        name: "No Conference",
+        color: "#6B7280",
+        description: "Teams not assigned to any conference"
+      }
+      
       if (!acc[conferenceName]) {
         acc[conferenceName] = {
-          conference: {
-            id: conference.id,
-            name: conference.name,
-            color: conference.color,
-            description: conference.description
-          },
+          conference: conferenceData,
           teams: []
         }
       }
