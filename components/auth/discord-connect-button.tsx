@@ -24,6 +24,7 @@ export default function DiscordConnectButton({
 
   const connectDiscord = async () => {
     try {
+      console.log("DiscordConnectButton clicked", { userId, source, connecting })
       setConnecting(true)
       setError(null)
 
@@ -110,6 +111,7 @@ export default function DiscordConnectButton({
           <span>{error}</span>
         </div>
         <Button
+          type="button"
           onClick={() => {
             setError(null)
             connectDiscord()
@@ -125,7 +127,13 @@ export default function DiscordConnectButton({
   }
 
   return (
-    <Button onClick={connectDiscord} disabled={connecting} className={className}>
+    <Button 
+      type="button"
+      onClick={connectDiscord} 
+      disabled={connecting} 
+      className={`${className} cursor-pointer`}
+      style={{ pointerEvents: 'auto' }}
+    >
       {connecting ? (
         <>
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />

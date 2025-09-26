@@ -89,7 +89,7 @@ export default function NewsCard({ news }: NewsCardProps) {
       </motion.div>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto bg-gray-900 border-gray-700 text-white">
+        <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto bg-gradient-to-br from-field-green-900 via-pitch-blue-900 to-stadium-gold-900 border-field-green-600 text-white">
           <DialogHeader>
             <DialogTitle className="text-2xl text-white">{news.title}</DialogTitle>
             <DialogDescription className="text-gray-400">{formattedDate}</DialogDescription>

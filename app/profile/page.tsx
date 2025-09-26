@@ -126,7 +126,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/20">
       {/* Header Section */}
-      <div className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+      <div className="bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900 dark:to-pitch-blue-900 border-b border-field-green-300 dark:border-field-green-600">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
           <div className="text-center">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-6">
@@ -151,7 +151,7 @@ export default function ProfilePage() {
         <div className="max-w-6xl mx-auto space-y-6 sm:space-y-8">
           {/* Profile Overview Cards */}
           <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-3">
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <CardContent className="p-4 sm:p-6 text-center">
                 <div className="p-2 sm:p-3 bg-gradient-to-r from-ice-blue-500 to-ice-blue-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                   <User className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
@@ -165,7 +165,7 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <CardContent className="p-4 sm:p-6 text-center">
                 <div className="p-2 sm:p-3 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                   <Trophy className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
@@ -186,7 +186,7 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+            <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <CardContent className="p-4 sm:p-6 text-center">
                 <div className="p-2 sm:p-3 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                   <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
@@ -203,7 +203,7 @@ export default function ProfilePage() {
 
           {/* Additional Profile Information */}
           <div className="grid gap-6 md:grid-cols-2">
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg">
+            <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-lg">
               <CardHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-ice-blue-900/30 dark:to-rink-blue-900/30 border-b border-slate-200 dark:border-slate-700">
                 <CardTitle className="text-xl text-slate-800 dark:text-slate-200 flex items-center gap-3">
                   <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
@@ -234,7 +234,7 @@ export default function ProfilePage() {
               </CardContent>
             </Card>
 
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg">
+            <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-lg">
               <CardHeader className="bg-gradient-to-r from-assist-green-50 to-assist-green-100 dark:from-assist-green-900/30 dark:to-assist-green-800/30 border-b border-slate-200 dark:border-slate-700">
                 <CardTitle className="text-xl text-slate-800 dark:text-slate-200 flex items-center gap-3">
                   <div className="p-2 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
@@ -255,7 +255,7 @@ export default function ProfilePage() {
                   <Button 
                     onClick={() => router.push("/dashboard")} 
                     variant="outline"
-                    className="w-full border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 hover:scale-105 transition-all duration-200"
+                    className="w-full border-field-green-300 dark:border-field-green-600 hover:bg-field-green-100 dark:hover:bg-field-green-700 hover:scale-105 transition-all duration-200"
                   >
                     <LayoutDashboard className="h-4 w-4 mr-2" />
                     View Dashboard
@@ -263,7 +263,7 @@ export default function ProfilePage() {
                   <Button 
                     onClick={() => router.push("/players/" + user?.id)} 
                     variant="outline"
-                    className="w-full border-slate-300 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 hover:scale-105 transition-all duration-200"
+                    className="w-full border-field-green-300 dark:border-field-green-600 hover:bg-field-green-100 dark:hover:bg-field-green-700 hover:scale-105 transition-all duration-200"
                   >
                     <Eye className="h-4 w-4 mr-2" />
                     View Public Profile

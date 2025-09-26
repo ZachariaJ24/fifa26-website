@@ -182,7 +182,7 @@ export default function DashboardPage() {
 
         {/* Debug Info (Development Only) */}
         {process.env.NODE_ENV === "development" && (
-          <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg mb-8">
+          <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-lg mb-8">
             <CardHeader>
               <CardTitle className="text-slate-800 dark:text-slate-200">Debug Information</CardTitle>
             </CardHeader>
@@ -210,7 +210,7 @@ export default function DashboardPage() {
 
         {/* Quick Stats Grid */}
         <div className="grid gap-4 sm:gap-6 grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-6 sm:mb-8">
-          <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <CardContent className="p-4 sm:p-6 text-center">
               <div className="p-2 sm:p-3 bg-gradient-to-r from-ice-blue-500 to-ice-blue-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                 <User className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
@@ -224,7 +224,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <CardContent className="p-4 sm:p-6 text-center">
               <div className="p-2 sm:p-3 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                 <Trophy className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
@@ -245,7 +245,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <CardContent className="p-4 sm:p-6 text-center">
               <div className="p-2 sm:p-3 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                 <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
@@ -259,7 +259,7 @@ export default function DashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
+          <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
             <CardContent className="p-4 sm:p-6 text-center">
               <div className="p-2 sm:p-3 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg w-fit mx-auto mb-3 sm:mb-4">
                 <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
@@ -275,7 +275,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Token Dashboard */}
-        <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-xl">
+        <Card className="bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/80 to-stadium-gold-50/80 dark:from-field-green-900/80 dark:via-pitch-blue-900/80 dark:to-stadium-gold-900/80 backdrop-blur-sm border border-field-green-300/60 dark:border-field-green-600/60 shadow-xl">
           <CardHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-ice-blue-900/30 dark:to-rink-blue-900/30 border-b border-slate-200 dark:border-slate-700">
             <CardTitle className="text-2xl text-slate-800 dark:text-slate-200 flex items-center gap-3">
               <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">

@@ -360,7 +360,7 @@ export default function SeasonRegistrationPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-xl overflow-hidden">
+            <div className="bg-gradient-to-br from-field-green-50/90 via-pitch-blue-50/90 to-stadium-gold-50/90 backdrop-blur-sm border border-field-green-300/60 rounded-2xl shadow-xl overflow-hidden">
               <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-6">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
@@ -393,7 +393,7 @@ export default function SeasonRegistrationPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-xl overflow-hidden">
+            <div className="bg-gradient-to-br from-field-green-50/90 via-pitch-blue-50/90 to-stadium-gold-50/90 backdrop-blur-sm border border-field-green-300/60 rounded-2xl shadow-xl overflow-hidden">
               <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-6">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
@@ -532,11 +532,11 @@ export default function SeasonRegistrationPage() {
               Register to participate in {activeSeason.name} of the FIFA 26 League.
             </p>
             <div className="flex justify-center gap-4">
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl px-4 py-2">
+              <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-50/80 to-pitch-blue-50/80 backdrop-blur-sm border border-field-green-300/60 rounded-xl px-4 py-2">
                 <Trophy className="h-5 w-5 text-emerald-600" />
                 <span className="text-emerald-800 font-semibold">{activeSeason.name}</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl px-4 py-2">
+              <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-50/80 to-pitch-blue-50/80 backdrop-blur-sm border border-field-green-300/60 rounded-xl px-4 py-2">
                 <Calendar className="h-5 w-5 text-teal-600" />
                 <span className="text-teal-800 font-semibold">Season {activeSeason.season_number || 1}</span>
               </div>

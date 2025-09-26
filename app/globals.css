@@ -304,8 +304,8 @@
 
   /* Enhanced FIFA-Themed Design System */
   .fifa-card {
-    @apply bg-gradient-to-br from-white via-field-green-50/30 to-pitch-blue-50/20 dark:from-stadium-gold-900 dark:via-field-green-900/20 dark:to-pitch-blue-900/10;
-    @apply border border-field-green-200/60 dark:border-pitch-blue-800/60;
+    @apply bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/60 to-stadium-gold-50/40 dark:from-field-green-900/80 dark:via-pitch-blue-900/60 dark:to-stadium-gold-900/40;
+    @apply border border-field-green-300/60 dark:border-field-green-600/60;
     @apply shadow-xl shadow-field-green-500/10 dark:shadow-pitch-blue-500/20;
     @apply backdrop-blur-sm rounded-2xl;
     @apply transition-all duration-500 ease-out;
@@ -554,8 +554,8 @@
 
   /* FIFA-themed component styles */
   .fifa-card {
-    @apply bg-gradient-to-br from-white to-field-green-50 dark:from-assist-white-900 dark:to-pitch-blue-900/20;
-    @apply border border-field-green-200/50 dark:border-pitch-blue-800/50;
+    @apply bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/60 to-stadium-gold-50/40 dark:from-field-green-900/80 dark:via-pitch-blue-900/60 dark:to-stadium-gold-900/40;
+    @apply border border-field-green-300/60 dark:border-field-green-600/60;
     @apply shadow-lg shadow-field-green-500/10 dark:shadow-pitch-blue-500/20;
     @apply backdrop-blur-sm;
     @apply min-h-[280px];
@@ -1085,9 +1085,10 @@ div[style*="position: fixed"][style*="bottom: 1rem"][style*="right: 1rem"] {
 
 /* Enhanced FIFA Card Styles */
 .fifa-card {
-  @apply bg-white dark:bg-assist-white-800;
-  @apply border border-field-green-200 dark:border-field-green-700;
-  @apply rounded-xl shadow-lg;
+  @apply bg-gradient-to-br from-field-green-50/80 via-pitch-blue-50/60 to-stadium-gold-50/40 dark:from-field-green-900/80 dark:via-pitch-blue-900/60 dark:to-stadium-gold-900/40;
+  @apply border border-field-green-300/60 dark:border-field-green-600/60;
+  @apply rounded-xl shadow-lg shadow-field-green-500/10 dark:shadow-pitch-blue-500/20;
+  @apply backdrop-blur-sm;
   @apply transition-all duration-300 ease-out;
 }
 

@@ -38,7 +38,7 @@ export default function PlayerCard() {
 
   if (loading) {
     return (
-        <div className="bg-gray-800/50 backdrop-blur-lg">
+        <div className="bg-gradient-to-r from-field-green-900/50 via-pitch-blue-900/50 to-stadium-gold-900/50 backdrop-blur-lg">
             <div className="container mx-auto px-4 py-2">
                 <Skeleton className="h-12 w-1/3" />
             </div>

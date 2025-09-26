@@ -223,7 +223,7 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
-                className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-field-green-200/50 dark:border-field-green-700/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center"
+                className="bg-gradient-to-br from-field-green-50/90 via-pitch-blue-50/90 to-stadium-gold-50/90 dark:from-field-green-900/90 dark:via-pitch-blue-900/90 dark:to-stadium-gold-900/90 backdrop-blur-md border border-field-green-300/50 dark:border-field-green-600/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}

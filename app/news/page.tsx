@@ -62,7 +62,7 @@ export default function NewsPage() {
             
             {/* News Overview Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-8">
-              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-field-green-200/50 dark:border-field-green-700/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
+              <div className="bg-gradient-to-br from-field-green-50/90 via-pitch-blue-50/90 to-stadium-gold-50/90 dark:from-field-green-900/90 dark:via-pitch-blue-900/90 dark:to-stadium-gold-900/90 backdrop-blur-md border border-field-green-300/50 dark:border-field-green-600/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
                 <div className="p-2 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg mb-3 mx-auto w-fit">
                   <Newspaper className="h-6 w-6 text-white" />
                 </div>
@@ -74,7 +74,7 @@ export default function NewsPage() {
                 </div>
               </div>
               
-              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-pitch-blue-200/50 dark:border-pitch-blue-700/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
+              <div className="bg-gradient-to-br from-pitch-blue-50/90 via-stadium-gold-50/90 to-goal-orange-50/90 dark:from-pitch-blue-900/90 dark:via-stadium-gold-900/90 dark:to-goal-orange-900/90 backdrop-blur-md border border-pitch-blue-300/50 dark:border-pitch-blue-600/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
                 <div className="p-2 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg mb-3 mx-auto w-fit">
                   <TrendingUp className="h-6 w-6 text-white" />
                 </div>
@@ -86,7 +86,7 @@ export default function NewsPage() {
                 </div>
               </div>
               
-              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-stadium-gold-200/50 dark:border-stadium-gold-700/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
+              <div className="bg-gradient-to-br from-stadium-gold-50/90 via-goal-orange-50/90 to-field-green-50/90 dark:from-stadium-gold-900/90 dark:via-goal-orange-900/90 dark:to-field-green-900/90 backdrop-blur-md border border-stadium-gold-300/50 dark:border-stadium-gold-600/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
                 <div className="p-2 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg mb-3 mx-auto w-fit">
                   <Users className="h-6 w-6 text-white" />
                 </div>
@@ -98,7 +98,7 @@ export default function NewsPage() {
                 </div>
               </div>
               
-              <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-goal-orange-200/50 dark:border-goal-orange-700/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
+              <div className="bg-gradient-to-br from-goal-orange-50/90 via-field-green-50/90 to-pitch-blue-50/90 dark:from-goal-orange-900/90 dark:via-field-green-900/90 dark:to-pitch-blue-900/90 backdrop-blur-md border border-goal-orange-300/50 dark:border-goal-orange-600/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center">
                 <div className="p-2 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg mb-3 mx-auto w-fit">
                   <Zap className="h-6 w-6 text-white" />
                 </div>
@@ -137,7 +137,7 @@ export default function NewsPage() {
           </div>
         ) : (
           <div className="text-center py-16">
-            <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border border-field-green-200/50 dark:border-field-green-700/50 rounded-2xl shadow-xl p-12">
+            <div className="bg-gradient-to-br from-field-green-50/90 via-pitch-blue-50/90 to-stadium-gold-50/90 dark:from-field-green-900/90 dark:via-pitch-blue-900/90 dark:to-stadium-gold-900/90 backdrop-blur-md border border-field-green-300/50 dark:border-field-green-600/50 rounded-2xl shadow-xl p-12">
               <div className="p-6 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full w-fit mx-auto mb-6">
                 <Newspaper className="h-16 w-16 text-field-green-600 dark:text-field-green-400" />
               </div>
