@@ -259,7 +259,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900 fifa-scrollbar">
       {/* Hero Section */}
       <motion.div 
         className="relative overflow-hidden py-12 px-4"
@@ -274,7 +274,7 @@ export default function RegisterPage() {
         
         {/* Floating Elements */}
         <motion.div 
-          className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-emerald-200/30 to-teal-200/30 rounded-full blur-3xl"
+          className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl"
           animate={{ 
             y: [-20, 20, -20],
             x: [-10, 10, -10]
@@ -286,7 +286,7 @@ export default function RegisterPage() {
           }}
         />
         <motion.div 
-          className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-full blur-3xl"
+          className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-pitch-blue-200/30 to-stadium-gold-200/30 rounded-full blur-3xl"
           animate={{ 
             y: [20, -20, 20],
             x: [10, -10, 10]
@@ -310,23 +310,23 @@ export default function RegisterPage() {
               whileHover={{ scale: 1.05 }}
             >
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/30 to-teal-500/30 rounded-xl blur-lg scale-150" />
-                <div className="relative p-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl shadow-lg">
+                <div className="absolute inset-0 bg-gradient-to-r from-field-green-500/30 to-pitch-blue-500/30 rounded-xl blur-lg scale-150" />
+                <div className="relative p-3 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl shadow-lg">
                   <UserPlus className="h-8 w-8 text-white" />
                 </div>
               </div>
-              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">
+              <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-stadium-gold-600 bg-clip-text text-transparent">
                 Join the FIFA 26 League
               </h1>
             </motion.div>
             <motion.div 
-              className="h-1 w-40 bg-gradient-to-r from-emerald-500 via-teal-500 to-transparent rounded-full mx-auto mb-8"
+              className="h-1 w-40 bg-gradient-to-r from-field-green-500 via-pitch-blue-500 to-transparent rounded-full mx-auto mb-8"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 1, delay: 0.5 }}
             />
             <motion.p 
-              className="text-lg md:text-xl text-emerald-700 mx-auto mb-8 max-w-2xl leading-relaxed"
+              className="text-lg md:text-xl text-field-green-700 dark:text-field-green-300 mx-auto mb-8 max-w-2xl leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
@@ -347,16 +347,16 @@ export default function RegisterPage() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="w-full max-w-2xl"
           >
-            <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl overflow-hidden shadow-xl">
-              <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-6 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20" />
+            <div className="fifa-card-hover-enhanced overflow-hidden shadow-xl">
+              <div className="bg-gradient-to-r from-field-green-600 to-pitch-blue-600 text-white p-6 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20" />
                 <div className="relative flex items-center gap-4">
                   <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
                     <UserPlus className="h-6 w-6 text-white" />
                   </div>
                   <div>
                     <h2 className="text-white text-xl font-bold">Create Your Account</h2>
-                    <p className="text-emerald-100 text-base">
+                    <p className="text-field-green-100 text-base">
                       Join the FIFA 26 League community and start your journey
                     </p>
                   </div>
@@ -401,14 +401,14 @@ export default function RegisterPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.1 }}
                   >
-                    <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white p-6 rounded-xl">
+                    <div className="bg-gradient-to-r from-field-green-500 to-pitch-blue-500 text-white p-6 rounded-xl">
                       <div className="flex items-center gap-4">
                         <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
                           <Info className="h-6 w-6 text-white" />
                         </div>
                         <div>
                           <h3 className="text-lg font-semibold text-white">Important Information</h3>
-                          <p className="text-emerald-100 text-sm">
+                          <p className="text-field-green-100 text-sm">
                             You must connect your Discord account to register. This is required for league communications and team coordination.
                           </p>
                         </div>
@@ -422,14 +422,14 @@ export default function RegisterPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
-                    <div className="bg-gradient-to-r from-teal-500 to-cyan-500 text-white p-6 rounded-xl">
+                    <div className="bg-gradient-to-r from-pitch-blue-500 to-stadium-gold-500 text-white p-6 rounded-xl">
                       <div className="flex items-center gap-4 mb-4">
                         <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
                           <MessageSquare className="h-6 w-6 text-white" />
                         </div>
                         <div>
                           <h3 className="text-lg font-semibold text-white">Step 1: Connect Discord</h3>
-                          <p className="text-teal-100 text-sm">
+                          <p className="text-pitch-blue-100 text-sm">
                             Discord connection is required for league communication and team coordination
                           </p>
                         </div>
@@ -488,18 +488,18 @@ export default function RegisterPage() {
                     className="space-y-6"
                   >
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-lg flex items-center justify-center">
+                      <div className="w-8 h-8 bg-gradient-to-r from-field-green-500 to-pitch-blue-500 rounded-lg flex items-center justify-center">
                         <User className="h-4 w-4 text-white" />
                       </div>
-                      <h3 className="text-xl font-bold text-emerald-800">
+                      <h3 className="text-xl font-bold text-field-green-800 dark:text-field-green-200">
                         Step 2: Account Information
                       </h3>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
-                        <Label htmlFor="email" className="text-base font-semibold text-emerald-700 flex items-center gap-2">
-                          <Mail className="h-4 w-4 text-emerald-600" />
+                        <Label htmlFor="email" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                          <Mail className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                           Email Address
                         </Label>
                         <Input 
@@ -507,7 +507,7 @@ export default function RegisterPage() {
                           type="email" 
                           placeholder="your.email@example.com" 
                           {...register("email")} 
-                          className="border-2 border-emerald-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300"
+                          className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300"
                         />
                         {errors.email && <p className="text-sm text-red-600 flex items-center gap-2">
                           <AlertCircle className="h-4 w-4" />
@@ -516,8 +516,8 @@ export default function RegisterPage() {
                       </div>
 
                       <div className="space-y-4">
-                        <Label htmlFor="password" className="text-base font-semibold text-emerald-700 flex items-center gap-2">
-                          <Lock className="h-4 w-4 text-teal-600" />
+                        <Label htmlFor="password" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                          <Lock className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
                           Password
                         </Label>
                         <Input 
@@ -525,7 +525,7 @@ export default function RegisterPage() {
                           type="password" 
                           placeholder="••••••••" 
                           {...register("password")} 
-                          className="border-2 border-emerald-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300"
+                          className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300"
                         />
                         {errors.password && <p className="text-sm text-red-600 flex items-center gap-2">
                           <AlertCircle className="h-4 w-4" />
@@ -535,16 +535,16 @@ export default function RegisterPage() {
                     </div>
 
                     <div className="space-y-4">
-                      <Label htmlFor="gamerTag" className="text-base font-semibold text-emerald-700 flex items-center gap-2">
-                        <Gamepad2 className="h-4 w-4 text-emerald-600" />
+                      <Label htmlFor="gamerTag" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                        <Gamepad2 className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                         Gamer Tag
                       </Label>
-                      <p className="text-sm text-emerald-600">Your Xbox or PSN name (2-50 characters)</p>
+                      <p className="text-sm text-field-green-600 dark:text-field-green-400">Your Xbox or PSN name (2-50 characters)</p>
                       <Input 
                         id="gamerTag" 
                         placeholder="Your in-game name" 
                         {...register("gamerTag")} 
-                        className="border-2 border-emerald-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300"
+                        className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300"
                       />
                       {errors.gamerTag && <p className="text-sm text-red-600 flex items-center gap-2">
                         <AlertCircle className="h-4 w-4" />
@@ -554,13 +554,13 @@ export default function RegisterPage() {
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
-                        <Label htmlFor="primaryPosition" className="text-base font-semibold text-emerald-700 flex items-center gap-2">
-                          <Target className="h-4 w-4 text-red-600" />
+                        <Label htmlFor="primaryPosition" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                          <Target className="h-4 w-4 text-goal-orange-600 dark:text-goal-orange-400" />
                           Primary Position
                         </Label>
                         <select
                           id="primaryPosition"
-                          className="border-2 border-emerald-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300 rounded-md px-3 py-2"
+                          className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300 rounded-md px-3 py-2"
                           {...register("primaryPosition")}
                         >
                           <option value="">Select position</option>
@@ -587,13 +587,13 @@ export default function RegisterPage() {
                       </div>
 
                       <div className="space-y-4">
-                        <Label htmlFor="secondaryPosition" className="text-base font-semibold text-emerald-700 flex items-center gap-2">
-                          <Target className="h-4 w-4 text-gray-600" />
+                        <Label htmlFor="secondaryPosition" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                          <Target className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                           Secondary Position (Optional)
                         </Label>
                         <select
                           id="secondaryPosition"
-                          className="border-2 border-emerald-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300 rounded-md px-3 py-2"
+                          className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300 rounded-md px-3 py-2"
                           {...register("secondaryPosition")}
                         >
                           <option value="">None</option>
@@ -621,13 +621,13 @@ export default function RegisterPage() {
                     </div>
 
                     <div className="space-y-4">
-                      <Label htmlFor="console" className="text-base font-semibold text-emerald-700 flex items-center gap-2">
-                        <Gamepad2 className="h-4 w-4 text-teal-600" />
+                      <Label htmlFor="console" className="text-base font-semibold text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                        <Gamepad2 className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
                         Console
                       </Label>
                       <select
                         id="console"
-                        className="border-2 border-emerald-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300 rounded-md px-3 py-2"
+                        className="fifa-search border-2 border-field-green-200 dark:border-field-green-700 focus:border-field-green-500 focus:ring-4 focus:ring-field-green-500/20 transition-all duration-300 rounded-md px-3 py-2"
                         {...register("console")}
                       >
                         <option value="">Select console</option>
@@ -650,7 +650,7 @@ export default function RegisterPage() {
                   >
                     <Button 
                       type="submit" 
-                      className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold text-lg py-3 hover:scale-105 transition-all duration-200" 
+                      className="w-full fifa-button-enhanced text-white font-semibold text-lg py-3 hover:scale-105 transition-all duration-200" 
                       disabled={isLoading || !discordConnected || discordConfigError}
                     >
                       {isLoading ? (
@@ -673,11 +673,11 @@ export default function RegisterPage() {
                     transition={{ duration: 0.6, delay: 0.5 }}
                     className="text-center"
                   >
-                    <p className="text-lg text-emerald-600">
+                    <p className="text-lg text-field-green-600 dark:text-field-green-400">
                       Already have an account?{" "}
                       <Link 
                         href="/login" 
-                        className="text-emerald-600 hover:text-emerald-700 font-semibold hover:underline transition-colors duration-200"
+                        className="text-field-green-600 dark:text-field-green-400 hover:text-field-green-700 dark:hover:text-field-green-300 font-semibold hover:underline transition-colors duration-200"
                       >
                         Sign In
                       </Link>

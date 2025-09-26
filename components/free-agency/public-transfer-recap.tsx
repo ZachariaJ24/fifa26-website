@@ -85,7 +85,7 @@ export function PublicTransferRecap() {
     <div className="space-y-8">
       {/* Overview Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 border border-slate-200 dark:border-slate-700">
+        <Card className="fifa-card-hover-enhanced bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 border border-field-green-200 dark:border-field-green-700">
           <CardHeader className="pb-3">
             <CardTitle className="text-lg text-slate-800 dark:text-slate-200 flex items-center gap-2">
               <DollarSign className="h-5 w-5 text-field-green-600" />
@@ -102,35 +102,35 @@ export function PublicTransferRecap() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-r from-stadium-gold-50 to-goal-orange-50 dark:from-stadium-gold-900/30 dark:to-goal-orange-900/30 border border-slate-200 dark:border-slate-700">
+        <Card className="fifa-card-hover-enhanced bg-gradient-to-r from-stadium-gold-50 to-goal-orange-50 dark:from-stadium-gold-900/30 dark:to-goal-orange-900/30 border border-stadium-gold-200 dark:border-stadium-gold-700">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-slate-800 dark:text-slate-200 flex items-center gap-2">
-              <Users className="h-5 w-5 text-stadium-gold-600" />
+            <CardTitle className="text-lg text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+              <Users className="h-5 w-5 text-stadium-gold-600 dark:text-stadium-gold-400" />
               Players Available
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-800 dark:text-slate-200">
+            <div className="text-3xl font-bold text-field-green-800 dark:text-field-green-200">
               {data.totalPlayers.toLocaleString()}
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            <p className="text-sm text-field-green-600 dark:text-field-green-400 mt-1">
               Free agents in market
             </p>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-r from-pitch-blue-50 to-assist-white-50 dark:from-pitch-blue-900/30 dark:to-assist-white-900/30 border border-slate-200 dark:border-slate-700">
+        <Card className="fifa-card-hover-enhanced bg-gradient-to-r from-pitch-blue-50 to-assist-white-50 dark:from-pitch-blue-900/30 dark:to-assist-white-900/30 border border-pitch-blue-200 dark:border-pitch-blue-700">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-slate-800 dark:text-slate-200 flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-pitch-blue-600" />
+            <CardTitle className="text-lg text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+              <Trophy className="h-5 w-5 text-pitch-blue-600 dark:text-pitch-blue-400" />
               Active Clubs
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-slate-800 dark:text-slate-200">
+            <div className="text-3xl font-bold text-field-green-800 dark:text-field-green-200">
               {data.totalTeams.toLocaleString()}
             </div>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+            <p className="text-sm text-field-green-600 dark:text-field-green-400 mt-1">
               Clubs in transfer market
             </p>
           </CardContent>
@@ -138,26 +138,26 @@ export function PublicTransferRecap() {
       </div>
 
       {/* Recent Transfer Activity */}
-      <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-lg">
-        <CardHeader className="bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 border-b border-slate-200 dark:border-slate-700">
-          <CardTitle className="text-xl text-slate-800 dark:text-slate-200 flex items-center gap-3">
+      <Card className="fifa-card-hover-enhanced bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-field-green-200 dark:border-field-green-700 shadow-lg">
+        <CardHeader className="bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 border-b border-field-green-200 dark:border-field-green-700">
+          <CardTitle className="text-xl text-field-green-800 dark:text-field-green-200 flex items-center gap-3">
             <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
               <Activity className="h-5 w-5 text-white" />
             </div>
             Recent Transfer Activity
           </CardTitle>
-          <CardDescription className="text-slate-600 dark:text-slate-400">
+          <CardDescription className="text-field-green-600 dark:text-field-green-400">
             Latest transfer offers and completed signings
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6">
           {data.recentOffers.length === 0 ? (
             <div className="text-center py-8">
-              <Target className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-slate-600 dark:text-slate-400 mb-2">
+              <Target className="h-12 w-12 text-field-green-400 dark:text-field-green-500 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-field-green-600 dark:text-field-green-400 mb-2">
                 No Recent Activity
               </h3>
-              <p className="text-slate-500 dark:text-slate-500">
+              <p className="text-field-green-500 dark:text-field-green-500">
                 No transfer offers have been placed recently.
               </p>
             </div>
@@ -166,26 +166,26 @@ export function PublicTransferRecap() {
               {data.recentOffers.slice(0, 10).map((offer, index) => (
                 <div
                   key={offer.id || index}
-                  className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600"
+                  className="flex items-center justify-between p-4 bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20 rounded-lg border border-field-green-200 dark:border-field-green-700"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
                       {offer.teams?.name?.charAt(0) || "?"}
                     </div>
                     <div>
-                      <div className="font-semibold text-slate-800 dark:text-slate-200">
+                      <div className="font-semibold text-field-green-800 dark:text-field-green-200">
                         {offer.teams?.name || "Unknown Team"}
                       </div>
-                      <div className="text-sm text-slate-600 dark:text-slate-400">
+                      <div className="text-sm text-field-green-600 dark:text-field-green-400">
                         Offer for {offer.player_name || "Unknown Player"}
                       </div>
                     </div>
                   </div>
                   <div className="text-right">
-                    <div className="text-lg font-bold text-slate-800 dark:text-slate-200">
+                    <div className="text-lg font-bold text-field-green-800 dark:text-field-green-200">
                       ${offer.offer_amount?.toLocaleString() || "0"}
                     </div>
-                    <div className="text-xs text-slate-500 dark:text-slate-400">
+                    <div className="text-xs text-field-green-500 dark:text-field-green-400">
                       {offer.created_at ? new Date(offer.created_at).toLocaleDateString() : "Unknown date"}
                     </div>
                   </div>

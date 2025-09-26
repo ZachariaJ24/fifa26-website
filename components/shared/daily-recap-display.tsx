@@ -115,13 +115,13 @@ function getResultBadgeVariant(result: string): "default" | "secondary" | "destr
 export default function DailyRecapDisplay({ recapData, showFullRoster = false }: DailyRecapDisplayProps) {
   if (!recapData?.team_recaps?.length) {
     return (
-      <Card className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
+      <Card className="fifa-card-hover-enhanced border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20">
         <CardContent className="text-center py-12">
-          <div className="p-6 bg-gradient-to-r from-hockey-silver-500/20 to-hockey-silver-500/20 rounded-full w-fit mx-auto mb-6">
-            <Target className="h-16 w-16 text-hockey-silver-600 dark:text-hockey-silver-400" />
+          <div className="p-6 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full w-fit mx-auto mb-6">
+            <Target className="h-16 w-16 text-field-green-600 dark:text-field-green-400" />
           </div>
-          <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-3">No Completed Matches</h2>
-          <p className="text-hockey-silver-600 dark:text-hockey-silver-400">No completed matches found in the specified time period.</p>
+          <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-3">No Completed Matches</h2>
+          <p className="text-field-green-600 dark:text-field-green-400">No completed matches found in the specified time period.</p>
         </CardContent>
       </Card>
     )
@@ -135,15 +135,15 @@ export default function DailyRecapDisplay({ recapData, showFullRoster = false }:
   return (
     <div className="space-y-8">
       {/* Time Window Header */}
-      <Card className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-ice-blue-100 to-rink-blue-100 dark:from-ice-blue-900/30 dark:to-rink-blue-900/30">
+      <Card className="fifa-card-hover-enhanced border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-field-green-100 to-pitch-blue-100 dark:from-field-green-900/30 dark:to-pitch-blue-900/30">
         <CardHeader>
-          <CardTitle className="flex items-center gap-3 text-ice-blue-800 dark:text-ice-blue-200">
-            <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-ice-blue-600 rounded-lg">
+          <CardTitle className="flex items-center gap-3 text-field-green-800 dark:text-field-green-200">
+            <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
               <Clock className="h-5 w-5 text-white" />
             </div>
             Daily Recap - Last {timeWindow} Hours
           </CardTitle>
-          <CardDescription className="flex items-center justify-between text-ice-blue-700 dark:text-ice-blue-300">
+          <CardDescription className="flex items-center justify-between text-field-green-700 dark:text-field-green-300">
             <span>
               {recapData.total_matches} matches completed • {recapData.team_recaps.length} teams analyzed • AI-powered
               insights
@@ -154,17 +154,17 @@ export default function DailyRecapDisplay({ recapData, showFullRoster = false }:
       </Card>
 
       {/* Summary */}
-      <Card className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
+      <Card className="fifa-card-hover-enhanced border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20">
         <CardHeader className="pb-4">
           <CardTitle className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg">
+            <div className="p-2 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg">
               <BarChart3 className="h-6 w-6 text-white" />
             </div>
             <div>
-              <div className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
+              <div className="text-xl font-bold text-field-green-800 dark:text-field-green-200">
                 Performance Summary
               </div>
-              <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">
+              <div className="text-sm text-field-green-600 dark:text-field-green-400">
                 Analysis of {recapData.total_matches} matches over the last {timeWindow} hours
               </div>
             </div>
@@ -173,17 +173,17 @@ export default function DailyRecapDisplay({ recapData, showFullRoster = false }:
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {recapData.best_team && (
-              <div className="flex items-start space-x-3 p-4 bg-gradient-to-br from-assist-green-100 to-assist-green-200 dark:from-assist-green-900/30 dark:to-assist-green-800/20 rounded-xl border border-assist-green-200/50 dark:border-assist-green-700/50">
-                <div className="p-2 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
+              <div className="flex items-start space-x-3 p-4 bg-gradient-to-br from-field-green-100 to-field-green-200 dark:from-field-green-900/30 dark:to-field-green-800/20 rounded-xl border border-field-green-200/50 dark:border-field-green-700/50">
+                <div className="p-2 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg">
                   <Trophy className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-assist-green-800 dark:text-assist-green-200">Best Team Performance</h4>
-                  <p className="text-sm text-assist-green-700 dark:text-assist-green-300">
+                  <h4 className="font-semibold text-field-green-800 dark:text-field-green-200">Best Team Performance</h4>
+                  <p className="text-sm text-field-green-700 dark:text-field-green-300">
                     {recapData.best_team.team_name} ({recapData.best_team.record.wins}-
                     {recapData.best_team.record.losses}-{recapData.best_team.record.otl})
                   </p>
-                  <p className="text-xs text-assist-green-600 dark:text-assist-green-400">
+                  <p className="text-xs text-field-green-600 dark:text-field-green-400">
                     Goal differential: {recapData.best_team.total_goal_differential >= 0 ? "+" : ""}
                     {recapData.best_team.total_goal_differential}
                   </p>
@@ -192,17 +192,17 @@ export default function DailyRecapDisplay({ recapData, showFullRoster = false }:
             )}
 
             {recapData.worst_team && (
-              <div className="flex items-start space-x-3 p-4 bg-gradient-to-br from-goal-red-100 to-goal-red-200 dark:from-goal-red-900/30 dark:to-goal-red-800/20 rounded-xl border border-goal-red-200/50 dark:border-goal-red-700/50">
-                <div className="p-2 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
+              <div className="flex items-start space-x-3 p-4 bg-gradient-to-br from-goal-orange-100 to-goal-orange-200 dark:from-goal-orange-900/30 dark:to-goal-orange-800/20 rounded-xl border border-goal-orange-200/50 dark:border-goal-orange-700/50">
+                <div className="p-2 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg">
                   <TrendingDown className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-goal-red-800 dark:text-goal-red-200">Needs Improvement</h4>
-                  <p className="text-sm text-goal-red-700 dark:text-goal-red-300">
+                  <h4 className="font-semibold text-goal-orange-800 dark:text-goal-orange-200">Needs Improvement</h4>
+                  <p className="text-sm text-goal-orange-700 dark:text-goal-orange-300">
                     {recapData.worst_team.team_name} ({recapData.worst_team.record.wins}-
                     {recapData.worst_team.record.losses}-{recapData.worst_team.record.otl})
                   </p>
-                  <p className="text-xs text-goal-red-600 dark:text-goal-red-400">
+                  <p className="text-xs text-goal-orange-600 dark:text-goal-orange-400">
                     Goal differential: {recapData.worst_team.total_goal_differential >= 0 ? "+" : ""}
                     {recapData.worst_team.total_goal_differential}
                   </p>

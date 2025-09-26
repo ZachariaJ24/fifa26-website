@@ -75,12 +75,12 @@ export default function Footer() {
               transition={{ duration: 0.6 }}
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl shadow-lg">
+                <div className="p-3 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl shadow-lg">
                   <Trophy className="h-8 w-8 text-white" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent">FIFA 26 League</h3>
-                  <div className="h-1 w-16 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
+                  <h3 className="font-bold text-2xl bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-stadium-gold-600 bg-clip-text text-transparent">FIFA 26 League</h3>
+                  <div className="h-1 w-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-500 rounded-full"></div>
                 </div>
               </div>
               <p className="text-muted-foreground leading-relaxed mb-6">
@@ -209,9 +209,9 @@ export default function Footer() {
                 transition={{ duration: 0.6 }}
                 className="flex justify-center items-center gap-2 mb-4"
               >
-                <div className="h-1 w-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full"></div>
-                <div className="h-1 w-8 bg-gradient-to-r from-teal-500 to-cyan-500 rounded-full"></div>
-                <div className="h-1 w-12 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full"></div>
+                <div className="h-1 w-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-500 rounded-full"></div>
+                <div className="h-1 w-8 bg-gradient-to-r from-pitch-blue-500 to-stadium-gold-500 rounded-full"></div>
+                <div className="h-1 w-12 bg-gradient-to-r from-stadium-gold-500 to-field-green-500 rounded-full"></div>
               </motion.div>
               <p className="text-muted-foreground leading-relaxed">
                 &copy; {currentYear} FIFA 26 League. All rights reserved.
