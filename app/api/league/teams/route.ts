@@ -20,7 +20,12 @@ export async function GET() {
         goals_for,
         goals_against,
         games_played,
-        conferences(name, color)
+        conferences(
+          id,
+          name,
+          color,
+          description
+        )
       `)
       .eq("is_active", true)
       .order("name")

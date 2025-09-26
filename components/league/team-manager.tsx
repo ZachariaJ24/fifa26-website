@@ -69,13 +69,18 @@ export function TeamManager() {
             goals_for,
             goals_against,
             games_played,
-            conferences(name, color)
+            conferences(
+              id,
+              name,
+              color,
+              description
+            )
           `)
           .eq("is_active", true)
           .order("name"),
         supabase
           .from("conferences")
-          .select("*")
+          .select("id, name, color, description")
           .eq("is_active", true)
           .order("name")
       ])

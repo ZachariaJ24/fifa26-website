@@ -7,7 +7,7 @@ export async function GET() {
     
     const { data: conferences, error } = await supabase
       .from("conferences")
-      .select("*")
+      .select("id, name, description, color, is_active, created_at, updated_at")
       .eq("is_active", true)
       .order("name")
 

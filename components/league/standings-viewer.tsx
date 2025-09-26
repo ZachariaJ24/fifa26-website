@@ -68,7 +68,12 @@ export function StandingsViewer() {
           goals_for,
           goals_against,
           games_played,
-          conferences(name, color)
+          conferences!inner(
+            id,
+            name,
+            color,
+            description
+          )
         `)
         .eq("is_active", true)
         .order("points", { ascending: false })
@@ -84,10 +89,18 @@ export function StandingsViewer() {
 
       // Group teams by conference
       const standingsByConference = teams.reduce((acc: any, team: any) => {
-        const conferenceName = team.conferences?.name || "No Conference"
+        const conference = team.conferences
+        if (!conference) return acc // Skip teams without conferences
+        
+        const conferenceName = conference.name
         if (!acc[conferenceName]) {
           acc[conferenceName] = {
-            conference: team.conferences || { name: conferenceName, color: "#6B7280" },
+            conference: {
+              id: conference.id,
+              name: conference.name,
+              color: conference.color,
+              description: conference.description
+            },
             teams: []
           }
         }
