@@ -165,7 +165,7 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
               <Button asChild size="lg" className="fifa-button-enhanced px-8 py-4 text-lg font-semibold rounded-2xl shadow-2xl">
                 <Link href="/register" className="flex items-center gap-3"><Trophy className="w-6 h-6" /> JOIN THE LEAGUE <ArrowRight className="w-5 h-5" /></Link>
               </Button>
-              <Button asChild variant="outline" size="lg" className="border-2 border-field-green-600 text-field-green-600 hover:bg-field-green-600 hover:text-white px-8 py-4 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300 hover:scale-105">
+              <Button asChild variant="outline" size="lg" className="border-2 border-field-green-600 text-field-green-600 hover:bg-field-green-600 hover:text-white px-8 py-4 text-lg font-semibold rounded-2xl shadow-xl transition-all duration-300">
                 <Link href="/standings" className="flex items-center gap-3"><BarChart3 className="w-6 h-6" /> VIEW STANDINGS</Link>
               </Button>
             </motion.div>
@@ -223,7 +223,7 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
-                className="bg-gradient-to-br from-field-green-50/90 via-pitch-blue-50/90 to-stadium-gold-50/90 dark:from-field-green-900/90 dark:via-pitch-blue-900/90 dark:to-stadium-gold-900/90 backdrop-blur-md border border-field-green-300/50 dark:border-field-green-600/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out hover:scale-[1.02] hover:-translate-y-2 p-6 text-center"
+                className="bg-gradient-to-br from-field-green-50/90 via-pitch-blue-50/90 to-stadium-gold-50/90 dark:from-field-green-900/90 dark:via-pitch-blue-900/90 dark:to-stadium-gold-900/90 backdrop-blur-md border border-field-green-300/50 dark:border-field-green-600/50 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 ease-out p-6 text-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -271,7 +271,7 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="transition-all duration-300 ease-out hover:scale-105 hover:-translate-y-2 hover:shadow-2xl"
+                className="transition-all duration-300 ease-out hover:shadow-2xl"
               >
                 <Link href={`/matches/${game.id}`}>
                   <Card className="h-full cursor-pointer">
@@ -547,7 +547,7 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
             <p className="text-xl mb-12 text-white/95 max-w-2xl mx-auto drop-shadow-lg" style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}>
               Your journey to becoming a FIFA legend starts now. Register for the upcoming season and write your own story.
             </p>
-            <Button asChild size="lg" className="bg-white text-field-green-600 hover:bg-field-green-50 px-8 py-4 text-lg font-semibold rounded-2xl shadow-2xl transition-all duration-300 hover:scale-105 border-2 border-white/20">
+            <Button asChild size="lg" className="bg-white text-field-green-600 hover:bg-field-green-50 px-8 py-4 text-lg font-semibold rounded-2xl shadow-2xl transition-all duration-300 border-2 border-white/20">
               <Link href="/register" className="flex items-center gap-3"><Play className="w-6 h-6" /> GET STARTED</Link>
             </Button>
           </motion.div>

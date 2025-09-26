@@ -147,11 +147,11 @@ export default function StatisticsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900 fifa-scrollbar">
       <div className="container mx-auto">
-        <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="text-center mb-12">
+        <div className="text-center mb-12">
           <h1 className="fifa-title-enhanced">Player Statistics</h1>
           <p className="mt-4 text-lg text-field-green-600 dark:text-field-green-400 max-w-3xl mx-auto">Deep dive into the performance metrics of the league's top talents.</p>
           <div className="fifa-section-divider"></div>
-        </motion.div>
+        </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-5 max-w-4xl mx-auto fifa-tabs-list mb-8">

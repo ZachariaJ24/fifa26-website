@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/components/ui/use-toast"
-import { useSupabase } from "@/lib/supabase/hooks"
+import { useSupabase } from "@/lib/supabase/client"
 import Link from "next/link"
 import {
   Users,
@@ -44,9 +44,12 @@ import {
   AlertTriangle,
   CheckCircle,
   XCircle,
+  Info,
+  ExternalLink,
+  Heart,
+  BookOpen
 } from "lucide-react"
 import AdminDiagnostics from "@/components/admin/admin-diagnostics"
-import HeaderBar from "@/components/admin/HeaderBar"
 
 export default function AdminDashboardPage() {
   const { supabase, session } = useSupabase()
@@ -102,14 +105,14 @@ export default function AdminDashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
         <div className="container mx-auto px-4 py-20">
           <div className="flex justify-center items-center h-64">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+              <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
                 <Shield className="h-8 w-8 text-white" />
               </div>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Loading Admin Dashboard...</p>
+              <p className="text-slate-600 dark:text-slate-400 font-medium">Loading Admin Dashboard...</p>
             </div>
           </div>
         </div>
@@ -128,7 +131,7 @@ export default function AdminDashboardPage() {
       icon: <Users className="h-6 w-6" />,
       href: "/admin/users",
       category: "user",
-      color: "ice-blue"
+      color: "field-green"
     },
     {
       title: "Complete User Deletion",
@@ -136,7 +139,7 @@ export default function AdminDashboardPage() {
       icon: <Trash2 className="h-6 w-6" />,
       href: "/admin/complete-user-deletion",
       category: "user",
-      color: "goal-red"
+      color: "goal-orange"
     },
     {
       title: "Banned Users Management",
@@ -144,23 +147,23 @@ export default function AdminDashboardPage() {
       icon: <Users className="h-6 w-6" />,
       href: "/admin/banned-users",
       category: "user",
-      color: "goal-red"
+      color: "goal-orange"
     },
     {
-      title: "League Management",
-      description: "Manage conferences, teams, and league standings",
+      title: "Team Management",
+      description: "Manage teams and rosters",
       icon: <Trophy className="h-6 w-6" />,
-      href: "/admin/league-new",
+      href: "/admin/teams",
       category: "team",
-      color: "assist-green"
+      color: "pitch-blue"
     },
     {
-      title: "Fixture Management",
-      description: "Manage fixture schedule and results",
+      title: "Schedule Management",
+      description: "Manage game schedule and results",
       icon: <Calendar className="h-6 w-6" />,
       href: "/admin/schedule",
       category: "game",
-      color: "rink-blue"
+      color: "stadium-gold"
     },
     {
       title: "Update Current Season",
@@ -168,7 +171,7 @@ export default function AdminDashboardPage() {
       icon: <Clock className="h-6 w-6" />,
       href: "/admin/update-current-season",
       category: "system",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "Season Registrations",
@@ -176,23 +179,23 @@ export default function AdminDashboardPage() {
       icon: <ClipboardList className="h-6 w-6" />,
       href: "/admin/registrations",
       category: "user",
-      color: "ice-blue"
+      color: "field-green"
     },
     {
-      title: "Club Availability",
-      description: "View player availability and fixtures played by week",
+      title: "Team Availability",
+      description: "View player availability and games played by week",
       icon: <Calendar className="h-6 w-6" />,
       href: "/admin/team-avail",
       category: "team",
-      color: "assist-green"
+      color: "pitch-blue"
     },
     {
-      title: "Transfer Recap",
-      description: "View comprehensive transfer statistics and player transfer history",
+      title: "Bidding Recap",
+      description: "View comprehensive bidding statistics and player bid history",
       icon: <DollarSign className="h-6 w-6" />,
-      href: "/admin/transfer-recap",
+      href: "/admin/bidding-recap",
       category: "finance",
-      color: "goal-red"
+      color: "goal-orange"
     },
     {
       title: "Daily Recap",
@@ -200,7 +203,7 @@ export default function AdminDashboardPage() {
       icon: <Newspaper className="h-6 w-6" />,
       href: "/admin/daily-recap",
       category: "content",
-      color: "rink-blue"
+      color: "stadium-gold"
     },
     {
       title: "Manage Tokens",
@@ -208,7 +211,7 @@ export default function AdminDashboardPage() {
       icon: <Coins className="h-6 w-6" />,
       href: "/admin/tokens",
       category: "finance",
-      color: "goal-red"
+      color: "goal-orange"
     },
     {
       title: "News Management",
@@ -216,7 +219,7 @@ export default function AdminDashboardPage() {
       icon: <Newspaper className="h-6 w-6" />,
       href: "/admin/news",
       category: "content",
-      color: "rink-blue"
+      color: "stadium-gold"
     },
     {
       title: "Statistics Management",
@@ -224,23 +227,23 @@ export default function AdminDashboardPage() {
       icon: <BarChart3 className="h-6 w-6" />,
       href: "/admin/statistics",
       category: "data",
-      color: "assist-green"
+      color: "pitch-blue"
     },
     {
       title: "EA Stats",
-      description: "View EA Sports NHL player statistics",
+      description: "View EA Sports FIFA player statistics",
       icon: <GameController className="h-6 w-6" />,
       href: "/admin/ea-stats",
       category: "data",
-      color: "assist-green"
+      color: "pitch-blue"
     },
     {
       title: "EA Matches",
-      description: "View EA Sports NHL match history",
+      description: "View EA Sports FIFA match history",
       icon: <Activity className="h-6 w-6" />,
       href: "/admin/ea-matches",
       category: "data",
-      color: "assist-green"
+      color: "pitch-blue"
     },
     {
       title: "Awards Management",
@@ -248,7 +251,7 @@ export default function AdminDashboardPage() {
       icon: <Trophy className="h-6 w-6" />,
       href: "/admin/awards",
       category: "content",
-      color: "rink-blue"
+      color: "stadium-gold"
     },
     {
       title: "Photo Gallery",
@@ -256,15 +259,15 @@ export default function AdminDashboardPage() {
       icon: <ImageIcon className="h-6 w-6" />,
       href: "/admin/photos",
       category: "content",
-      color: "rink-blue"
+      color: "stadium-gold"
     },
     {
-      title: "Club Logos",
-      description: "Manage club logos and branding",
+      title: "Team Logos",
+      description: "Manage team logos and branding",
       icon: <ImageIcon className="h-6 w-6" />,
       href: "/admin/team-logos",
       category: "team",
-      color: "assist-green"
+      color: "pitch-blue"
     },
     {
       title: "Email Verification",
@@ -272,7 +275,7 @@ export default function AdminDashboardPage() {
       icon: <ShieldCheck className="h-6 w-6" />,
       href: "/admin/email-verification",
       category: "security",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "Password Reset",
@@ -280,7 +283,7 @@ export default function AdminDashboardPage() {
       icon: <ShieldCheck className="h-6 w-6" />,
       href: "/admin/password-reset",
       category: "security",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "System Settings",
@@ -288,7 +291,7 @@ export default function AdminDashboardPage() {
       icon: <Settings className="h-6 w-6" />,
       href: "/admin/settings",
       category: "system",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "User Diagnostics",
@@ -296,7 +299,7 @@ export default function AdminDashboardPage() {
       icon: <Users className="h-6 w-6" />,
       href: "/admin/user-diagnostics",
       category: "user",
-      color: "ice-blue"
+      color: "field-green"
     },
     {
       title: "User Account Manager",
@@ -304,15 +307,15 @@ export default function AdminDashboardPage() {
       icon: <Users className="h-6 w-6" />,
       href: "/admin/user-account-manager",
       category: "user",
-      color: "ice-blue"
+      color: "field-green"
     },
     {
-      title: "SCS Bot",
+      title: "FIFA 26 Bot",
       description: "Manage Discord bot integration, roles, and Twitch streaming",
       icon: <Bot className="h-6 w-6" />,
       href: "/admin/scs-bot",
       category: "integration",
-      color: "rink-blue"
+      color: "stadium-gold"
     },
     {
       title: "Setup Bot Config",
@@ -320,7 +323,7 @@ export default function AdminDashboardPage() {
       icon: <Settings className="h-6 w-6" />,
       href: "/admin/setup-bot-config",
       category: "integration",
-      color: "rink-blue"
+      color: "stadium-gold"
     },
     {
       title: "Reset User Password",
@@ -328,7 +331,7 @@ export default function AdminDashboardPage() {
       icon: <ShieldCheck className="h-6 w-6" />,
       href: "/admin/reset-user-password",
       category: "security",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "Auth to Database Sync",
@@ -336,7 +339,7 @@ export default function AdminDashboardPage() {
       icon: <RefreshCw className="h-6 w-6" />,
       href: "/admin/sync-auth-database",
       category: "system",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "Orphaned Auth Users",
@@ -344,7 +347,7 @@ export default function AdminDashboardPage() {
       icon: <Users className="h-6 w-6" />,
       href: "/admin/orphaned-auth-users",
       category: "user",
-      color: "ice-blue"
+      color: "field-green"
     },
     {
       title: "Sync Missing Users",
@@ -352,7 +355,7 @@ export default function AdminDashboardPage() {
       icon: <RefreshCw className="h-6 w-6" />,
       href: "/admin/sync-missing-users",
       category: "system",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "Fix User Constraints",
@@ -360,7 +363,7 @@ export default function AdminDashboardPage() {
       icon: <ShieldCheck className="h-6 w-6" />,
       href: "/admin/fix-user-constraints",
       category: "system",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "Fix Console Values",
@@ -368,7 +371,7 @@ export default function AdminDashboardPage() {
       icon: <GameController className="h-6 w-6" />,
       href: "/admin/fix-console-values",
       category: "system",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "Role Sync Fix",
@@ -376,7 +379,7 @@ export default function AdminDashboardPage() {
       icon: <Shield className="h-6 w-6" />,
       href: "/admin/role-sync",
       category: "system",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "Discord Debug",
@@ -384,7 +387,7 @@ export default function AdminDashboardPage() {
       icon: <Bot className="h-6 w-6" />,
       href: "/admin/discord-debug",
       category: "integration",
-      color: "rink-blue"
+      color: "stadium-gold"
     },
     {
       title: "Forum Management",
@@ -392,15 +395,15 @@ export default function AdminDashboardPage() {
       icon: <MessageSquare className="h-6 w-6" />,
       href: "/admin/forum",
       category: "content",
-      color: "rink-blue"
+      color: "stadium-gold"
     },
     {
-      title: "Featured Fixtures",
-      description: "Manage featured fixtures on homepage",
+      title: "Featured Games",
+      description: "Manage featured games on homepage",
       icon: <Trophy className="h-6 w-6" />,
       href: "/admin/featured-games",
       category: "content",
-      color: "rink-blue"
+      color: "stadium-gold"
     },
     {
       title: "Player Mappings",
@@ -408,7 +411,7 @@ export default function AdminDashboardPage() {
       icon: <Users className="h-6 w-6" />,
       href: "/admin/player-mappings",
       category: "data",
-      color: "assist-green"
+      color: "pitch-blue"
     },
     {
       title: "Database Structure",
@@ -416,7 +419,7 @@ export default function AdminDashboardPage() {
       icon: <Database className="h-6 w-6" />,
       href: "/admin/database-structure",
       category: "system",
-      color: "hockey-silver"
+      color: "slate"
     },
     {
       title: "RBAC Debug",
@@ -424,20 +427,20 @@ export default function AdminDashboardPage() {
       icon: <ShieldCheck className="h-6 w-6" />,
       href: "/admin/rbac-debug",
       category: "security",
-      color: "hockey-silver"
+      color: "slate"
     },
   ]
 
   const categories = {
-    user: { name: "User Management", icon: <Users className="h-5 w-5" />, color: "ice-blue" },
-    team: { name: "Team Operations", icon: <Trophy className="h-5 w-5" />, color: "assist-green" },
-    game: { name: "Game Management", icon: <GameController className="h-5 w-5" />, color: "rink-blue" },
-    system: { name: "System Tools", icon: <Settings className="h-5 w-5" />, color: "hockey-silver" },
-    finance: { name: "Financial Tools", icon: <DollarSign className="h-5 w-5" />, color: "goal-red" },
-    content: { name: "Content Management", icon: <Newspaper className="h-5 w-5" />, color: "rink-blue" },
-    data: { name: "Data & Statistics", icon: <BarChart3 className="h-5 w-5" />, color: "assist-green" },
-    security: { name: "Security & Access", icon: <Shield className="h-5 w-5" />, color: "hockey-silver" },
-    integration: { name: "Integrations", icon: <Bot className="h-5 w-5" />, color: "rink-blue" },
+    user: { name: "User Management", icon: <Users className="h-5 w-5" />, color: "field-green" },
+    team: { name: "Team Operations", icon: <Trophy className="h-5 w-5" />, color: "pitch-blue" },
+    game: { name: "Game Management", icon: <GameController className="h-5 w-5" />, color: "stadium-gold" },
+    system: { name: "System Tools", icon: <Settings className="h-5 w-5" />, color: "slate" },
+    finance: { name: "Financial Tools", icon: <DollarSign className="h-5 w-5" />, color: "goal-orange" },
+    content: { name: "Content Management", icon: <Newspaper className="h-5 w-5" />, color: "stadium-gold" },
+    data: { name: "Data & Statistics", icon: <BarChart3 className="h-5 w-5" />, color: "pitch-blue" },
+    security: { name: "Security & Access", icon: <Shield className="h-5 w-5" />, color: "slate" },
+    integration: { name: "Integrations", icon: <Bot className="h-5 w-5" />, color: "stadium-gold" },
   }
 
   const groupedLinks = adminLinks.reduce((acc, link) => {
@@ -450,22 +453,35 @@ export default function AdminDashboardPage() {
 
   const getColorClasses = (color: string) => {
     const colorMap: Record<string, string> = {
-      'ice-blue': 'from-ice-blue-500 to-rink-blue-600',
-      'rink-blue': 'from-rink-blue-500 to-ice-blue-600',
-      'assist-green': 'from-assist-green-500 to-assist-green-600',
-      'goal-red': 'from-goal-red-500 to-goal-red-600',
-      'hockey-silver': 'from-hockey-silver-500 to-hockey-silver-600'
+      'field-green': 'from-field-green-500 to-field-green-600',
+      'pitch-blue': 'from-pitch-blue-500 to-pitch-blue-600',
+      'stadium-gold': 'from-stadium-gold-500 to-stadium-gold-600',
+      'goal-orange': 'from-goal-orange-500 to-goal-orange-600',
+      'slate': 'from-slate-500 to-slate-600'
     }
-    return colorMap[color] || 'from-ice-blue-500 to-rink-blue-600'
+    return colorMap[color] || 'from-field-green-500 to-field-green-600'
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
-      <div className="container mx-auto px-4 py-8">
-        <HeaderBar
-          title="Admin Dashboard"
-          subtitle="Complete control center for managing SCS operations, users, teams, and system configurations"
-        />
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+      {/* Hero Header Section */}
+      <div className="hockey-header relative py-16 px-4">
+        <div className="container mx-auto text-center">
+          <div>
+            <h1 className="hockey-title mb-6">
+              Admin Dashboard
+            </h1>
+            <p className="hockey-subtitle mb-8">
+              Complete control center for managing FIFA 26 League operations, users, teams, and system configurations
+            </p>
+            
+            {/* Admin Status Badge */}
+            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-field-green-500 to-field-green-600 text-white px-6 py-3 rounded-full shadow-lg shadow-field-green-500/25 border-2 border-white dark:border-slate-800">
+              <Shield className="h-5 w-5" />
+              <span className="font-semibold">Administrator Access Granted</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Main Content */}
@@ -483,10 +499,10 @@ export default function AdminDashboardPage() {
                     </div>
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
+                    <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200">
                       {category.name}
                     </h2>
-                    <p className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                    <p className="text-slate-600 dark:text-slate-400">
                       {links.length} tool{links.length !== 1 ? 's' : ''} available
                     </p>
                   </div>
@@ -495,9 +511,9 @@ export default function AdminDashboardPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {links.map((link, index) => (
                     <Link key={index} href={link.href} className="block group">
-                      <Card className="hockey-card hockey-card-hover h-full group-hover:scale-105 transition-all duration-300 cursor-pointer">
+                      <Card className="fifa-card-hover-enhanced h-full group-hover:scale-105 transition-all duration-300 cursor-pointer">
                         <CardHeader className="flex flex-row items-center justify-between pb-4 relative">
-                          <CardTitle className="text-xl text-hockey-silver-800 dark:text-hockey-silver-200 group-hover:text-ice-blue-600 dark:group-hover:text-ice-blue-400 transition-colors duration-200">
+                          <CardTitle className="text-xl text-slate-800 dark:text-slate-200 group-hover:text-field-green-600 dark:group-hover:text-field-green-400 transition-colors duration-200">
                             {link.title}
                           </CardTitle>
                           <div className={`text-white bg-gradient-to-r ${getColorClasses(link.color)} p-3 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-200`}>
@@ -505,13 +521,13 @@ export default function AdminDashboardPage() {
                           </div>
                         </CardHeader>
                         <CardContent>
-                          <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base leading-relaxed mb-4">
+                          <CardDescription className="text-slate-600 dark:text-slate-400 text-base leading-relaxed mb-4">
                             {link.description}
                           </CardDescription>
                           
                           {/* Action Indicator */}
                           <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-2 text-ice-blue-600 dark:text-ice-blue-400 font-medium group-hover:text-ice-blue-700 dark:group-hover:text-ice-blue-300 transition-colors duration-200">
+                            <div className="flex items-center gap-2 text-field-green-600 dark:text-field-green-400 font-medium group-hover:text-field-green-700 dark:group-hover:text-field-green-300 transition-colors duration-200">
                               <span>Access Tool</span>
                               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-200" />
                             </div>
@@ -533,11 +549,11 @@ export default function AdminDashboardPage() {
 
         {/* System Diagnostics Section */}
         <div className="mt-20">
-          <Card className="hockey-card hockey-card-hover group">
+          <Card className="fifa-card-hover-enhanced group">
             <CardHeader className="relative">
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-hockey-silver-100 to-ice-blue-100 dark:from-hockey-silver-800/30 dark:to-ice-blue-900/30 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-slate-100 to-field-green-100 dark:from-slate-800/30 dark:to-field-green-900/30 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
               <CardTitle className="flex items-center gap-3 text-2xl relative z-10">
-                <div className="w-12 h-12 bg-gradient-to-r from-hockey-silver-500 to-ice-blue-600 rounded-xl flex items-center justify-center shadow-lg shadow-ice-blue-500/25">
+                <div className="w-12 h-12 bg-gradient-to-r from-slate-500 to-field-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-field-green-500/25">
                   <Wrench className="h-6 w-6 text-white" />
                 </div>
                 System Diagnostics & Monitoring

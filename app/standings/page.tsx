@@ -55,12 +55,7 @@ export default function StandingsPage() {
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-field-green-600/20 via-pitch-blue-600/20 to-stadium-gold-600/20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
+          <div className="text-center">
             <h1 className="fifa-title-enhanced mb-6">
               League Standings
             </h1>
@@ -68,7 +63,7 @@ export default function StandingsPage() {
               Track the performance of every club across all our competitive conferences.
             </p>
             <div className="fifa-section-divider"></div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -89,12 +84,7 @@ export default function StandingsPage() {
         ) : (
           <div className="space-y-16">
             {conferences.map((conference, index) => (
-              <motion.div
-                key={conference.id}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.2 }}
-              >
+              <div key={conference.id}>
                 <div className="fifa-card-hover-enhanced overflow-hidden shadow-2xl shadow-field-green-500/10">
                   <div className={`p-6 bg-gradient-to-r ${conferenceColors[index % conferenceColors.length]}`}>
                     <h2 className="text-2xl md:text-3xl font-bold text-center text-white flex items-center justify-center gap-3">
@@ -106,7 +96,7 @@ export default function StandingsPage() {
                     <TeamStandings teams={conference.standings} />
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         )}
