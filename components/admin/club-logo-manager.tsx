@@ -301,10 +301,10 @@ export function ClubLogoManager() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+          <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 fifa-title">
             Club Logo Management
           </h2>
-          <p className="text-field-green-600 dark:text-field-green-400">
+          <p className="text-field-green-600 dark:text-field-green-400 fifa-subtitle">
             Upload and manage club logos
           </p>
         </div>

@@ -309,10 +309,10 @@ export function EnhancedBannedUsersPanel() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+          <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 fifa-title">
             Banned Users Management
           </h2>
-          <p className="text-field-green-600 dark:text-field-green-400">
+          <p className="text-field-green-600 dark:text-field-green-400 fifa-subtitle">
             Manage user bans and restrictions
           </p>
         </div>
@@ -413,17 +413,17 @@ export function EnhancedBannedUsersPanel() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="fifa-card-hover-enhanced">
+        <Card className="fifa-card-hover-enhanced border-2 border-goal-red-200/60 dark:border-goal-red-700/60 shadow-lg">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg flex items-center justify-center shadow-md">
                 <Ban className="h-5 w-5 text-white" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-red-800 dark:text-red-200">
+                <p className="text-2xl font-bold text-goal-red-800 dark:text-goal-red-200">
                   {bannedUsers.length}
                 </p>
-                <p className="text-sm text-red-600 dark:text-red-400">
+                <p className="text-sm text-goal-red-600 dark:text-goal-red-400">
                   Total Banned
                 </p>
               </div>
@@ -431,17 +431,17 @@ export function EnhancedBannedUsersPanel() {
           </CardContent>
         </Card>
 
-        <Card className="fifa-card-hover-enhanced">
+        <Card className="fifa-card-hover-enhanced border-2 border-goal-orange-200/60 dark:border-goal-orange-700/60 shadow-lg">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg flex items-center justify-center shadow-md">
                 <Clock className="h-5 w-5 text-white" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-orange-800 dark:text-orange-200">
+                <p className="text-2xl font-bold text-goal-orange-800 dark:text-goal-orange-200">
                   {bannedUsers.filter(u => !u.is_permanent).length}
                 </p>
-                <p className="text-sm text-orange-600 dark:text-orange-400">
+                <p className="text-sm text-goal-orange-600 dark:text-goal-orange-400">
                   Temporary
                 </p>
               </div>
@@ -449,17 +449,17 @@ export function EnhancedBannedUsersPanel() {
           </CardContent>
         </Card>
 
-        <Card className="fifa-card-hover-enhanced">
+        <Card className="fifa-card-hover-enhanced border-2 border-ice-blue-200/60 dark:border-ice-blue-700/60 shadow-lg">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-gray-500 to-gray-600 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-ice-blue-500 to-ice-blue-600 rounded-lg flex items-center justify-center shadow-md">
                 <XCircle className="h-5 w-5 text-white" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+                <p className="text-2xl font-bold text-ice-blue-800 dark:text-ice-blue-200">
                   {bannedUsers.filter(u => u.is_permanent).length}
                 </p>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-ice-blue-600 dark:text-ice-blue-400">
                   Permanent
                 </p>
               </div>
@@ -467,19 +467,19 @@ export function EnhancedBannedUsersPanel() {
           </CardContent>
         </Card>
 
-        <Card className="fifa-card-hover-enhanced">
+        <Card className="fifa-card-hover-enhanced border-2 border-stadium-gold-200/60 dark:border-stadium-gold-700/60 shadow-lg">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg flex items-center justify-center shadow-md">
                 <AlertTriangle className="h-5 w-5 text-white" />
               </div>
               <div>
-                <p className="text-2xl font-bold text-yellow-800 dark:text-yellow-200">
+                <p className="text-2xl font-bold text-stadium-gold-800 dark:text-stadium-gold-200">
                   {bannedUsers.filter(u => 
                     !u.is_permanent && u.days_remaining !== null && u.days_remaining <= 7 && u.days_remaining > 0
                   ).length}
                 </p>
-                <p className="text-sm text-yellow-600 dark:text-yellow-400">
+                <p className="text-sm text-stadium-gold-600 dark:text-stadium-gold-400">
                   Expiring Soon
                 </p>
               </div>

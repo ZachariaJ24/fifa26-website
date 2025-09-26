@@ -21,22 +21,22 @@ import { Input } from "@/components/ui/input"
 import { Form, FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form"
 import { useForm } from "react-hook-form"
 
-export default function AdminTeamLogosPage() {
+export default function AdminClubLogosPage() {
   const { supabase, session } = useSupabase()
   const { toast } = useToast()
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [updating, setUpdating] = useState(false)
-  const [uploadingTeam, setUploadingTeam] = useState<string | null>(null)
+  const [uploadingClub, setUploadingClub] = useState<string | null>(null)
   const [uploadProgress, setUploadProgress] = useState(0)
-  const [teams, setTeams] = useState<any[]>([])
+  const [clubs, setClubs] = useState<any[]>([])
   const [storageLogos, setStorageLogos] = useState<Record<string, string | null>>({})
   const [isAdmin, setIsAdmin] = useState(false)
   const [activeTab, setActiveTab] = useState("current")
   const [updateResults, setUpdateResults] = useState<any[]>([])
   const [debugInfo, setDebugInfo] = useState<Record<string, any>>({})
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  const [editingTeam, setEditingTeam] = useState<{ id: string; name: string; logoUrl: string } | null>(null)
+  const [editingClub, setEditingClub] = useState<{ id: string; name: string; logoUrl: string } | null>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
 
   // Form for editing logo URL
@@ -46,7 +46,7 @@ export default function AdminTeamLogosPage() {
     },
   })
 
-  // Check if user is admin and load teams
+  // Check if user is admin and load clubs
   useEffect(() => {
     async function checkAuthAndLoadData() {
       if (!session?.user) {
@@ -81,59 +81,59 @@ export default function AdminTeamLogosPage() {
 
         setIsAdmin(true)
 
-        // Load teams
-        const { data: teamsData, error: teamsError } = await supabase
-          .from("teams")
+        // Load clubs
+        const { data: clubsData, error: clubsError } = await supabase
+          .from("clubs")
           .select("id, name, logo_url")
           .order("name")
 
-        if (teamsError) throw teamsError
-        setTeams(teamsData || [])
+        if (clubsError) throw clubsError
+        setClubs(clubsData || [])
 
         // Check storage for logos
         const storageUrls: Record<string, string | null> = {}
         const debugData: Record<string, any> = {}
 
-        for (const [teamName, filename] of Object.entries(TEAM_LOGOS)) {
+        for (const [clubName, filename] of Object.entries(TEAM_LOGOS)) {
           try {
             // Get the public URL from storage
-            const { data } = supabase.storage.from("media").getPublicUrl(`teams/${filename}`)
+            const { data } = supabase.storage.from("media").getPublicUrl(`clubs/${filename}`)
 
-            storageUrls[teamName] = data?.publicUrl || null
+            storageUrls[clubName] = data?.publicUrl || null
 
             // Store debug info
-            debugData[teamName] = {
+            debugData[clubName] = {
               filename,
-              storagePath: `teams/${filename}`,
+              storagePath: `clubs/${filename}`,
               publicUrl: data?.publicUrl || null,
             }
 
             // Check if file exists in storage
-            const { data: fileData, error: fileError } = await supabase.storage.from("media").list("teams", {
+            const { data: fileData, error: fileError } = await supabase.storage.from("media").list("clubs", {
               search: filename,
             })
 
-            debugData[teamName].fileExists = fileData && fileData.length > 0
-            debugData[teamName].fileListError = fileError ? fileError.message : null
-            debugData[teamName].fileListResult = fileData
+            debugData[clubName].fileExists = fileData && fileData.length > 0
+            debugData[clubName].fileListError = fileError ? fileError.message : null
+            debugData[clubName].fileListResult = fileData
           } catch (error: any) {
-            console.error(`Error checking storage for ${teamName}:`, error)
-            debugData[teamName] = {
+            console.error(`Error checking storage for ${clubName}:`, error)
+            debugData[clubName] = {
               error: error.message,
               filename,
-              storagePath: `teams/${filename}`,
+              storagePath: `clubs/${filename}`,
             }
           }
         }
 
-        // Check for teams that don't have a mapping in TEAM_LOGOS
-        for (const team of teamsData || []) {
-          if (!TEAM_LOGOS[team.name]) {
-            debugData[team.name] = {
+        // Check for clubs that don't have a mapping in TEAM_LOGOS
+        for (const club of clubsData || []) {
+          if (!TEAM_LOGOS[club.name]) {
+            debugData[club.name] = {
               error: "No mapping in TEAM_LOGOS",
               missingMapping: true,
             }
-            console.warn(`Team "${team.name}" does not have a mapping in TEAM_LOGOS`)
+            console.warn(`Club "${club.name}" does not have a mapping in TEAM_LOGOS`)
           }
         }
 
@@ -381,25 +381,25 @@ export default function AdminTeamLogosPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
+        <div className="absolute inset-0 bg-fifa-pattern opacity-5"></div>
         
         {/* Floating Elements */}
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
         
         <div className="container mx-auto text-center relative z-10">
           <div>
-            <div className="w-20 h-20 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-ice-blue-500/25">
+            <div className="w-20 h-20 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-field-green-500/25">
               <ImageIcon className="h-10 w-10 text-white" />
             </div>
-            <h1 className="hockey-title mb-6">
+            <h1 className="text-4xl font-bold text-field-green-800 dark:text-field-green-200 mb-6 fifa-title">
               Club Logo Management
             </h1>
-            <p className="hockey-subtitle mx-auto mb-8 max-w-3xl">
+            <p className="text-xl text-field-green-600 dark:text-field-green-400 mx-auto mb-8 max-w-3xl fifa-subtitle">
               Comprehensive club logo management and storage system. Upload, update, and manage club logos with advanced storage integration and debugging tools.
             </p>
             

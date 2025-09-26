@@ -37,7 +37,7 @@ interface Player {
   isOnIR: boolean
 }
 
-interface Team {
+interface Club {
   id: string
   name: string
   logoUrl: string | null
@@ -45,8 +45,8 @@ interface Team {
   matches: any[]
 }
 
-interface TeamAvailabilityData {
-  teams: Team[]
+interface ClubAvailabilityData {
+  clubs: Club[]
   matches: any[]
   seasons: any[]
   currentSeasonId: string
@@ -83,15 +83,15 @@ const InjuryReservesManagement = () => {
   )
 }
 
-export default function TeamAvailabilityPage() {
+export default function ClubAvailabilityPage() {
   const { supabase, session } = useSupabase()
   const { toast } = useToast()
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [isAdmin, setIsAdmin] = useState(false)
-  const [data, setData] = useState<TeamAvailabilityData | null>(null)
+  const [data, setData] = useState<ClubAvailabilityData | null>(null)
   const [currentWeek, setCurrentWeek] = useState(new Date())
-  const [selectedTeam, setSelectedTeam] = useState<string>("all")
+  const [selectedClub, setSelectedClub] = useState<string>("all")
   const [seasonId, setSeasonId] = useState("current")
   const [seasons, setSeasons] = useState<any[]>([])
 
@@ -230,8 +230,8 @@ export default function TeamAvailabilityPage() {
     }
   }
 
-  const filteredTeams =
-    selectedTeam === "all" ? data?.teams || [] : data?.teams.filter((team) => team.id === selectedTeam) || []
+  const filteredClubs =
+    selectedClub === "all" ? data?.clubs || [] : data?.clubs.filter((club) => club.id === selectedClub) || []
 
   if (loading) {
     return (
@@ -258,25 +258,25 @@ export default function TeamAvailabilityPage() {
   const weekEnd = endOfWeek(currentWeek, { weekStartsOn: 1 })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
+        <div className="absolute inset-0 bg-fifa-pattern opacity-5"></div>
         
         {/* Floating Elements */}
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
         
         <div className="container mx-auto text-center relative z-10">
           <div>
-            <div className="w-20 h-20 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-ice-blue-500/25">
+            <div className="w-20 h-20 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-field-green-500/25">
               <Users className="h-10 w-10 text-white" />
             </div>
-            <h1 className="hockey-title mb-6">
+            <h1 className="text-4xl font-bold text-field-green-800 dark:text-field-green-200 mb-6 fifa-title">
               Club Availability
             </h1>
-            <p className="hockey-subtitle mx-auto mb-8 max-w-3xl">
+            <p className="text-xl text-field-green-600 dark:text-field-green-400 mx-auto mb-8 max-w-3xl fifa-subtitle">
               Comprehensive club roster management and player availability tracking. Monitor fixture participation, injury reserves, and club statistics.
             </p>
             
@@ -414,17 +414,17 @@ export default function TeamAvailabilityPage() {
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-2">
                     <Users className="h-5 w-5 text-assist-green-600 dark:text-assist-green-400" />
-                    <Label className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">Filter Teams:</Label>
+                    <Label className="text-base font-semibold text-field-green-800 dark:text-field-green-200">Filter Clubs:</Label>
                   </div>
-                  <Select value={selectedTeam} onValueChange={setSelectedTeam}>
-                    <SelectTrigger className="hockey-search w-[250px] border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300">
-                      <SelectValue placeholder="Filter by team" />
+                  <Select value={selectedClub} onValueChange={setSelectedClub}>
+                    <SelectTrigger className="fifa-search w-[250px] border-2 border-field-green-200/60 dark:border-field-green-700/60 focus:border-field-green-500 dark:focus:border-field-green-400 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-field-green-400/20 transition-all duration-300">
+                      <SelectValue placeholder="Filter by club" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="all">All Teams</SelectItem>
-                      {data?.teams.map((team) => (
-                        <SelectItem key={team.id} value={team.id}>
-                          {team.name}
+                      <SelectItem value="all">All Clubs</SelectItem>
+                      {data?.clubs.map((club) => (
+                        <SelectItem key={club.id} value={club.id}>
+                          {club.name}
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -473,8 +473,8 @@ export default function TeamAvailabilityPage() {
             )}
 
             {/* Enhanced Team Availability Tables */}
-            {filteredTeams.map((team) => (
-              <Card key={team.id} className="hockey-card hockey-card-hover mb-6 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-lg shadow-ice-blue-500/10">
+            {filteredClubs.map((club) => (
+              <Card key={club.id} className="fifa-card-hover-enhanced mb-6 border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg shadow-field-green-500/10">
                 <CardHeader className="relative">
                   <div className="absolute inset-0 bg-gradient-to-r from-ice-blue-50/30 to-rink-blue-50/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-t-lg"></div>
                   <div className="relative z-10 flex items-center gap-3">
@@ -482,10 +482,10 @@ export default function TeamAvailabilityPage() {
                       <Users className="h-5 w-5 text-white" />
                     </div>
                     <div className="flex-1">
-                      <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-3">
-                        {team.name}
+                      <CardTitle className="text-xl font-bold text-field-green-800 dark:text-field-green-200 flex items-center gap-3">
+                        {club.name}
                         <Badge className="bg-gradient-to-r from-assist-green-500 to-assist-green-600 text-white border-0 shadow-md">
-                          {team.players.length} players
+                          {club.players.length} players
                         </Badge>
                       </CardTitle>
                       <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">Player availability and games played for the selected week</CardDescription>
@@ -517,7 +517,7 @@ export default function TeamAvailabilityPage() {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {team.players.length === 0 ? (
+                        {club.players.length === 0 ? (
                           <TableRow>
                             <TableCell colSpan={7} className="text-center py-8 text-hockey-silver-600 dark:text-hockey-silver-400">
                               <div className="flex flex-col items-center gap-2">
@@ -527,7 +527,7 @@ export default function TeamAvailabilityPage() {
                             </TableCell>
                           </TableRow>
                         ) : (
-                          team.players.map((player) => (
+                          club.players.map((player) => (
                             <TableRow
                               key={player.id}
                               className={`hover:bg-gradient-to-r hover:from-ice-blue-50/30 hover:to-rink-blue-50/30 dark:hover:from-ice-blue-900/10 dark:hover:to-rink-blue-900/10 transition-all duration-300 border-b border-ice-blue-200/30 dark:border-rink-blue-700/30 ${

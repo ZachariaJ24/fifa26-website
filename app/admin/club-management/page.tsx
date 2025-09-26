@@ -531,7 +531,7 @@ export default function ClubManagementPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <motion.div 
@@ -542,14 +542,14 @@ export default function ClubManagementPage() {
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                 <Building2 className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200">
+                <h1 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 fifa-title">
                   Club Management
                 </h1>
-                <p className="text-field-green-600 dark:text-field-green-400">
+                <p className="text-field-green-600 dark:text-field-green-400 fifa-subtitle">
                   Manage football clubs, availability, and logos
                 </p>
               </div>
@@ -624,10 +624,10 @@ export default function ClubManagementPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <Card className="fifa-card-hover-enhanced">
+          <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg flex items-center justify-center shadow-md">
                   <Building2 className="h-5 w-5 text-white" />
                 </div>
                 <div>
@@ -642,17 +642,17 @@ export default function ClubManagementPage() {
             </CardContent>
           </Card>
 
-          <Card className="fifa-card-hover-enhanced">
+          <Card className="fifa-card-hover-enhanced border-2 border-assist-green-200/60 dark:border-assist-green-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg flex items-center justify-center shadow-md">
                   <CheckCircle2 className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-green-800 dark:text-green-200">
+                  <p className="text-2xl font-bold text-assist-green-800 dark:text-assist-green-200">
                     {clubs.filter(c => c.is_active).length}
                   </p>
-                  <p className="text-sm text-green-600 dark:text-green-400">
+                  <p className="text-sm text-assist-green-600 dark:text-assist-green-400">
                     Active Clubs
                   </p>
                 </div>
@@ -660,17 +660,17 @@ export default function ClubManagementPage() {
             </CardContent>
           </Card>
 
-          <Card className="fifa-card-hover-enhanced">
+          <Card className="fifa-card-hover-enhanced border-2 border-pitch-blue-200/60 dark:border-pitch-blue-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg flex items-center justify-center shadow-md">
                   <Trophy className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">
+                  <p className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">
                     {conferences.length}
                   </p>
-                  <p className="text-sm text-blue-600 dark:text-blue-400">
+                  <p className="text-sm text-pitch-blue-600 dark:text-pitch-blue-400">
                     Conferences
                   </p>
                 </div>
@@ -678,17 +678,17 @@ export default function ClubManagementPage() {
             </CardContent>
           </Card>
 
-          <Card className="fifa-card-hover-enhanced">
+          <Card className="fifa-card-hover-enhanced border-2 border-stadium-gold-200/60 dark:border-stadium-gold-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg flex items-center justify-center shadow-md">
                   <Image className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-purple-800 dark:text-purple-200">
+                  <p className="text-2xl font-bold text-stadium-gold-800 dark:text-stadium-gold-200">
                     {clubs.filter(c => c.logo_url).length}
                   </p>
-                  <p className="text-sm text-purple-600 dark:text-purple-400">
+                  <p className="text-sm text-stadium-gold-600 dark:text-stadium-gold-400">
                     With Logos
                   </p>
                 </div>

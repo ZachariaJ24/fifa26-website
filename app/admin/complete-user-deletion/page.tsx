@@ -67,7 +67,7 @@ export default function CompleteUserDeletionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       <div className="container mx-auto px-4 py-8">
         <HeaderBar
           title="Complete User Deletion"
@@ -78,17 +78,17 @@ export default function CompleteUserDeletionPage() {
 
           {/* Warning Banner */}
           <div className="animate-fade-in-up mb-8">
-            <Card className="hockey-card hockey-card-hover border-2 border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-r from-goal-red-50/30 to-goal-red-100/30 dark:from-goal-red-900/10 dark:to-goal-red-800/10">
+            <Card className="fifa-card-hover-enhanced border-2 border-goal-red-200/60 dark:border-goal-red-700/60 bg-gradient-to-r from-goal-red-50/30 to-goal-red-100/30 dark:from-goal-red-900/10 dark:to-goal-red-800/10 shadow-lg">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
                     <AlertTriangle className="h-6 w-6 text-white" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-bold text-goal-red-800 dark:text-goal-red-200 mb-2">
+                    <h3 className="text-lg font-bold text-goal-red-800 dark:text-goal-red-200 mb-2 fifa-title">
                       ⚠️ Irreversible Action Warning
                     </h3>
-                    <p className="text-goal-red-700 dark:text-goal-red-300">
+                    <p className="text-goal-red-700 dark:text-goal-red-300 fifa-subtitle">
                       This action will completely and permanently remove a user from both the authentication system and database. 
                       All user data, roles, team associations, and history will be permanently deleted. 
                       <strong className="font-bold">This action cannot be undone.</strong>
@@ -101,16 +101,16 @@ export default function CompleteUserDeletionPage() {
 
           {/* Main Deletion Form */}
           <div className="animate-fade-in-up">
-            <Card className="hockey-card hockey-card-hover border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
-              <CardHeader className="relative">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-ice-blue-100 to-rink-blue-100 dark:from-ice-blue-900/30 dark:to-rink-blue-900/30 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+            <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-2xl shadow-field-green-500/20">
+              <CardHeader className="relative bg-gradient-to-r from-field-green-500 to-pitch-blue-600 text-white">
+                <div className="absolute inset-0 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20"></div>
                 <div className="flex items-center gap-4 relative z-10">
-                  <div className="w-14 h-14 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-2xl flex items-center justify-center shadow-lg">
+                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center shadow-lg backdrop-blur-sm">
                     <UserX className="h-7 w-7 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl text-hockey-silver-800 dark:text-hockey-silver-200">User Deletion Form</CardTitle>
-                    <CardDescription className="text-lg text-hockey-silver-600 dark:text-hockey-silver-400">
+                    <CardTitle className="text-2xl text-white fifa-title">User Deletion Form</CardTitle>
+                    <CardDescription className="text-lg text-field-green-100 fifa-subtitle">
                       Enter user email and admin verification key to proceed
                     </CardDescription>
                   </div>

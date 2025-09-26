@@ -288,7 +288,7 @@ export default function UserManagementPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <motion.div 
@@ -298,14 +298,14 @@ export default function UserManagementPage() {
           transition={{ duration: 0.6 }}
         >
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center">
+            <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center shadow-lg">
               <Users className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200">
+              <h1 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 fifa-title">
                 User Management
               </h1>
-              <p className="text-field-green-600 dark:text-field-green-400">
+              <p className="text-field-green-600 dark:text-field-green-400 fifa-subtitle">
                 Comprehensive user administration and management
               </p>
             </div>
@@ -319,10 +319,10 @@ export default function UserManagementPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <Card className="fifa-card-hover-enhanced">
+          <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg flex items-center justify-center shadow-md">
                   <Users className="h-5 w-5 text-white" />
                 </div>
                 <div>
@@ -337,17 +337,17 @@ export default function UserManagementPage() {
             </CardContent>
           </Card>
 
-          <Card className="fifa-card-hover-enhanced">
+          <Card className="fifa-card-hover-enhanced border-2 border-assist-green-200/60 dark:border-assist-green-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg flex items-center justify-center shadow-md">
                   <UserCheck className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-green-800 dark:text-green-200">
+                  <p className="text-2xl font-bold text-assist-green-800 dark:text-assist-green-200">
                     {stats.active}
                   </p>
-                  <p className="text-sm text-green-600 dark:text-green-400">
+                  <p className="text-sm text-assist-green-600 dark:text-assist-green-400">
                     Active Users
                   </p>
                 </div>
@@ -355,17 +355,17 @@ export default function UserManagementPage() {
             </CardContent>
           </Card>
 
-          <Card className="fifa-card-hover-enhanced">
+          <Card className="fifa-card-hover-enhanced border-2 border-goal-red-200/60 dark:border-goal-red-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg flex items-center justify-center shadow-md">
                   <Ban className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-red-800 dark:text-red-200">
+                  <p className="text-2xl font-bold text-goal-red-800 dark:text-goal-red-200">
                     {stats.banned}
                   </p>
-                  <p className="text-sm text-red-600 dark:text-red-400">
+                  <p className="text-sm text-goal-red-600 dark:text-goal-red-400">
                     Banned Users
                   </p>
                 </div>
@@ -373,17 +373,17 @@ export default function UserManagementPage() {
             </CardContent>
           </Card>
 
-          <Card className="fifa-card-hover-enhanced">
+          <Card className="fifa-card-hover-enhanced border-2 border-goal-orange-200/60 dark:border-goal-orange-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-lg flex items-center justify-center shadow-md">
                   <AlertTriangle className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-orange-800 dark:text-orange-200">
+                  <p className="text-2xl font-bold text-goal-orange-800 dark:text-goal-orange-200">
                     {stats.orphaned}
                   </p>
-                  <p className="text-sm text-orange-600 dark:text-orange-400">
+                  <p className="text-sm text-goal-orange-600 dark:text-goal-orange-400">
                     Orphaned Users
                   </p>
                 </div>
@@ -391,17 +391,17 @@ export default function UserManagementPage() {
             </CardContent>
           </Card>
 
-          <Card className="fifa-card-hover-enhanced">
+          <Card className="fifa-card-hover-enhanced border-2 border-pitch-blue-200/60 dark:border-pitch-blue-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg flex items-center justify-center shadow-md">
                   <Calendar className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-blue-800 dark:text-blue-200">
+                  <p className="text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">
                     {stats.registered}
                   </p>
-                  <p className="text-sm text-blue-600 dark:text-blue-400">
+                  <p className="text-sm text-pitch-blue-600 dark:text-pitch-blue-400">
                     Season Registered
                   </p>
                 </div>
@@ -409,17 +409,17 @@ export default function UserManagementPage() {
             </CardContent>
           </Card>
 
-          <Card className="fifa-card-hover-enhanced">
+          <Card className="fifa-card-hover-enhanced border-2 border-stadium-gold-200/60 dark:border-stadium-gold-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-yellow-500 to-yellow-600 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg flex items-center justify-center shadow-md">
                   <Clock className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-yellow-800 dark:text-yellow-200">
+                  <p className="text-2xl font-bold text-stadium-gold-800 dark:text-stadium-gold-200">
                     {stats.unconfirmed}
                   </p>
-                  <p className="text-sm text-yellow-600 dark:text-yellow-400">
+                  <p className="text-sm text-stadium-gold-600 dark:text-stadium-gold-400">
                     Unconfirmed
                   </p>
                 </div>
@@ -445,14 +445,15 @@ export default function UserManagementPage() {
 
             {/* All Users Tab */}
             <TabsContent value="users" className="space-y-6">
-              <Card className="fifa-card-hover-enhanced">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
+              <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg">
+                <CardHeader className="bg-gradient-to-r from-field-green-500 to-pitch-blue-600 text-white relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20" />
+                  <div className="relative flex items-center justify-between">
                     <div>
-                      <CardTitle className="text-xl text-field-green-800 dark:text-field-green-200">
+                      <CardTitle className="text-xl text-white fifa-title">
                         User Management
                       </CardTitle>
-                      <CardDescription>
+                      <CardDescription className="text-field-green-100">
                         Manage all users in the system
                       </CardDescription>
                     </div>
@@ -461,7 +462,7 @@ export default function UserManagementPage() {
                         onClick={fetchUsers}
                         variant="outline"
                         size="sm"
-                        className="fifa-button-enhanced"
+                        className="fifa-button-enhanced border-white/30 text-white hover:bg-white/10"
                       >
                         <RefreshCw className="h-4 w-4 mr-2" />
                         Refresh
@@ -473,7 +474,7 @@ export default function UserManagementPage() {
                   {/* Search and Filters */}
                   <div className="flex flex-col sm:flex-row gap-4 mb-6">
                     <div className="flex-1">
-                      <Label htmlFor="search" className="text-sm font-medium">
+                      <Label htmlFor="search" className="text-sm font-medium text-field-green-700 dark:text-field-green-300">
                         Search Users
                       </Label>
                       <div className="relative">
@@ -483,19 +484,19 @@ export default function UserManagementPage() {
                           placeholder="Search by email, gamer tag, or Discord username..."
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
-                          className="pl-10 fifa-search"
+                          className="pl-10 fifa-search border-2 border-field-green-200/60 dark:border-field-green-700/60 focus:border-field-green-500 dark:focus:border-field-green-400"
                         />
                       </div>
                     </div>
                     <div className="sm:w-48">
-                      <Label htmlFor="role-filter" className="text-sm font-medium">
+                      <Label htmlFor="role-filter" className="text-sm font-medium text-field-green-700 dark:text-field-green-300">
                         Filter by Role
                       </Label>
                       <select
                         id="role-filter"
                         value={filterRole}
                         onChange={(e) => setFilterRole(e.target.value)}
-                        className="w-full p-2 border border-field-green-200 rounded-lg bg-white dark:bg-slate-800 dark:border-field-green-700"
+                        className="w-full p-2 border-2 border-field-green-200/60 rounded-lg bg-white dark:bg-slate-800 dark:border-field-green-700/60 focus:border-field-green-500 dark:focus:border-field-green-400 fifa-search"
                       >
                         <option value="all">All Roles</option>
                         <option value="Admin">Admin</option>
@@ -505,14 +506,14 @@ export default function UserManagementPage() {
                       </select>
                     </div>
                     <div className="sm:w-48">
-                      <Label htmlFor="status-filter" className="text-sm font-medium">
+                      <Label htmlFor="status-filter" className="text-sm font-medium text-field-green-700 dark:text-field-green-300">
                         Filter by Status
                       </Label>
                       <select
                         id="status-filter"
                         value={filterStatus}
                         onChange={(e) => setFilterStatus(e.target.value)}
-                        className="w-full p-2 border border-field-green-200 rounded-lg bg-white dark:bg-slate-800 dark:border-field-green-700"
+                        className="w-full p-2 border-2 border-field-green-200/60 rounded-lg bg-white dark:bg-slate-800 dark:border-field-green-700/60 focus:border-field-green-500 dark:focus:border-field-green-400 fifa-search"
                       >
                         <option value="all">All Status</option>
                         <option value="active">Active</option>
@@ -528,11 +529,11 @@ export default function UserManagementPage() {
                   <div className="overflow-x-auto">
                     <table className="w-full">
                       <thead>
-                        <tr className="border-b border-field-green-200 dark:border-field-green-700">
+                        <tr className="border-b-2 border-field-green-200 dark:border-field-green-700 bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
                           <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
                             <input
                               type="checkbox"
-                              className="rounded border-field-green-300"
+                              className="rounded border-2 border-field-green-300 focus:border-field-green-500"
                               onChange={(e) => {
                                 if (e.target.checked) {
                                   setSelectedUsers(filteredUsers.map(u => u.id))
@@ -580,11 +581,11 @@ export default function UserManagementPage() {
                           </tr>
                         ) : (
                           filteredUsers.map((user) => (
-                            <tr key={user.id} className="border-b border-field-green-100 dark:border-field-green-800 hover:bg-field-green-50 dark:hover:bg-field-green-900/20">
+                            <tr key={user.id} className="border-b border-field-green-100 dark:border-field-green-800 hover:bg-gradient-to-r hover:from-field-green-50 hover:to-pitch-blue-50 dark:hover:from-field-green-900/20 dark:hover:to-pitch-blue-900/20 transition-all duration-200">
                               <td className="p-3">
                                 <input
                                   type="checkbox"
-                                  className="rounded border-field-green-300"
+                                  className="rounded border-2 border-field-green-300 focus:border-field-green-500"
                                   checked={selectedUsers.includes(user.id)}
                                   onChange={(e) => {
                                     if (e.target.checked) {
@@ -597,7 +598,7 @@ export default function UserManagementPage() {
                               </td>
                               <td className="p-3">
                                 <div className="flex items-center gap-3">
-                                  <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full flex items-center justify-center">
+                                  <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full flex items-center justify-center shadow-md">
                                     <span className="text-white font-semibold text-sm">
                                       {user.email.charAt(0).toUpperCase()}
                                     </span>
