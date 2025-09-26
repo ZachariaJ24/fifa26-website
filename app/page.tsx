@@ -23,6 +23,7 @@ export default async function Home() {
   }
 
   // Fetch featured games (next 2 upcoming matches)
+  // Fetch featured games (next 2 upcoming matches)
   const { data: featuredGames } = await supabase
     .from('matches')
     .select(`
@@ -34,16 +35,69 @@ export default async function Home() {
     .order('match_date', { ascending: true })
     .limit(2)
 
-  // Placeholder for latest news
-  const latestNews = [
-    { date: 'Oct 1, 2025', title: 'Season 1 Kicks Off!', excerpt: 'The inaugural season of the FIFA 26 League is officially underway. See the opening day results.' },
-    { date: 'Sep 28, 2025', title: 'New Transfer Window Record', excerpt: 'A new record has been set for the most transfers in a single window. The market is hotter than ever.' },
-    { date: 'Sep 25, 2025', title: 'Official League Rules Updated', excerpt: 'We have updated our league rules for the upcoming season. Please review them before your first match.' },
-  ]
+  // Fetch upcoming fixtures (next 4 after the featured games)
+  const { data: upcomingFixtures } = await supabase
+    .from('matches')
+    .select(`
+      *,
+      home_team:teams!matches_home_team_id_fkey (*),
+      away_team:teams!matches_away_team_id_fkey (*)
+    `)
+    .eq('status', 'Scheduled')
+    .order('match_date', { ascending: true })
+    .range(2, 5) // Fetch next 4 games
+
+  // Fetch recent results (last 4 completed matches)
+  const { data: recentResults } = await supabase
+    .from('matches')
+    .select(`
+      *,
+      home_team:teams!matches_home_team_id_fkey (*),
+      away_team:teams!matches_away_team_id_fkey (*)
+    `)
+    .eq('status', 'Completed')
+    .order('match_date', { ascending: false })
+    .limit(4)
+
+  // Fetch standings data
+  const { data: standingsData } = await supabase
+    .from('teams')
+    .select('*, conferences(name)')
+    .eq('is_active', true)
+    .order('points', { ascending: false });
+
+  const standings = standingsData?.reduce((acc, team) => {
+    const conferenceName = team.conferences?.name || 'Unassigned';
+    if (!acc[conferenceName]) {
+      acc[conferenceName] = [];
+    }
+    acc[conferenceName].push(team);
+    return acc;
+  }, {} as Record<string, any[]>);
+
+  // Fetch latest news
+  const { data: newsData } = await supabase
+    .from('news')
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(3)
+
+  const latestNews = newsData?.map(item => ({
+    ...item,
+    date: new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+  })) || [];
 
   return (
     <Suspense fallback={<Skeleton className="h-screen w-full" />}>
-      <HomePageClient session={session} stats={stats} featuredGames={featuredGames || []} latestNews={latestNews} />
+      <HomePageClient 
+        session={session} 
+        stats={stats} 
+        featuredGames={featuredGames || []} 
+        latestNews={latestNews}
+        upcomingFixtures={upcomingFixtures || []}
+        recentResults={recentResults || []}
+        standings={standings || {}}
+      />
     </Suspense>
   )
 }

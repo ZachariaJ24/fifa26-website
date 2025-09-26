@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { motion, useInView } from "framer-motion"
 import { Card, CardContent } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { TeamLogo } from "@/components/team-logo"
 import {
   Trophy,
@@ -26,6 +28,9 @@ interface HomePageClientProps {
   stats: { players: number; teams: number; matches: number }
   featuredGames: any[]
   latestNews: any[]
+  upcomingFixtures: any[]
+  recentResults: any[]
+  standings: Record<string, any[]>
 }
 
 function AnimatedCounter({ end, duration = 2000 }: { end: number; duration?: number }) {
@@ -57,7 +62,7 @@ function AnimatedCounter({ end, duration = 2000 }: { end: number; duration?: num
   return <span ref={ref}>{count.toLocaleString()}</span>
 }
 
-export default function HomePageClient({ session, stats, featuredGames, latestNews }: HomePageClientProps) {
+export default function HomePageClient({ session, stats, featuredGames, latestNews, upcomingFixtures, recentResults, standings }: HomePageClientProps) {
   const StatCard = ({ icon, value, label }: { icon: React.ElementType, value: number, label: string }) => {
     const Icon = icon
     return (
@@ -186,6 +191,97 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Upcoming Fixtures Section */}
+      <section className="py-20 px-4 bg-white/50 backdrop-blur-lg">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">Upcoming Fixtures</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {upcomingFixtures.map((match, index) => (
+              <motion.div key={match.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.2 }}>
+                <Card className="bg-white/80 border border-emerald-200 rounded-2xl shadow-lg overflow-hidden text-left">
+                  <CardContent className="p-6">
+                    <div className="flex justify-between items-center mb-4">
+                      <div className="flex items-center gap-2 text-sm text-emerald-600"><Clock className="h-4 w-4" /><span>{new Date(match.match_date).toLocaleString()}</span></div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3"><TeamLogo teamName={match.home_team.name} logoUrl={match.home_team.logo_url} size="sm" /><span className="font-bold text-lg">{match.home_team.name}</span></div>
+                      <div className="font-bold text-2xl">vs</div>
+                      <div className="flex items-center gap-3"><span className="font-bold text-lg">{match.away_team.name}</span><TeamLogo teamName={match.away_team.name} logoUrl={match.away_team.logo_url} size="sm" /></div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Results and Standings Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <Tabs defaultValue="results">
+            <TabsList className="grid w-full grid-cols-2 max-w-lg mx-auto bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl p-2 mb-8">
+              <TabsTrigger value="results">Recent Results</TabsTrigger>
+              <TabsTrigger value="standings">League Standings</TabsTrigger>
+            </TabsList>
+            <TabsContent value="results">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {recentResults.map((match, index) => (
+                  <motion.div key={match.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.2 }}>
+                    <Card className="bg-white/80 border border-emerald-200 rounded-2xl shadow-lg overflow-hidden text-left">
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-center mb-4">
+                          <div className="flex items-center gap-2 text-sm text-emerald-600"><Clock className="h-4 w-4" /><span>{new Date(match.match_date).toLocaleDateString()}</span></div>
+                          <span className="px-3 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Completed</span>
+                        </div>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3"><TeamLogo teamName={match.home_team.name} logoUrl={match.home_team.logo_url} size="sm" /><span className="font-bold text-lg">{match.home_team.name}</span></div>
+                          <div className="font-bold text-2xl">{match.home_score} - {match.away_score}</div>
+                          <div className="flex items-center gap-3"><span className="font-bold text-lg">{match.away_team.name}</span><TeamLogo teamName={match.away_team.name} logoUrl={match.away_team.logo_url} size="sm" /></div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </TabsContent>
+            <TabsContent value="standings">
+              <div className="space-y-8">
+                {Object.entries(standings).map(([conference, teams]) => (
+                  <div key={conference}>
+                    <h3 className="text-2xl font-bold mb-4 text-center">{conference}</h3>
+                    <Card className="bg-white/80 border border-emerald-200 rounded-2xl shadow-lg overflow-hidden">
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Team</TableHead>
+                            <TableHead>W</TableHead>
+                            <TableHead>L</TableHead>
+                            <TableHead>OTL</TableHead>
+                            <TableHead>Points</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {teams.map(team => (
+                            <TableRow key={team.id}>
+                              <TableCell className="flex items-center gap-2"><TeamLogo teamName={team.name} logoUrl={team.logo_url} size="sm" /> {team.name}</TableCell>
+                              <TableCell>{team.wins}</TableCell>
+                              <TableCell>{team.losses}</TableCell>
+                              <TableCell>{team.otl}</TableCell>
+                              <TableCell>{team.points}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </Card>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </section>
 
