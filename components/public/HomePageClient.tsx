@@ -207,26 +207,63 @@ export default function HomePageClient() {
   }, [supabase, toast])
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
       <BannedUserModal />
       <main>
-        <HeroCarousel images={heroImages} />
+        {/* Hero Section */}
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-teal-600/20 to-cyan-600/20"></div>
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center"
+            >
+              <h1 className="text-5xl md:text-7xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-6">
+                FIFA 26 League
+              </h1>
+              <p className="text-xl md:text-2xl text-emerald-700 mb-8 max-w-3xl mx-auto">
+                Experience the ultimate football management simulation with dynamic conferences, 
+                real-time standings, and competitive gameplay.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <Trophy className="inline-block mr-2" />
+                  View Standings
+                </motion.button>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <Users className="inline-block mr-2" />
+                  Join League
+                </motion.button>
+              </div>
+            </motion.div>
+          </div>
+        </div>
 
         {/* League Selector */}
         <section className="container mx-auto px-4 mt-6">
           <div className="flex items-center justify-between gap-4">
-            <h2 className="text-xl font-semibold">Select League</h2>
+            <h2 className="text-xl font-semibold text-emerald-800">Select League</h2>
             <LeagueSelector />
           </div>
         </section>
 
         {/* League Statistics Section */}
-        <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/50">
+        <section className="py-20 px-4 bg-gradient-to-b from-emerald-50/50 to-teal-50/50">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent leading-tight tracking-tight mb-6">League Statistics</h2>
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">Real-time data from our advanced tracking system</p>
-              <div className="h-1 w-24 bg-primary rounded-full mx-auto mt-8"></div>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">League Statistics</h2>
+              <p className="text-xl md:text-2xl text-emerald-700 leading-relaxed max-w-3xl mx-auto">Real-time data from our advanced tracking system</p>
+              <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full mx-auto mt-8"></div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -235,24 +272,24 @@ export default function HomePageClient() {
                   icon: Users,
                   label: "Active Players",
                   value: stats.totalPlayers,
-                  color: "from-green-500 to-green-600",
+                  color: "from-emerald-500 to-emerald-600",
                 },
                 {
                   icon: Trophy,
                   label: "Clubs",
                   value: stats.totalTeams,
-                  color: "from-blue-500 to-blue-600",
+                  color: "from-teal-500 to-teal-600",
                 },
                 {
                   icon: Calendar,
                   label: "Fixtures",
                   value: stats.totalMatches,
-                  color: "from-yellow-500 to-yellow-600",
+                  color: "from-cyan-500 to-cyan-600",
                 },
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
-                  className="bg-card border border-border/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105 p-6 text-center"
+                  className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105 p-6 text-center"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -260,10 +297,10 @@ export default function HomePageClient() {
                   <div className={`p-4 bg-gradient-to-br ${stat.color} rounded-xl shadow-lg inline-block mb-4`}>
                     <stat.icon className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-4xl font-bold text-foreground mb-2">
+                  <div className="text-4xl font-bold text-emerald-800 mb-2">
                     <AnimatedCounter end={stat.value} />
                   </div>
-                  <div className="text-lg text-muted-foreground font-medium">{stat.label}</div>
+                  <div className="text-lg text-emerald-600 font-medium">{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -274,15 +311,15 @@ export default function HomePageClient() {
         <section className="py-20 px-4">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent leading-tight tracking-tight mb-6">Featured Matches</h2>
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">Don't miss these highlighted matches from our competitive league.</p>
-              <div className="h-1 w-24 bg-primary rounded-full mx-auto mt-8"></div>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">Featured Matches</h2>
+              <p className="text-xl md:text-2xl text-emerald-700 leading-relaxed max-w-3xl mx-auto">Don't miss these highlighted matches from our competitive league.</p>
+              <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full mx-auto mt-8"></div>
             </div>
 
             {loading.featured ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[...Array(3)].map((_, i) => (
-                  <div key={i} className="bg-card border border-border/50 rounded-2xl shadow-lg p-6">
+                  <div key={i} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6">
                     <Skeleton className="h-40 w-full rounded-lg mb-4" />
                     <Skeleton className="h-6 w-3/4 mb-2" />
                     <Skeleton className="h-4 w-1/2" />
@@ -294,14 +331,14 @@ export default function HomePageClient() {
                 {featuredGames.map((game, index) => (
                   <motion.div
                     key={game.id}
-                    className="bg-card border border-border/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105 overflow-hidden"
+                    className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105 overflow-hidden"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
                     <Link href={`/matches/${game.id}`} className="block">
                       <div className="relative h-40 bg-cover bg-center" style={{ backgroundImage: `url(https://source.unsplash.com/random/800x600?soccer,${game.id})` }}>
-                        <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/40 to-teal-600/40 flex items-center justify-center">
                           <div className="text-center text-white">
                             <p className="text-sm font-semibold">{new Date(game.match_date).toLocaleDateString()}</p>
                             <h3 className="text-xl font-bold">{`${game.home_team?.name} vs ${game.away_team?.name}`}</h3>
@@ -312,15 +349,15 @@ export default function HomePageClient() {
                         <div className="flex items-center justify-between mb-4">
                           <div className="flex items-center gap-2">
                             <img src={game.home_team?.logo_url} alt={game.home_team?.name} className="h-8 w-8" />
-                            <span className="font-semibold">{game.home_team?.name}</span>
+                            <span className="font-semibold text-emerald-800">{game.home_team?.name}</span>
                           </div>
-                          <span className="text-muted-foreground">vs</span>
+                          <span className="text-emerald-600 font-bold">vs</span>
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold">{game.away_team?.name}</span>
+                            <span className="font-semibold text-emerald-800">{game.away_team?.name}</span>
                             <img src={game.away_team?.logo_url} alt={game.away_team?.name} className="h-8 w-8" />
                           </div>
                         </div>
-                        <Button className="w-full">View Match Details</Button>
+                        <Button className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white">View Match Details</Button>
                       </div>
                     </Link>
                   </motion.div>
@@ -328,19 +365,19 @@ export default function HomePageClient() {
               </div>
             ) : (
               <div className="text-center py-16">
-                <p className="text-xl text-muted-foreground">No featured matches yet. Check back soon!</p>
+                <p className="text-xl text-emerald-600">No featured matches yet. Check back soon!</p>
               </div>
             )}
           </div>
         </section>
 
         {/* About SFS Section */}
-        <section className="py-20 px-4 bg-gradient-to-b from-muted/50 to-background">
+        <section className="py-20 px-4 bg-gradient-to-b from-emerald-50/50 to-teal-50/50">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent leading-tight tracking-tight mb-6">About Secret Football Society (SFS)</h2>
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">Discover what makes SFS the premier destination for competitive football gaming.</p>
-              <div className="h-1 w-24 bg-primary rounded-full mx-auto mt-8"></div>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">About FIFA 26 League</h2>
+              <p className="text-xl md:text-2xl text-emerald-700 leading-relaxed max-w-3xl mx-auto">Discover what makes our league the premier destination for competitive football gaming.</p>
+              <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full mx-auto mt-8"></div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -351,21 +388,21 @@ export default function HomePageClient() {
                 transition={{ duration: 0.5 }}
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gradient-to-br from-green-500 to-green-600 rounded-xl shadow-lg">
+                  <div className="p-3 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl shadow-lg">
                     <GamepadIcon className="h-8 w-8 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">Premier SFS League</h3>
-                    <p className="text-lg text-muted-foreground">SFS is a competitive and professionally organized FC 26 football league, offering a complete simulation experience with structured seasons, playoffs, and championships.</p>
+                    <h3 className="text-2xl font-bold text-emerald-800 mb-2">Premier League Competition</h3>
+                    <p className="text-lg text-emerald-700">A competitive and professionally organized FIFA 26 football league, offering a complete simulation experience with structured seasons, playoffs, and championships.</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl shadow-lg">
+                  <div className="p-3 bg-gradient-to-br from-teal-500 to-teal-600 rounded-xl shadow-lg">
                     <Users className="h-8 w-8 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-2xl font-bold text-foreground mb-2">Professional Community</h3>
-                    <p className="text-lg text-muted-foreground">Connect with dedicated FC 26 players in a top-tier competitive environment. Our community is passionate about strategic play and sportsmanship.</p>
+                    <h3 className="text-2xl font-bold text-emerald-800 mb-2">Professional Community</h3>
+                    <p className="text-lg text-emerald-700">Connect with dedicated FIFA 26 players in a top-tier competitive environment. Our community is passionate about strategic play and sportsmanship.</p>
                   </div>
                 </div>
               </motion.div>
@@ -376,21 +413,21 @@ export default function HomePageClient() {
                 transition={{ duration: 0.5 }}
               >
                 <img src="https://source.unsplash.com/random/800x600?soccer-stadium" alt="Soccer Stadium" className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/50 to-teal-600/50 flex items-center justify-center">
                   <div className="text-center text-white p-8">
-                    <h3 className="text-3xl font-bold mb-4">Why Choose SFS?</h3>
+                    <h3 className="text-3xl font-bold mb-4">Why Choose Our League?</h3>
                     <p className="text-lg mb-6">Experience professional league management, cutting-edge technology, and a passionate community.</p>
                     <div className="flex justify-center gap-8">
                       <div className="text-center">
-                        <Shield className="h-10 w-10 text-primary mx-auto mb-2" />
+                        <Shield className="h-10 w-10 text-white mx-auto mb-2" />
                         <span className="font-semibold">Fair Play</span>
                       </div>
                       <div className="text-center">
-                        <Clock className="h-10 w-10 text-primary mx-auto mb-2" />
+                        <Clock className="h-10 w-10 text-white mx-auto mb-2" />
                         <span className="font-semibold">24/7 Support</span>
                       </div>
                       <div className="text-center">
-                        <Star className="h-10 w-10 text-primary mx-auto mb-2" />
+                        <Star className="h-10 w-10 text-white mx-auto mb-2" />
                         <span className="font-semibold">Excellence</span>
                       </div>
                     </div>
@@ -405,9 +442,9 @@ export default function HomePageClient() {
         <section className="py-20 px-4">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent leading-tight tracking-tight mb-6">Advanced League Features</h2>
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">Discover the cutting-edge features that make SFS the most advanced football league platform.</p>
-              <div className="h-1 w-24 bg-primary rounded-full mx-auto mt-8"></div>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">Advanced League Features</h2>
+              <p className="text-xl md:text-2xl text-emerald-700 leading-relaxed max-w-3xl mx-auto">Discover the cutting-edge features that make our league the most advanced football platform.</p>
+              <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full mx-auto mt-8"></div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -416,24 +453,24 @@ export default function HomePageClient() {
                   icon: TrendingUp,
                   title: "Advanced Stat Tracking",
                   description: "In-depth player and team statistics, including advanced metrics to track performance.",
-                  color: "from-purple-500 to-purple-600",
+                  color: "from-emerald-500 to-emerald-600",
                 },
                 {
                   icon: Zap,
                   title: "Live Match Streaming",
                   description: "Watch live matches with real-time statistics and commentary for a professional broadcast experience.",
-                  color: "from-red-500 to-red-600",
+                  color: "from-teal-500 to-teal-600",
                 },
                 {
                   icon: Target,
                   title: "Club Management",
                   description: "A full suite of tools for transfers, contracts, and finances for an immersive management experience.",
-                  color: "from-indigo-500 to-indigo-600",
+                  color: "from-cyan-500 to-cyan-600",
                 },
               ].map((feature, index) => (
                 <motion.div
                   key={feature.title}
-                  className="bg-card border border-border/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105 p-8 text-center"
+                  className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105 p-8 text-center"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -441,8 +478,8 @@ export default function HomePageClient() {
                   <div className={`p-4 bg-gradient-to-br ${feature.color} rounded-xl shadow-lg inline-block mb-6`}>
                     <feature.icon className="h-10 w-10 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-foreground mb-4">{feature.title}</h3>
-                  <p className="text-lg text-muted-foreground">{feature.description}</p>
+                  <h3 className="text-2xl font-bold text-emerald-800 mb-4">{feature.title}</h3>
+                  <p className="text-lg text-emerald-700">{feature.description}</p>
                 </motion.div>
               ))}
             </div>
@@ -450,25 +487,25 @@ export default function HomePageClient() {
         </section>
 
         {/* Games and Standings Section */}
-        <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/50">
+        <section className="py-20 px-4 bg-gradient-to-b from-emerald-50/50 to-teal-50/50">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent leading-tight tracking-tight mb-6">Games & Standings</h2>
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">Stay up-to-date with the latest match results and league standings.</p>
-              <div className="h-1 w-24 bg-primary rounded-full mx-auto mt-8"></div>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">Games & Standings</h2>
+              <p className="text-xl md:text-2xl text-emerald-700 leading-relaxed max-w-3xl mx-auto">Stay up-to-date with the latest match results and league standings.</p>
+              <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full mx-auto mt-8"></div>
             </div>
 
             <Tabs defaultValue="upcoming" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 bg-card border border-border/50 rounded-xl p-2">
-                <TabsTrigger value="upcoming" className="py-3 rounded-lg text-lg font-semibold">Upcoming</TabsTrigger>
-                <TabsTrigger value="completed" className="py-3 rounded-lg text-lg font-semibold">Completed</TabsTrigger>
-                <TabsTrigger value="standings" className="py-3 rounded-lg text-lg font-semibold">Standings</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-3 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl p-2">
+                <TabsTrigger value="upcoming" className="py-3 rounded-lg text-lg font-semibold text-emerald-700 data-[state=active]:bg-emerald-600 data-[state=active]:text-white">Upcoming</TabsTrigger>
+                <TabsTrigger value="completed" className="py-3 rounded-lg text-lg font-semibold text-emerald-700 data-[state=active]:bg-emerald-600 data-[state=active]:text-white">Completed</TabsTrigger>
+                <TabsTrigger value="standings" className="py-3 rounded-lg text-lg font-semibold text-emerald-700 data-[state=active]:bg-emerald-600 data-[state=active]:text-white">Standings</TabsTrigger>
               </TabsList>
               <TabsContent value="upcoming" className="mt-8">
                 {loading.games ? (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {[...Array(3)].map((_, i) => (
-                      <div key={i} className="bg-card border border-border/50 rounded-2xl shadow-lg p-6">
+                      <div key={i} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6">
                         <Skeleton className="h-40 w-full rounded-lg mb-4" />
                         <Skeleton className="h-6 w-3/4 mb-2" />
                         <Skeleton className="h-4 w-1/2" />
@@ -479,7 +516,7 @@ export default function HomePageClient() {
                   <UpcomingGames games={upcomingGames} />
                 ) : (
                   <div className="text-center py-16">
-                    <p className="text-xl text-muted-foreground">No upcoming games scheduled.</p>
+                    <p className="text-xl text-emerald-600">No upcoming games scheduled.</p>
                   </div>
                 )}
               </TabsContent>
@@ -487,7 +524,7 @@ export default function HomePageClient() {
                 {loading.games ? (
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {[...Array(3)].map((_, i) => (
-                      <div key={i} className="bg-card border border-border/50 rounded-2xl shadow-lg p-6">
+                      <div key={i} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6">
                         <Skeleton className="h-40 w-full rounded-lg mb-4" />
                         <Skeleton className="h-6 w-3/4 mb-2" />
                         <Skeleton className="h-4 w-1/2" />
@@ -498,7 +535,7 @@ export default function HomePageClient() {
                   <CompletedGames games={completedGames} />
                 ) : (
                   <div className="text-center py-16">
-                    <p className="text-xl text-muted-foreground">No completed games found.</p>
+                    <p className="text-xl text-emerald-600">No completed games found.</p>
                   </div>
                 )}
               </TabsContent>
@@ -509,7 +546,7 @@ export default function HomePageClient() {
                   <TeamStandings teams={standings} />
                 ) : (
                   <div className="text-center py-16">
-                    <p className="text-xl text-muted-foreground">Standings are not available yet.</p>
+                    <p className="text-xl text-emerald-600">Standings are not available yet.</p>
                   </div>
                 )}
               </TabsContent>
@@ -521,15 +558,15 @@ export default function HomePageClient() {
         <section className="py-20 px-4">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent leading-tight tracking-tight mb-6">Latest News</h2>
-              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">Stay informed with the latest updates and announcements from the league.</p>
-              <div className="h-1 w-24 bg-primary rounded-full mx-auto mt-8"></div>
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">Latest News</h2>
+              <p className="text-xl md:text-2xl text-emerald-700 leading-relaxed max-w-3xl mx-auto">Stay informed with the latest updates and announcements from the league.</p>
+              <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full mx-auto mt-8"></div>
             </div>
 
             {loading.news ? (
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {[...Array(3)].map((_, i) => (
-                  <div key={i} className="bg-card border border-border/50 rounded-2xl shadow-lg p-6">
+                  <div key={i} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6">
                     <Skeleton className="h-40 w-full rounded-lg mb-4" />
                     <Skeleton className="h-6 w-3/4 mb-2" />
                     <Skeleton className="h-4 w-1/2" />
@@ -551,7 +588,7 @@ export default function HomePageClient() {
               </div>
             ) : (
               <div className="text-center py-16">
-                <p className="text-xl text-muted-foreground">No news articles found.</p>
+                <p className="text-xl text-emerald-600">No news articles found.</p>
               </div>
             )}
           </div>
@@ -560,19 +597,19 @@ export default function HomePageClient() {
         {/* Call to Action Section */}
         <section className="py-20 px-4">
           <div className="max-w-7xl mx-auto">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-r from-primary to-secondary p-12 text-center">
-              <div className="absolute inset-0 bg-black/30"></div>
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 p-12 text-center">
+              <div className="absolute inset-0 bg-black/20"></div>
               <div className="relative">
                 <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight tracking-tight mb-6">Ready to Join the Action?</h2>
-                <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto mb-10">Register now to join the most competitive FC 26 league and showcase your skills.</p>
+                <p className="text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto mb-10">Register now to join the most competitive FIFA 26 league and showcase your skills.</p>
                 <div className="flex justify-center gap-x-6">
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button asChild size="lg" className="text-lg font-semibold px-8 py-6 bg-white text-primary hover:bg-white/90">
+                    <Button asChild size="lg" className="text-lg font-semibold px-8 py-6 bg-white text-emerald-600 hover:bg-white/90">
                       <Link href="/register">Register Now</Link>
                     </Button>
                   </motion.div>
                   <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                    <Button asChild size="lg" variant="outline" className="text-lg font-semibold px-8 py-6 border-2 border-white text-white hover:bg-white hover:text-primary">
+                    <Button asChild size="lg" variant="outline" className="text-lg font-semibold px-8 py-6 border-2 border-white text-white hover:bg-white hover:text-emerald-600">
                       <Link href="/login">Login</Link>
                     </Button>
                   </motion.div>

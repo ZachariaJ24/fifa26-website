@@ -191,71 +191,109 @@ export default function MatchesPage() {
   const matchesByDate = groupMatchesByDate(weekMatches)
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mx-auto mb-4"></div>
+          <p className="text-emerald-700 font-medium">Loading matches...</p>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900/30 text-white">
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent tracking-tight">Matches</h1>
-        </div>
-        <div className="space-y-8">
-            {Object.entries(matchesByDate).map(([date, dateMatches]) => (
-              <motion.div 
-                key={date}
-                initial={{ opacity: 0, y: 20 }} 
-                animate={{ opacity: 1, y: 0 }} 
-                transition={{ duration: 0.6 }}
-              >
-                <h2 className="text-2xl font-bold text-white mb-4">{date}</h2>
-                <div className="grid gap-6 md:grid-cols-2">
-                  {dateMatches.map((match, index) => {
-                    const formattedDate = formatDate(match.match_date)
-                    const isCompleted = match.status === "Completed"
-
-                    return (
-                      <motion.div
-                        key={match.id}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.4, delay: index * 0.1 }}
-                        whileHover={{ y: -4, scale: 1.02 }}
-                        className="group cursor-pointer"
-                        onClick={() => router.push(`/matches/${match.id}`)}
-                      >
-                        <Card className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm overflow-hidden shadow-2xl shadow-blue-500/10 h-full">
-                          <CardContent className="p-4">
-                            <div className="flex justify-between items-center mb-4">
-                                <div className="flex items-center gap-2 text-sm text-gray-400">
-                                  <Clock className="h-4 w-4" />
-                                  <span className="font-medium">{formattedDate.time}</span>
-                                </div>
-                                <Badge variant={getStatusBadgeVariant(match.status)}>{match.status}</Badge>
-                            </div>
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2">
-                                    <TeamLogo teamName={match.home_team.name} logoUrl={match.home_team.logo_url} size="sm" />
-                                    <span className="font-bold text-lg">{match.home_team.name}</span>
-                                </div>
-                                <div className="font-bold text-2xl">
-                                    {isCompleted ? `${match.home_score} - ${match.away_score}` : 'vs'}
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <span className="font-bold text-lg">{match.away_team.name}</span>
-                                    <TeamLogo teamName={match.away_team.name} logoUrl={match.away_team.logo_url} size="sm" />
-                                </div>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      </motion.div>
-                    )
-                  })}
-                </div>
-              </motion.div>
-            ))}
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-teal-600/20 to-cyan-600/20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-6">
+              Matches
+            </h1>
+            <p className="text-xl md:text-2xl text-emerald-700 mb-8 max-w-3xl mx-auto">
+              Follow all the action from our competitive league matches.
+            </p>
+          </motion.div>
         </div>
       </div>
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="space-y-8">
+          {Object.entries(matchesByDate).map(([date, dateMatches]) => (
+            <motion.div 
+              key={date}
+              initial={{ opacity: 0, y: 20 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.6 }}
+            >
+              <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6 mb-6">
+                <h2 className="text-2xl font-bold text-emerald-800 mb-2">{date}</h2>
+                <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full"></div>
+              </div>
+              <div className="grid gap-6 md:grid-cols-2">
+                {dateMatches.map((match, index) => {
+                  const formattedDate = formatDate(match.match_date)
+                  const isCompleted = match.status === "Completed"
+
+                  return (
+                    <motion.div
+                      key={match.id}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      whileHover={{ y: -4, scale: 1.02 }}
+                      className="group cursor-pointer"
+                      onClick={() => router.push(`/matches/${match.id}`)}
+                    >
+                      <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                        <div className="p-6">
+                          <div className="flex justify-between items-center mb-4">
+                            <div className="flex items-center gap-2 text-sm text-emerald-600">
+                              <Clock className="h-4 w-4" />
+                              <span className="font-medium">{formattedDate.time}</span>
+                            </div>
+                            <Badge 
+                              variant={getStatusBadgeVariant(match.status)}
+                              className={`${
+                                match.status === "Completed" 
+                                  ? "bg-emerald-100 text-emerald-800 border-emerald-200" 
+                                  : match.status === "In Progress"
+                                  ? "bg-teal-100 text-teal-800 border-teal-200"
+                                  : "bg-cyan-100 text-cyan-800 border-cyan-200"
+                              }`}
+                            >
+                              {match.status}
+                            </Badge>
+                          </div>
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                              <TeamLogo teamName={match.home_team.name} logoUrl={match.home_team.logo_url} size="sm" />
+                              <span className="font-bold text-lg text-emerald-800">{match.home_team.name}</span>
+                            </div>
+                            <div className="font-bold text-2xl text-emerald-700">
+                              {isCompleted ? `${match.home_score} - ${match.away_score}` : 'vs'}
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <span className="font-bold text-lg text-emerald-800">{match.away_team.name}</span>
+                              <TeamLogo teamName={match.away_team.name} logoUrl={match.away_team.logo_url} size="sm" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )
+                })}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </main>
     </div>
   )
 }

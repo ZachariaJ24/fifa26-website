@@ -44,46 +44,45 @@ export default function StandingsPage() {
   }, [toast])
 
   const conferenceColors = [
-    'from-blue-500 to-cyan-400',
-    'from-green-500 to-emerald-400',
-    'from-purple-500 to-pink-400',
+    'from-emerald-500 to-emerald-600',
+    'from-teal-500 to-teal-600',
+    'from-cyan-500 to-cyan-600',
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900/30 text-white">
-      <div 
-        className="py-20 px-6 text-center bg-cover bg-center bg-no-repeat relative"
-        style={{ backgroundImage: "url('/images/stadium-background.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-        <div className="relative">
-          <motion.h1 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent tracking-tight"
-          >
-            League Standings
-          </motion.h1>
-          <motion.p 
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-teal-600/20 to-cyan-600/20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-4 text-lg text-gray-300 max-w-3xl mx-auto"
+            transition={{ duration: 0.8 }}
+            className="text-center"
           >
-            Track the performance of every club across all our competitive conferences.
-          </motion.p>
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-6">
+              League Standings
+            </h1>
+            <p className="text-xl md:text-2xl text-emerald-700 mb-8 max-w-3xl mx-auto">
+              Track the performance of every club across all our competitive conferences.
+            </p>
+          </motion.div>
         </div>
       </div>
 
-      <main className="container mx-auto px-6 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {loading ? (
           <div className="space-y-12">
             {[...Array(3)].map((_, i) => (
-              <Card key={i} className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm">
-                <CardHeader><Skeleton className="h-8 w-1/2 mx-auto bg-gray-700" /></CardHeader>
-                <CardContent><Skeleton className="h-96 w-full bg-gray-700" /></CardContent>
-              </Card>
+              <div key={i} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg">
+                <div className="p-6">
+                  <Skeleton className="h-8 w-1/2 mx-auto bg-emerald-100" />
+                </div>
+                <div className="p-6">
+                  <Skeleton className="h-96 w-full bg-emerald-100 rounded-xl" />
+                </div>
+              </div>
             ))}
           </div>
         ) : (
@@ -95,16 +94,17 @@ export default function StandingsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.2 }}
               >
-                <Card className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm overflow-hidden shadow-2xl shadow-blue-500/10">
-                  <CardHeader className={`p-4 bg-gradient-to-r ${conferenceColors[index % conferenceColors.length]}`}>
-                    <CardTitle className="text-2xl md:text-3xl font-bold text-center text-white flex items-center justify-center gap-3">
-                      <Trophy /> {conference.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-0">
+                <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl overflow-hidden shadow-2xl shadow-emerald-500/10">
+                  <div className={`p-6 bg-gradient-to-r ${conferenceColors[index % conferenceColors.length]}`}>
+                    <h2 className="text-2xl md:text-3xl font-bold text-center text-white flex items-center justify-center gap-3">
+                      <Trophy className="h-8 w-8" />
+                      {conference.name}
+                    </h2>
+                  </div>
+                  <div className="p-0">
                     <TeamStandings teams={conference.standings} />
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </motion.div>
             ))}
           </div>

@@ -7,7 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Trophy, Award, Star } from "lucide-react"
+import { Trophy, Award, Star, Crown, Medal, Zap } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
@@ -118,42 +118,93 @@ export default function AwardsPage() {
   )
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900/30 text-white">
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent tracking-tight">Awards</h1>
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/20 via-teal-600/20 to-cyan-600/20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-6">
+              Awards Hall of Fame
+            </h1>
+            <p className="text-xl md:text-2xl text-emerald-700 mb-8 max-w-3xl mx-auto">
+              Celebrating excellence and achievement in our competitive league.
+            </p>
+            <div className="flex justify-center gap-4">
+              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl px-4 py-2">
+                <Trophy className="h-5 w-5 text-emerald-600" />
+                <span className="text-emerald-800 font-semibold">Team Awards</span>
+              </div>
+              <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl px-4 py-2">
+                <Star className="h-5 w-5 text-teal-600" />
+                <span className="text-teal-800 font-semibold">Player Awards</span>
+              </div>
+            </div>
+          </motion.div>
         </div>
+      </div>
 
-        <Tabs defaultValue="team-awards">
-          <TabsList className="grid w-full grid-cols-2 max-w-lg mx-auto bg-gray-800/50 border border-gray-700 p-1 rounded-lg mb-8">
-            <TabsTrigger value="team-awards">Team Awards</TabsTrigger>
-            <TabsTrigger value="player-awards">Player Awards</TabsTrigger>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Tabs defaultValue="team-awards" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 max-w-lg mx-auto bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-xl p-2 mb-8">
+            <TabsTrigger 
+              value="team-awards" 
+              className="py-3 rounded-lg text-lg font-semibold text-emerald-700 data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
+            >
+              <Trophy className="h-5 w-5 mr-2" />
+              Team Awards
+            </TabsTrigger>
+            <TabsTrigger 
+              value="player-awards" 
+              className="py-3 rounded-lg text-lg font-semibold text-emerald-700 data-[state=active]:bg-emerald-600 data-[state=active]:text-white"
+            >
+              <Star className="h-5 w-5 mr-2" />
+              Player Awards
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="team-awards">
             {loading ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[...Array(6)].map((_, i) => (
-                  <Skeleton key={i} className="h-64 rounded-xl" />
+                  <div key={i} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6">
+                    <Skeleton className="h-48 w-full rounded-xl bg-emerald-100" />
+                  </div>
                 ))}
               </div>
             ) : (
-              <div className="space-y-8">
-                {Object.entries(teamAwardsByType).map(([awardType, awards]) => (
-                  <div key={awardType}>
-                    <h3 className="text-xl font-bold mb-4 text-white">{awardType}</h3>
+              <div className="space-y-12">
+                {Object.entries(teamAwardsByType).map(([awardType, awards], typeIndex) => (
+                  <motion.div
+                    key={awardType}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: typeIndex * 0.1 }}
+                  >
+                    <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6 mb-6">
+                      <h3 className="text-2xl font-bold text-emerald-800 mb-2 flex items-center gap-2">
+                        <Crown className="h-6 w-6 text-yellow-600" />
+                        {awardType}
+                      </h3>
+                      <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full"></div>
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {awards.map((award) => (
+                      {awards.map((award, index) => (
                         <motion.div
                           key={award.id}
                           initial={{ opacity: 0, scale: 0.95 }}
                           animate={{ opacity: 1, scale: 1 }}
-                          transition={{ duration: 0.3 }}
+                          transition={{ duration: 0.4, delay: index * 0.1 }}
                           whileHover={{ y: -4, scale: 1.02 }}
                         >
                           <Link href={`/teams/${award.team_id}`}>
-                            <Card className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm overflow-hidden shadow-2xl shadow-blue-500/10 h-full">
-                              <CardContent className="p-6">
+                            <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                              <div className="p-6">
                                 <div className="flex flex-col items-center">
                                   <div className="relative h-24 w-24 mb-4">
                                     {award.team_logo ? (
@@ -161,27 +212,27 @@ export default function AwardsPage() {
                                         src={award.team_logo || "/placeholder.svg"}
                                         alt={award.team_name}
                                         fill
-                                        className="object-contain rounded-lg"
+                                        className="object-contain rounded-xl"
                                       />
                                     ) : (
-                                      <div className="w-24 h-24 bg-gray-700 flex items-center justify-center text-xl font-bold text-white rounded-lg">
+                                      <div className="w-24 h-24 bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-xl font-bold text-white rounded-xl">
                                         {award.team_name.substring(0, 2)}
                                       </div>
                                     )}
                                   </div>
-                                  <h3 className="text-lg font-semibold mb-2 text-white text-center">{award.team_name}</h3>
-                                  <div className="text-sm text-gray-400 mb-3 text-center">Season {award.season_number} • {award.year}</div>
+                                  <h3 className="text-lg font-bold mb-2 text-emerald-800 text-center">{award.team_name}</h3>
+                                  <div className="text-sm text-emerald-600 mb-3 text-center font-medium">Season {award.season_number} • {award.year}</div>
                                   {award.description && (
-                                    <p className="text-sm text-gray-400 text-center">{award.description}</p>
+                                    <p className="text-sm text-emerald-700 text-center">{award.description}</p>
                                   )}
                                 </div>
-                              </CardContent>
-                            </Card>
+                              </div>
+                            </div>
                           </Link>
                         </motion.div>
                       ))}
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             )}
@@ -189,48 +240,66 @@ export default function AwardsPage() {
 
           <TabsContent value="player-awards">
             {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {[...Array(6)].map((_, i) => (
-                        <Skeleton key={i} className="h-64 rounded-xl" />
-                    ))}
-                </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[...Array(6)].map((_, i) => (
+                  <div key={i} className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6">
+                    <Skeleton className="h-48 w-full rounded-xl bg-emerald-100" />
+                  </div>
+                ))}
+              </div>
             ) : (
-                <div className="space-y-8">
-                    {Object.entries(playerAwardsByType).map(([awardType, awards]) => (
-                        <div key={awardType}>
-                            <h3 className="text-xl font-bold mb-4 text-white">{awardType}</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                {awards.map((award) => (
-                                    <motion.div
-                                        key={award.id}
-                                        initial={{ opacity: 0, scale: 0.95 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{ duration: 0.3 }}
-                                        whileHover={{ y: -4, scale: 1.02 }}
-                                    >
-                                        <Link href={`/players/${award.player_id}`}>
-                                            <Card className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm overflow-hidden shadow-2xl shadow-blue-500/10 h-full">
-                                                <CardContent className="p-6">
-                                                    <div className="flex flex-col items-center">
-                                                        <div className="text-2xl font-bold text-white">{award.gamer_tag_id}</div>
-                                                        <div className="text-sm text-gray-400 mb-2">{award.team_name && `${award.team_name} • `}Season {award.season_number} • {award.year}</div>
-                                                        {award.description && (
-                                                            <p className="text-sm text-gray-400 text-center">{award.description}</p>
-                                                        )}
-                                                    </div>
-                                                </CardContent>
-                                            </Card>
-                                        </Link>
-                                    </motion.div>
-                                ))}
+              <div className="space-y-12">
+                {Object.entries(playerAwardsByType).map(([awardType, awards], typeIndex) => (
+                  <motion.div
+                    key={awardType}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: typeIndex * 0.1 }}
+                  >
+                    <div className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl shadow-lg p-6 mb-6">
+                      <h3 className="text-2xl font-bold text-emerald-800 mb-2 flex items-center gap-2">
+                        <Medal className="h-6 w-6 text-yellow-600" />
+                        {awardType}
+                      </h3>
+                      <div className="h-1 w-24 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-full"></div>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {awards.map((award, index) => (
+                        <motion.div
+                          key={award.id}
+                          initial={{ opacity: 0, scale: 0.95 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ duration: 0.4, delay: index * 0.1 }}
+                          whileHover={{ y: -4, scale: 1.02 }}
+                        >
+                          <Link href={`/players/${award.player_id}`}>
+                            <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+                              <div className="p-6">
+                                <div className="flex flex-col items-center">
+                                  <div className="w-24 h-24 bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center text-xl font-bold text-white rounded-xl mb-4">
+                                    <Zap className="h-8 w-8" />
+                                  </div>
+                                  <div className="text-xl font-bold text-emerald-800 mb-2">{award.gamer_tag_id}</div>
+                                  <div className="text-sm text-emerald-600 mb-2 text-center font-medium">
+                                    {award.team_name && `${award.team_name} • `}Season {award.season_number} • {award.year}
+                                  </div>
+                                  {award.description && (
+                                    <p className="text-sm text-emerald-700 text-center">{award.description}</p>
+                                  )}
+                                </div>
+                              </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                          </Link>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             )}
           </TabsContent>
         </Tabs>
-      </div>
+      </main>
     </div>
   )
 }

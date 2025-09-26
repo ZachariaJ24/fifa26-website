@@ -99,8 +99,8 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-slate-50 to-pitch-blue-50 dark:from-stadium-gold-900 dark:via-stadium-gold-800 dark:to-pitch-blue-900/30">
-      {/* Enhanced Hero Header Section */}
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+      {/* Hero Section */}
       <div className="relative overflow-hidden py-20 px-4">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5" style={{
@@ -108,15 +108,15 @@ export default function LoginPage() {
         }}></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-stadium-gold-200/30 to-goal-orange-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-emerald-200/30 to-teal-200/30 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-teal-200/30 to-cyan-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
         
         <div className="container mx-auto text-center relative z-10">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 via-pitch-blue-600 to-field-green-800 dark:from-field-green-400 dark:via-pitch-blue-400 dark:to-field-green-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent leading-tight tracking-tight mb-6">
               Welcome Back to FIFA 26 League
             </h1>
-            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto mb-12">
+            <p className="text-xl md:text-2xl text-emerald-700 leading-relaxed max-w-2xl mx-auto mb-12">
               Sign in to your FIFA 26 League account and get back to the action. 
               Access your profile, manage your club, and stay connected with the league.
             </p>
@@ -127,60 +127,56 @@ export default function LoginPage() {
       {/* Main Content */}
       <div className="container mx-auto px-4 py-16">
         <div className="flex justify-center">
-          <Card className="hockey-card border-2 border-ice-blue-200 dark:border-ice-blue-700 overflow-hidden w-full max-w-md">
-            <CardHeader className="bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 text-white">
+          <div className="bg-white/90 backdrop-blur-sm border border-emerald-200 rounded-2xl overflow-hidden w-full max-w-md shadow-xl">
+            <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white p-6">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
                   <LogIn className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-white text-xl">Sign In</CardTitle>
-                  <CardDescription className="text-ice-blue-100">
-                    Access your SCS account
-                  </CardDescription>
+                  <h2 className="text-white text-xl font-bold">Sign In</h2>
+                  <p className="text-emerald-100 text-sm">
+                    Access your FIFA 26 League account
+                  </p>
                 </div>
               </div>
-            </CardHeader>
+            </div>
             
             <form onSubmit={handleSubmit(onSubmit)}>
-              <CardContent className="space-y-6 p-6">
+              <div className="space-y-6 p-6">
                 {justRegistered && (
-                  <div className="hockey-card border-2 border-assist-green-200 dark:border-assist-green-700 overflow-hidden">
-                    <div className="bg-gradient-to-r from-assist-green-500 to-goal-red-600 text-white p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                          <CheckCircle2 className="h-4 w-4 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-sm font-semibold text-white">Registration Successful</h3>
-                          <p className="text-assist-green-100 text-xs">
-                            Your account has been created successfully. You can now log in.
-                          </p>
-                        </div>
+                  <div className="bg-gradient-to-r from-emerald-500 to-teal-500 text-white p-4 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <CheckCircle2 className="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-semibold text-white">Registration Successful</h3>
+                        <p className="text-emerald-100 text-xs">
+                          Your account has been created successfully. You can now log in.
+                        </p>
                       </div>
                     </div>
                   </div>
                 )}
 
                 {loginError && (
-                  <div className="hockey-card border-2 border-goal-red-200 dark:border-goal-red-700 overflow-hidden">
-                    <div className="bg-gradient-to-r from-goal-red-500 to-assist-green-600 text-white p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                          <AlertTriangle className="h-4 w-4 text-white" />
-                        </div>
-                        <div>
-                          <h3 className="text-sm font-semibold text-white">Login Error</h3>
-                          <p className="text-goal-red-100 text-xs">{loginError}</p>
-                        </div>
+                  <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-4 rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
+                        <AlertTriangle className="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-semibold text-white">Login Error</h3>
+                        <p className="text-red-100 text-xs">{loginError}</p>
                       </div>
                     </div>
                   </div>
                 )}
 
                 <div className="space-y-3">
-                  <Label htmlFor="email" className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300 flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-ice-blue-600" />
+                  <Label htmlFor="email" className="text-sm font-medium text-emerald-700 flex items-center gap-2">
+                    <Mail className="h-4 w-4 text-emerald-600" />
                     Email Address
                   </Label>
                   <Input 
@@ -188,9 +184,9 @@ export default function LoginPage() {
                     type="email" 
                     placeholder="your.email@example.com" 
                     {...register("email")} 
-                    className="hockey-input border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300"
+                    className="border-2 border-emerald-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300"
                   />
-                  {errors.email && <p className="text-sm text-goal-red-600 dark:text-goal-red-400 flex items-center gap-1">
+                  {errors.email && <p className="text-sm text-red-600 flex items-center gap-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.email.message}
                   </p>}
@@ -198,11 +194,11 @@ export default function LoginPage() {
 
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <Label htmlFor="password" className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300 flex items-center gap-2">
-                      <Lock className="h-4 w-4 text-rink-blue-600" />
+                    <Label htmlFor="password" className="text-sm font-medium text-emerald-700 flex items-center gap-2">
+                      <Lock className="h-4 w-4 text-teal-600" />
                       Password
                     </Label>
-                    <Link href="/forgot-password" className="text-sm text-ice-blue-600 hover:text-ice-blue-700 dark:text-ice-blue-400 dark:hover:text-ice-blue-300 hover:underline transition-colors duration-200">
+                    <Link href="/forgot-password" className="text-sm text-emerald-600 hover:text-emerald-700 hover:underline transition-colors duration-200">
                       Forgot password?
                     </Link>
                   </div>
@@ -211,19 +207,19 @@ export default function LoginPage() {
                     type="password" 
                     placeholder="••••••••" 
                     {...register("password")} 
-                    className="hockey-input border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300"
+                    className="border-2 border-emerald-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 transition-all duration-300"
                   />
-                  {errors.password && <p className="text-sm text-goal-red-600 dark:text-goal-red-400 flex items-center gap-1">
+                  {errors.password && <p className="text-sm text-red-600 flex items-center gap-1">
                     <AlertCircle className="h-3 w-3" />
                     {errors.password.message}
                   </p>}
                 </div>
-              </CardContent>
+              </div>
               
-              <CardFooter className="flex flex-col space-y-4 p-6 pt-0">
+              <div className="flex flex-col space-y-4 p-6 pt-0">
                 <Button 
                   type="submit" 
-                  className="w-full btn-championship hover:scale-105 transition-all duration-200" 
+                  className="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold hover:scale-105 transition-all duration-200" 
                   disabled={isLoading}
                 >
                   {isLoading ? (
@@ -240,19 +236,19 @@ export default function LoginPage() {
                 </Button>
                 
                 <div className="text-center">
-                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">
+                  <p className="text-sm text-emerald-600">
                     Don't have an account?{" "}
                     <Link 
                       href="/register" 
-                      className="text-ice-blue-600 hover:text-ice-blue-700 dark:text-ice-blue-400 dark:hover:text-ice-blue-300 font-medium hover:underline transition-colors duration-200"
+                      className="text-emerald-600 hover:text-emerald-700 font-medium hover:underline transition-colors duration-200"
                     >
                       Create Account
                     </Link>
                   </p>
                 </div>
-              </CardFooter>
+              </div>
             </form>
-          </Card>
+          </div>
         </div>
       </div>
     </div>
