@@ -1,47 +1,92 @@
 // Midnight Studios INTl - All rights reserved
 "use client"
 
-import React, { useState, useEffect } from "react"
-import { useSupabase } from "@/lib/supabase/client"
-import TeamStandings from "@/components/team-standings"
+import { useState, useEffect } from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
+import { useToast } from "@/components/ui/use-toast"
+import TeamStandings from "@/components/team-standings"
+import { Trophy, BarChart3, Users } from "lucide-react"
+
+interface Standing {
+  id: string;
+  name: string;
+  logo_url: string;
+  wins: number;
+  draws: number;
+  losses: number;
+  points: number;
+  games_played: number;
+  goals_for: number;
+  goals_against: number;
+  goal_difference: number;
+}
+
+interface League {
+  id: string;
+  name: string;
+  standings: Standing[];
+}
 
 export default function StandingsPage() {
-  const { supabase } = useSupabase()
-  const [standings, setStandings] = useState<any[]>([])
+  const { toast } = useToast()
+  const [leagues, setLeagues] = useState<League[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    async function fetchStandings() {
+    async function fetchStandingsData() {
       try {
-        const response = await fetch('/api/standings')
-        if (!response.ok) {
-          throw new Error('Failed to fetch standings')
-        }
-        const data = await response.json()
-        setStandings(data.standings)
-      } catch (error) {
-        console.error("Error fetching standings:", error)
+        setLoading(true)
+        const response = await fetch("/api/standings-by-league")
+        if (!response.ok) throw new Error("Failed to fetch standings")
+        const { leagues } = await response.json()
+        setLeagues(leagues)
+      } catch (error: any) {
+        toast({
+          title: "Error loading standings",
+          description: error.message || "Failed to load standings data.",
+          variant: "destructive",
+        })
       } finally {
         setLoading(false)
       }
     }
 
-    fetchStandings()
-  }, [supabase])
+    fetchStandingsData()
+  }, [toast])
 
   return (
-    <div className="min-h-screen bg-background">
-      <main className="container mx-auto px-4 py-8">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">Standings</h1>
-          <p className="mt-4 text-lg leading-8 text-muted-foreground">View the current league standings.</p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-blue-900/20">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+        <div className="container mx-auto px-6 py-12 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-green-500 dark:from-blue-400 dark:to-green-400 bg-clip-text text-transparent">League Standings</h1>
+          <p className="mt-4 text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto leading-relaxed">Track the performance of every club across all three of our competitive leagues.</p>
         </div>
+      </div>
 
+      <main className="container mx-auto px-6 py-8">
         {loading ? (
-          <Skeleton className="h-96 w-full rounded-lg" />
+          <div className="space-y-8">
+            {[...Array(3)].map((_, i) => (
+              <Card key={i} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-lg">
+                <CardHeader><Skeleton className="h-8 w-1/2" /></CardHeader>
+                <CardContent><Skeleton className="h-96 w-full" /></CardContent>
+              </Card>
+            ))}
+          </div>
         ) : (
-          <TeamStandings teams={standings} />
+          <div className="space-y-12">
+            {leagues.map((league) => (
+              <Card key={league.id} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-green-500/20 transition-shadow duration-300">
+                <CardHeader>
+                  <CardTitle className="text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent">{league.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <TeamStandings teams={league.standings} />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         )}
       </main>
     </div>
