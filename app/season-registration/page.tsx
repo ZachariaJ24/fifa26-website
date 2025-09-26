@@ -588,24 +588,24 @@ export default function SeasonRegistrationPage() {
                     <SelectTrigger id="primaryPosition" className="fifa-search">
                       <SelectValue placeholder="Select position" />
                     </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="ST">Striker (ST)</SelectItem>
-                        <SelectItem value="CF">Center Forward (CF)</SelectItem>
-                        <SelectItem value="LW">Left Winger (LW)</SelectItem>
-                        <SelectItem value="RW">Right Winger (RW)</SelectItem>
-                        <SelectItem value="CAM">Attacking Midfielder (CAM)</SelectItem>
-                        <SelectItem value="CM">Central Midfielder (CM)</SelectItem>
-                        <SelectItem value="CDM">Defensive Midfielder (CDM)</SelectItem>
-                        <SelectItem value="LM">Left Midfielder (LM)</SelectItem>
-                        <SelectItem value="RM">Right Midfielder (RM)</SelectItem>
-                        <SelectItem value="CB">Center Back (CB)</SelectItem>
-                        <SelectItem value="LB">Left Back (LB)</SelectItem>
-                        <SelectItem value="RB">Right Back (RB)</SelectItem>
-                        <SelectItem value="LWB">Left Wing Back (LWB)</SelectItem>
-                        <SelectItem value="RWB">Right Wing Back (RWB)</SelectItem>
-                        <SelectItem value="GK">Goalkeeper (GK)</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <SelectContent>
+                      <SelectItem value="ST">Striker (ST)</SelectItem>
+                      <SelectItem value="CF">Center Forward (CF)</SelectItem>
+                      <SelectItem value="LW">Left Winger (LW)</SelectItem>
+                      <SelectItem value="RW">Right Winger (RW)</SelectItem>
+                      <SelectItem value="CAM">Attacking Midfielder (CAM)</SelectItem>
+                      <SelectItem value="CM">Central Midfielder (CM)</SelectItem>
+                      <SelectItem value="CDM">Defensive Midfielder (CDM)</SelectItem>
+                      <SelectItem value="LM">Left Midfielder (LM)</SelectItem>
+                      <SelectItem value="RM">Right Midfielder (RM)</SelectItem>
+                      <SelectItem value="CB">Center Back (CB)</SelectItem>
+                      <SelectItem value="LB">Left Back (LB)</SelectItem>
+                      <SelectItem value="RB">Right Back (RB)</SelectItem>
+                      <SelectItem value="LWB">Left Wing Back (LWB)</SelectItem>
+                      <SelectItem value="RWB">Right Wing Back (RWB)</SelectItem>
+                      <SelectItem value="GK">Goalkeeper (GK)</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <p className="text-sm text-field-green-600">Your preferred position to play.</p>
                   {errors.primaryPosition && <p className="text-sm text-red-500">{errors.primaryPosition}</p>}
                 </div>
@@ -619,25 +619,25 @@ export default function SeasonRegistrationPage() {
                     <SelectTrigger id="secondaryPosition" className="fifa-search">
                       <SelectValue placeholder="Select position (optional)" />
                     </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="none">None</SelectItem>
-                        <SelectItem value="ST">Striker (ST)</SelectItem>
-                        <SelectItem value="CF">Center Forward (CF)</SelectItem>
-                        <SelectItem value="LW">Left Winger (LW)</SelectItem>
-                        <SelectItem value="RW">Right Winger (RW)</SelectItem>
-                        <SelectItem value="CAM">Attacking Midfielder (CAM)</SelectItem>
-                        <SelectItem value="CM">Central Midfielder (CM)</SelectItem>
-                        <SelectItem value="CDM">Defensive Midfielder (CDM)</SelectItem>
-                        <SelectItem value="LM">Left Midfielder (LM)</SelectItem>
-                        <SelectItem value="RM">Right Midfielder (RM)</SelectItem>
-                        <SelectItem value="CB">Center Back (CB)</SelectItem>
-                        <SelectItem value="LB">Left Back (LB)</SelectItem>
-                        <SelectItem value="RB">Right Back (RB)</SelectItem>
-                        <SelectItem value="LWB">Left Wing Back (LWB)</SelectItem>
-                        <SelectItem value="RWB">Right Wing Back (RWB)</SelectItem>
-                        <SelectItem value="GK">Goalkeeper (GK)</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <SelectContent>
+                      <SelectItem value="none">None</SelectItem>
+                      <SelectItem value="ST">Striker (ST)</SelectItem>
+                      <SelectItem value="CF">Center Forward (CF)</SelectItem>
+                      <SelectItem value="LW">Left Winger (LW)</SelectItem>
+                      <SelectItem value="RW">Right Winger (RW)</SelectItem>
+                      <SelectItem value="CAM">Attacking Midfielder (CAM)</SelectItem>
+                      <SelectItem value="CM">Central Midfielder (CM)</SelectItem>
+                      <SelectItem value="CDM">Defensive Midfielder (CDM)</SelectItem>
+                      <SelectItem value="LM">Left Midfielder (LM)</SelectItem>
+                      <SelectItem value="RM">Right Midfielder (RM)</SelectItem>
+                      <SelectItem value="CB">Center Back (CB)</SelectItem>
+                      <SelectItem value="LB">Left Back (LB)</SelectItem>
+                      <SelectItem value="RB">Right Back (RB)</SelectItem>
+                      <SelectItem value="LWB">Left Wing Back (LWB)</SelectItem>
+                      <SelectItem value="RWB">Right Wing Back (RWB)</SelectItem>
+                      <SelectItem value="GK">Goalkeeper (GK)</SelectItem>
+                    </SelectContent>
+                  </Select>
                   <p className="text-sm text-field-green-600">Optional backup position.</p>
                 </div>
               </div>
@@ -651,11 +651,11 @@ export default function SeasonRegistrationPage() {
                   <SelectTrigger id="consoleType" className="fifa-search">
                     <SelectValue placeholder="Select console" />
                   </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Xbox">Xbox</SelectItem>
-                      <SelectItem value="PS5">PS5</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <SelectContent>
+                    <SelectItem value="Xbox">Xbox</SelectItem>
+                    <SelectItem value="PS5">PS5</SelectItem>
+                  </SelectContent>
+                </Select>
                 <p className="text-sm text-field-green-600">Your gaming platform.</p>
                 {errors.consoleType && <p className="text-sm text-red-500">{errors.consoleType}</p>}
               </div>
