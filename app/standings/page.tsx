@@ -32,7 +32,7 @@ interface StandingsPageProps {
 interface TeamStanding {
   id: string
   name: string
-  logo_url: string | null
+  logo_url?: string
   wins: number
   losses: number
   otl: number
@@ -157,130 +157,12 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
         setLoading(true)
         setError(null)
 
-        // Get current season
-        const { data: seasonData, error: seasonError } = await supabase
-          .from("seasons")
-          .select("id, name")
-          .eq("is_active", true)
-          .single()
+        // Import the unified standings calculator
+        const { calculateUnifiedStandingsClient } = await import("@/lib/standings-calculator-unified")
+        
+        const { standings } = await calculateUnifiedStandingsClient(supabase)
 
-        if (seasonError) {
-          console.error("Error fetching season:", seasonError)
-          setError("Failed to load season data")
-          return
-        }
-
-        if (!seasonData) {
-          setError("No active season found")
-          return
-        }
-
-        // Calculate standings dynamically from matches (same logic as home page)
-        const { data: teamsData, error: teamsError } = await supabase
-          .from("teams")
-          .select(`
-            id,
-            name,
-            logo_url,
-            division,
-            conference_id,
-            conferences (
-              name,
-              color
-            )
-          `)
-          .eq("is_active", true)
-
-        if (teamsError) {
-          console.error("Error fetching teams:", teamsError)
-          setError("Failed to load teams data")
-          return
-        }
-
-        const { data: matchesData, error: matchesError } = await supabase
-          .from("matches")
-          .select(`
-            id,
-            home_team_id,
-            away_team_id,
-            home_score,
-            away_score,
-            status
-          `)
-          .eq("season_id", (seasonData as any).id)
-          .eq("status", "completed")
-
-        if (matchesError) {
-          console.error("Error fetching matches:", matchesError)
-          setError("Failed to load matches data")
-          return
-        }
-
-        // Calculate standings for each team
-        const calculatedStandings = teamsData.map((team: any) => {
-          let wins = 0
-          let losses = 0
-          let otl = 0
-          let goalsFor = 0
-          let goalsAgainst = 0
-
-          matchesData.forEach((match: any) => {
-            if (match.home_team_id === team.id) {
-              goalsFor += match.home_score || 0
-              goalsAgainst += match.away_score || 0
-              
-              if (match.home_score > match.away_score) {
-                wins++
-              } else if (match.home_score < match.away_score) {
-                losses++
-              } else {
-                otl++
-              }
-            } else if (match.away_team_id === team.id) {
-              goalsFor += match.away_score || 0
-              goalsAgainst += match.home_score || 0
-              
-              if (match.away_score > match.home_score) {
-                wins++
-              } else if (match.away_score < match.home_score) {
-                losses++
-              } else {
-                otl++
-              }
-            }
-          })
-
-          const gamesPlayed = wins + losses + otl
-          const points = wins * 2 + otl * 1 // 2 points for win, 1 for OTL
-          const goalDifferential = goalsFor - goalsAgainst
-
-          return {
-            id: team.id,
-            name: team.name,
-            logo_url: team.logo_url,
-            wins,
-            losses,
-            otl,
-            games_played: gamesPlayed,
-            points,
-            goals_for: goalsFor,
-            goals_against: goalsAgainst,
-            goal_differential: goalDifferential,
-            division: team.division || "Premier Division",
-            conference: team.conferences?.name || "No Conference",
-            conference_id: team.conference_id,
-            conference_color: team.conferences?.color || "#6B7280",
-          }
-        })
-
-        // Sort by points (descending), then by wins (descending), then by goal differential (descending)
-        calculatedStandings.sort((a, b) => {
-          if (b.points !== a.points) return b.points - a.points
-          if (b.wins !== a.wins) return b.wins - a.wins
-          return b.goal_differential - a.goal_differential
-        })
-
-        setStandings(calculatedStandings)
+        setStandings(standings)
       } catch (err) {
         console.error("Error in fetchStandings:", err)
         setError("An unexpected error occurred")

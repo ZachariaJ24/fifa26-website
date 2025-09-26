@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server"
+// Remove server import - we'll only use client-side version
 
 export interface TeamStanding {
   id: string
@@ -40,12 +40,13 @@ export interface StandingsData {
 /**
  * Unified standings calculation function that all components should use
  * This ensures consistent standings across the entire site
+ * Note: This function is deprecated in favor of calculateUnifiedStandingsClient
  */
 export async function calculateUnifiedStandings(): Promise<{
   standings: TeamStanding[]
   standingsByConference: StandingsData
 }> {
-  const supabase = createClient()
+  throw new Error("This function is deprecated. Use calculateUnifiedStandingsClient instead.")
 
   // Get current season
   const { data: seasonData, error: seasonError } = await supabase

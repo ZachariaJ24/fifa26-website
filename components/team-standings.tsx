@@ -3,7 +3,7 @@ import { TeamLogo } from "@/components/team-logo"
 import { Badge } from "@/components/ui/badge"
 import Image from "next/image"
 import Link from "next/link"
-import type { TeamStanding } from "@/lib/standings-calculator"
+import type { TeamStanding } from "@/lib/standings-calculator-unified"
 
 interface TeamStandingsProps {
   teams: TeamStanding[]

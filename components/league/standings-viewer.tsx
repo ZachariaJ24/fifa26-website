@@ -54,155 +54,10 @@ export function StandingsViewer() {
       setLoading(true)
       setError(null)
 
-      // Get current season
-      const { data: seasonData, error: seasonError } = await supabase
-        .from("seasons")
-        .select("id, name")
-        .eq("is_active", true)
-        .single()
-
-      if (seasonError) {
-        console.error("Error fetching season:", seasonError)
-        setError("Failed to load season data")
-        return
-      }
-
-      if (!seasonData) {
-        setError("No active season found")
-        return
-      }
-
-      // Calculate standings dynamically from matches (same logic as main standings page)
-      const { data: teamsData, error: teamsError } = await supabase
-        .from("teams")
-        .select(`
-          id,
-          name,
-          logo_url,
-          conference_id,
-          conferences(
-            id,
-            name,
-            color,
-            description
-          )
-        `)
-        .eq("is_active", true)
-
-      if (teamsError) {
-        console.error("Error fetching teams:", teamsError)
-        setError("Failed to load teams data")
-        return
-      }
-
-      const { data: matchesData, error: matchesError } = await supabase
-        .from("matches")
-        .select(`
-          id,
-          home_team_id,
-          away_team_id,
-          home_score,
-          away_score,
-          status
-        `)
-        .eq("season_id", (seasonData as any).id)
-        .eq("status", "completed")
-
-      if (matchesError) {
-        console.error("Error fetching matches:", matchesError)
-        setError("Failed to load matches data")
-        return
-      }
-
-      // Calculate standings for each team
-      const calculatedStandings = teamsData.map((team: any) => {
-        let wins = 0
-        let losses = 0
-        let otl = 0
-        let goalsFor = 0
-        let goalsAgainst = 0
-
-        // Calculate stats from matches
-        matchesData.forEach((match: any) => {
-          if (match.home_team_id === team.id) {
-            goalsFor += match.home_score || 0
-            goalsAgainst += match.away_score || 0
-            
-            if (match.home_score > match.away_score) {
-              wins++
-            } else if (match.home_score < match.away_score) {
-              losses++
-            } else {
-              otl++
-            }
-          } else if (match.away_team_id === team.id) {
-            goalsFor += match.away_score || 0
-            goalsAgainst += match.home_score || 0
-            
-            if (match.away_score > match.home_score) {
-              wins++
-            } else if (match.away_score < match.home_score) {
-              losses++
-            } else {
-              otl++
-            }
-          }
-        })
-
-        const gamesPlayed = wins + losses + otl
-        const points = wins * 3 + otl * 1
-        const goalDifferential = goalsFor - goalsAgainst
-
-        return {
-          id: team.id,
-          name: team.name,
-          logo_url: team.logo_url,
-          wins,
-          losses,
-          otl,
-          games_played: gamesPlayed,
-          points,
-          goals_for: goalsFor,
-          goals_against: goalsAgainst,
-          goal_differential: goalDifferential,
-          conference_id: team.conference_id,
-          conferences: team.conferences
-        }
-      })
-
-      // Group teams by conference
-      const standingsByConference = calculatedStandings.reduce((acc: any, team: any) => {
-        const conference = team.conferences
-        
-        // Handle teams without conferences
-        const conferenceName = conference ? conference.name : "No Conference"
-        const conferenceData = conference || {
-          id: "no-conference",
-          name: "No Conference",
-          color: "#6B7280",
-          description: "Teams not assigned to any conference"
-        }
-        
-        if (!acc[conferenceName]) {
-          acc[conferenceName] = {
-            conference: conferenceData,
-            teams: []
-          }
-        }
-        
-        acc[conferenceName].teams.push(team)
-        
-        return acc
-      }, {})
-
-      // Sort teams within each conference by points, then wins, then goal differential
-      Object.keys(standingsByConference).forEach(conferenceName => {
-        standingsByConference[conferenceName].teams.sort((a: any, b: any) => {
-          if (b.points !== a.points) return b.points - a.points
-          if (b.wins !== a.wins) return b.wins - a.wins
-          return b.goal_differential - a.goal_differential
-        })
-      })
+      // Import the unified standings calculator
+      const { calculateUnifiedStandingsClient } = await import("@/lib/standings-calculator-unified")
+      
+      const { standingsByConference } = await calculateUnifiedStandingsClient(supabase)
 
       setStandings(standingsByConference)
     } catch (error: any) {
@@ -236,8 +91,11 @@ export function StandingsViewer() {
           <CardTitle>League Standings</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-center justify-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          <div className="space-y-4">
+            <div className="animate-pulse">
+              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -248,15 +106,16 @@ export function StandingsViewer() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>League Standings</CardTitle>
+          <CardTitle>Error Loading Standings</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-center py-8">
-            <p className="text-red-600 mb-4">Error: {error}</p>
-            <Button onClick={fetchStandings} variant="outline">
-              Retry
-            </Button>
-          </div>
+          <p className="text-red-600">{error}</p>
+          <button 
+            onClick={fetchStandings}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Retry
+          </button>
         </CardContent>
       </Card>
     )
@@ -269,12 +128,7 @@ export function StandingsViewer() {
           <CardTitle>League Standings</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-center py-8">
-            <p className="text-gray-600 mb-4">No standings data available</p>
-            <Button onClick={fetchStandings} variant="outline">
-              Refresh
-            </Button>
-          </div>
+          <p className="text-gray-600">No standings data available</p>
         </CardContent>
       </Card>
     )
@@ -336,16 +190,10 @@ export function StandingsViewer() {
                       const PrIcon = prStatus.icon
                       
                       return (
-                        <tr 
-                          key={team.id} 
-                          className={`hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors ${
-                            index < 2 ? 'bg-green-50 dark:bg-green-900/20' : 
-                            index >= conferenceData.teams.length - 2 ? 'bg-red-50 dark:bg-red-900/20' : ''
-                          }`}
-                        >
+                        <tr key={team.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center gap-2">
-                              <span className="text-lg font-bold">{index + 1}</span>
+                              <span className="font-bold text-lg">{index + 1}</span>
                               {PrIcon && (
                                 <PrIcon className={`h-4 w-4 ${prStatus.color}`} />
                               )}
@@ -353,44 +201,65 @@ export function StandingsViewer() {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center gap-3">
-                              {team.logo_url && (
-                                <img src={team.logo_url} alt={team.name} className="h-10 w-10 rounded-full object-cover" />
+                              {team.logo_url ? (
+                                <img 
+                                  src={team.logo_url} 
+                                  alt={team.name}
+                                  className="h-8 w-8 rounded-full object-cover"
+                                />
+                              ) : (
+                                <div className="h-8 w-8 rounded-full bg-gray-300 flex items-center justify-center">
+                                  <span className="text-xs font-bold text-gray-600">
+                                    {team.name.charAt(0)}
+                                  </span>
+                                </div>
                               )}
                               <div>
-                                <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{team.name}</div>
-                                <div className="text-sm text-gray-500 dark:text-gray-400">
-                                  {prStatus.status === 'promotion' && 'Promotion Zone'}
-                                  {prStatus.status === 'relegation' && 'Relegation Zone'}
-                                  {prStatus.status === 'safe' && 'Safe Zone'}
+                                <div className="font-semibold text-gray-900 dark:text-gray-100">
+                                  {team.name}
                                 </div>
                               </div>
                             </div>
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900 dark:text-gray-100">
                             {team.games_played}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900 dark:text-gray-100">
                             {team.wins}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900 dark:text-gray-100">
                             {team.losses}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900 dark:text-gray-100">
                             {team.otl}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900 dark:text-gray-100">
                             {team.goals_for}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-900 dark:text-gray-100">
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-gray-900 dark:text-gray-100">
                             {team.goals_against}
                           </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm">
-                            <span className={team.goal_differential >= 0 ? "text-green-600 font-medium" : "text-red-600 font-medium"}>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <span className={team.goal_differential >= 0 ? "text-green-600" : "text-red-600"}>
                               {team.goal_differential >= 0 ? "+" : ""}{team.goal_differential}
                             </span>
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-right">
-                            <span className="text-lg font-bold text-gray-900 dark:text-gray-100">{team.points}</span>
+                            <div className="flex items-center justify-end gap-2">
+                              <span className="text-lg font-bold text-gray-900 dark:text-gray-100">
+                                {team.points}
+                              </span>
+                              {prStatus.status === "promotion" && (
+                                <Badge variant="default" className="bg-green-600 text-white text-xs">
+                                  P
+                                </Badge>
+                              )}
+                              {prStatus.status === "relegation" && (
+                                <Badge variant="destructive" className="bg-red-600 text-white text-xs">
+                                  R
+                                </Badge>
+                              )}
+                            </div>
                           </td>
                         </tr>
                       )
