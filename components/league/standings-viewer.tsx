@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Trophy, TrendingUp, TrendingDown } from "lucide-react"
@@ -41,6 +41,7 @@ interface StandingsData {
 export function StandingsViewer() {
   const [standings, setStandings] = useState<StandingsData>({})
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const { toast } = useToast()
   const supabase = createClient()
 
@@ -51,6 +52,7 @@ export function StandingsViewer() {
   const fetchStandings = async () => {
     try {
       setLoading(true)
+      setError(null)
       
       const { data: teams, error } = await supabase
         .from("teams")
@@ -75,8 +77,13 @@ export function StandingsViewer() {
         throw error
       }
 
+      if (!teams || teams.length === 0) {
+        setStandings({})
+        return
+      }
+
       // Group teams by conference
-      const standingsByConference = teams?.reduce((acc: any, team: any) => {
+      const standingsByConference = teams.reduce((acc: any, team: any) => {
         const conferenceName = team.conferences?.name || "No Conference"
         if (!acc[conferenceName]) {
           acc[conferenceName] = {
@@ -94,7 +101,7 @@ export function StandingsViewer() {
         })
         
         return acc
-      }, {}) || {}
+      }, {})
 
       // Sort teams within each conference by points, then wins, then goal differential
       Object.keys(standingsByConference).forEach(conferenceName => {
@@ -108,6 +115,7 @@ export function StandingsViewer() {
       setStandings(standingsByConference)
     } catch (error: any) {
       console.error("Error fetching standings:", error)
+      setError(error.message || "Failed to fetch standings")
       toast({
         title: "Error",
         description: error.message || "Failed to fetch standings",
@@ -118,14 +126,16 @@ export function StandingsViewer() {
     }
   }
 
-  const getPromotionRelegationStatus = (team: TeamStanding, position: number, totalTeams: number) => {
-    if (position <= 2) {
-      return { status: "promotion", icon: TrendingUp, color: "text-green-600" }
-    } else if (position >= totalTeams - 1) {
-      return { status: "relegation", icon: TrendingDown, color: "text-red-600" }
+  const getPromotionRelegationStatus = useMemo(() => {
+    return (team: TeamStanding, position: number, totalTeams: number) => {
+      if (position <= 2) {
+        return { status: "promotion", icon: TrendingUp, color: "text-green-600" }
+      } else if (position >= totalTeams - 1) {
+        return { status: "relegation", icon: TrendingDown, color: "text-red-600" }
+      }
+      return { status: "safe", icon: null, color: "text-gray-600" }
     }
-    return { status: "safe", icon: null, color: "text-gray-600" }
-  }
+  }, [])
 
   if (loading) {
     return (
@@ -136,6 +146,42 @@ export function StandingsViewer() {
         <CardContent>
           <div className="flex items-center justify-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>League Standings</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-8">
+            <p className="text-red-600 mb-4">Error: {error}</p>
+            <Button onClick={fetchStandings} variant="outline">
+              Retry
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (Object.keys(standings).length === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>League Standings</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-center py-8">
+            <p className="text-gray-600 mb-4">No standings data available</p>
+            <Button onClick={fetchStandings} variant="outline">
+              Refresh
+            </Button>
           </div>
         </CardContent>
       </Card>
