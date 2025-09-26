@@ -56,54 +56,10 @@ export default function DiscordConnectButton({
       localStorage.setItem("discord_connect_user_id", userId)
 
       const authUrl = `/api/auth/discord?user_id=${finalUserId}&state=${state}`
-      console.log("Opening Discord OAuth popup:", authUrl)
+      console.log("Redirecting to Discord OAuth:", authUrl)
 
-      const popup = window.open(authUrl, "discord-connect", "width=500,height=600,scrollbars=yes,resizable=yes")
-
-      if (!popup) {
-        throw new Error("Failed to open popup window. Please check if popups are blocked.")
-      }
-
-      // Listen for the popup to close or send a message
-      const checkClosed = setInterval(() => {
-        if (popup?.closed) {
-          clearInterval(checkClosed)
-          setConnecting(false)
-          // Refresh the page to show updated Discord connection
-          window.location.reload()
-        }
-      }, 1000)
-
-      // Listen for messages from the popup
-      const messageListener = (event: MessageEvent) => {
-        if (event.origin !== window.location.origin) return
-
-        if (event.data.type === "discord_connected") {
-          clearInterval(checkClosed)
-          popup?.close()
-          setConnecting(false)
-          
-          // Update the user's Discord info in the database
-          updateUserDiscordInfo(event.data.discord_id, event.data.discord_username)
-          
-          if (onSuccess) {
-            onSuccess(event.data.discord_id, event.data.discord_username)
-          }
-        }
-      }
-
-      window.addEventListener("message", messageListener)
-
-      // Cleanup
-      setTimeout(() => {
-        clearInterval(checkClosed)
-        window.removeEventListener("message", messageListener)
-        if (!popup?.closed) {
-          popup?.close()
-          setConnecting(false)
-          setError("Connection timed out. Please try again.")
-        }
-      }, 300000) // 5 minutes timeout
+      // Redirect to Discord OAuth in the same window
+      window.location.href = authUrl
     } catch (error: any) {
       console.error("Error connecting Discord:", error)
       setError(error.message || "Failed to connect to Discord")
@@ -118,10 +74,10 @@ export default function DiscordConnectButton({
 
   if (error) {
     return (
-      <div className="space-y-2">
-        <div className="flex items-center space-x-2 text-red-600 dark:text-red-400 text-sm">
-          <AlertTriangle className="h-4 w-4" />
-          <span>{error}</span>
+      <div className="space-y-3">
+        <div className="flex items-center space-x-2 text-red-600 dark:text-red-400 text-sm bg-red-50 dark:bg-red-900/20 p-3 rounded-lg border border-red-200 dark:border-red-800">
+          <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+          <span className="font-medium">{error}</span>
         </div>
         <Button
           type="button"
@@ -129,11 +85,10 @@ export default function DiscordConnectButton({
             setError(null)
             connectDiscord()
           }}
-          variant="outline"
-          className={className}
+          className={`${className} fifa-button-enhanced cursor-pointer w-full`}
         >
-          <MessageSquare className="mr-2 h-4 w-4" />
-          Try Again
+          <MessageSquare className="mr-2 h-4 w-4 text-white" />
+          <span className="text-white font-semibold">Try Again</span>
         </Button>
       </div>
     )
@@ -150,18 +105,18 @@ export default function DiscordConnectButton({
           connectDiscord()
         }} 
         disabled={connecting} 
-        className={`${className} cursor-pointer w-full`}
+        className={`${className} fifa-button-enhanced cursor-pointer w-full`}
         style={{ pointerEvents: 'auto', zIndex: 10 }}
       >
         {connecting ? (
           <>
-            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            Connecting...
+            <Loader2 className="mr-2 h-4 w-4 animate-spin text-white" />
+            <span className="text-white font-semibold">Connecting...</span>
           </>
         ) : (
           <>
-            <MessageSquare className="mr-2 h-4 w-4" />
-            Connect Discord
+            <MessageSquare className="mr-2 h-4 w-4 text-white" />
+            <span className="text-white font-semibold">Connect Discord</span>
           </>
         )}
       </Button>
