@@ -122,7 +122,7 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
       </section>
 
       {/* Featured Games Section */}
-      <section className="py-20 px-4 bg-white/50 backdrop-blur-lg">
+      <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-12">Featured Games</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -162,7 +162,7 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
       </section>
 
       {/* Why Choose SFS? Section */}
-      <section className="py-20 px-4 bg-white/50 backdrop-blur-lg">
+      <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-4xl md:text-5xl font-bold mb-12">Why Choose SFS?</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -195,7 +195,7 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
       </section>
 
       {/* Upcoming Fixtures Section */}
-      <section className="py-20 px-4 bg-white/50 backdrop-blur-lg">
+      <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">Upcoming Fixtures</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
