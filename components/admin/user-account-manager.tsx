@@ -1,509 +1,807 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useSupabase } from "@/lib/supabase/client"
+import { useToast } from "@/components/ui/use-toast"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
-import { Separator } from "@/components/ui/separator"
-import { AlertCircle, Search, Trash2, UserCheck, RefreshCw, Shield, Users, Database, Key, AlertTriangle, CheckCircle2 } from "lucide-react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { 
+  Dialog, 
+  DialogContent, 
+  DialogDescription, 
+  DialogFooter, 
+  DialogHeader, 
+  DialogTitle, 
+  DialogTrigger 
+} from "@/components/ui/dialog"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { 
+  User, 
+  Edit, 
+  Save, 
+  X, 
+  Shield, 
+  Ban, 
+  Unlock, 
+  Trash2, 
+  Eye, 
+  RefreshCw,
+  Search,
+  Filter,
+  Calendar,
+  MessageSquare,
+  Gamepad2,
+  Target,
+  Crown,
+  CheckCircle2,
+  XCircle,
+  AlertTriangle,
+  Clock,
+  Database,
+  Activity
+} from "lucide-react"
 import { motion } from "framer-motion"
-import { useToast } from "@/hooks/use-toast"
+
+interface UserAccount {
+  id: string
+  email: string
+  gamer_tag?: string
+  gamer_tag_id?: string
+  discord_username?: string
+  discord_id?: string
+  primary_position?: string
+  secondary_position?: string
+  console?: string
+  is_banned?: boolean
+  ban_reason?: string
+  ban_expires_at?: string
+  created_at: string
+  updated_at: string
+  last_sign_in_at?: string
+  email_confirmed_at?: string
+  roles?: string[]
+  team?: {
+    id: string
+    name: string
+  }
+  season_registrations?: any[]
+  player_stats?: any[]
+  trade_history?: any[]
+  waiver_history?: any[]
+}
+
+interface EditUserForm {
+  gamer_tag: string
+  gamer_tag_id: string
+  discord_username: string
+  discord_id: string
+  primary_position: string
+  secondary_position: string
+  console: string
+  roles: string[]
+}
 
 export function UserAccountManager() {
-  const [email, setEmail] = useState("")
-  const [adminKey, setAdminKey] = useState("")
-  const [isLoading, setIsLoading] = useState(false)
-  const [searchResults, setSearchResults] = useState<any>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState("search")
+  const { supabase } = useSupabase()
   const { toast } = useToast()
+  
+  const [users, setUsers] = useState<UserAccount[]>([])
+  const [filteredUsers, setFilteredUsers] = useState<UserAccount[]>([])
+  const [selectedUser, setSelectedUser] = useState<UserAccount | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [filterRole, setFilterRole] = useState("all")
+  const [filterStatus, setFilterStatus] = useState("all")
+  const [editDialogOpen, setEditDialogOpen] = useState(false)
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [editForm, setEditForm] = useState<EditUserForm>({
+    gamer_tag: "",
+    gamer_tag_id: "",
+    discord_username: "",
+    discord_id: "",
+    primary_position: "",
+    secondary_position: "",
+    console: "",
+    roles: []
+  })
 
-  const handleSearch = async () => {
-    if (!email.trim()) {
-      setError("Please enter an email address")
-      return
-    }
+  const availableRoles = [
+    { value: "Player", label: "Player" },
+    { value: "GM", label: "General Manager" },
+    { value: "AGM", label: "Assistant GM" },
+    { value: "Admin", label: "Administrator" }
+  ]
 
-    if (!adminKey.trim()) {
-      setError("Please enter your admin key")
-      return
-    }
+  const positions = [
+    "ST", "CF", "LW", "RW", "CAM", "CM", "CDM", "LM", "RM", 
+    "CB", "LB", "RB", "LWB", "RWB", "GK"
+  ]
 
-    setIsLoading(true)
-    setError(null)
-    setSearchResults(null)
+  const consoles = ["PS5", "Xbox"]
 
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+
+  useEffect(() => {
+    filterUsers()
+  }, [searchQuery, filterRole, filterStatus, users])
+
+  const fetchUsers = async () => {
     try {
-      console.log("Searching for user:", email)
+      setLoading(true)
+      const { data, error } = await supabase
+        .from("users")
+        .select(`
+          *,
+          user_roles(role),
+          teams(id, name),
+          season_registrations(*),
+          player_stats(*),
+          trades!initiator_user_id(*),
+          waivers(*)
+        `)
+        .order("created_at", { ascending: false })
 
-      const response = await fetch("/api/admin/search-user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email.trim(),
-          adminKey: adminKey.trim(),
-        }),
-      })
+      if (error) throw error
 
-      console.log("Response status:", response.status)
+      const processedUsers = (data || []).map(user => ({
+        ...user,
+        roles: user.user_roles?.map((r: any) => r.role) || [],
+        team: user.teams?.[0] || null,
+        season_registrations: user.season_registrations || [],
+        player_stats: user.player_stats || [],
+        trade_history: user.trades || [],
+        waiver_history: user.waivers || []
+      }))
 
-      const data = await response.json()
-      console.log("Response data:", data)
-
-      if (!response.ok) {
-        throw new Error(data.error || `HTTP ${response.status}: Failed to search for user`)
-      }
-
-      setSearchResults(data)
-      setActiveTab("results")
-
+      setUsers(processedUsers)
+    } catch (error) {
+      console.error("Error fetching users:", error)
       toast({
-        title: "Search completed",
-        description: `Found ${data.authUser ? "1" : "0"} auth user and ${data.dbUser ? "1" : "0"} database user`,
-      })
-    } catch (err: any) {
-      console.error("Search error:", err)
-      setError(err.message || "An error occurred while searching for the user")
-      toast({
-        title: "Search failed",
-        description: err.message || "An error occurred while searching for the user",
-        variant: "destructive",
+        title: "Error",
+        description: "Failed to load users",
+        variant: "destructive"
       })
     } finally {
-      setIsLoading(false)
+      setLoading(false)
     }
   }
 
-  const handleDeleteUser = async (userId: string, source: string) => {
-    if (!confirm(`Are you sure you want to delete this user from ${source}? This action cannot be undone.`)) {
-      return
+  const filterUsers = () => {
+    let filtered = users
+
+    // Search filter
+    if (searchQuery) {
+      filtered = filtered.filter(user => 
+        user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.gamer_tag?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.discord_username?.toLowerCase().includes(searchQuery.toLowerCase())
+      )
     }
 
-    setIsLoading(true)
+    // Role filter
+    if (filterRole !== "all") {
+      filtered = filtered.filter(user => 
+        user.roles?.includes(filterRole)
+      )
+    }
+
+    // Status filter
+    if (filterStatus !== "all") {
+      switch (filterStatus) {
+        case "active":
+          filtered = filtered.filter(user => !user.is_banned && user.email_confirmed_at)
+          break
+        case "banned":
+          filtered = filtered.filter(user => user.is_banned)
+          break
+        case "unconfirmed":
+          filtered = filtered.filter(user => !user.email_confirmed_at)
+          break
+        case "registered":
+          filtered = filtered.filter(user => user.season_registrations && user.season_registrations.length > 0)
+          break
+      }
+    }
+
+    setFilteredUsers(filtered)
+  }
+
+  const handleEditUser = (user: UserAccount) => {
+    setSelectedUser(user)
+    setEditForm({
+      gamer_tag: user.gamer_tag || "",
+      gamer_tag_id: user.gamer_tag_id || "",
+      discord_username: user.discord_username || "",
+      discord_id: user.discord_id || "",
+      primary_position: user.primary_position || "",
+      secondary_position: user.secondary_position || "",
+      console: user.console || "",
+      roles: user.roles || []
+    })
+    setEditDialogOpen(true)
+  }
+
+  const handleSaveUser = async () => {
+    if (!selectedUser) return
+
+    try {
+      // Update user basic info
+      const { error: userError } = await supabase
+        .from("users")
+        .update({
+          gamer_tag: editForm.gamer_tag,
+          gamer_tag_id: editForm.gamer_tag_id,
+          discord_username: editForm.discord_username,
+          discord_id: editForm.discord_id,
+          primary_position: editForm.primary_position,
+          secondary_position: editForm.secondary_position || null,
+          console: editForm.console,
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", selectedUser.id)
+
+      if (userError) throw userError
+
+      // Update user roles
+      const { error: deleteRolesError } = await supabase
+        .from("user_roles")
+        .delete()
+        .eq("user_id", selectedUser.id)
+
+      if (deleteRolesError) throw deleteRolesError
+
+      const { error: insertRolesError } = await supabase
+        .from("user_roles")
+        .insert(editForm.roles.map(role => ({
+          user_id: selectedUser.id,
+          role
+        })))
+
+      if (insertRolesError) throw insertRolesError
+
+      toast({
+        title: "User Updated",
+        description: "User account has been updated successfully",
+      })
+
+      setEditDialogOpen(false)
+      setSelectedUser(null)
+      fetchUsers()
+    } catch (error: any) {
+      console.error("Error updating user:", error)
+      toast({
+        title: "Error",
+        description: error.message || "Failed to update user",
+        variant: "destructive"
+      })
+    }
+  }
+
+  const handleDeleteUser = async () => {
+    if (!selectedUser) return
 
     try {
       const response = await fetch("/api/admin/delete-user", {
-        method: "POST",
+        method: "DELETE",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({ userId, source, adminKey }),
+        body: JSON.stringify({
+          userId: selectedUser.id,
+          cascade: true
+        })
       })
 
-      const data = await response.json()
+      const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to delete user")
+        throw new Error(result.error || "Failed to delete user")
       }
 
       toast({
-        title: "User deleted",
-        description: `User has been deleted from ${source}`,
+        title: "User Deleted",
+        description: `User ${selectedUser.email} has been completely deleted`,
       })
 
-      // Refresh search results
-      handleSearch()
-    } catch (err: any) {
+      setDeleteDialogOpen(false)
+      setSelectedUser(null)
+      fetchUsers()
+    } catch (error: any) {
+      console.error("Error deleting user:", error)
       toast({
         title: "Error",
-        description: err.message || "Failed to delete user",
-        variant: "destructive",
+        description: error.message || "Failed to delete user",
+        variant: "destructive"
       })
-    } finally {
-      setIsLoading(false)
     }
   }
 
-  const handleVerifyUser = async (userId: string) => {
-    setIsLoading(true)
-
+  const handleBanUser = async (userId: string, reason: string, duration: "permanent" | "temporary", days?: number) => {
     try {
-      const response = await fetch("/api/admin/manual-verify", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, adminKey }),
-      })
+      const expirationDate = duration === "temporary" && days
+        ? new Date(Date.now() + days * 24 * 60 * 60 * 1000).toISOString()
+        : null
 
-      const data = await response.json()
+      const { error: banError } = await supabase
+        .from("banned_users")
+        .insert({
+          user_id: userId,
+          reason,
+          expires_at: expirationDate,
+          banned_by: (await supabase.auth.getUser()).data.user?.id
+        })
 
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to verify user")
-      }
+      if (banError) throw banError
+
+      const { error: userError } = await supabase
+        .from("users")
+        .update({
+          is_banned: true,
+          ban_reason: reason,
+          ban_expires_at: expirationDate
+        })
+        .eq("id", userId)
+
+      if (userError) throw userError
 
       toast({
-        title: "User verified",
-        description: `User ${data.email || email} has been manually verified`,
+        title: "User Banned",
+        description: `User has been ${duration === "permanent" ? "permanently" : "temporarily"} banned`,
       })
 
-      // Refresh search results
-      handleSearch()
-    } catch (err: any) {
+      fetchUsers()
+    } catch (error: any) {
+      console.error("Error banning user:", error)
       toast({
         title: "Error",
-        description: err.message || "Failed to verify user",
-        variant: "destructive",
+        description: error.message || "Failed to ban user",
+        variant: "destructive"
       })
-    } finally {
-      setIsLoading(false)
     }
   }
 
-  const renderUserDetails = () => {
-    if (!searchResults) return null
+  const handleUnbanUser = async (userId: string) => {
+    try {
+      const { error: banError } = await supabase
+        .from("banned_users")
+        .delete()
+        .eq("user_id", userId)
 
-    const hasAnyUser = searchResults.authUser || searchResults.dbUser
-    const hasTokens = searchResults.verificationTokens && searchResults.verificationTokens.length > 0
+      if (banError) throw banError
+
+      const { error: userError } = await supabase
+        .from("users")
+        .update({
+          is_banned: false,
+          ban_reason: null,
+          ban_expires_at: null
+        })
+        .eq("id", userId)
+
+      if (userError) throw userError
+
+      toast({
+        title: "User Unbanned",
+        description: "User has been unbanned successfully",
+      })
+
+      fetchUsers()
+    } catch (error: any) {
+      console.error("Error unbanning user:", error)
+      toast({
+        title: "Error",
+        description: error.message || "Failed to unban user",
+        variant: "destructive"
+      })
+    }
+  }
+
+  const getStatusBadge = (user: UserAccount) => {
+    if (user.is_banned) {
+      return (
+        <Badge variant="destructive" className="flex items-center gap-1">
+          <Ban className="h-3 w-3" />
+          Banned
+        </Badge>
+      )
+    }
+
+    if (!user.email_confirmed_at) {
+      return (
+        <Badge variant="outline" className="flex items-center gap-1 border-yellow-500 text-yellow-600">
+          <Clock className="h-3 w-3" />
+          Unconfirmed
+        </Badge>
+      )
+    }
 
     return (
-      <div className="space-y-6">
-        {/* Show summary first */}
-        <Card className="hockey-enhanced-card">
-          <CardHeader>
-            <CardTitle className="text-xl text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
-                <Database className="h-5 w-5 text-white" />
-              </div>
-              Search Summary
-            </CardTitle>
-            <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
-              Results for: {searchResults.searchEmail}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid gap-3">
-              <div className="flex justify-between items-center">
-                <span className="text-hockey-silver-700 dark:text-hockey-silver-300">Auth User:</span>
-                <Badge className={searchResults.authUser ? "bg-assist-green-500 text-white" : "bg-hockey-silver-500 text-white"}>
-                  {searchResults.authUser ? "Found" : "Not Found"}
-                </Badge>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-hockey-silver-700 dark:text-hockey-silver-300">Database User:</span>
-                <Badge className={searchResults.dbUser ? "bg-assist-green-500 text-white" : "bg-hockey-silver-500 text-white"}>
-                  {searchResults.dbUser ? "Found" : "Not Found"}
-                </Badge>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-hockey-silver-700 dark:text-hockey-silver-300">Verification Tokens:</span>
-                <Badge className={hasTokens ? "bg-ice-blue-500 text-white" : "bg-hockey-silver-500 text-white"}>
-                  {hasTokens ? `${searchResults.verificationTokens.length} Found` : "None"}
-                </Badge>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {searchResults.authUser && (
-          <Card>
-            <CardHeader className="bg-amber-50 dark:bg-amber-900/20">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-amber-700 dark:text-amber-400">Supabase Auth User</CardTitle>
-                <Badge variant={searchResults.authUser.email_confirmed_at ? "success" : "destructive"}>
-                  {searchResults.authUser.email_confirmed_at ? "Verified" : "Unverified"}
-                </Badge>
-              </div>
-              <CardDescription>User authentication record</CardDescription>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <div className="grid gap-4">
-                <div className="grid grid-cols-3 items-center gap-4">
-                  <span className="font-medium">User ID:</span>
-                  <span className="col-span-2 font-mono text-sm">{searchResults.authUser.id}</span>
-                </div>
-                <div className="grid grid-cols-3 items-center gap-4">
-                  <span className="font-medium">Email:</span>
-                  <span className="col-span-2">{searchResults.authUser.email}</span>
-                </div>
-                <div className="grid grid-cols-3 items-center gap-4">
-                  <span className="font-medium">Created:</span>
-                  <span className="col-span-2">{new Date(searchResults.authUser.created_at).toLocaleString()}</span>
-                </div>
-                <div className="grid grid-cols-3 items-center gap-4">
-                  <span className="font-medium">Last Sign In:</span>
-                  <span className="col-span-2">
-                    {searchResults.authUser.last_sign_in_at
-                      ? new Date(searchResults.authUser.last_sign_in_at).toLocaleString()
-                      : "Never"}
-                  </span>
-                </div>
-                <div className="grid grid-cols-3 items-center gap-4">
-                  <span className="font-medium">Email Verified:</span>
-                  <span className="col-span-2">
-                    {searchResults.authUser.email_confirmed_at
-                      ? new Date(searchResults.authUser.email_confirmed_at).toLocaleString()
-                      : "No"}
-                  </span>
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-between border-t bg-muted/20 px-6 py-4">
-              <Button
-                variant="outline"
-                onClick={() => handleVerifyUser(searchResults.authUser.id)}
-                disabled={isLoading || searchResults.authUser.email_confirmed_at}
-              >
-                <UserCheck className="mr-2 h-4 w-4" />
-                Verify Email
-              </Button>
-              <Button
-                variant="destructive"
-                onClick={() => handleDeleteUser(searchResults.authUser.id, "auth")}
-                disabled={isLoading}
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete Auth User
-              </Button>
-            </CardFooter>
-          </Card>
-        )}
-
-        {searchResults.dbUser && (
-          <Card>
-            <CardHeader className="bg-blue-50 dark:bg-blue-900/20">
-              <CardTitle className="text-blue-700 dark:text-blue-400">Database User</CardTitle>
-              <CardDescription>User record in the database</CardDescription>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <div className="grid gap-4">
-                <div className="grid grid-cols-3 items-center gap-4">
-                  <span className="font-medium">User ID:</span>
-                  <span className="col-span-2 font-mono text-sm">{searchResults.dbUser.id}</span>
-                </div>
-                <div className="grid grid-cols-3 items-center gap-4">
-                  <span className="font-medium">Email:</span>
-                  <span className="col-span-2">{searchResults.dbUser.email}</span>
-                </div>
-                <div className="grid grid-cols-3 items-center gap-4">
-                  <span className="font-medium">Created:</span>
-                  <span className="col-span-2">{new Date(searchResults.dbUser.created_at).toLocaleString()}</span>
-                </div>
-                {searchResults.dbUser.is_active !== undefined && (
-                  <div className="grid grid-cols-3 items-center gap-4">
-                    <span className="font-medium">Active:</span>
-                    <span className="col-span-2">{searchResults.dbUser.is_active ? "Yes" : "No"}</span>
-                  </div>
-                )}
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-end border-t bg-muted/20 px-6 py-4">
-              <Button
-                variant="destructive"
-                onClick={() => handleDeleteUser(searchResults.dbUser.id, "database")}
-                disabled={isLoading}
-              >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete DB User
-              </Button>
-            </CardFooter>
-          </Card>
-        )}
-
-        {searchResults.verificationTokens && searchResults.verificationTokens.length > 0 && (
-          <Card>
-            <CardHeader className="bg-purple-50 dark:bg-purple-900/20">
-              <CardTitle className="text-purple-700 dark:text-purple-400">Verification Tokens</CardTitle>
-              <CardDescription>Email verification tokens for this user</CardDescription>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <div className="space-y-4">
-                {searchResults.verificationTokens.map((token: any, index: number) => (
-                  <div key={index} className="rounded-md border p-4">
-                    <div className="grid gap-2">
-                      <div className="grid grid-cols-3 items-center gap-4">
-                        <span className="font-medium">Token:</span>
-                        <span className="col-span-2 font-mono text-sm truncate">{token.token}</span>
-                      </div>
-                      <div className="grid grid-cols-3 items-center gap-4">
-                        <span className="font-medium">Created:</span>
-                        <span className="col-span-2">{new Date(token.created_at).toLocaleString()}</span>
-                      </div>
-                      <div className="grid grid-cols-3 items-center gap-4">
-                        <span className="font-medium">Expires:</span>
-                        <span className="col-span-2">{new Date(token.expires_at).toLocaleString()}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-            <CardFooter className="flex justify-end border-t bg-muted/20 px-6 py-4">
-              <Button variant="destructive" onClick={() => handleDeleteUser(email, "tokens")} disabled={isLoading}>
-                <Trash2 className="mr-2 h-4 w-4" />
-                Delete All Tokens
-              </Button>
-            </CardFooter>
-          </Card>
-        )}
-
-        {searchResults.roles && searchResults.roles.length > 0 && (
-          <Card>
-            <CardHeader className="bg-green-50 dark:bg-green-900/20">
-              <CardTitle className="text-green-700 dark:text-green-400">User Roles</CardTitle>
-              <CardDescription>Assigned roles for this user</CardDescription>
-            </CardHeader>
-            <CardContent className="pt-6">
-              <div className="flex flex-wrap gap-2">
-                {searchResults.roles.map((role: any, index: number) => (
-                  <Badge key={index} variant="outline" className="bg-green-100 dark:bg-green-900/30">
-                    {role.role}
-                  </Badge>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {!searchResults.authUser && !searchResults.dbUser && (
-          <Alert variant="destructive">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>User Not Found</AlertTitle>
-            <AlertDescription>
-              No user found with email {email}. This email is available for registration.
-            </AlertDescription>
-          </Alert>
-        )}
-
-        {searchResults.authUser && !searchResults.dbUser && (
-          <Alert variant="warning">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Orphaned Auth User</AlertTitle>
-            <AlertDescription>
-              This user exists in Auth but not in the database. This can cause issues with login and registration.
-              Consider deleting the Auth user to allow re-registration.
-            </AlertDescription>
-          </Alert>
-        )}
-
-        {!searchResults.authUser && searchResults.dbUser && (
-          <Alert variant="warning">
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Orphaned Database User</AlertTitle>
-            <AlertDescription>
-              This user exists in the database but not in Auth. This can cause issues with login and registration.
-              Consider deleting the database user to allow re-registration.
-            </AlertDescription>
-          </Alert>
-        )}
-      </div>
+      <Badge variant="outline" className="flex items-center gap-1 border-green-500 text-green-600">
+        <CheckCircle2 className="h-3 w-3" />
+        Active
+      </Badge>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
-      <div className="space-y-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+            User Account Manager
+          </h2>
+          <p className="text-field-green-600 dark:text-field-green-400">
+            Comprehensive user account management and administration
+          </p>
+        </div>
+        <Button
+          onClick={fetchUsers}
+          variant="outline"
+          size="sm"
+          className="fifa-button-enhanced"
         >
-          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 gap-2 p-2 bg-hockey-silver-100 dark:bg-hockey-silver-800 rounded-xl">
-              <TabsTrigger 
-                value="search" 
-                className="px-6 py-3 rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white hover:bg-hockey-silver-200 dark:hover:bg-hockey-silver-700 transition-all duration-200"
-              >
-                <Search className="mr-2 h-4 w-4" />
-                Search User
-              </TabsTrigger>
-              <TabsTrigger 
-                value="results" 
-                disabled={!searchResults}
-                className="px-6 py-3 rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white hover:bg-hockey-silver-200 dark:hover:bg-hockey-silver-700 transition-all duration-200"
-              >
-                <Users className="mr-2 h-4 w-4" />
-                Results
-              </TabsTrigger>
-            </TabsList>
-        <TabsContent value="search" className="space-y-4 pt-4">
-          <Card className="hockey-enhanced-card">
-            <CardHeader>
-              <CardTitle className="text-2xl text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
-                  <Shield className="h-6 w-6 text-white" />
-                </div>
-                Search for User Account
-              </CardTitle>
-              <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
-                Enter an email address to search for a user across all systems
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <label htmlFor="email" className="text-sm font-medium text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-2">
-                  <Users className="h-4 w-4 text-assist-green-500" />
-                  User Email
-                </label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="user@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="hockey-search"
-                />
-              </div>
-              <div className="space-y-3">
-                <label htmlFor="adminKey" className="text-sm font-medium text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-2">
-                  <Key className="h-4 w-4 text-ice-blue-500" />
-                  Admin Key
-                </label>
-                <Input
-                  id="adminKey"
-                  type="password"
-                  placeholder="Enter your admin key"
-                  value={adminKey}
-                  onChange={(e) => setAdminKey(e.target.value)}
-                  className="hockey-search"
-                />
-              </div>
-              {error && (
-                <Alert variant="destructive" className="hockey-enhanced-card border-goal-red-200 dark:border-goal-red-800">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle className="text-hockey-silver-900 dark:text-hockey-silver-100">Error</AlertTitle>
-                  <AlertDescription className="text-hockey-silver-700 dark:text-hockey-silver-300">{error}</AlertDescription>
-                </Alert>
-              )}
-            </CardContent>
-            <CardFooter>
-              <Button onClick={handleSearch} disabled={isLoading || !email || !adminKey} className="w-full hockey-button-enhanced bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white">
-                {isLoading ? (
-                  <>
-                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
-                    Searching...
-                  </>
-                ) : (
-                  <>
-                    <Search className="mr-2 h-4 w-4" />
-                    Search User
-                  </>
-                )}
-              </Button>
-            </CardFooter>
-          </Card>
-        </TabsContent>
-        <TabsContent value="results" className="space-y-4 pt-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-medium text-hockey-silver-900 dark:text-hockey-silver-100">
-              Results for: <span className="font-bold text-ice-blue-600 dark:text-ice-blue-400">{email}</span>
-            </h3>
-            <Button variant="outline" onClick={() => handleSearch()} disabled={isLoading} className="hockey-button-enhanced">
-              <RefreshCw className={`mr-2 h-4 w-4 ${isLoading ? "animate-spin" : ""}`} />
-              Refresh
-            </Button>
-          </div>
-          <Separator className="bg-hockey-silver-200 dark:bg-hockey-silver-700" />
-          {renderUserDetails()}
-        </TabsContent>
-      </Tabs>
-        </motion.div>
+          <RefreshCw className="h-4 w-4 mr-2" />
+          Refresh
+        </Button>
       </div>
+
+      {/* Filters */}
+      <Card className="fifa-card-hover-enhanced">
+        <CardContent className="p-4">
+          <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex-1">
+              <Label htmlFor="search">Search Users</Label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-field-green-400" />
+                <Input
+                  id="search"
+                  placeholder="Search by email, gamer tag, or Discord username..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 fifa-search"
+                />
+              </div>
+            </div>
+            <div className="sm:w-48">
+              <Label htmlFor="role-filter">Filter by Role</Label>
+              <select
+                id="role-filter"
+                value={filterRole}
+                onChange={(e) => setFilterRole(e.target.value)}
+                className="w-full p-2 border border-field-green-200 rounded-lg bg-white dark:bg-slate-800 dark:border-field-green-700"
+              >
+                <option value="all">All Roles</option>
+                {availableRoles.map(role => (
+                  <option key={role.value} value={role.value}>{role.label}</option>
+                ))}
+              </select>
+            </div>
+            <div className="sm:w-48">
+              <Label htmlFor="status-filter">Filter by Status</Label>
+              <select
+                id="status-filter"
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="w-full p-2 border border-field-green-200 rounded-lg bg-white dark:bg-slate-800 dark:border-field-green-700"
+              >
+                <option value="all">All Status</option>
+                <option value="active">Active</option>
+                <option value="banned">Banned</option>
+                <option value="unconfirmed">Unconfirmed</option>
+                <option value="registered">Season Registered</option>
+              </select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Users List */}
+      <Card className="fifa-card-hover-enhanced">
+        <CardHeader>
+          <CardTitle>Users ({filteredUsers.length})</CardTitle>
+          <CardDescription>
+            Manage user accounts and permissions
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {loading ? (
+            <div className="text-center p-8">
+              <RefreshCw className="h-6 w-6 animate-spin text-field-green-500 mx-auto mb-2" />
+              <p className="text-field-green-600">Loading users...</p>
+            </div>
+          ) : filteredUsers.length === 0 ? (
+            <div className="text-center p-8">
+              <User className="h-12 w-12 text-field-green-400 mx-auto mb-4" />
+              <p className="text-field-green-600">No users found</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredUsers.map((user) => (
+                <motion.div
+                  key={user.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="border border-field-green-200 dark:border-field-green-700 rounded-lg p-4 hover:bg-field-green-50 dark:hover:bg-field-green-900/20 transition-colors"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full flex items-center justify-center">
+                        <User className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-semibold text-field-green-800 dark:text-field-green-200">
+                            {user.gamer_tag || user.email}
+                          </h3>
+                          {getStatusBadge(user)}
+                        </div>
+                        <p className="text-sm text-field-green-600 dark:text-field-green-400">
+                          {user.email}
+                        </p>
+                        <div className="flex items-center gap-4 mt-1">
+                          {user.discord_username && (
+                            <p className="text-xs text-pitch-blue-600 dark:text-pitch-blue-400 flex items-center gap-1">
+                              <MessageSquare className="h-3 w-3" />
+                              {user.discord_username}
+                            </p>
+                          )}
+                          {user.primary_position && (
+                            <p className="text-xs text-field-green-600 dark:text-field-green-400 flex items-center gap-1">
+                              <Target className="h-3 w-3" />
+                              {user.primary_position}
+                            </p>
+                          )}
+                          {user.console && (
+                            <p className="text-xs text-stadium-gold-600 dark:text-stadium-gold-400 flex items-center gap-1">
+                              <Gamepad2 className="h-3 w-3" />
+                              {user.console}
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                          {user.roles?.map((role) => (
+                            <Badge
+                              key={role}
+                              variant={role === "Admin" ? "destructive" : "secondary"}
+                              className="text-xs"
+                            >
+                              {role}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleEditUser(user)}
+                        className="h-8 w-8 p-0"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      {user.is_banned ? (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleUnbanUser(user.id)}
+                          className="h-8 w-8 p-0 text-green-600 hover:text-green-700"
+                        >
+                          <Unlock className="h-4 w-4" />
+                        </Button>
+                      ) : (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => handleBanUser(user.id, "Manual ban", "temporary", 7)}
+                          className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
+                        >
+                          <Ban className="h-4 w-4" />
+                        </Button>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => {
+                          setSelectedUser(user)
+                          setDeleteDialogOpen(true)
+                        }}
+                        className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
+      {/* Edit User Dialog */}
+      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Edit User Account</DialogTitle>
+            <DialogDescription>
+              Update user information and roles
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="gamer_tag">Gamer Tag</Label>
+                <Input
+                  id="gamer_tag"
+                  value={editForm.gamer_tag}
+                  onChange={(e) => setEditForm({ ...editForm, gamer_tag: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="gamer_tag_id">Gamer Tag ID</Label>
+                <Input
+                  id="gamer_tag_id"
+                  value={editForm.gamer_tag_id}
+                  onChange={(e) => setEditForm({ ...editForm, gamer_tag_id: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="discord_username">Discord Username</Label>
+                <Input
+                  id="discord_username"
+                  value={editForm.discord_username}
+                  onChange={(e) => setEditForm({ ...editForm, discord_username: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="discord_id">Discord ID</Label>
+                <Input
+                  id="discord_id"
+                  value={editForm.discord_id}
+                  onChange={(e) => setEditForm({ ...editForm, discord_id: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label htmlFor="primary_position">Primary Position</Label>
+                <select
+                  id="primary_position"
+                  value={editForm.primary_position}
+                  onChange={(e) => setEditForm({ ...editForm, primary_position: e.target.value })}
+                  className="w-full p-2 border border-field-green-200 rounded-lg bg-white dark:bg-slate-800 dark:border-field-green-700"
+                >
+                  <option value="">Select Position</option>
+                  {positions.map(pos => (
+                    <option key={pos} value={pos}>{pos}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <Label htmlFor="secondary_position">Secondary Position</Label>
+                <select
+                  id="secondary_position"
+                  value={editForm.secondary_position}
+                  onChange={(e) => setEditForm({ ...editForm, secondary_position: e.target.value })}
+                  className="w-full p-2 border border-field-green-200 rounded-lg bg-white dark:bg-slate-800 dark:border-field-green-700"
+                >
+                  <option value="">Select Position</option>
+                  {positions.map(pos => (
+                    <option key={pos} value={pos}>{pos}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="console">Console</Label>
+              <select
+                id="console"
+                value={editForm.console}
+                onChange={(e) => setEditForm({ ...editForm, console: e.target.value })}
+                className="w-full p-2 border border-field-green-200 rounded-lg bg-white dark:bg-slate-800 dark:border-field-green-700"
+              >
+                <option value="">Select Console</option>
+                {consoles.map(console => (
+                  <option key={console} value={console}>{console}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <Label>Roles</Label>
+              <div className="flex flex-wrap gap-2 mt-2">
+                {availableRoles.map(role => (
+                  <label key={role.value} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={editForm.roles.includes(role.value)}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setEditForm({ ...editForm, roles: [...editForm.roles, role.value] })
+                        } else {
+                          setEditForm({ ...editForm, roles: editForm.roles.filter(r => r !== role.value) })
+                        }
+                      }}
+                      className="rounded border-field-green-300"
+                    />
+                    <span className="text-sm">{role.label}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setEditDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSaveUser}
+              className="fifa-button-enhanced"
+            >
+              <Save className="h-4 w-4 mr-2" />
+              Save Changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Delete User Dialog */}
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete User Account</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to permanently delete this user account? This action cannot be undone and will remove all associated data.
+            </DialogDescription>
+          </DialogHeader>
+          {selectedUser && (
+            <Alert variant="destructive">
+              <AlertTriangle className="h-4 w-4" />
+              <AlertTitle>Warning</AlertTitle>
+              <AlertDescription>
+                This will permanently delete user <strong>{selectedUser.gamer_tag || selectedUser.email}</strong> and all associated data including:
+                <ul className="list-disc list-inside mt-2">
+                  <li>User profile and settings</li>
+                  <li>Season registrations</li>
+                  <li>Player statistics</li>
+                  <li>Trade history</li>
+                  <li>Waiver history</li>
+                  <li>All related records</li>
+                </ul>
+              </AlertDescription>
+            </Alert>
+          )}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDeleteDialogOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDeleteUser}
+              className="fifa-button-enhanced"
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Delete Permanently
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
