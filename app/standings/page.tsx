@@ -24,37 +24,51 @@ import {
   Flame,
   ArrowUpDown
 } from "lucide-react"
-import type { TeamStanding } from "@/lib/standings-calculator"
 
 interface StandingsPageProps {
   searchParams: { season?: string }
 }
 
-function DivisionStandings({ standings }: { standings: TeamStanding[] }) {
-  // Group teams by division (Premier League style - 3 divisions)
-  const divisions = new Map<string, { teams: TeamStanding[], name: string, color: string }>()
+interface TeamStanding {
+  id: string
+  name: string
+  logo_url: string | null
+  wins: number
+  losses: number
+  otl: number
+  games_played: number
+  points: number
+  goals_for: number
+  goals_against: number
+  goal_differential: number
+  division?: string
+  conference?: string
+  conference_id?: string
+  conference_color?: string
+}
+
+function ConferenceStandings({ standings }: { standings: TeamStanding[] }) {
+  // Group teams by conference
+  const conferences = new Map<string, { teams: TeamStanding[], name: string, color: string }>()
   
   standings.forEach(team => {
-    const divisionKey = team.division || "Premier Division"
-    if (!divisions.has(divisionKey)) {
-      // Assign colors based on division
-      let color = '#6366f1' // Default color
-      if (divisionKey === "Premier Division") color = '#16a34a' // Field green
-      else if (divisionKey === "Championship Division") color = '#f59e0b' // Stadium gold
-      else if (divisionKey === "League One") color = '#f97316' // Goal orange
+    const conferenceKey = team.conference || "No Conference"
+    if (!conferences.has(conferenceKey)) {
+      // Use conference color or default
+      const color = team.conference_color || '#6366f1'
       
-      divisions.set(divisionKey, {
+      conferences.set(conferenceKey, {
         teams: [],
-        name: divisionKey,
+        name: conferenceKey,
         color: color
       })
     }
     
-    divisions.get(divisionKey)!.teams.push(team)
+    conferences.get(conferenceKey)!.teams.push(team)
   })
 
-  // Sort teams within each division
-  const sortDivisionTeams = (teams: TeamStanding[]) => {
+  // Sort teams within each conference
+  const sortConferenceTeams = (teams: TeamStanding[]) => {
     return teams.sort((a, b) => {
       if (a.points !== b.points) return b.points - a.points
       if (a.wins !== b.wins) return b.wins - a.wins
@@ -63,120 +77,57 @@ function DivisionStandings({ standings }: { standings: TeamStanding[] }) {
     })
   }
 
-  // Get teams for each division
-  const premierTeams = sortDivisionTeams(divisions.get("Premier Division")?.teams || [])
-  const championshipTeams = sortDivisionTeams(divisions.get("Championship Division")?.teams || [])
-  const leagueOneTeams = sortDivisionTeams(divisions.get("League One")?.teams || [])
+  // Get all conferences
+  const conferenceEntries = Array.from(conferences.entries())
 
   return (
     <div className="grid gap-8 grid-cols-1">
-      {/* Premier Division */}
-      <motion.div
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        <Card className="fifa-card fifa-card-hover h-full group border-2 border-field-green-200/50 dark:border-field-green-700/50 shadow-2xl shadow-field-green-500/20 overflow-hidden">
-          <CardHeader className="pb-4 relative">
-            <div
-              className="absolute top-0 right-0 w-24 h-24 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"
-              style={{
-                background: `linear-gradient(135deg, #10b98120, #10b98140)`
-              }}
-            ></div>
-            <CardTitle className="flex items-center gap-2 sm:gap-3 relative z-10">
-              <div
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg"
-                style={{
-                  background: `linear-gradient(135deg, #10b981, #10b981dd)`,
-                  boxShadow: `0 10px 25px #10b98140`
-                }}
-              >
-                <Trophy className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Premier Division</div>
-                <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{premierTeams.length} clubs</div>
-              </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <TeamStandings teams={premierTeams} />
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* Championship Division */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-      >
-        <Card className="fifa-card fifa-card-hover h-full group border-2 border-stadium-gold-200/50 dark:border-stadium-gold-700/50 shadow-2xl shadow-stadium-gold-500/20 overflow-hidden">
-          <CardHeader className="pb-4 relative">
-            <div
-              className="absolute top-0 right-0 w-24 h-24 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"
-              style={{
-                background: `linear-gradient(135deg, #f59e0b20, #f59e0b40)`
-              }}
-            ></div>
-            <CardTitle className="flex items-center gap-2 sm:gap-3 relative z-10">
-              <div
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg"
-                style={{
-                  background: `linear-gradient(135deg, #f59e0b, #f59e0bdd)`,
-                  boxShadow: `0 10px 25px #f59e0b40`
-                }}
-              >
-                <Award className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">Championship Division</div>
-                <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{championshipTeams.length} clubs</div>
-              </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <TeamStandings teams={championshipTeams} />
-          </CardContent>
-        </Card>
-      </motion.div>
-
-      {/* League One */}
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <Card className="fifa-card fifa-card-hover h-full group border-2 border-goal-orange-200/50 dark:border-goal-orange-700/50 shadow-2xl shadow-goal-orange-500/20 overflow-hidden">
-          <CardHeader className="pb-4 relative">
-            <div
-              className="absolute top-0 right-0 w-24 h-24 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"
-              style={{
-                background: `linear-gradient(135deg, #ea580c20, #ea580c40)`
-              }}
-            ></div>
-            <CardTitle className="flex items-center gap-2 sm:gap-3 relative z-10">
-              <div
-                className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg"
-                style={{
-                  background: `linear-gradient(135deg, #ea580c, #ea580cdd)`,
-                  boxShadow: `0 10px 25px #ea580c40`
-                }}
-              >
-                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">League One</div>
-                <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{leagueOneTeams.length} clubs</div>
-              </div>
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-0">
-            <TeamStandings teams={leagueOneTeams} />
-          </CardContent>
-        </Card>
-      </motion.div>
+      {conferenceEntries.map(([conferenceName, conferenceData], index) => {
+        const sortedTeams = sortConferenceTeams(conferenceData.teams)
+        const conferenceColor = conferenceData.color
+        
+        return (
+          <motion.div
+            key={conferenceName}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 * index }}
+          >
+            <Card className="fifa-card fifa-card-hover h-full group border-2 overflow-hidden" 
+                  style={{ 
+                    borderColor: `${conferenceColor}50`,
+                    boxShadow: `0 25px 50px ${conferenceColor}20`
+                  }}>
+              <CardHeader className="pb-4 relative">
+                <div
+                  className="absolute top-0 right-0 w-24 h-24 rounded-full -mr-6 -mt-6 opacity-60 group-hover:opacity-80 transition-opacity duration-300"
+                  style={{
+                    background: `linear-gradient(135deg, ${conferenceColor}20, ${conferenceColor}40)`
+                  }}
+                ></div>
+                <CardTitle className="flex items-center gap-2 sm:gap-3 relative z-10">
+                  <div
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-lg"
+                    style={{
+                      background: `linear-gradient(135deg, ${conferenceColor}, ${conferenceColor}dd)`,
+                      boxShadow: `0 10px 25px ${conferenceColor}40`
+                    }}
+                  >
+                    <Trophy className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
+                  </div>
+                  <div>
+                    <div className="text-xl sm:text-2xl font-bold text-pitch-blue-800 dark:text-pitch-blue-200">{conferenceName}</div>
+                    <div className="text-sm sm:text-lg text-pitch-blue-600 dark:text-pitch-blue-400">{sortedTeams.length} clubs</div>
+                  </div>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0">
+                <TeamStandings teams={sortedTeams} />
+              </CardContent>
+            </Card>
+          </motion.div>
+        )
+      })}
     </div>
   )
 }
@@ -234,7 +185,8 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
             division,
             conference_id,
             conferences (
-              name
+              name,
+              color
             )
           `)
           .eq("is_active", true)
@@ -255,7 +207,7 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
             away_score,
             status
           `)
-          .eq("season_id", seasonData.id)
+          .eq("season_id", (seasonData as any).id)
           .eq("status", "completed")
 
         if (matchesError) {
@@ -265,14 +217,14 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
         }
 
         // Calculate standings for each team
-        const calculatedStandings = teamsData.map((team) => {
+        const calculatedStandings = teamsData.map((team: any) => {
           let wins = 0
           let losses = 0
           let otl = 0
           let goalsFor = 0
           let goalsAgainst = 0
 
-          matchesData.forEach((match) => {
+          matchesData.forEach((match: any) => {
             if (match.home_team_id === team.id) {
               goalsFor += match.home_score || 0
               goalsAgainst += match.away_score || 0
@@ -315,8 +267,9 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
             goals_against: goalsAgainst,
             goal_differential: goalDifferential,
             division: team.division || "Premier Division",
-            conference: team.conferences?.name || "Unknown",
+            conference: team.conferences?.name || "No Conference",
             conference_id: team.conference_id,
+            conference_color: team.conferences?.color || "#6B7280",
           }
         })
 
@@ -386,18 +339,18 @@ export default function StandingsPage({ searchParams }: StandingsPageProps) {
               transition={{ delay: 0.2 }}
               className="text-lg md:text-xl text-pitch-blue-600 dark:text-pitch-blue-400 max-w-2xl mx-auto"
             >
-              Follow your team's progress through the Premier League, Championship, and League One divisions
+              Follow your team's progress through the league conferences
             </motion.p>
           </div>
 
-          {/* Divisions */}
+          {/* Conferences */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
             <div className="space-y-6">
-              <DivisionStandings standings={standings} />
+              <ConferenceStandings standings={standings} />
             </div>
           </motion.div>
         </motion.div>
