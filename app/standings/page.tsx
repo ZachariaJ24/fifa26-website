@@ -5,32 +5,18 @@ import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useToast } from "@/components/ui/use-toast"
-import TeamStandings from "@/components/team-standings"
+import TeamStandings, { type TeamStanding } from "@/components/team-standings"
 import { Trophy, BarChart3, Users } from "lucide-react"
 
-interface Standing {
+interface Conference {
   id: string;
   name: string;
-  logo_url: string;
-  wins: number;
-  draws: number;
-  losses: number;
-  points: number;
-  games_played: number;
-  goals_for: number;
-  goals_against: number;
-  goal_difference: number;
-}
-
-interface League {
-  id: string;
-  name: string;
-  standings: Standing[];
+  standings: TeamStanding[];
 }
 
 export default function StandingsPage() {
   const { toast } = useToast()
-  const [leagues, setLeagues] = useState<League[]>([])
+  const [conferences, setConferences] = useState<Conference[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -39,8 +25,8 @@ export default function StandingsPage() {
         setLoading(true)
         const response = await fetch("/api/standings-by-league")
         if (!response.ok) throw new Error("Failed to fetch standings")
-        const { leagues } = await response.json()
-        setLeagues(leagues)
+        const { conferences } = await response.json()
+        setConferences(conferences)
       } catch (error: any) {
         toast({
           title: "Error loading standings",
@@ -76,13 +62,13 @@ export default function StandingsPage() {
           </div>
         ) : (
           <div className="space-y-12">
-            {leagues.map((league) => (
-              <Card key={league.id} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-green-500/20 transition-shadow duration-300">
+            {conferences.map((conference) => (
+              <Card key={conference.id} className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-gray-200 dark:border-gray-700 shadow-2xl hover:shadow-blue-500/20 dark:hover:shadow-green-500/20 transition-shadow duration-300">
                 <CardHeader>
-                  <CardTitle className="text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent">{league.name}</CardTitle>
+                  <CardTitle className="text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-blue-500 to-green-400 bg-clip-text text-transparent">{conference.name}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <TeamStandings teams={league.standings} />
+                  <TeamStandings teams={conference.standings} />
                 </CardContent>
               </Card>
             ))}

@@ -8,7 +8,7 @@ interface Team {
   id: string;
   name: string;
   logo_url: string;
-  league_id: string;
+  conference_id: string;
 }
 
 interface Match {
@@ -32,7 +32,7 @@ interface Standing {
   goal_difference: number;
 }
 
-interface League {
+interface Conference {
   id: string;
   name: string;
   standings: Standing[];
@@ -42,17 +42,17 @@ export async function GET() {
   const supabase = createRouteHandlerClient({ cookies })
 
   try {
-    // 1. Fetch all leagues
-    const { data: leagues, error: leaguesError } = await supabase
-      .from('leagues')
+    // 1. Fetch all conferences
+    const { data: conferences, error: conferencesError } = await supabase
+      .from('conferences')
       .select('id, name')
 
-    if (leaguesError) throw new Error(leaguesError.message)
+    if (conferencesError) throw new Error(conferencesError.message)
 
     // 2. Fetch all teams
     const { data: teams, error: teamsError } = await supabase
       .from('teams')
-      .select('id, name, logo_url, league_id')
+      .select('id, name, logo_url, conference_id')
 
     if (teamsError) throw new Error(teamsError.message)
 
@@ -64,11 +64,11 @@ export async function GET() {
 
     if (matchesError) throw new Error(matchesError.message)
 
-    // 4. Process and calculate standings for each league
-    const leaguesWithStandings: League[] = leagues.map(league => {
-      const leagueTeams = teams.filter(team => team.league_id === league.id)
+    // 4. Process and calculate standings for each conference
+    const conferencesWithStandings: Conference[] = conferences.map(conference => {
+      const conferenceTeams = teams.filter(team => team.conference_id === conference.id)
       
-      const standings: Standing[] = leagueTeams.map(team => {
+      const standings: Standing[] = conferenceTeams.map(team => {
         let wins = 0
         let draws = 0
         let losses = 0
@@ -118,12 +118,12 @@ export async function GET() {
       })
 
       return {
-        ...league,
+        ...conference,
         standings
       }
     })
 
-    return NextResponse.json({ leagues: leaguesWithStandings })
+    return NextResponse.json({ conferences: conferencesWithStandings })
 
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 })
