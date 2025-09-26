@@ -57,6 +57,7 @@ export const config = {
     "/api/admin/transfers/:path*",
     "/api/admin/signings/:path*",
     "/api/admin/remove-user-transfers/:path*",
+    "/api/admin/sync-standings/:path*",
     "/api/forum/replies/:path*",
     "/api/forum/votes/:path*",
     "/api/forum/posts/:path*",

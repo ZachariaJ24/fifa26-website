@@ -11,6 +11,7 @@ import { AdminDiagnostics } from "@/components/admin/admin-diagnostics"
 import { RemoveUserTransfers } from "@/components/admin/remove-user-transfers"
 import { IpTracking } from "@/components/admin/ip-tracking"
 import { SeasonsManager } from "@/components/admin/seasons-manager"
+import { SyncStandingsButton } from "@/components/admin/sync-standings-button"
 import { Settings, Shield, Users, Database, Trophy, Activity } from "lucide-react"
 // import { motion } from "framer-motion"
 
@@ -116,7 +117,7 @@ export function AdminSettingsPageClient() {
 
           <Tabs defaultValue="transfers" className="space-y-8">
             <div className="flex justify-center">
-              <TabsList className="grid grid-cols-6 w-full max-w-5xl gap-3 p-2 bg-gradient-to-r from-ice-blue-100/80 to-rink-blue-100/80 dark:from-ice-blue-900/40 dark:to-rink-blue-900/40 rounded-2xl border-2 border-ice-blue-200/60 dark:border-rink-blue-700/60 shadow-xl backdrop-blur-sm">
+              <TabsList className="grid grid-cols-7 w-full max-w-6xl gap-3 p-2 bg-gradient-to-r from-ice-blue-100/80 to-rink-blue-100/80 dark:from-ice-blue-900/40 dark:to-rink-blue-900/40 rounded-2xl border-2 border-ice-blue-200/60 dark:border-rink-blue-700/60 shadow-xl backdrop-blur-sm">
                 <TabsTrigger 
                   value="transfers" 
                   className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
@@ -153,6 +154,13 @@ export function AdminSettingsPageClient() {
                   Seasons
                 </TabsTrigger>
                 <TabsTrigger 
+                  value="standings" 
+                  className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
+                >
+                  <Trophy className="h-5 w-5" />
+                  Standings
+                </TabsTrigger>
+                <TabsTrigger 
                   value="diagnostics" 
                   className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
                 >
@@ -180,6 +188,10 @@ export function AdminSettingsPageClient() {
 
         <TabsContent value="seasons">
           <SeasonsManager />
+        </TabsContent>
+
+        <TabsContent value="standings">
+          <SyncStandingsButton />
         </TabsContent>
 
         <TabsContent value="diagnostics">
