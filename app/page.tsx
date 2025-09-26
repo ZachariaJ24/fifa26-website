@@ -365,141 +365,19 @@ export default function Home() {
 
         setLoading((prev) => ({ ...prev, games: false }))
 
-        // Fetch team standings using the same logic as standings page
+        // Fetch team standings using unified calculation
         try {
           console.log("=== STARTING STANDINGS FETCH ===")
-          console.log("Fetching standings using standings page approach...")
+          console.log("Fetching standings using unified calculation...")
           
-          // Get all teams with conference information (same as standings page)
-          const { data: teamsData, error: teamsError } = await supabase
-            .from("teams")
-            .select(`
-              *,
-              conferences!left(name)
-            `)
-            .eq("is_active", true)
-            .order("name")
-
-          if (teamsError) {
-            throw teamsError
-          }
-
-          if (!teamsData || teamsData.length === 0) {
-            console.log("No teams found")
-            setStandings([])
-            setLoading((prev) => ({ ...prev, standings: false }))
-            return
-          }
-
-          console.log(`Found ${teamsData.length} teams:`, teamsData.slice(0, 2))
-
-          // Get current season name (same as standings page)
-          let currentSeasonName = "Season 1" // Default fallback
+          // Import the unified standings calculator
+          const { calculateUnifiedStandingsClient } = await import("@/lib/standings-calculator-unified")
           
-          try {
-            const { data: activeSeason } = await supabase
-              .from("seasons")
-              .select("name")
-              .eq("is_active", true)
-              .single()
-            
-            if (activeSeason?.name) {
-              currentSeasonName = activeSeason.name
-            }
-          } catch (seasonError) {
-            console.log("Could not fetch active season, using default:", seasonError)
-          }
+          const { standings } = await calculateUnifiedStandingsClient(supabase)
 
-          // Get all matches for the current season (same as standings page)
-          const { data: matchesData, error: matchesError } = await supabase
-            .from("matches")
-            .select("*")
-            .eq("season_name", currentSeasonName)
-            .eq("status", "completed")
-
-          if (matchesError) {
-            console.error("Error fetching matches:", matchesError)
-          } else {
-            console.log(`Found ${matchesData?.length || 0} completed matches for season: ${currentSeasonName}`)
-            if (matchesData && matchesData.length > 0) {
-              console.log("Sample match data:", matchesData.slice(0, 2))
-            }
-          }
-
-          // Calculate standings manually (same logic as standings page)
-          const calculatedStandings = teamsData.map((team, index) => {
-            let wins = 0
-            let losses = 0
-            let otl = 0
-            let goalsFor = 0
-            let goalsAgainst = 0
-
-            // Calculate stats from matches
-            matchesData?.forEach((match) => {
-              if (match.home_team_id === team.id) {
-                goalsFor += match.home_score || 0
-                goalsAgainst += match.away_score || 0
-
-                if (match.home_score > match.away_score) {
-                  wins++
-                } else if (match.home_score < match.away_score) {
-                  if (match.overtime || match.has_overtime) {
-                    otl++
-                  } else {
-                    losses++
-                  }
-                } else {
-                  losses++ // Tie counts as loss
-                }
-              } else if (match.away_team_id === team.id) {
-                goalsFor += match.away_score || 0
-                goalsAgainst += match.home_score || 0
-
-                if (match.away_score > match.home_score) {
-                  wins++
-                } else if (match.away_score < match.home_score) {
-                  if (match.overtime || match.has_overtime) {
-                    otl++
-                  } else {
-                    losses++
-                  }
-                } else {
-                  losses++ // Tie counts as loss
-                }
-              }
-            })
-
-            const gamesPlayed = wins + losses + otl
-            const points = wins * 2 + otl * 1 // 2 points for win, 1 for OTL
-            const goalDifferential = goalsFor - goalsAgainst
-
-            return {
-              id: team.id,
-              name: team.name,
-              logo_url: team.logo_url,
-              wins,
-              losses,
-              otl,
-              games_played: gamesPlayed,
-              points,
-              goals_for: goalsFor,
-              goals_against: goalsAgainst,
-              goal_differential: goalDifferential,
-              conference: team.conferences?.name || "Unknown",
-              conference_id: team.conference_id,
-            }
-          })
-
-          // Sort by points (descending), then by wins (descending), then by goal differential (descending)
-          calculatedStandings.sort((a, b) => {
-            if (b.points !== a.points) return b.points - a.points
-            if (b.wins !== a.wins) return b.wins - a.wins
-            return b.goal_differential - a.goal_differential
-          })
-
-          console.log(`Calculated standings for ${calculatedStandings.length} teams`)
-          console.log("Sample standings data:", calculatedStandings.slice(0, 2))
-          setStandings(calculatedStandings)
+          console.log(`Calculated standings for ${standings.length} teams`)
+          console.log("Sample standings data:", standings.slice(0, 2))
+          setStandings(standings)
           setLoading((prev) => ({ ...prev, standings: false }))
         } catch (error) {
           console.error("Error fetching standings:", error)

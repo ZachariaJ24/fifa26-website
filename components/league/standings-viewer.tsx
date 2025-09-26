@@ -53,21 +53,33 @@ export function StandingsViewer() {
     try {
       setLoading(true)
       setError(null)
-      
-      const { data: teams, error } = await supabase
+
+      // Get current season
+      const { data: seasonData, error: seasonError } = await supabase
+        .from("seasons")
+        .select("id, name")
+        .eq("is_active", true)
+        .single()
+
+      if (seasonError) {
+        console.error("Error fetching season:", seasonError)
+        setError("Failed to load season data")
+        return
+      }
+
+      if (!seasonData) {
+        setError("No active season found")
+        return
+      }
+
+      // Calculate standings dynamically from matches (same logic as main standings page)
+      const { data: teamsData, error: teamsError } = await supabase
         .from("teams")
         .select(`
           id,
           name,
           logo_url,
           conference_id,
-          wins,
-          losses,
-          otl,
-          points,
-          goals_for,
-          goals_against,
-          games_played,
           conferences(
             id,
             name,
@@ -76,19 +88,90 @@ export function StandingsViewer() {
           )
         `)
         .eq("is_active", true)
-        .order("points", { ascending: false })
 
-      if (error) {
-        throw error
-      }
-
-      if (!teams || teams.length === 0) {
-        setStandings({})
+      if (teamsError) {
+        console.error("Error fetching teams:", teamsError)
+        setError("Failed to load teams data")
         return
       }
 
+      const { data: matchesData, error: matchesError } = await supabase
+        .from("matches")
+        .select(`
+          id,
+          home_team_id,
+          away_team_id,
+          home_score,
+          away_score,
+          status
+        `)
+        .eq("season_id", (seasonData as any).id)
+        .eq("status", "completed")
+
+      if (matchesError) {
+        console.error("Error fetching matches:", matchesError)
+        setError("Failed to load matches data")
+        return
+      }
+
+      // Calculate standings for each team
+      const calculatedStandings = teamsData.map((team: any) => {
+        let wins = 0
+        let losses = 0
+        let otl = 0
+        let goalsFor = 0
+        let goalsAgainst = 0
+
+        // Calculate stats from matches
+        matchesData.forEach((match: any) => {
+          if (match.home_team_id === team.id) {
+            goalsFor += match.home_score || 0
+            goalsAgainst += match.away_score || 0
+            
+            if (match.home_score > match.away_score) {
+              wins++
+            } else if (match.home_score < match.away_score) {
+              losses++
+            } else {
+              otl++
+            }
+          } else if (match.away_team_id === team.id) {
+            goalsFor += match.away_score || 0
+            goalsAgainst += match.home_score || 0
+            
+            if (match.away_score > match.home_score) {
+              wins++
+            } else if (match.away_score < match.home_score) {
+              losses++
+            } else {
+              otl++
+            }
+          }
+        })
+
+        const gamesPlayed = wins + losses + otl
+        const points = wins * 3 + otl * 1
+        const goalDifferential = goalsFor - goalsAgainst
+
+        return {
+          id: team.id,
+          name: team.name,
+          logo_url: team.logo_url,
+          wins,
+          losses,
+          otl,
+          games_played: gamesPlayed,
+          points,
+          goals_for: goalsFor,
+          goals_against: goalsAgainst,
+          goal_differential: goalDifferential,
+          conference_id: team.conference_id,
+          conferences: team.conferences
+        }
+      })
+
       // Group teams by conference
-      const standingsByConference = teams.reduce((acc: any, team: any) => {
+      const standingsByConference = calculatedStandings.reduce((acc: any, team: any) => {
         const conference = team.conferences
         
         // Handle teams without conferences
@@ -107,13 +190,7 @@ export function StandingsViewer() {
           }
         }
         
-        // Calculate goal differential
-        const goalDifferential = (team.goals_for || 0) - (team.goals_against || 0)
-        
-        acc[conferenceName].teams.push({
-          ...team,
-          goal_differential: goalDifferential
-        })
+        acc[conferenceName].teams.push(team)
         
         return acc
       }, {})
