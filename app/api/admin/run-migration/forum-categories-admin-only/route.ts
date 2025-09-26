@@ -22,28 +22,33 @@ export async function POST() {
       return NextResponse.json({ error: "Admin access required" }, { status: 403 })
     }
 
-    // Run the migration
-    const { error } = await supabase.rpc("exec_sql", {
-      sql_query: `
-        -- Add admin_only column to forum_categories table
-        ALTER TABLE forum_categories 
-        ADD COLUMN IF NOT EXISTS admin_only BOOLEAN DEFAULT FALSE;
+    // Update existing categories to admin-only for announcement-like types
+    const { error: updateError } = await supabase
+      .from("forum_categories")
+      .update({ admin_only: true })
+      .or("name.ilike.%announcement%,name.ilike.%admin%,name.ilike.%news%")
 
-        -- Update existing categories
-        UPDATE forum_categories 
-        SET admin_only = TRUE 
-        WHERE name ILIKE '%announcement%' OR name ILIKE '%admin%' OR name ILIKE '%news%';
+    if (updateError) {
+      console.error("Migration update error:", updateError)
+      return NextResponse.json({ error: updateError.message }, { status: 500 })
+    }
 
-        -- Ensure we have a general category that's not admin-only
-        INSERT INTO forum_categories (name, description, color, admin_only)
-        VALUES ('General Discussion', 'General discussion topics', '#6366f1', FALSE)
-        ON CONFLICT (name) DO NOTHING;
-      `,
-    })
+    // Ensure a General Discussion category exists and is not admin-only
+    const { error: upsertError } = await supabase
+      .from("forum_categories")
+      .upsert(
+        {
+          name: "General Discussion",
+          description: "General discussion topics",
+          color: "#6366f1",
+          admin_only: false,
+        },
+        { onConflict: "name" }
+      )
 
-    if (error) {
-      console.error("Migration error:", error)
-      return NextResponse.json({ error: error.message }, { status: 500 })
+    if (upsertError) {
+      console.error("Migration upsert error:", upsertError)
+      return NextResponse.json({ error: upsertError.message }, { status: 500 })
     }
 
     return NextResponse.json({ success: true, message: "Forum categories admin-only migration completed" })

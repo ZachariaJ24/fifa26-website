@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic"
 
 export async function POST(request: Request) {
   try {
-    const { userId, banReason, banDuration } = await request.json()
+    const { userId, banReason, banDuration, bannedBy } = await request.json()
 
     if (!userId || !banReason || !banDuration) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 })
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     })
 
     // Calculate ban expiration date
-    let banExpiration = null
+    let banExpiration: string | null = null
     if (banDuration !== "permanent") {
       const now = new Date()
 
@@ -68,19 +68,29 @@ export async function POST(request: Request) {
       }
     }
 
-    // Update user with ban information - IMPORTANT: Set is_banned to true
-    const { error: updateError } = await supabase
-      .from("users")
-      .update({
-        is_banned: true, // This was missing!
-        ban_reason: banReason,
-        ban_expiration: banExpiration,
-      })
-      .eq("id", userId)
+    // Ensure only one ban record per user: delete existing then insert new
+    const { error: deleteError } = await supabase
+      .from("banned_users")
+      .delete()
+      .eq("user_id", userId)
 
-    if (updateError) {
-      console.error("Error banning user:", updateError)
-      return NextResponse.json({ error: updateError.message }, { status: 500 })
+    if (deleteError) {
+      console.error("Error clearing existing ban:", deleteError)
+      return NextResponse.json({ error: deleteError.message }, { status: 500 })
+    }
+
+    const { error: insertError } = await supabase
+      .from("banned_users")
+      .insert({
+        user_id: userId,
+        banned_by: bannedBy || null,
+        reason: banReason,
+        expires_at: banExpiration,
+      })
+
+    if (insertError) {
+      console.error("Error inserting ban:", insertError)
+      return NextResponse.json({ error: insertError.message }, { status: 500 })
     }
 
     return NextResponse.json({

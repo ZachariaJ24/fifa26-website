@@ -35,7 +35,7 @@ import { formatDistanceToNow } from "date-fns"
 import { useSupabase } from "@/lib/supabase/client"
 import { useToast } from "@/components/ui/use-toast"
 import { RichTextEditor } from "@/components/rich-text-editor"
-import { createClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/supabase/browser-client"
 
 interface ForumPost {
   id: string

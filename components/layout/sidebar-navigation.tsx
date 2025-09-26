@@ -352,6 +352,19 @@ export function SidebarNavigation({ isOpen: externalIsOpen, onToggle: externalOn
       color: "field-green",
       description: "Return to the main page"
     },
+    {
+      name: "Leagues",
+      href: "/leagues/sfs-league-1",
+      icon: TrophyIcon,
+      color: "pitch-blue",
+      description: "Browse SFS conferences",
+      submenu: [
+        { name: "SFS League 1", href: "/leagues/sfs-league-1", icon: TrophyIcon },
+        { name: "SFS League 2", href: "/leagues/sfs-league-2", icon: TrophyIcon },
+        { name: "SFS League 3", href: "/leagues/sfs-league-3", icon: TrophyIcon },
+        { name: "Stacked Standings", href: "/standings/all", icon: BarChart3Icon },
+      ],
+    },
     { 
       name: "Clubs", 
       href: "/teams", 

@@ -12,7 +12,7 @@ import { Loader2, AlertCircle, CheckCircle2, Eye, EyeOff, Key, Shield, RefreshCw
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { useToast } from "@/components/ui/use-toast"
 import Link from "next/link"
-import { createClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/supabase/browser-client"
 
 export default function ResetPasswordPage() {
   const router = useRouter()

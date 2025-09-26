@@ -39,6 +39,7 @@ import {
   BarChartIcon as ChartBar,
 } from "lucide-react"
 import { BannedUserModal } from "@/components/auth/banned-user-modal"
+import { LeagueSelector } from "@/components/league/LeagueSelector"
 
 // Animated counter component
 function AnimatedCounter({ end, duration = 2000, suffix = "" }: { end: number; duration?: number; suffix?: string }) {
@@ -117,11 +118,11 @@ export default function Home() {
       return
     }
   }, [searchParams, router])
-  const [news, setNews] = useState([])
-  const [upcomingGames, setUpcomingGames] = useState([])
-  const [completedGames, setCompletedGames] = useState([])
-  const [standings, setStandings] = useState([])
-  const [featuredGames, setFeaturedGames] = useState([])
+  const [news, setNews] = useState<any[]>([])
+  const [upcomingGames, setUpcomingGames] = useState<any[]>([])
+  const [completedGames, setCompletedGames] = useState<any[]>([])
+  const [standings, setStandings] = useState<any[]>([])
+  const [featuredGames, setFeaturedGames] = useState<any[]>([])
   const [stats, setStats] = useState({
     totalPlayers: 0,
     totalTeams: 0,
@@ -133,21 +134,21 @@ export default function Home() {
     standings: true,
     featured: true,
   })
-  const [heroImages, setHeroImages] = useState([
+  const [heroImages, setHeroImages] = useState<{ url: string; title: string; subtitle: string }[]>([
     {
       url: "https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200",
-      title: "Welcome to FIFA 26 League",
-      subtitle: "The premier FIFA 26 competitive football league with advanced stat tracking",
+      title: "Welcome to Secret Football Society (SFS)",
+      subtitle: "Premier FC 26 competitive football with advanced stat tracking",
     },
     {
       url: "https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200",
-      title: "Season 1 Registration Open",
-      subtitle: "Join the most competitive FIFA 26 league and earn rewards through our token system",
+      title: "Season Registration Open",
+      subtitle: "Join SFS and earn rewards through our token system",
     },
     {
       url: "https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200",
       title: "Live Match Streaming",
-      subtitle: "Watch professional FIFA 26 matches with real-time statistics and commentary",
+      subtitle: "Watch SFS matches with real-time statistics and commentary",
     },
   ])
 
@@ -168,13 +169,16 @@ export default function Home() {
             .order("order", { ascending: true })
 
           if (!carouselError && carouselData && carouselData.length > 0) {
-            const validatedImages = carouselData.map((img) => ({
-              ...img,
-              url:
-                img.url && typeof img.url === "string" && img.url.trim() !== ""
-                  ? img.url
-                  : `/https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200&query=${encodeURIComponent(img.title || "FIFA 26 football league")}`,
-            }))
+            const validatedImages = (carouselData as any[]).map((img: any) => {
+              const url = typeof img?.url === "string" && img.url.trim() !== ""
+                ? img.url
+                : `https://kudmtqjzuxakngbrqxzp.supabase.co/storage/v1/object/public/logoheader/scslogo.png?height=600&width=1200&query=${encodeURIComponent(String(img?.title || "SFS League"))}`
+              return {
+                url,
+                title: String(img?.title || "Secret Football Society"),
+                subtitle: String(img?.subtitle || "Premier FC 26 competitive football with advanced stat tracking"),
+              }
+            })
             setHeroImages(validatedImages)
           }
         } catch (carouselError) {
@@ -226,7 +230,7 @@ export default function Home() {
 
         if (!seasonsError && seasonsData && seasonsData.length > 0) {
           // Find active season
-          const activeSeason = seasonsData.find((s) => s.is_active === true)
+          const activeSeason = (seasonsData as any[]).find((s: any) => s?.is_active === true)
           if (activeSeason) {
             console.log("Found active season for home page:", activeSeason)
             currentSeason = activeSeason
@@ -237,14 +241,14 @@ export default function Home() {
           }
         } else {
           // Try to get current season from system_settings
-          const { data, error } = await supabase
+          const { data: settingsData, error: settingsError } = await supabase
             .from("system_settings")
             .select("value")
             .eq("key", "current_season")
             .single()
 
-          if (!error && data && data.value) {
-            const seasonNumber = Number.parseInt(data.value.toString(), 10)
+          if (!settingsError && settingsData && (settingsData as any).value) {
+            const seasonNumber = Number.parseInt(String((settingsData as any).value), 10)
             if (!isNaN(seasonNumber)) {
               currentSeason = {
                 id: seasonNumber.toString(),
@@ -392,11 +396,11 @@ export default function Home() {
         }
         
         console.log("=== HOME PAGE DATA FETCHING COMPLETED ===")
-      } catch (error) {
-        console.error("=== ERROR IN HOME PAGE DATA FETCHING ===", error)
+      } catch (err) {
+        console.error("=== ERROR IN HOME PAGE DATA FETCHING ===", err)
         toast({
           title: "Error loading data",
-          description: error.message || "Failed to load content. Please try again.",
+          description: err instanceof Error ? err.message : "Failed to load content. Please try again.",
           variant: "destructive",
         })
         setLoading({
@@ -419,6 +423,14 @@ export default function Home() {
       <div className="relative">
         <HeroCarousel images={heroImages} />
       </div>
+
+      {/* League Selector */}
+      <section className="container mx-auto px-4 mt-6">
+        <div className="flex items-center justify-between gap-4">
+          <h2 className="text-xl font-semibold">Select League</h2>
+          <LeagueSelector />
+        </div>
+      </section>
 
       {/* League Statistics Section */}
       <motion.section
@@ -626,10 +638,10 @@ export default function Home() {
       >
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            About FIFA 26 League
+            About Secret Football Society (SFS)
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            Discover what makes the FIFA 26 League the premier destination for competitive football gaming
+            Discover what makes SFS the premier destination for competitive football gaming
           </p>
         </div>
 
@@ -647,17 +659,17 @@ export default function Home() {
                     <GamepadIcon className="h-8 w-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200">
-                    Premier FIFA 26 League
+                    Premier SFS League
                   </h3>
                 </div>
                 <div className="space-y-4">
                   <p className="text-slate-600 dark:text-slate-400">
-                    The FIFA 26 League is the most competitive and professionally organized FIFA 26
-                    football league available today. We provide a complete football simulation experience with structured
+                    Secret Football Society (SFS) is a competitive and professionally organized FC 26
+                    football league. We provide a complete football simulation experience with structured
                     seasons, playoffs, and championship tournaments that mirror real football operations.
                   </p>
                   <p className="text-slate-600 dark:text-slate-400">
-                    We provide a comprehensive football experience with multiple divisions and in-depth club management. 
+                    We offer a comprehensive football experience with multiple divisions and in-depth club management. 
                     Players can engage in a full range of league activities, 
                     from transfers to a complete statistical system that tracks every detail of on-pitch performance.
                   </p>
@@ -714,10 +726,10 @@ export default function Home() {
                   <Trophy className="h-12 w-12 text-white" />
                 </div>
                 <h3 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-6">
-                  Why Choose FIFA 26 League?
+                  Why Choose Secret Football Society?
                 </h3>
                 <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
-                  Join thousands of players who have made FIFA 26 League their home for competitive football gaming. 
+                  Join players who have made SFS their home for competitive football. 
                   Experience the perfect blend of professional league management, cutting-edge technology, 
                   and a passionate community that shares your love for football.
                 </p>
@@ -1043,7 +1055,6 @@ export default function Home() {
           </TabsContent>
 
           <TabsContent value="standings" className="space-y-6">
-            {console.log("Rendering standings tab - loading:", loading.standings, "standings count:", standings.length, "standings data:", standings.slice(0, 2))}
             {loading.standings ? (
               <Card className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-lg">
                 <CardContent className="p-8">

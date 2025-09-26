@@ -24,41 +24,20 @@ export async function POST(request: NextRequest) {
 
     console.log("Unbanning user:", userId)
 
-    // First check if user exists
-    const { data: existingUser, error: checkError } = await supabaseAdmin
-      .from("users")
-      .select("id, is_banned, ban_reason")
-      .eq("id", userId)
-      .single()
+    // Delete from public.banned_users to unban
+    const { error: deleteError } = await supabaseAdmin
+      .from("banned_users")
+      .delete()
+      .eq("user_id", userId)
 
-    if (checkError) {
-      console.error("Error checking user:", checkError)
-      return NextResponse.json({ error: "User not found" }, { status: 404 })
+    if (deleteError) {
+      console.error("Error deleting banned_users row:", deleteError)
+      return NextResponse.json({ error: deleteError.message }, { status: 500 })
     }
-
-    console.log("Found user:", existingUser)
-
-    // Update user ban status
-    const { data: updateData, error: userUpdateError } = await supabaseAdmin
-      .from("users")
-      .update({
-        is_banned: false,
-        ban_reason: null,
-        ban_expiration: null,
-      })
-      .eq("id", userId)
-      .select()
-
-    if (userUpdateError) {
-      console.error("Error updating user ban status:", userUpdateError)
-      return NextResponse.json({ error: userUpdateError.message }, { status: 500 })
-    }
-
-    console.log("User unbanned successfully:", updateData)
 
     return NextResponse.json({
       message: "User unbanned successfully",
-      user: updateData?.[0],
+      user: { id: userId },
     })
   } catch (error: any) {
     console.error("Unexpected error during unban:", error)

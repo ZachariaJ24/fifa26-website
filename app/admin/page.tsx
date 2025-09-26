@@ -4,7 +4,7 @@ import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/components/ui/use-toast"
-import { useSupabase } from "@/lib/supabase/client"
+import { useSupabase } from "@/lib/supabase/hooks"
 import Link from "next/link"
 import {
   Users,

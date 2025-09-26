@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { createClient } from "@/lib/supabase/client"
+import { createClient } from "@/lib/supabase/browser-client"
 
 export default function AuthReset() {
   const [isClearing, setIsClearing] = useState(false)

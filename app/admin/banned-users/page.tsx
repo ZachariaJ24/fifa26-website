@@ -22,7 +22,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useSupabase } from "@/lib/supabase/client"
+import { useSupabase } from "@/lib/supabase/hooks"
+import HeaderBar from "@/components/admin/HeaderBar"
 
 interface BannedUser {
   id: string
@@ -145,6 +146,24 @@ export default function BannedUsersPage() {
 
     checkAuthorization()
   }, [supabase, session, toast, router])
+
+  // Realtime updates for banned_users changes
+  useEffect(() => {
+    const channel = supabase
+      .channel("banned_users_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "banned_users" },
+        () => {
+          fetchBannedUsers()
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [supabase])
 
   const fetchBannedUsers = async () => {
     setLoadingBannedUsers(true)
@@ -390,39 +409,16 @@ export default function BannedUsersPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
     <div className="container mx-auto px-4 py-8">
-        {/* Enhanced Hockey-Themed Header */}
-        <div className="relative mb-8 animate-fade-in-up">
-          <div className="hockey-enhanced-card p-8 text-center relative overflow-hidden">
-            {/* Background Elements */}
-            <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-ice-blue-500/20 to-rink-blue-500/20 rounded-full blur-xl"></div>
-            <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-goal-red-500/20 to-assist-green-500/20 rounded-full blur-lg"></div>
-            
-            <div className="relative z-10">
-              <div 
-                className="flex items-center justify-center gap-4 mb-4"
-              >
-                <div className="p-3 bg-gradient-to-br from-ice-blue-500 to-rink-blue-600 rounded-full shadow-lg">
-                  <Shield className="h-8 w-8 text-white" />
-      </div>
-                <div className="p-3 bg-gradient-to-br from-goal-red-500 to-assist-green-500 rounded-full shadow-lg">
-                  <Gavel className="h-8 w-8 text-white" />
-                </div>
-              </div>
-              
-              <h1 
-                className="hockey-title-enhanced mb-4"
-              >
-                Banned Users Management
-              </h1>
-              
-              <p 
-                className="hockey-subtitle-enhanced text-hockey-silver-600 dark:text-hockey-silver-300 max-w-2xl mx-auto"
-              >
-                Manage user access and maintain community standards with our comprehensive ban management system
-              </p>
-            </div>
-          </div>
-        </div>
+        <HeaderBar
+          title="Banned Users"
+          subtitle="Manage user access and maintain community standards."
+          actions={
+            <Button onClick={fetchBannedUsers} disabled={loadingBannedUsers}>
+              <RefreshCw className={`mr-2 h-4 w-4 ${loadingBannedUsers ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+          }
+        />
 
       <Tabs defaultValue="list" className="w-full">
           <TabsList className="grid w-full grid-cols-2 gap-2 p-2 bg-hockey-silver-100 dark:bg-hockey-silver-800 rounded-xl">
