@@ -3,6 +3,8 @@ import { getLeagueIdFromSlug, LEAGUE_META } from '@/lib/constants/leagues'
 import { getLeagueStandings } from '@/lib/api/leagues'
 import { TeamStandings } from '@/components/teams/TeamStandings'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { BarChart, Users, Trophy } from 'lucide-react'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,28 +18,39 @@ export default async function LeagueStandingsPage({ params }: { params: { league
 
   return (
     <div className="container py-8 space-y-8">
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight">Standings</h1>
-        {meta && (
-          <div className="flex items-center gap-2 text-sm">
-            <span className="inline-block h-3 w-3 rounded-full" style={{ backgroundColor: meta.color }} />
-            <span>{meta.name}</span>
-          </div>
-        )}
+      <div className="text-center">
+        <h1 className="text-4xl font-bold tracking-tight text-primary">League Standings</h1>
+        <p className="mt-2 text-lg text-muted-foreground">Track your team's journey through the season with comprehensive statistics, rankings, and playoff projections.</p>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>League Table</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {teams && teams.length ? (
-            <TeamStandings teams={teams} />
-          ) : (
-            <div className="text-center text-muted-foreground py-10">No standings available yet.</div>
-          )}
-        </CardContent>
-      </Card>
+      <Tabs defaultValue="overall">
+        <TabsList className="grid w-full grid-cols-3 max-w-lg mx-auto">
+          <TabsTrigger value="overall"><BarChart className="w-4 h-4 mr-2" />Overall Standings</TabsTrigger>
+          <TabsTrigger value="conference"><Users className="w-4 h-4 mr-2" />Conference</TabsTrigger>
+          <TabsTrigger value="playoffs"><Trophy className="w-4 h-4 mr-2" />Playoff Picture</TabsTrigger>
+        </TabsList>
+        <TabsContent value="overall">
+          <Card className="bg-card/50">
+            <CardHeader>
+              <CardTitle>League Standings</CardTitle>
+              <p className="text-sm text-muted-foreground">Complete standings for all teams in the league</p>
+            </CardHeader>
+            <CardContent>
+              {teams && teams.length ? (
+                <TeamStandings teams={teams} />
+              ) : (
+                <div className="text-center text-muted-foreground py-10">No standings available yet.</div>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="conference">
+          <div className="text-center text-muted-foreground py-10">Conference standings coming soon.</div>
+        </TabsContent>
+        <TabsContent value="playoffs">
+          <div className="text-center text-muted-foreground py-10">Playoff picture coming soon.</div>
+        </TabsContent>
+      </Tabs>
     </div>
   )
 }

@@ -63,18 +63,18 @@ function AnimatedCounter({ end, duration = 2000 }: { end: number; duration?: num
 }
 
 export default function HomePageClient({ session, stats, featuredGames, latestNews, upcomingFixtures, recentResults, standings }: HomePageClientProps) {
-  const StatCard = ({ icon, value, label }: { icon: React.ElementType, value: number, label: string }) => {
+  const StatCard = ({ icon, value, label, color }: { icon: React.ElementType, value: number, label: string, color: string }) => {
     const Icon = icon
     return (
-      <motion.div
-        className="bg-white/80 backdrop-blur-sm border border-emerald-200 rounded-2xl p-6 text-center shadow-lg"
-        whileHover={{ y: -5, scale: 1.03 }}
-        transition={{ type: "spring", stiffness: 300 }}
-      >
-        <Icon className="h-10 w-10 text-emerald-600 mx-auto mb-4" />
-        <div className="text-4xl font-bold text-emerald-800"><AnimatedCounter end={value} /></div>
-        <p className="text-emerald-700 font-medium mt-1">{label}</p>
-      </motion.div>
+      <div className="bg-card/50 border border-border rounded-lg p-4 flex items-center space-x-4">
+        <div className={`p-3 rounded-lg bg-${color}-500/10 text-${color}-400`}>
+          <Icon className="h-6 w-6" />
+        </div>
+        <div>
+          <div className="text-2xl font-bold"><AnimatedCounter end={value} /></div>
+          <p className="text-sm text-muted-foreground">{label}</p>
+        </div>
+      </div>
     )
   }
 
@@ -112,11 +112,15 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
 
       {/* League Stats Section */}
       <section className="py-20 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <StatCard icon={Users} value={stats.players} label="Active Players" />
-            <StatCard icon={Shield} value={stats.teams} label="Clubs" />
-            <StatCard icon={Calendar} value={stats.matches} label="Fixtures" />
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-3xl font-bold text-primary">League Statistics</h2>
+          <p className="mt-2 text-muted-foreground">Real-time data from our advanced tracking system</p>
+          <div className="h-1 w-16 bg-primary mx-auto my-6"></div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+            <StatCard icon={Users} value={stats.players} label="Active Players" color="blue" />
+            <StatCard icon={Shield} value={stats.teams} label="Teams" color="green" />
+            <StatCard icon={Calendar} value={stats.matches} label="Matches" color="purple" />
+            <StatCard icon={BarChart3} value={0} label="NaN" color="red" />
           </div>
         </div>
       </section>
@@ -124,19 +128,21 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
       {/* Featured Games Section */}
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-12">Featured Games</h2>
+          <h2 className="text-3xl font-bold text-primary">Featured Games</h2>
+          <p className="mt-2 text-muted-foreground">Don't miss these highlighted matches from our competitive league</p>
+          <div className="h-1 w-16 bg-primary mx-auto my-6"></div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {featuredGames.map((match, index) => (
               <motion.div key={match.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.2 }}>
-                <Card className="bg-white/80 border border-emerald-200 rounded-2xl shadow-lg overflow-hidden text-left">
+                <Card className="bg-card/50 border border-border rounded-lg overflow-hidden text-left">
                   <CardContent className="p-6">
                     <div className="flex justify-between items-center mb-4">
-                      <div className="flex items-center gap-2 text-sm text-emerald-600"><Clock className="h-4 w-4" /><span>{new Date(match.match_date).toLocaleString()}</span></div>
-                      <span className="px-3 py-1 text-xs font-semibold text-teal-800 bg-teal-100 rounded-full">Upcoming</span>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground"><Clock className="h-4 w-4" /><span>{new Date(match.match_date).toLocaleString()}</span></div>
+                      <span className="px-3 py-1 text-xs font-semibold text-blue-100 bg-blue-600/50 rounded-full">Upcoming</span>
                     </div>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3"><TeamLogo teamName={match.home_team.name} logoUrl={match.home_team.logo_url} size="sm" /><span className="font-bold text-lg">{match.home_team.name}</span></div>
-                      <div className="font-bold text-2xl">vs</div>
+                      <div className="font-bold text-2xl text-muted-foreground">vs</div>
                       <div className="flex items-center gap-3"><span className="font-bold text-lg">{match.away_team.name}</span><TeamLogo teamName={match.away_team.name} logoUrl={match.away_team.logo_url} size="sm" /></div>
                     </div>
                   </CardContent>
