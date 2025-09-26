@@ -18,7 +18,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import Link from "next/link"
-import { motion } from "framer-motion"
 import { Skeleton } from "@/components/ui/skeleton"
 import { TeamLogos } from "@/components/management/team-logos"
 import { SignPlayerModal } from "@/components/management/sign-player-modal"
@@ -1090,7 +1089,7 @@ const ManagementPage = () => {
             projectedRosterSize={projectedRosterSize}
           />
         )}
-      </motion.div>
+      </div>
     </div>
   )
 }
