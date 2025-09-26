@@ -79,7 +79,7 @@ export default function HomePageClient({ session, stats, featuredGames, latestNe
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 text-emerald-800">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 opacity-10" style={{ backgroundImage: `radial-gradient(circle at 25px 25px, #16a34a 2px, transparent 0), radial-gradient(circle at 75px 75px, #0d9488 2px, transparent 0)`, backgroundSize: '100px 100px' }} />
