@@ -46,6 +46,7 @@ import {
   XCircle,
 } from "lucide-react"
 import AdminDiagnostics from "@/components/admin/admin-diagnostics"
+import HeaderBar from "@/components/admin/HeaderBar"
 
 export default function AdminDashboardPage() {
   const { supabase, session } = useSupabase()
@@ -460,31 +461,11 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-slate-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
-      {/* Enhanced Hero Header Section */}
-      <div className="relative overflow-hidden py-20 px-4">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        
-        <div className="container mx-auto text-center relative z-10">
-          <div>
-            <h1 className="hockey-title mb-6">
-              Admin Dashboard
-            </h1>
-            <p className="hockey-subtitle mx-auto mb-8">
-              Complete control center for managing SCS operations, users, teams, and system configurations
-            </p>
-            
-            {/* Admin Status Badge */}
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-assist-green-500 to-assist-green-600 text-white px-6 py-3 rounded-full shadow-lg shadow-assist-green-500/25 border-2 border-white dark:border-hockey-silver-800">
-              <Shield className="h-5 w-5" />
-              <span className="font-semibold">Administrator Access Granted</span>
-            </div>
-          </div>
-        </div>
+      <div className="container mx-auto px-4 py-8">
+        <HeaderBar
+          title="Admin Dashboard"
+          subtitle="Complete control center for managing SCS operations, users, teams, and system configurations"
+        />
       </div>
 
       {/* Main Content */}

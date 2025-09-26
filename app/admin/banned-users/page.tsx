@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useSupabase } from "@/lib/supabase/hooks"
+import FilterBar from "@/components/admin/FilterBar"
 import HeaderBar from "@/components/admin/HeaderBar"
 
 interface BannedUser {
@@ -55,6 +56,9 @@ export default function BannedUsersPage() {
   const [loadingBannedUsers, setLoadingBannedUsers] = useState(false)
   const [unbanning, setUnbanning] = useState<string | null>(null)
   const [banning, setBanning] = useState(false)
+
+  // Bulk selection for banned users
+  const [selected, setSelected] = useState<string[]>([])
 
   const [users, setUsers] = useState<User[]>([])
   const [totalUsers, setTotalUsers] = useState(0)
@@ -254,6 +258,31 @@ export default function BannedUsersPage() {
     }
   }
 
+  // Bulk unban selected users
+  const bulkUnban = async () => {
+    if (selected.length === 0) return
+    try {
+      // Process sequentially to avoid rate limits
+      for (const id of selected) {
+        await handleUnban(id)
+      }
+      setSelected([])
+      fetchBannedUsers()
+    } catch (e) {
+      console.error('Bulk unban error', e)
+    }
+  }
+
+  const toggleSelectAll = () => {
+    const currentIds = filteredBannedUsers.map(u => u.id)
+    const allSelected = currentIds.every(id => selected.includes(id))
+    setSelected(allSelected ? selected.filter(id => !currentIds.includes(id)) : Array.from(new Set([...selected, ...currentIds])))
+  }
+
+  const toggleSelect = (id: string) => {
+    setSelected(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
+  }
+
   const fetchUsers = async (page = 1) => {
     setLoadingUsers(true)
     try {
@@ -392,6 +421,45 @@ export default function BannedUsersPage() {
     return new Date(expirationDate) < new Date()
   }
 
+  // Export currently visible banned users to CSV
+  const exportToCsv = () => {
+    try {
+      const headers = [
+        'email',
+        'gamer_tag',
+        'gamer_tag_id',
+        'discord_name',
+        'ban_reason',
+        'ban_expiration',
+        'created_at',
+      ]
+
+      const rows = filteredBannedUsers.map(u => [
+        u.email || '',
+        u.gamer_tag || '',
+        u.gamer_tag_id || '',
+        u.discord_name || '',
+        u.ban_reason || '',
+        u.ban_expiration || '',
+        u.created_at || '',
+      ])
+
+      const csv = [headers.join(','), ...rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(','))].join('\n')
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `banned-users-${new Date().toISOString().split('T')[0]}.csv`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Error exporting CSV', err)
+      toast({ title: 'Error', description: 'Failed to export CSV', variant: 'destructive' })
+    }
+  }
+
   if (loading) {
     return (
       <div className="container mx-auto px-4 py-8">
@@ -413,12 +481,41 @@ export default function BannedUsersPage() {
           title="Banned Users"
           subtitle="Manage user access and maintain community standards."
           actions={
-            <Button onClick={fetchBannedUsers} disabled={loadingBannedUsers}>
-              <RefreshCw className={`mr-2 h-4 w-4 ${loadingBannedUsers ? 'animate-spin' : ''}`} />
-              Refresh
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="destructive"
+                onClick={bulkUnban}
+                disabled={selected.length === 0 || loadingBannedUsers}
+                title={selected.length === 0 ? 'Select users first' : 'Unban selected users'}
+              >
+                <UserMinus className="mr-2 h-4 w-4" />
+                Bulk Unban ({selected.length})
+              </Button>
+              <Button variant="outline" onClick={exportToCsv}>
+                Export CSV
+              </Button>
+              <Button onClick={fetchBannedUsers} disabled={loadingBannedUsers}>
+                <RefreshCw className={`mr-2 h-4 w-4 ${loadingBannedUsers ? 'animate-spin' : ''}`} />
+                Refresh
+              </Button>
+            </div>
           }
         />
+
+        {/* Standardized filter bar for search */}
+        <FilterBar onClear={() => setSearchTerm("")}>
+          <div className="w-80">
+            <Input
+              placeholder="Search by gamer tag ID, discord name, email..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <Button variant="outline" onClick={fetchBannedUsers} disabled={loadingBannedUsers}>
+            <RefreshCw className={`mr-2 h-4 w-4 ${loadingBannedUsers ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+        </FilterBar>
 
       <Tabs defaultValue="list" className="w-full">
           <TabsList className="grid w-full grid-cols-2 gap-2 p-2 bg-hockey-silver-100 dark:bg-hockey-silver-800 rounded-xl">
@@ -480,26 +577,7 @@ export default function BannedUsersPage() {
                   Refresh
                 </Button>
               </div>
-                <div className="flex items-center gap-2 mb-6">
-                <div className="relative flex-1 max-w-sm">
-                  <Input
-                    placeholder="Search by gamer tag ID, discord name, email..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                      className="hockey-search pr-8"
-                  />
-                  {searchTerm && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                        className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-goal-red-500 hover:text-white transition-colors"
-                      onClick={() => setSearchTerm("")}
-                    >
-                      ×
-                    </Button>
-                  )}
-                </div>
-              </div>
+                {/* Removed in-card search; standardized FilterBar is used above */}
               {loadingBannedUsers ? (
                   <div className="flex justify-center items-center py-12">
                     <div className="text-center">

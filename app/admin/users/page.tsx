@@ -1,5 +1,5 @@
 import type { Metadata } from "next"
-import UsersManagementClient from "./UsersManagementClient"
+import UsersPage from "./UsersPage"
 
 export const metadata: Metadata = {
   title: "User Management | SCS Admin",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 }
 
 export default function UsersManagementPage() {
-  return <UsersManagementClient />
+  return <UsersPage />
 }

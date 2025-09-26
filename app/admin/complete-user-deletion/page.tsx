@@ -8,6 +8,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { Loader2, AlertCircle, CheckCircle, Trash2, Shield, UserX, Database, Key, AlertTriangle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 // import { motion } from "framer-motion" - disabled due to Next.js 15.2.4 compatibility
+import HeaderBar from "@/components/admin/HeaderBar"
 
 export default function CompleteUserDeletionPage() {
   const [email, setEmail] = useState("")
@@ -68,27 +69,12 @@ export default function CompleteUserDeletionPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
       <div className="container mx-auto px-4 py-8">
+        <HeaderBar
+          title="Complete User Deletion"
+          subtitle="Permanently remove users from both Auth and Database systems"
+        />
+
         <div className="animate-fade-in-up max-w-2xl mx-auto">
-          {/* Hero Header Section */}
-          <div className="relative overflow-hidden py-16 px-4 mb-8 text-center">
-            <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
-            <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-goal-red-200/30 to-goal-red-300/30 rounded-full blur-3xl animate-float"></div>
-            <div className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-            
-            <div className="relative z-10">
-              <div className="flex flex-col items-center gap-6 mb-8">
-                <div className="w-20 h-20 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-3xl flex items-center justify-center shadow-2xl shadow-goal-red-500/25">
-                  <Trash2 className="h-10 w-10 text-white" />
-                </div>
-                <div>
-                  <h1 className="hockey-title text-4xl md:text-5xl mb-4">Complete User Deletion</h1>
-                  <p className="hockey-subtitle text-xl md:text-2xl text-hockey-silver-600 dark:text-hockey-silver-400 max-w-2xl">
-                    Permanently remove users from both Auth and Database systems
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
 
           {/* Warning Banner */}
           <div className="animate-fade-in-up mb-8">

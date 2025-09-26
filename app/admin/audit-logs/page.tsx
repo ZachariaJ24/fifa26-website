@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils"
 import { searchAuditLogs, getActionLabel, AuditLogResult } from "@/lib/audit/audit-log"
 import HeaderBar from "@/components/admin/HeaderBar"
 import FilterBar from "@/components/admin/FilterBar"
+import { createClient } from "@/lib/supabase/browser-client"
 
 export default function AuditLogsPage() {
   const router = useRouter()
@@ -23,6 +24,7 @@ export default function AuditLogsPage() {
   
   const [logs, setLogs] = useState<AuditLogResult[]>([])
   const [loading, setLoading] = useState(true)
+  const [realtimeOn, setRealtimeOn] = useState(false)
   const [searchParams, setSearchParams] = useState({
     searchText: '',
     startDate: undefined as Date | undefined,
@@ -34,6 +36,7 @@ export default function AuditLogsPage() {
   })
   const [totalCount, setTotalCount] = useState(0)
   const [tableNames, setTableNames] = useState<string[]>([])
+  const supabase = createClient()
 
   const fetchLogs = async () => {
     try {
@@ -74,6 +77,22 @@ export default function AuditLogsPage() {
     fetchLogs()
   }, [searchParams.page, searchParams.pageSize])
 
+  // Realtime subscription to audit.logged_actions
+  useEffect(() => {
+    if (!realtimeOn) return
+    const channel = supabase
+      .channel('audit_logs_changes')
+      .on('postgres_changes', { event: '*', schema: 'audit', table: 'logged_actions' }, () => {
+        // Refresh current page when a new audit event occurs
+        fetchLogs()
+      })
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [realtimeOn])
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
     // Reset to first page when searching
@@ -109,133 +128,102 @@ export default function AuditLogsPage() {
         title="Audit Logs"
         subtitle="View and filter system activity across tables."
         actions={
-          <Button variant="outline" onClick={fetchLogs} disabled={loading}>
-            <RefreshCw className={`mr-2 h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-            Refresh
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={() => setRealtimeOn(!realtimeOn)}>
+              {realtimeOn ? 'Realtime: On' : 'Realtime: Off'}
+            </Button>
+            <Button variant="outline" onClick={fetchLogs} disabled={loading}>
+              <RefreshCw className={`mr-2 h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+          </div>
         }
       />
 
-      <Card className="mb-6">
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Filter Logs</CardTitle>
-            <Button variant="ghost" size="sm" onClick={clearFilters}>
-              <X className="h-4 w-4 mr-1" /> Clear Filters
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSearch} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Search</label>
-                <Input
-                  placeholder="Search logs..."
-                  value={searchParams.searchText}
-                  onChange={(e) => setSearchParams({ ...searchParams, searchText: e.target.value })}
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Action</label>
-                <Select
-                  value={searchParams.action}
-                  onValueChange={(value) => setSearchParams({ ...searchParams, action: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All Actions" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">All Actions</SelectItem>
-                    <SelectItem value="I">Created</SelectItem>
-                    <SelectItem value="U">Updated</SelectItem>
-                    <SelectItem value="D">Deleted</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Table</label>
-                <Select
-                  value={searchParams.tableName}
-                  onValueChange={(value) => setSearchParams({ ...searchParams, tableName: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All Tables" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="">All Tables</SelectItem>
-                    {tableNames.map((table) => (
-                      <SelectItem key={table} value={table}>
-                        {table}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <label className="text-sm font-medium">Date Range</label>
-                <div className="flex space-x-2">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !searchParams.startDate && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {searchParams.startDate ? format(searchParams.startDate, 'PPP') : <span>Start date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={searchParams.startDate}
-                        onSelect={(date) => setSearchParams({ ...searchParams, startDate: date })}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className={cn(
-                          "w-full justify-start text-left font-normal",
-                          !searchParams.endDate && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {searchParams.endDate ? format(searchParams.endDate, 'PPP') : <span>End date</span>}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={searchParams.endDate}
-                        onSelect={(date) => setSearchParams({ ...searchParams, endDate: date })}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-              </div>
-            </div>
-            
-            <div className="flex justify-end">
-              <Button type="submit" disabled={loading}>
-                <Search className="mr-2 h-4 w-4" />
-                Search
+      {/* Standardized filter bar (transitional, before we remove the old card) */}
+      <FilterBar onClear={clearFilters}>
+        <div className="w-64">
+          <Input
+            type="search"
+            placeholder="Search logs..."
+            value={searchParams.searchText}
+            onChange={(e) => setSearchParams({ ...searchParams, searchText: e.target.value })}
+          />
+        </div>
+        <div className="w-44">
+          <Select
+            value={searchParams.action}
+            onValueChange={(value) => setSearchParams({ ...searchParams, action: value })}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="All Actions" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">All Actions</SelectItem>
+              <SelectItem value="I">Created</SelectItem>
+              <SelectItem value="U">Updated</SelectItem>
+              <SelectItem value="D">Deleted</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="w-56">
+          <Select
+            value={searchParams.tableName}
+            onValueChange={(value) => setSearchParams({ ...searchParams, tableName: value })}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="All Tables" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">All Tables</SelectItem>
+              {tableNames.map((table) => (
+                <SelectItem key={table} value={table}>
+                  {table}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex gap-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline">
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {searchParams.startDate ? format(searchParams.startDate, 'PPP') : 'Start date'}
               </Button>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={searchParams.startDate}
+                onSelect={(date) => setSearchParams({ ...searchParams, startDate: date || undefined })}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline">
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {searchParams.endDate ? format(searchParams.endDate, 'PPP') : 'End date'}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={searchParams.endDate}
+                onSelect={(date) => setSearchParams({ ...searchParams, endDate: date || undefined })}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+          <Button onClick={fetchLogs} disabled={loading}>
+            <Search className="mr-2 h-4 w-4" />
+            Apply
+          </Button>
+        </div>
+      </FilterBar>
+
 
       <Card>
         <CardContent className="p-0">
