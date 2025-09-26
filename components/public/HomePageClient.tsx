@@ -221,33 +221,51 @@ export default function HomePageClient() {
         </section>
 
         {/* League Statistics Section */}
-        <section className="py-16 sm:py-20">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <div className="mx-auto max-w-2xl lg:max-w-none">
-              <div className="text-center">
-                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">Trusted by the Best Teams</h2>
-                <p className="mt-4 text-lg leading-8 text-muted-foreground">Our platform is the choice for top-tier teams and players.</p>
-              </div>
-              <dl className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 text-center lg:grid-cols-3">
-                <div className="mx-auto flex max-w-xs flex-col gap-y-4">
-                  <dt className="text-base leading-7 text-muted-foreground">Active Players</dt>
-                  <dd className="order-first text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                    <AnimatedCounter end={stats.totalPlayers} />
-                  </dd>
-                </div>
-                <div className="mx-auto flex max-w-xs flex-col gap-y-4">
-                  <dt className="text-base leading-7 text-muted-foreground">Clubs</dt>
-                  <dd className="order-first text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                    <AnimatedCounter end={stats.totalTeams} />
-                  </dd>
-                </div>
-                <div className="mx-auto flex max-w-xs flex-col gap-y-4">
-                  <dt className="text-base leading-7 text-muted-foreground">Fixtures</dt>
-                  <dd className="order-first text-3xl font-semibold tracking-tight text-foreground sm:text-5xl">
-                    <AnimatedCounter end={stats.totalMatches} />
-                  </dd>
-                </div>
-              </dl>
+        <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/50">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent leading-tight tracking-tight mb-6">League Statistics</h2>
+              <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">Real-time data from our advanced tracking system</p>
+              <div className="h-1 w-24 bg-primary rounded-full mx-auto mt-8"></div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  icon: Users,
+                  label: "Active Players",
+                  value: stats.totalPlayers,
+                  color: "from-green-500 to-green-600",
+                },
+                {
+                  icon: Trophy,
+                  label: "Clubs",
+                  value: stats.totalTeams,
+                  color: "from-blue-500 to-blue-600",
+                },
+                {
+                  icon: Calendar,
+                  label: "Fixtures",
+                  value: stats.totalMatches,
+                  color: "from-yellow-500 to-yellow-600",
+                },
+              ].map((stat, index) => (
+                <motion.div
+                  key={stat.label}
+                  className="bg-card border border-border/50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105 p-6 text-center"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                >
+                  <div className={`p-4 bg-gradient-to-br ${stat.color} rounded-xl shadow-lg inline-block mb-4`}>
+                    <stat.icon className="h-8 w-8 text-white" />
+                  </div>
+                  <div className="text-4xl font-bold text-foreground mb-2">
+                    <AnimatedCounter end={stat.value} />
+                  </div>
+                  <div className="text-lg text-muted-foreground font-medium">{stat.label}</div>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>

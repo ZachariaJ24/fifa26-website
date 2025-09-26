@@ -5,7 +5,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { MantineProviderWrapper } from "@/components/providers/mantine-provider"
-import SiteHeader from "@/components/public/SiteHeader"
+import SiteHeaderClient from "@/components/public/SiteHeaderClient"
 import SiteFooter from "@/components/public/SiteFooter"
 import { Toaster } from "@/components/ui/toaster"
 import SupabaseProvider from "@/lib/supabase/client"
@@ -56,7 +56,7 @@ export default function RootLayout({
             <SupabaseProvider>
               <MobileScalingProvider>
                 <div className="relative flex min-h-dvh flex-col bg-background">
-                  <SiteHeader />
+                  <SiteHeaderClient />
                   <main className="flex-1">{children}</main>
                   <SiteFooter />
                 </div>
