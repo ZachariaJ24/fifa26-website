@@ -1,107 +1,60 @@
+// Midnight Studios INTl - All rights reserved
+
 import { NextResponse } from "next/server"
-import { createClient } from "@/lib/supabase/server"
-import { cookies } from "next/headers"
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
+
+export const dynamic = 'force-dynamic'
 
 export async function GET(request: Request) {
+  const supabase = createRouteHandlerClient({ cookies })
+  const { searchParams } = new URL(request.url)
+  const seasonId = searchParams.get('season_id')
+
   try {
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
-
-    const { searchParams } = new URL(request.url)
-    const season = searchParams.get("season")
-    const status = searchParams.get("status")
-    const conference = searchParams.get("conference")
-
     let query = supabase
-      .from("matches")
+      .from('matches')
       .select(`
         id,
-        home_team_id,
-        away_team_id,
+        match_date,
+        status,
         home_score,
         away_score,
-        status,
-        match_date,
-        venue,
-        attendance,
-        referee,
-        overtime,
-        has_overtime,
-        has_shootout,
-        ea_match_id,
-        season_id,
-        home_team:teams!home_team_id(
-          id,
-          name,
-          logo_url,
-          conference_id,
-          conferences(
-            id,
-            name,
-            color
-          )
-        ),
-        away_team:teams!away_team_id(
-          id,
-          name,
-          logo_url,
-          conference_id,
-          conferences(
-            id,
-            name,
-            color
-          )
-        ),
-        seasons(
-          id,
-          name,
-          season_number
-        )
+        home_team:teams!home_team_id(id, name, logo_url),
+        away_team:teams!away_team_id(id, name, logo_url)
       `)
 
-    // Apply filters
-    if (season) {
-      query = query.eq("season_id", season)
+    if (seasonId) {
+      query = query.eq('season_id', seasonId)
     } else {
-      // Default to current active season
-      const { data: seasonData } = await supabase
-        .from("seasons")
-        .select("id")
-        .eq("is_active", true)
-        .single()
-      
-      if (seasonData) {
-        query = query.eq("season_id", seasonData.id)
-      }
+        // If no season is specified, fetch the current active season
+        const { data: activeSeason, error: seasonError } = await supabase
+            .from('seasons')
+            .select('id')
+            .eq('is_active', true)
+            .single();
+
+        if (seasonError || !activeSeason) {
+            throw new Error('No active season found and no season specified');
+        }
+
+        query = query.eq('season_id', activeSeason.id);
     }
 
-    if (status) {
-      query = query.eq("status", status)
-    }
+    const { data, error } = await query.order('match_date', { ascending: true });
 
-    // Filter by conference if specified
-    if (conference) {
-      query = query.or(`home_team.conference_id.eq.${conference},away_team.conference_id.eq.${conference}`)
-    }
+    if (error) throw new Error(error.message);
 
-    const { data: matches, error } = await query
-      .order("match_date", { ascending: false })
+    return NextResponse.json({ matches: data });
 
-    if (error) {
-      return NextResponse.json({ error: error.message }, { status: 500 })
-    }
-
-    return NextResponse.json(matches)
   } catch (error: any) {
-    console.error("Error fetching matches:", error)
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 })
+    return NextResponse.json({ error: error.message }, { status: 500 })
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const cookieStore = cookies()
-    const supabase = createClient(cookieStore)
+    const supabase = createRouteHandlerClient({ cookies })
 
     // Check if user is admin
     const {

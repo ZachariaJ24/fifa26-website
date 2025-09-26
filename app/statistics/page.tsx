@@ -4,11 +4,14 @@
 import { useState, useEffect, useMemo } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
 import { motion } from "framer-motion"
-import { Crown, Shield, BarChart3, TrendingUp, ArrowUpDown } from "lucide-react"
+import { Crown, Shield, BarChart3, TrendingUp, ArrowUpDown, Users, Target, Footprints, Hand } from "lucide-react"
 import { TeamLogo } from "@/components/team-logo"
 import Link from "next/link"
+import { Skeleton } from "@/components/ui/skeleton"
 
 // Define the structure of our player stats
 interface PlayerStats {
@@ -16,6 +19,7 @@ interface PlayerStats {
   player_name: string;
   team_id: string | null;
   team_name: string | null;
+  position: string | null;
   games_played: number;
   goals: number;
   assists: number;
@@ -26,6 +30,10 @@ interface PlayerStats {
   tackles: number;
   interceptions: number;
   dribbles: number;
+  saves?: number;
+  goals_against?: number;
+  save_percentage?: number;
+  clean_sheets?: number;
 }
 
 type SortKey = keyof PlayerStats | 'points';
@@ -35,12 +43,13 @@ export default function StatisticsPage() {
   const [stats, setStats] = useState<PlayerStats[]>([])
   const [loading, setLoading] = useState(true)
   const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: 'asc' | 'desc' }>({ key: 'points', direction: 'desc' });
+  const [activeTab, setActiveTab] = useState('overall');
 
   useEffect(() => {
     async function fetchStats() {
       try {
         setLoading(true)
-        const response = await fetch('/api/player-stats')
+        const response = await fetch('/api/v2/player-stats')
         if (!response.ok) throw new Error('Failed to fetch player stats')
         const data = await response.json()
         setStats(data.playerStats)
@@ -58,8 +67,17 @@ export default function StatisticsPage() {
     fetchStats()
   }, [toast])
 
+  const filteredStats = useMemo(() => {
+    if (activeTab === 'overall') return stats;
+    if (activeTab === 'attackers') return stats.filter(p => ['ST', 'CF', 'LW', 'RW'].includes(p.position || ''));
+    if (activeTab === 'midfielders') return stats.filter(p => ['CAM', 'CM', 'CDM', 'LM', 'RM'].includes(p.position || ''));
+    if (activeTab === 'defenders') return stats.filter(p => ['CB', 'LB', 'RB', 'LWB', 'RWB'].includes(p.position || ''));
+    if (activeTab === 'goalkeepers') return stats.filter(p => p.position === 'GK');
+    return [];
+  }, [stats, activeTab]);
+
   const sortedStats = useMemo(() => {
-    let sortableStats = [...stats];
+    let sortableStats = [...filteredStats];
     sortableStats.sort((a, b) => {
       let aValue: any;
       let bValue: any;
@@ -68,20 +86,16 @@ export default function StatisticsPage() {
         aValue = a.goals + a.assists;
         bValue = b.goals + b.assists;
       } else {
-        aValue = a[sortConfig.key as keyof PlayerStats];
-        bValue = b[sortConfig.key as keyof PlayerStats];
+        aValue = a[sortConfig.key as keyof PlayerStats] || 0;
+        bValue = b[sortConfig.key as keyof PlayerStats] || 0;
       }
 
-      if (aValue < bValue) {
-        return sortConfig.direction === 'asc' ? -1 : 1;
-      }
-      if (aValue > bValue) {
-        return sortConfig.direction === 'asc' ? 1 : -1;
-      }
+      if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
+      if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
       return 0;
     });
     return sortableStats;
-  }, [stats, sortConfig]);
+  }, [filteredStats, sortConfig]);
 
   const handleSort = (key: SortKey) => {
     let direction: 'asc' | 'desc' = 'desc';
@@ -90,20 +104,6 @@ export default function StatisticsPage() {
     }
     setSortConfig({ key, direction });
   };
-
-  const getTopPlayer = (key: keyof PlayerStats | 'points') => {
-    if (stats.length === 0) return null;
-    return [...stats].sort((a, b) => {
-      const aValue = key === 'points' ? a.goals + a.assists : a[key];
-      const bValue = key === 'points' ? b.goals + b.assists : b[key];
-      return (bValue as number) - (aValue as number);
-    })[0];
-  };
-
-  const topScorer = getTopPlayer('goals');
-  const topAssister = getTopPlayer('assists');
-  const topPlaymaker = getTopPlayer('points');
-  const topPasser = getTopPlayer('pass_accuracy');
 
   const statHeaders: { key: SortKey; label: string; className?: string }[] = [
     { key: 'player_name', label: 'Player', className: 'min-w-[200px]' },
@@ -119,6 +119,31 @@ export default function StatisticsPage() {
     { key: 'dribbles', label: 'DRB' },
   ];
 
+  const goalieStatHeaders: { key: SortKey; label: string; className?: string }[] = [
+    { key: 'player_name', label: 'Player', className: 'min-w-[200px]' },
+    { key: 'team_name', label: 'Team', className: 'min-w-[150px]' },
+    { key: 'games_played', label: 'GP' },
+    { key: 'saves', label: 'SV' },
+    { key: 'goals_against', label: 'GA' },
+    { key: 'save_percentage', label: 'SV%' },
+    { key: 'clean_sheets', label: 'CS' },
+  ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900/20 text-white p-4 sm:p-6 lg:p-8">
+        <div className="container mx-auto">
+          <Skeleton className="h-12 w-1/2 mx-auto mb-4" />
+          <Skeleton className="h-8 w-3/4 mx-auto mb-12" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-12">
+            {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-24 w-full" />)}
+          </div>
+          <Skeleton className="h-96 w-full" />
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900/20 text-white p-4 sm:p-6 lg:p-8">
       <div className="container mx-auto">
@@ -127,24 +152,22 @@ export default function StatisticsPage() {
           <p className="mt-4 text-lg text-gray-400 max-w-3xl mx-auto">Deep dive into the performance metrics of the league's top talents.</p>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <StatCard title="Top Scorer" player={topScorer} stat={`${topScorer?.goals} Goals`} icon={<Crown className="text-yellow-400" />} />
-            <StatCard title="Top Playmaker" player={topPlaymaker} stat={`${(topPlaymaker?.goals || 0) + (topPlaymaker?.assists || 0)} Points`} icon={<TrendingUp className="text-green-400" />} />
-            <StatCard title="Assist King" player={topAssister} stat={`${topAssister?.assists} Assists`} icon={<BarChart3 className="text-blue-400" />} />
-            <StatCard title="Passing Maestro" player={topPasser} stat={`${topPasser?.pass_accuracy}% PA`} icon={<Shield className="text-purple-400" />} />
-          </div>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-5 max-w-4xl mx-auto bg-gray-800/50 border border-gray-700 p-1 rounded-lg mb-8">
+            <TabsTrigger value="overall"><Users className="w-4 h-4 mr-2"/>Overall</TabsTrigger>
+            <TabsTrigger value="attackers"><Target className="w-4 h-4 mr-2"/>Attackers</TabsTrigger>
+            <TabsTrigger value="midfielders"><Footprints className="w-4 h-4 mr-2"/>Midfielders</TabsTrigger>
+            <TabsTrigger value="defenders"><Shield className="w-4 h-4 mr-2"/>Defenders</TabsTrigger>
+            <TabsTrigger value="goalkeepers"><Hand className="w-4 h-4 mr-2"/>Goalkeepers</TabsTrigger>
+          </TabsList>
 
           <Card className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-2xl font-bold text-white">League Leaders</CardTitle>
-            </CardHeader>
-            <CardContent>
+            <CardContent className="p-4">
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow className="border-gray-700 hover:bg-gray-700/50">
-                      {statHeaders.map(({ key, label, className }) => (
+                      {(activeTab === 'goalkeepers' ? goalieStatHeaders : statHeaders).map(({ key, label, className }) => (
                         <TableHead key={key} className={`text-white font-bold ${className}`}>
                           <div className="flex items-center cursor-pointer" onClick={() => handleSort(key)}>
                             {label}
@@ -165,14 +188,25 @@ export default function StatisticsPage() {
                           {player.team_name}
                         </TableCell>
                         <TableCell>{player.games_played}</TableCell>
-                        <TableCell>{player.goals}</TableCell>
-                        <TableCell>{player.assists}</TableCell>
-                        <TableCell>{player.goals + player.assists}</TableCell>
-                        <TableCell>{player.shots}</TableCell>
-                        <TableCell>{player.pass_accuracy}%</TableCell>
-                        <TableCell>{player.tackles}</TableCell>
-                        <TableCell>{player.interceptions}</TableCell>
-                        <TableCell>{player.dribbles}</TableCell>
+                        {activeTab === 'goalkeepers' ? (
+                          <>
+                            <TableCell>{player.saves}</TableCell>
+                            <TableCell>{player.goals_against}</TableCell>
+                            <TableCell>{player.save_percentage}%</TableCell>
+                            <TableCell>{player.clean_sheets}</TableCell>
+                          </>
+                        ) : (
+                          <>
+                            <TableCell>{player.goals}</TableCell>
+                            <TableCell>{player.assists}</TableCell>
+                            <TableCell>{player.goals + player.assists}</TableCell>
+                            <TableCell>{player.shots}</TableCell>
+                            <TableCell>{player.pass_accuracy}%</TableCell>
+                            <TableCell>{player.tackles}</TableCell>
+                            <TableCell>{player.interceptions}</TableCell>
+                            <TableCell>{player.dribbles}</TableCell>
+                          </>
+                        )}
                       </TableRow>
                     ))}
                   </TableBody>
@@ -180,27 +214,8 @@ export default function StatisticsPage() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </Tabs>
       </div>
     </div>
   );
 }
-
-const StatCard = ({ title, player, stat, icon }: { title: string; player: PlayerStats | null; stat: string; icon: React.ReactNode }) => (
-  <Card className="bg-gray-800/60 border border-gray-700 hover:border-blue-500 transition-colors duration-300">
-    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-      <CardTitle className="text-sm font-medium text-gray-400">{title}</CardTitle>
-      {icon}
-    </CardHeader>
-    <CardContent>
-      {player ? (
-        <>
-          <div className="text-2xl font-bold text-white">{player.player_name}</div>
-          <p className="text-xs text-gray-500">{stat}</p>
-        </>
-      ) : (
-        <div className="text-2xl font-bold text-white">N/A</div>
-      )}
-    </CardContent>
-  </Card>
-);
