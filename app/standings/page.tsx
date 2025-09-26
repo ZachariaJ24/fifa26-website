@@ -1,12 +1,13 @@
 // Midnight Studios INTl - All rights reserved
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useToast } from "@/components/ui/use-toast"
 import TeamStandings, { type TeamStanding } from "@/components/team-standings"
-import { Trophy, BarChart3, Users } from "lucide-react"
+import { Trophy, BarChart3, Users, Shield, Crown, Flame } from "lucide-react"
+import { TeamLogo } from "@/components/team-logo"
 import { motion } from "framer-motion"
 
 interface Conference {
@@ -42,6 +43,18 @@ export default function StandingsPage() {
 
     fetchStandingsData()
   }, [toast])
+
+  const overallStandings = useMemo(() => {
+    const allTeams = conferences.flatMap(c => c.standings);
+    return allTeams.sort((a, b) => {
+      if (b.points !== a.points) return b.points - a.points;
+      if (b.goal_difference !== a.goal_difference) return b.goal_difference - a.goal_difference;
+      return b.goals_for - a.goals_for;
+    });
+  }, [conferences]);
+
+  const playoffTeams = useMemo(() => overallStandings.slice(0, 8), [overallStandings]);
+  const bubbleTeams = useMemo(() => overallStandings.slice(8, 12), [overallStandings]);
 
   const conferenceColors = [
     'from-blue-500 to-cyan-400',
@@ -107,9 +120,60 @@ export default function StandingsPage() {
                 </Card>
               </motion.div>
             ))}
+
+            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: conferences.length * 0.2 }}>
+              <Card className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm overflow-hidden shadow-2xl shadow-green-500/10">
+                <CardHeader className="p-4 bg-gradient-to-r from-green-500 to-emerald-400">
+                  <CardTitle className="text-2xl md:text-3xl font-bold text-center text-white flex items-center justify-center gap-3">
+                    <BarChart3 /> Overall Standings
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <TeamStandings teams={overallStandings} />
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: (conferences.length + 1) * 0.2 }}>
+              <Card className="bg-gray-800/50 border border-gray-700 backdrop-blur-sm overflow-hidden shadow-2xl shadow-purple-500/10">
+                <CardHeader className="p-4 bg-gradient-to-r from-purple-500 to-pink-400">
+                  <CardTitle className="text-2xl md:text-3xl font-bold text-center text-white flex items-center justify-center gap-3">
+                    <Shield /> Race to the Finals
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                      <h3 className="text-xl font-bold text-green-400 flex items-center gap-2 mb-4"><Crown /> Playoff Teams</h3>
+                      <div className="space-y-2">
+                        {playoffTeams.map((team, i) => <PlayoffTeamCard key={team.id} team={team} rank={i + 1} />)}
+                      </div>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-yellow-400 flex items-center gap-2 mb-4"><Flame /> On the Bubble</h3>
+                      <div className="space-y-2">
+                        {bubbleTeams.map((team, i) => <PlayoffTeamCard key={team.id} team={team} rank={i + 9} />)}
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
           </div>
         )}
       </main>
     </div>
   )
 }
+
+const PlayoffTeamCard = ({ team, rank }: { team: TeamStanding, rank: number }) => (
+  <div className="flex items-center justify-between bg-gray-700/50 p-3 rounded-lg">
+    <div className="flex items-center gap-3">
+      <span className="font-bold text-lg w-6 text-center">{rank}</span>
+      <TeamLogo teamName={team.name} logoUrl={team.logo_url} size="sm" />
+      <span className="font-semibold">{team.name}</span>
+    </div>
+    <div className="font-bold text-blue-400">{team.points} PTS</div>
+  </div>
+);

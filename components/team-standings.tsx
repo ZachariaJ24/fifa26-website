@@ -1,3 +1,4 @@
+import React from "react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { TeamLogo } from "@/components/team-logo"
 import { Badge } from "@/components/ui/badge"
@@ -5,21 +6,21 @@ import Image from "next/image"
 import Link from "next/link"
 
 // This type should be flexible enough for soccer standings.
-// We'll assume the incoming data matches this structure.
 export interface TeamStanding {
-  id: string
-  name: string
-  logo_url: string
-  games_played: number
-  wins: number
-  draws: number
-  losses: number
-  points: number
-  goals_for: number
-  goals_against: number
-  goal_difference: number
-  // Optional fields from the original hockey component, can be ignored for soccer
-  playoff_status?: "clinched" | "eliminated" | "active"
+  id: string;
+  name: string;
+  logo_url: string;
+  games_played: number;
+  wins: number;
+  draws: number;
+  losses: number;
+  points: number;
+  goals_for: number;
+  goals_against: number;
+  goal_difference: number;
+  form: string[];
+  streak: string;
+  playoff_status?: "clinched" | "eliminated" | "active";
 }
 
 interface TeamStandingsProps {
@@ -44,81 +45,90 @@ function getPlayoffStatusIndicator(status?: "clinched" | "eliminated" | "active"
   return null
 }
 
+const FormBadge = ({ result }: { result: string }) => {
+  const baseClasses = "w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold text-white";
+  switch (result) {
+    case 'W':
+      return <div className={`${baseClasses} bg-green-500`}>W</div>;
+    case 'L':
+      return <div className={`${baseClasses} bg-red-500`}>L</div>;
+    case 'D':
+      return <div className={`${baseClasses} bg-gray-500`}>D</div>;
+    default:
+      return null;
+  }
+};
+
+const StreakBadge = ({ streak }: { streak: string }) => {
+  if (!streak) return <span className="text-gray-400">-</span>;
+  const type = streak.slice(-1);
+  const count = streak.slice(0, -1);
+  let color = "bg-gray-500";
+  if (type === 'W') color = "bg-green-500";
+  if (type === 'L') color = "bg-red-500";
+  return <Badge className={`${color} text-white font-bold`}>{`${count} ${type}`} </Badge>;
+};
+
 export default function TeamStandings({ teams }: TeamStandingsProps) {
   if (!teams || teams.length === 0) {
-    return <div className="text-center py-8 text-gray-500 dark:text-gray-400">No teams found.</div>
+    return <div className="text-center py-8 text-gray-400">No teams found.</div>;
   }
 
   return (
     <div className="overflow-x-auto">
-      <Table>
+      <Table className="w-full text-white">
         <TableHeader>
-          <TableRow className="border-gray-200 dark:border-gray-700">
-            <TableHead className="w-12 text-center font-bold">#</TableHead>
-            <TableHead className="min-w-[220px] font-bold">Team</TableHead>
-            <TableHead className="text-center font-bold">GP</TableHead>
-            <TableHead className="text-center font-bold">W</TableHead>
-            <TableHead className="text-center font-bold">D</TableHead>
-            <TableHead className="text-center font-bold">L</TableHead>
-            <TableHead className="text-center font-bold">GF</TableHead>
-            <TableHead className="text-center font-bold">GA</TableHead>
-            <TableHead className="text-center font-bold">GD</TableHead>
-            <TableHead className="text-center font-bold">PTS</TableHead>
+          <TableRow className="border-b border-gray-700">
+            <TableHead className="w-12 text-center font-bold text-gray-300">#</TableHead>
+            <TableHead className="min-w-[220px] font-bold text-gray-300">Team</TableHead>
+            <TableHead className="text-center font-bold text-gray-300">GP</TableHead>
+            <TableHead className="text-center font-bold text-gray-300">W</TableHead>
+            <TableHead className="text-center font-bold text-gray-300">D</TableHead>
+            <TableHead className="text-center font-bold text-gray-300">L</TableHead>
+            <TableHead className="text-center font-bold text-gray-300">GF</TableHead>
+            <TableHead className="text-center font-bold text-gray-300">GA</TableHead>
+            <TableHead className="text-center font-bold text-gray-300">GD</TableHead>
+            <TableHead className="text-center font-bold text-gray-300">Form</TableHead>
+            <TableHead className="text-center font-bold text-gray-300">Streak</TableHead>
+            <TableHead className="text-center font-bold text-gray-300">PTS</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {teams.map((team, index) => (
             <TableRow 
               key={team.id} 
-              className="hover:bg-gray-100/50 dark:hover:bg-gray-800/50 border-gray-200 dark:border-gray-700 transition-colors duration-200"
+              className="border-b border-gray-800 hover:bg-gray-700/50 transition-colors duration-200"
             >
-              <TableCell className="font-bold text-center text-gray-800 dark:text-gray-200">
-                {index + 1}
-              </TableCell>
+              <TableCell className="font-bold text-center text-lg text-gray-300">{index + 1}</TableCell>
               <TableCell>
                 <Link href={`/teams/${team.id}`} className="flex items-center gap-3 hover:underline group">
-                  <div className="flex-shrink-0">
-                    <TeamLogo teamName={team.name} logoUrl={team.logo_url} size="sm" />
-                  </div>
-                  <div className="flex items-center">
-                    <span className="font-semibold truncate text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-200">
-                      {team.name}
-                    </span>
-                    {getPlayoffStatusIndicator(team.playoff_status)}
-                  </div>
+                  <TeamLogo teamName={team.name} logoUrl={team.logo_url} size="sm" />
+                  <span className="font-semibold text-white group-hover:text-blue-400 transition-colors duration-200">{team.name}</span>
+                  {getPlayoffStatusIndicator(team.playoff_status)}
                 </Link>
               </TableCell>
-              <TableCell className="text-center text-gray-700 dark:text-gray-300 font-medium">
-                {team.games_played}
-              </TableCell>
-              <TableCell className="text-center font-bold text-green-700 dark:text-green-400">
-                {team.wins}
-              </TableCell>
-              <TableCell className="text-center font-bold text-gray-700 dark:text-gray-300">
-                {team.draws}
-              </TableCell>
-              <TableCell className="text-center font-bold text-red-700 dark:text-red-400">
-                {team.losses}
-              </TableCell>
-              <TableCell className="text-center font-medium text-gray-700 dark:text-gray-300">
-                {team.goals_for}
-              </TableCell>
-              <TableCell className="text-center font-medium text-gray-700 dark:text-gray-300">
-                {team.goals_against}
-              </TableCell>
-              <TableCell className="text-center">
-                <span className={`font-bold text-lg ${team.goal_difference >= 0 ? "text-green-600 dark:text-green-400" : "text-red-600 dark:text-red-400"}`}>
-                  {team.goal_difference >= 0 ? "+" : ""}
-                  {team.goal_difference}
+              <TableCell className="text-center font-medium text-gray-300">{team.games_played}</TableCell>
+              <TableCell className="text-center font-bold text-green-400">{team.wins}</TableCell>
+              <TableCell className="text-center font-bold text-gray-300">{team.draws}</TableCell>
+              <TableCell className="text-center font-bold text-red-400">{team.losses}</TableCell>
+              <TableCell className="text-center font-medium text-gray-300">{team.goals_for}</TableCell>
+              <TableCell className="text-center font-medium text-gray-300">{team.goals_against}</TableCell>
+              <TableCell className="text-center font-bold text-lg">
+                <span className={`${team.goal_difference >= 0 ? "text-green-400" : "text-red-400"}`}>
+                  {team.goal_difference >= 0 ? "+" : ""}{team.goal_difference}
                 </span>
               </TableCell>
-              <TableCell className="text-center font-bold text-2xl text-blue-700 dark:text-blue-400">
-                {team.points}
+              <TableCell className="text-center">
+                <div className="flex justify-center items-center gap-1">
+                  {team.form.map((result, i) => <FormBadge key={i} result={result} />)}
+                </div>
               </TableCell>
+              <TableCell className="text-center"><StreakBadge streak={team.streak} /></TableCell>
+              <TableCell className="text-center font-bold text-2xl text-blue-400">{team.points}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }

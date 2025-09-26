@@ -30,6 +30,8 @@ interface Standing {
   goals_for: number;
   goals_against: number;
   goal_difference: number;
+  form: string[];
+  streak: string;
 }
 
 interface Conference {
@@ -92,8 +94,41 @@ export async function GET() {
         })
 
         const games_played = wins + draws + losses
-        const points = (wins * 3) + draws
-        const goal_difference = goals_for - goals_against
+        const points = (wins * 3) + draws;
+        const goal_difference = goals_for - goals_against;
+
+        // Calculate Form and Streak
+        const teamMatches = matches
+          .filter(m => m.home_team_id === team.id || m.away_team_id === team.id)
+          // Assuming matches have a date, which they don't in this context.
+          // This will need to be added to the matches table to be accurate.
+          // For now, we'll proceed without sorting by date, which is not ideal.
+
+        const form: string[] = teamMatches.slice(-5).map(m => {
+          if (m.home_team_id === team.id) {
+            if (m.home_score > m.away_score) return 'W';
+            if (m.home_score < m.away_score) return 'L';
+            return 'D';
+          } else {
+            if (m.away_score > m.home_score) return 'W';
+            if (m.away_score < m.home_score) return 'L';
+            return 'D';
+          }
+        });
+
+        let streak = '';
+        if (teamMatches.length > 0) {
+          const lastResult = form[form.length - 1];
+          let count = 0;
+          for (let i = form.length - 1; i >= 0; i--) {
+            if (form[i] === lastResult) {
+              count++;
+            } else {
+              break;
+            }
+          }
+          streak = `${count}${lastResult}`;
+        }
 
         return {
           id: team.id,
@@ -106,8 +141,10 @@ export async function GET() {
           games_played,
           goals_for,
           goals_against,
-          goal_difference
-        }
+          goal_difference,
+          form,
+          streak,
+        };
       })
 
       // Sort standings by points, then goal difference, then goals for
