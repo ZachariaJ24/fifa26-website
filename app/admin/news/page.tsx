@@ -131,7 +131,7 @@ export default function AdminNewsPage() {
         <div className="container mx-auto px-4 py-12">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-stadium-gold-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center">
                 <Newspaper className="h-8 w-8 text-white" />
               </div>
               <div>
