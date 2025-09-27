@@ -17,10 +17,10 @@ export default function AdminForumPage() {
         
         <div className="container mx-auto text-center relative z-10">
           <div>
-            <h1 className="hockey-title mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">
               Forum Management Center
             </h1>
-            <p className="hockey-subtitle mx-auto mb-12">
+            <p className="text-lg text-field-green-700 dark:text-field-green-300 mx-auto mb-12 max-w-4xl">
               Comprehensive forum management and moderation tools for the league community. 
               Manage categories, posts, user interactions, and maintain a healthy discussion environment.
             </p>
