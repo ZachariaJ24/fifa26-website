@@ -251,10 +251,10 @@ export default function UserManagementPage() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white fifa-title mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             User Management
           </h1>
-          <p className="text-lg text-white fifa-subtitle max-w-4xl mx-auto">
+          <p className="text-lg text-white max-w-4xl mx-auto">
             Comprehensive user administration and management
           </p>
         </div>

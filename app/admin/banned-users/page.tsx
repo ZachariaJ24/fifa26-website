@@ -284,10 +284,10 @@ export default function BannedUsersPage() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white hockey-title mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Banned Users Management
           </h1>
-          <p className="text-lg text-white hockey-subtitle mb-8">
+          <p className="text-lg text-white mb-8">
             Manage user access and maintain community standards. 
             View, unban, and track banned users across the platform.
           </p>

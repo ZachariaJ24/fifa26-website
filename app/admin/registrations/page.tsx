@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/components/ui/use-toast"
-import { Loader2, Download, Search, AlertCircle, RefreshCw, User, MapPin, Gamepad2, Edit, Trophy, Calendar, Users, Star, Shield, Target, Zap, CheckCircle2 } from "lucide-react"
+import { Loader2, Download, Search, AlertCircle, RefreshCw, User, MapPin, Gamepad2, Edit, Trophy, Calendar, Users, Star, Shield, Target, Zap, CheckCircle2, XCircle } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -318,10 +318,10 @@ export default function RegistrationsPage() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white fifa-title mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Season Registrations
           </h1>
-          <p className="text-lg text-white fifa-subtitle max-w-4xl mx-auto">
+          <p className="text-lg text-white max-w-4xl mx-auto">
             {activeSeason ? `Managing registrations for ${activeSeason.name}` : "Loading active season..."}
           </p>
         </div>

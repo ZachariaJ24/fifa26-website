@@ -193,10 +193,10 @@ export default function CompleteUserDeletionPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white fifa-title mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Complete User Deletion
           </h1>
-          <p className="text-lg text-white fifa-subtitle max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Permanently remove users from all systems. This action cannot be undone.
           </p>
         </div>
