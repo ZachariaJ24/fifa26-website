@@ -60,7 +60,7 @@ interface User {
   last_sign_in_at?: string
   email_confirmed_at?: string
   roles?: string[]
-  team?: {
+  club?: {
     id: string
     name: string
   }
@@ -124,7 +124,7 @@ export default function UserManagementPage() {
         .select("role")
         .eq("user_id", user.id)
 
-      const isAdminUser = roles?.some(role => role.role === "Admin")
+      const isAdminUser = roles?.some((role: any) => role.role === "Admin") || false
       setIsAdmin(isAdminUser)
 
       if (!isAdminUser) {
@@ -151,7 +151,7 @@ export default function UserManagementPage() {
         .select(`
           *,
           user_roles(role),
-          teams(id, name),
+          clubs(id, name),
           season_registrations(*)
         `)
         .order("created_at", { ascending: false })
@@ -159,10 +159,10 @@ export default function UserManagementPage() {
       if (usersError) throw usersError
 
       // Process users data
-      const processedUsers = (usersData || []).map(user => ({
+      const processedUsers = (usersData || []).map((user: any) => ({
         ...user,
         roles: user.user_roles?.map((r: any) => r.role) || [],
-        team: user.teams?.[0] || null,
+        club: user.clubs?.[0] || null,
         season_registrations: user.season_registrations || [],
         is_orphaned: !user.email_confirmed_at && new Date(user.created_at) < new Date(Date.now() - 24 * 60 * 60 * 1000) // 24 hours old and unconfirmed
       }))
@@ -553,7 +553,7 @@ export default function UserManagementPage() {
                             Status
                           </th>
                           <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
-                            Team
+                            Club
                           </th>
                           <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
                             Season Reg
@@ -658,12 +658,12 @@ export default function UserManagementPage() {
                                 </div>
                               </td>
                               <td className="p-3">
-                                {user.team ? (
+                                {user.club ? (
                                   <Badge variant="outline" className="text-xs">
-                                    {user.team.name}
+                                    {user.club.name}
                                   </Badge>
                                 ) : (
-                                  <span className="text-sm text-field-green-400">No Team</span>
+                                  <span className="text-sm text-field-green-400">No Club</span>
                                 )}
                               </td>
                               <td className="p-3">

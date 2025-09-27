@@ -157,7 +157,7 @@ export default function ClubAvailabilityPage() {
       console.log(`Loading availability data for week ${weekStart} to ${weekEnd}, season ${seasonId}`)
 
       const response = await fetch(
-        `/api/admin/team-availability?weekStart=${weekStart}&weekEnd=${weekEnd}&seasonId=${seasonId}`,
+        `/api/admin/club-availability?weekStart=${weekStart}&weekEnd=${weekEnd}&seasonId=${seasonId}`,
       )
 
       if (!response.ok) {
@@ -242,7 +242,7 @@ export default function ClubAvailabilityPage() {
               <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
                 <Users className="h-8 w-8 text-white" />
               </div>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Loading Team Availability...</p>
+              <p className="text-field-green-600 dark:text-field-green-400 font-medium">Loading Club Availability...</p>
             </div>
           </div>
         </div>
@@ -313,7 +313,7 @@ export default function ClubAvailabilityPage() {
                 className="hockey-button flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg hover:scale-105 transition-all duration-300"
               >
                 <Users className="h-4 w-4" />
-                Team Availability
+                Club Availability
               </TabsTrigger>
               <TabsTrigger 
                 value="injury-reserves" 
@@ -336,7 +336,7 @@ export default function ClubAvailabilityPage() {
                   </div>
                   <div>
                     <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Controls & Filters</CardTitle>
-                    <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">Configure season and team filters for availability tracking</CardDescription>
+                    <CardDescription className="text-field-green-600 dark:text-field-green-400">Configure season and club filters for availability tracking</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -408,7 +408,7 @@ export default function ClubAvailabilityPage() {
               </CardHeader>
             </Card>
 
-            {/* Enhanced Team Filter */}
+            {/* Enhanced Club Filter */}
             <Card className="hockey-card hockey-card-hover mb-6 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-lg shadow-ice-blue-500/10">
               <CardContent className="p-6">
                 <div className="flex items-center gap-4">
@@ -453,7 +453,7 @@ export default function ClubAvailabilityPage() {
                     {data.matches.map((match) => (
                       <div key={match.id} className="p-4 bg-gradient-to-r from-ice-blue-50/30 to-rink-blue-50/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border-2 border-ice-blue-200/30 dark:border-rink-blue-700/30 hover:shadow-lg hover:scale-105 transition-all duration-300">
                         <div className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-2">
-                          {match.teams?.name} vs {match.away_team?.name}
+                          {match.home_club?.name} vs {match.away_club?.name}
                         </div>
                         <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 mb-3 flex items-center gap-2">
                           <Clock className="h-4 w-4" />
@@ -472,7 +472,7 @@ export default function ClubAvailabilityPage() {
               </Card>
             )}
 
-            {/* Enhanced Team Availability Tables */}
+            {/* Enhanced Club Availability Tables */}
             {filteredClubs.map((club) => (
               <Card key={club.id} className="fifa-card-hover-enhanced mb-6 border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg shadow-field-green-500/10">
                 <CardHeader className="relative">
@@ -522,7 +522,7 @@ export default function ClubAvailabilityPage() {
                             <TableCell colSpan={7} className="text-center py-8 text-hockey-silver-600 dark:text-hockey-silver-400">
                               <div className="flex flex-col items-center gap-2">
                                 <Users className="h-8 w-8 text-hockey-silver-400 dark:text-hockey-silver-500" />
-                                <span className="font-medium">No players found for this team</span>
+                                <span className="font-medium">No players found for this club</span>
                               </div>
                             </TableCell>
                           </TableRow>
@@ -609,7 +609,7 @@ export default function ClubAvailabilityPage() {
             </Card>
           ))}
 
-            {filteredTeams.length === 0 && (
+            {filteredClubs.length === 0 && (
               <Card className="hockey-card hockey-card-hover border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-lg shadow-ice-blue-500/10">
                 <CardContent className="text-center py-12">
                   <div className="w-16 h-16 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-goal-red-500/25">
@@ -617,17 +617,17 @@ export default function ClubAvailabilityPage() {
                   </div>
                   <h3 className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-4">No Data Available</h3>
                   <p className="text-hockey-silver-600 dark:text-hockey-silver-400 mb-6 max-w-md mx-auto">
-                    {data?.teams.length === 0
-                      ? "No teams found. Make sure teams are set up and marked as active."
-                      : "No team availability data found for the selected week and season."}
+                    {data?.clubs.length === 0
+                      ? "No clubs found. Make sure clubs are set up and marked as active."
+                      : "No club availability data found for the selected week and season."}
                   </p>
-                  {data?.teams.length === 0 && (
+                  {data?.clubs.length === 0 && (
                     <Button 
-                      onClick={() => router.push("/admin/teams")} 
-                      className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                      onClick={() => router.push("/admin/club-management")} 
+                      className="fifa-button-enhanced bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                     >
                       <Settings className="h-4 w-4 mr-2" />
-                      Manage Teams
+                      Manage Clubs
                     </Button>
                   )}
                 </CardContent>

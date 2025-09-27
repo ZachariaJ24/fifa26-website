@@ -150,11 +150,11 @@ export default function AdminDashboardPage() {
       color: "goal-orange"
     },
     {
-      title: "Team Management",
-      description: "Manage teams and rosters",
+      title: "Club Management",
+      description: "Manage clubs and rosters",
       icon: <Trophy className="h-6 w-6" />,
-      href: "/admin/teams",
-      category: "team",
+      href: "/admin/club-management",
+      category: "club",
       color: "pitch-blue"
     },
     {
@@ -182,11 +182,11 @@ export default function AdminDashboardPage() {
       color: "field-green"
     },
     {
-      title: "Team Availability",
+      title: "Club Availability",
       description: "View player availability and games played by week",
       icon: <Calendar className="h-6 w-6" />,
-      href: "/admin/team-avail",
-      category: "team",
+      href: "/admin/club-availability",
+      category: "club",
       color: "pitch-blue"
     },
     {
@@ -199,7 +199,7 @@ export default function AdminDashboardPage() {
     },
     {
       title: "Daily Recap",
-      description: "Generate nightly recap for all teams based on recent matches",
+      description: "Generate nightly recap for all clubs based on recent matches",
       icon: <Newspaper className="h-6 w-6" />,
       href: "/admin/daily-recap",
       category: "content",
@@ -223,7 +223,7 @@ export default function AdminDashboardPage() {
     },
     {
       title: "Statistics Management",
-      description: "Manage player and team statistics",
+      description: "Manage player and club statistics",
       icon: <BarChart3 className="h-6 w-6" />,
       href: "/admin/statistics",
       category: "data",
@@ -262,11 +262,11 @@ export default function AdminDashboardPage() {
       color: "stadium-gold"
     },
     {
-      title: "Team Logos",
-      description: "Manage team logos and branding",
+      title: "Club Logos",
+      description: "Manage club logos and branding",
       icon: <ImageIcon className="h-6 w-6" />,
-      href: "/admin/team-logos",
-      category: "team",
+      href: "/admin/club-logos",
+      category: "club",
       color: "pitch-blue"
     },
     {
@@ -433,7 +433,7 @@ export default function AdminDashboardPage() {
 
   const categories = {
     user: { name: "User Management", icon: <Users className="h-5 w-5" />, color: "field-green" },
-    team: { name: "Team Operations", icon: <Trophy className="h-5 w-5" />, color: "pitch-blue" },
+    club: { name: "Club Operations", icon: <Trophy className="h-5 w-5" />, color: "pitch-blue" },
     game: { name: "Game Management", icon: <GameController className="h-5 w-5" />, color: "stadium-gold" },
     system: { name: "System Tools", icon: <Settings className="h-5 w-5" />, color: "slate" },
     finance: { name: "Financial Tools", icon: <DollarSign className="h-5 w-5" />, color: "goal-orange" },

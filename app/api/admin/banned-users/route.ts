@@ -12,7 +12,7 @@ export async function GET(request: Request) {
       .from("banned_users")
       .select(
         `user_id, reason, expires_at, created_at,
-         user:auth.users(id, email, raw_user_meta_data)`
+         user:auth.users!inner(id, email, raw_user_meta_data)`
       )
       .order("created_at", { ascending: false })
 
