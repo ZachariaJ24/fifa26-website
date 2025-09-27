@@ -120,37 +120,39 @@ export function OrphanedUserFinder() {
 
   return (
     <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Orphaned User Finder</CardTitle>
-          <CardDescription>
+      <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg shadow-field-green-500/10">
+        <CardHeader className="bg-gradient-to-r from-field-green-50/30 to-pitch-blue-50/30 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
+          <CardTitle className="fifa-title text-field-green-800 dark:text-field-green-200">Orphaned User Finder</CardTitle>
+          <CardDescription className="fifa-subtitle text-field-green-600 dark:text-field-green-400">
             Find and fix users that exist in Auth but not in the database, or vice versa
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
+              <Label htmlFor="email" className="text-field-green-700 dark:text-field-green-300 font-medium">Email Address</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="user@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                className="fifa-search border-field-green-300 dark:border-field-green-600 focus:border-field-green-500 focus:ring-field-green-500/20"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="admin-key">Admin Key</Label>
+              <Label htmlFor="admin-key" className="text-field-green-700 dark:text-field-green-300 font-medium">Admin Key</Label>
               <Input
                 id="admin-key"
                 type="password"
                 placeholder="Enter admin key"
                 value={adminKey}
                 onChange={(e) => setAdminKey(e.target.value)}
+                className="fifa-search border-field-green-300 dark:border-field-green-600 focus:border-field-green-500 focus:ring-field-green-500/20"
               />
             </div>
           </div>
-          <Button onClick={searchUser} disabled={loading} className="w-full">
+          <Button onClick={searchUser} disabled={loading} className="w-full fifa-button-enhanced bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
             <Search className="mr-2 h-4 w-4" />
             {loading ? "Searching..." : "Search User"}
           </Button>
@@ -174,17 +176,17 @@ export function OrphanedUserFinder() {
           )}
 
           {/* Auth User Status */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+          <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg shadow-field-green-500/10">
+            <CardHeader className="bg-gradient-to-r from-field-green-50/30 to-pitch-blue-50/30 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
+              <CardTitle className="flex items-center gap-2 fifa-title text-field-green-800 dark:text-field-green-200">
                 Supabase Auth User
                 {result.authUser ? (
-                  <Badge variant="outline" className="bg-green-50 text-green-700">
+                  <Badge variant="outline" className="bg-assist-green-50 text-assist-green-700 border-assist-green-200">
                     <CheckCircle className="mr-1 h-3 w-3" />
                     Found
                   </Badge>
                 ) : (
-                  <Badge variant="outline" className="bg-red-50 text-red-700">
+                  <Badge variant="outline" className="bg-goal-red-50 text-goal-red-700 border-goal-red-200">
                     <X className="mr-1 h-3 w-3" />
                     Not Found
                   </Badge>
@@ -214,16 +216,16 @@ export function OrphanedUserFinder() {
 
                   <div className="flex gap-2 mt-4">
                     {!result.authUser.email_confirmed_at && (
-                      <Button size="sm" onClick={() => fixUser("verify_email", "Verify Email")} disabled={fixing}>
+                      <Button size="sm" onClick={() => fixUser("verify_email", "Verify Email")} disabled={fixing} className="fifa-button-enhanced bg-gradient-to-r from-assist-green-500 to-assist-green-600 hover:from-assist-green-600 hover:to-assist-green-700 text-white">
                         <CheckCircle className="mr-1 h-3 w-3" />
                         Verify Email
                       </Button>
                     )}
                     <Button
                       size="sm"
-                      variant="destructive"
                       onClick={() => fixUser("delete_auth_user", "Delete Auth User")}
                       disabled={fixing}
+                      className="fifa-button-enhanced bg-gradient-to-r from-goal-red-500 to-goal-red-600 hover:from-goal-red-600 hover:to-goal-red-700 text-white"
                     >
                       <Trash2 className="mr-1 h-3 w-3" />
                       Delete Auth User
@@ -237,17 +239,17 @@ export function OrphanedUserFinder() {
           </Card>
 
           {/* Custom User Status */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+          <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg shadow-field-green-500/10">
+            <CardHeader className="bg-gradient-to-r from-field-green-50/30 to-pitch-blue-50/30 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
+              <CardTitle className="flex items-center gap-2 fifa-title text-field-green-800 dark:text-field-green-200">
                 Custom Users Table
                 {result.customUser ? (
-                  <Badge variant="outline" className="bg-green-50 text-green-700">
+                  <Badge variant="outline" className="bg-assist-green-50 text-assist-green-700 border-assist-green-200">
                     <CheckCircle className="mr-1 h-3 w-3" />
                     Found
                   </Badge>
                 ) : (
-                  <Badge variant="outline" className="bg-red-50 text-red-700">
+                  <Badge variant="outline" className="bg-goal-red-50 text-goal-red-700 border-goal-red-200">
                     <X className="mr-1 h-3 w-3" />
                     Not Found
                   </Badge>
@@ -281,6 +283,7 @@ export function OrphanedUserFinder() {
                       size="sm"
                       onClick={() => fixUser("create_custom_user", "Create Custom User")}
                       disabled={fixing}
+                      className="fifa-button-enhanced bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white"
                     >
                       <Plus className="mr-1 h-3 w-3" />
                       Create Custom User Record
@@ -292,17 +295,17 @@ export function OrphanedUserFinder() {
           </Card>
 
           {/* Player Record Status */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
+          <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg shadow-field-green-500/10">
+            <CardHeader className="bg-gradient-to-r from-field-green-50/30 to-pitch-blue-50/30 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
+              <CardTitle className="flex items-center gap-2 fifa-title text-field-green-800 dark:text-field-green-200">
                 Player Record
                 {result.playerRecord ? (
-                  <Badge variant="outline" className="bg-green-50 text-green-700">
+                  <Badge variant="outline" className="bg-assist-green-50 text-assist-green-700 border-assist-green-200">
                     <CheckCircle className="mr-1 h-3 w-3" />
                     Found
                   </Badge>
                 ) : (
-                  <Badge variant="outline" className="bg-red-50 text-red-700">
+                  <Badge variant="outline" className="bg-goal-red-50 text-goal-red-700 border-goal-red-200">
                     <X className="mr-1 h-3 w-3" />
                     Not Found
                   </Badge>
@@ -333,11 +336,11 @@ export function OrphanedUserFinder() {
 
           {/* Verification Tokens */}
           {result.verificationToken && (
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
+            <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg shadow-field-green-500/10">
+              <CardHeader className="bg-gradient-to-r from-field-green-50/30 to-pitch-blue-50/30 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
+                <CardTitle className="flex items-center gap-2 fifa-title text-field-green-800 dark:text-field-green-200">
                   Pending Verification Token
-                  <Badge variant="outline" className="bg-yellow-50 text-yellow-700">
+                  <Badge variant="outline" className="bg-stadium-gold-50 text-stadium-gold-700 border-stadium-gold-200">
                     Found
                   </Badge>
                 </CardTitle>
@@ -353,10 +356,9 @@ export function OrphanedUserFinder() {
 
                   <Button
                     size="sm"
-                    variant="outline"
                     onClick={() => fixUser("delete_verification_tokens", "Delete Verification Tokens")}
                     disabled={fixing}
-                    className="mt-4"
+                    className="mt-4 fifa-button-enhanced bg-gradient-to-r from-goal-red-500 to-goal-red-600 hover:from-goal-red-600 hover:to-goal-red-700 text-white"
                   >
                     <Trash2 className="mr-1 h-3 w-3" />
                     Delete Verification Token

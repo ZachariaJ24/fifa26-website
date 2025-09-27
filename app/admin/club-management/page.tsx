@@ -534,7 +534,7 @@ export default function ClubManagementPage() {
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <motion.div 
+        <div 
           className="mb-8"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -615,10 +615,10 @@ export default function ClubManagementPage() {
               </Dialog>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* Stats Cards */}
-        <motion.div 
+        <div 
           className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -695,7 +695,7 @@ export default function ClubManagementPage() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
         {/* Filters */}
         <motion.div
@@ -774,10 +774,8 @@ export default function ClubManagementPage() {
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {filteredClubs.map((club) => (
-                    <motion.div
+                    <div
                       key={club.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
                       className="border border-field-green-200 dark:border-field-green-700 rounded-lg p-4 hover:bg-field-green-50 dark:hover:bg-field-green-900/20 transition-colors"
                     >
                       <div className="flex items-start justify-between mb-4">
@@ -864,13 +862,13 @@ export default function ClubManagementPage() {
                           </div>
                         )}
                       </div>
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               )}
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
         {/* Edit Club Dialog */}
         <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>

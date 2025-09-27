@@ -1325,14 +1325,14 @@ export default function AdminSchedulePage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="container mx-auto px-4 py-20">
           <div className="flex justify-center items-center h-64">
             <div className="text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+              <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 ">
                 <Calendar className="h-8 w-8 text-white" />
               </div>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Loading Schedule Management...</p>
+              <p className="text-field-green-600 dark:text-field-green-400 font-medium">Loading Schedule Management...</p>
             </div>
           </div>
         </div>
@@ -1345,15 +1345,15 @@ export default function AdminSchedulePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl "></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl " style={{ animationDelay: '2s' }}></div>
         
         <div className="container mx-auto text-center relative z-10">
           <div>
@@ -1371,19 +1371,19 @@ export default function AdminSchedulePage() {
             <div className="flex flex-wrap justify-center gap-6 mb-8">
               <div className="flex items-center gap-2 bg-gradient-to-r from-assist-green-100/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 px-4 py-2 rounded-full border border-assist-green-200/30 dark:border-assist-green-700/30">
                 <Calendar className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Match Scheduling</span>
+                <span className="text-sm font-medium text-field-green-700 dark:text-field-green-300">Match Scheduling</span>
               </div>
               <div className="flex items-center gap-2 bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-4 py-2 rounded-full border border-ice-blue-200/30 dark:border-rink-blue-700/30">
                 <Trophy className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
-                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Season Management</span>
+                <span className="text-sm font-medium text-field-green-700 dark:text-field-green-300">Season Management</span>
               </div>
               <div className="flex items-center gap-2 bg-gradient-to-r from-goal-red-100/50 to-goal-red-100/50 dark:from-goal-red-900/20 dark:to-goal-red-900/20 px-4 py-2 rounded-full border border-goal-red-200/30 dark:border-goal-red-700/30">
                 <Database className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">CSV Import/Export</span>
+                <span className="text-sm font-medium text-field-green-700 dark:text-field-green-300">CSV Import/Export</span>
               </div>
-              <div className="flex items-center gap-2 bg-gradient-to-r from-hockey-silver-100/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 px-4 py-2 rounded-full border border-hockey-silver-200/30 dark:border-hockey-silver-700/30">
-                <Settings className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
-                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Advanced Controls</span>
+              <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-field-green-100/50 dark:from-field-green-900/20 dark:to-field-green-900/20 px-4 py-2 rounded-full border border-field-green-200/30 dark:border-field-green-700/30">
+                <Settings className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+                <span className="text-sm font-medium text-field-green-700 dark:text-field-green-300">Advanced Controls</span>
               </div>
             </div>
           </div>
@@ -1399,8 +1399,8 @@ export default function AdminSchedulePage() {
               <Trophy className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Match Management</h2>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400">Create and manage league matches</p>
+              <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">Match Management</h2>
+              <p className="text-field-green-600 dark:text-field-green-400">Create and manage league matches</p>
             </div>
           </div>
           <div className="flex gap-3">
@@ -1418,7 +1418,7 @@ export default function AdminSchedulePage() {
             </Button>
             <Button 
               onClick={() => setIsUploadDialogOpen(true)} 
-              className="hockey-button bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 hover:from-hockey-silver-600 hover:to-hockey-silver-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+              className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
             >
               <Upload className="mr-2 h-4 w-4" /> Upload CSV
             </Button>
@@ -1440,18 +1440,18 @@ export default function AdminSchedulePage() {
         )}
 
         {fetchError && (
-          <Alert className="mb-6 border-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-r from-hockey-silver-50/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-800/20">
-            <AlertCircle className="h-5 w-5 text-hockey-silver-600 dark:text-hockey-silver-400" />
-            <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Warning</AlertTitle>
-            <AlertDescription className="text-hockey-silver-700 dark:text-hockey-silver-300">{fetchError}</AlertDescription>
+          <Alert className="mb-6 border-2 border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-r from-field-green-50/50 to-field-green-100/50 dark:from-field-green-900/20 dark:to-field-green-800/20">
+            <AlertCircle className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
+            <AlertTitle className="text-field-green-800 dark:text-field-green-200 font-bold">Warning</AlertTitle>
+            <AlertDescription className="text-field-green-700 dark:text-field-green-300">{fetchError}</AlertDescription>
           </Alert>
         )}
 
         {!hasSeasonNameColumn && (
-          <Alert className="mb-6 border-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-r from-hockey-silver-50/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-800/20">
-            <AlertCircle className="h-5 w-5 text-hockey-silver-600 dark:text-hockey-silver-400" />
-            <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Database Update Required</AlertTitle>
-            <AlertDescription className="flex flex-col gap-3 text-hockey-silver-700 dark:text-hockey-silver-300">
+          <Alert className="mb-6 border-2 border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-r from-field-green-50/50 to-field-green-100/50 dark:from-field-green-900/20 dark:to-field-green-800/20">
+            <AlertCircle className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
+            <AlertTitle className="text-field-green-800 dark:text-field-green-200 font-bold">Database Update Required</AlertTitle>
+            <AlertDescription className="flex flex-col gap-3 text-field-green-700 dark:text-field-green-300">
               <p>The season_name column needs to be added to the matches table.</p>
               <Button 
                 onClick={runSeasonNameMigration} 
@@ -1469,10 +1469,10 @@ export default function AdminSchedulePage() {
         )}
 
         {seasonIdType === "uuid" && (
-          <Alert className="mb-6 border-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-r from-hockey-silver-50/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-800/20">
-            <AlertCircle className="h-5 w-5 text-hockey-silver-600 dark:text-hockey-silver-400" />
-            <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Type Mismatch Warning</AlertTitle>
-            <AlertDescription className="text-hockey-silver-700 dark:text-hockey-silver-300">
+          <Alert className="mb-6 border-2 border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-r from-field-green-50/50 to-field-green-100/50 dark:from-field-green-900/20 dark:to-field-green-800/20">
+            <AlertCircle className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
+            <AlertTitle className="text-field-green-800 dark:text-field-green-200 font-bold">Type Mismatch Warning</AlertTitle>
+            <AlertDescription className="text-field-green-700 dark:text-field-green-300">
               <p>
                 There appears to be a type mismatch between season IDs in the seasons table (UUID) and the matches table
                 (integer).
@@ -1493,10 +1493,10 @@ export default function AdminSchedulePage() {
                   <Trophy className="h-4 w-4 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <p className="text-sm font-medium text-field-green-800 dark:text-field-green-200">
                     Available Seasons: <span className="text-assist-green-600 dark:text-assist-green-400">{seasons.map((s) => s.name).join(", ")}</span>
                   </p>
-                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400">
                     Active Season: <span className="font-semibold text-ice-blue-600 dark:text-ice-blue-400">{seasons.find((s) => s.is_active)?.name || "None"}</span>
                   </p>
                 </div>
@@ -1524,7 +1524,7 @@ export default function AdminSchedulePage() {
               </TabsTrigger>
               <TabsTrigger 
                 value="all" 
-                className="hockey-button flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-hockey-silver-500 data-[state=active]:to-hockey-silver-600 data-[state=active]:text-white data-[state=active]:shadow-lg hover:scale-105 transition-all duration-300"
+                className="hockey-button flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg hover:scale-105 transition-all duration-300"
               >
                 <Database className="h-4 w-4" />
                 All Matches
@@ -1536,11 +1536,11 @@ export default function AdminSchedulePage() {
         {filteredMatches.length === 0 ? (
           <Card className="hockey-card hockey-card-hover border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-lg shadow-ice-blue-500/10">
             <CardContent className="text-center py-12">
-              <div className="w-16 h-16 bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-hockey-silver-500/25">
+              <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-field-green-500/25">
                 <Calendar className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-4">No Matches Found</h3>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400 mb-6 max-w-md mx-auto">
+              <h3 className="text-xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">No Matches Found</h3>
+              <p className="text-field-green-600 dark:text-field-green-400 mb-6 max-w-md mx-auto">
                 No matches found for the selected filter. Create a new match or adjust your search criteria.
               </p>
               <Button 
@@ -1561,8 +1561,8 @@ export default function AdminSchedulePage() {
                   <Trophy className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Match Schedule</CardTitle>
-                  <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                  <CardTitle className="text-xl font-bold text-field-green-800 dark:text-field-green-200">Match Schedule</CardTitle>
+                  <CardDescription className="text-field-green-600 dark:text-field-green-400">
                     {filteredMatches.length} matches found • {activeTab === "upcoming" ? "Upcoming games" : activeTab === "completed" ? "Completed games" : "All matches"}
                   </CardDescription>
                 </div>
@@ -1573,13 +1573,13 @@ export default function AdminSchedulePage() {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-gradient-to-r from-ice-blue-50/50 to-rink-blue-50/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Date & Time</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Home Team</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Away Team</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Score</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Status</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Season</TableHead>
-                      <TableHead className="text-right text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Actions</TableHead>
+                      <TableHead className="text-base font-bold text-field-green-800 dark:text-field-green-200">Date & Time</TableHead>
+                      <TableHead className="text-base font-bold text-field-green-800 dark:text-field-green-200">Home Team</TableHead>
+                      <TableHead className="text-base font-bold text-field-green-800 dark:text-field-green-200">Away Team</TableHead>
+                      <TableHead className="text-base font-bold text-field-green-800 dark:text-field-green-200">Score</TableHead>
+                      <TableHead className="text-base font-bold text-field-green-800 dark:text-field-green-200">Status</TableHead>
+                      <TableHead className="text-base font-bold text-field-green-800 dark:text-field-green-200">Season</TableHead>
+                      <TableHead className="text-right text-base font-bold text-field-green-800 dark:text-field-green-200">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -1612,20 +1612,20 @@ export default function AdminSchedulePage() {
                         >
                           <TableCell>
                             <div className="flex flex-col">
-                              <span className="font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">{format(new Date(match[dateColumnName]), "MMM d, yyyy")}</span>
-                              <span className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 flex items-center gap-1">
+                              <span className="font-semibold text-field-green-800 dark:text-field-green-200">{format(new Date(match[dateColumnName]), "MMM d, yyyy")}</span>
+                              <span className="text-sm text-field-green-600 dark:text-field-green-400 flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 {format(new Date(match[dateColumnName]), "h:mm a")}
                               </span>
                             </div>
                           </TableCell>
                           <TableCell>
-                            <div className="font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                            <div className="font-semibold text-field-green-800 dark:text-field-green-200">
                               {match.home_team?.name || "Unknown Team"}
                             </div>
                           </TableCell>
                           <TableCell>
-                            <div className="font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                            <div className="font-semibold text-field-green-800 dark:text-field-green-200">
                               {match.away_team?.name || "Unknown Team"}
                             </div>
                           </TableCell>
@@ -1633,7 +1633,7 @@ export default function AdminSchedulePage() {
                             <div className="flex items-center gap-2">
                               {match.home_score !== null && match.away_score !== null ? (
                                 <div className="flex items-center gap-2">
-                                  <span className="font-bold text-lg text-hockey-silver-800 dark:text-hockey-silver-200">
+                                  <span className="font-bold text-lg text-field-green-800 dark:text-field-green-200">
                                     {match.home_score} - {match.away_score}
                                   </span>
                                   {match.overtime && (
@@ -1643,7 +1643,7 @@ export default function AdminSchedulePage() {
                                   )}
                                 </div>
                               ) : (
-                                <span className="text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">TBD</span>
+                                <span className="text-field-green-600 dark:text-field-green-400 font-medium">TBD</span>
                               )}
                             </div>
                           </TableCell>
@@ -1654,16 +1654,16 @@ export default function AdminSchedulePage() {
                               ) : match.status === "In Progress" ? (
                                 <span className="text-ice-blue-600 dark:text-ice-blue-400">In Progress</span>
                               ) : match.status === "Postponed" ? (
-                                <span className="text-hockey-silver-600 dark:text-hockey-silver-400">Postponed</span>
+                                <span className="text-field-green-600 dark:text-field-green-400">Postponed</span>
                               ) : match.status === "Cancelled" ? (
                                 <span className="text-goal-red-600 dark:text-goal-red-400">Cancelled</span>
                               ) : (
-                                <span className="text-hockey-silver-600 dark:text-hockey-silver-400">Scheduled</span>
+                                <span className="text-field-green-600 dark:text-field-green-400">Scheduled</span>
                               )}
                             </div>
                           </TableCell>
                           <TableCell>
-                            <span className="text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                            <span className="text-field-green-600 dark:text-field-green-400 font-medium">
                               {seasonName || "No Season"}
                             </span>
                           </TableCell>
@@ -1701,22 +1701,22 @@ export default function AdminSchedulePage() {
 
         {/* Create/Edit Match Dialog */}
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogContent className="sm:max-w-[600px] bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:to-rink-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
+          <DialogContent className="sm:max-w-[600px] bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-field-green-900 dark:to-pitch-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
             <DialogHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-              <DialogTitle className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-3">
+              <DialogTitle className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 flex items-center gap-3">
                 <div className="w-8 h-8 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg flex items-center justify-center">
                   <Trophy className="h-4 w-4 text-white" />
                 </div>
                 {currentMatch ? "Edit Match" : "Create Match"}
               </DialogTitle>
-              <DialogDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">
+              <DialogDescription className="text-field-green-600 dark:text-field-green-400 text-base">
                 {currentMatch ? "Update the details for this match." : "Enter the details for the new match."}
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  <Label htmlFor="seasonName" className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <Label htmlFor="seasonName" className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                     <Trophy className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                     Season
                   </Label>
@@ -1747,13 +1747,13 @@ export default function AdminSchedulePage() {
                   )}
                   {formErrors.seasonName && <p className="text-sm text-goal-red-600 dark:text-goal-red-400 font-medium">{formErrors.seasonName}</p>}
                   {!hasSeasonNameColumn && (
-                    <p className="text-xs p-2 bg-gradient-to-r from-hockey-silver-100/50 to-hockey-silver-200/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-800/20 rounded-lg border border-hockey-silver-200/30 dark:border-hockey-silver-700/30 text-hockey-silver-600 dark:text-hockey-silver-400">
+                    <p className="text-xs p-2 bg-gradient-to-r from-field-green-100/50 to-field-green-200/50 dark:from-field-green-900/20 dark:to-field-green-800/20 rounded-lg border border-field-green-200/30 dark:border-field-green-700/30 text-field-green-600 dark:text-field-green-400">
                       Note: The season_name column doesn't exist yet. The season will be stored by ID.
                     </p>
                   )}
                 </div>
                 <div className="space-y-3">
-                  <Label htmlFor="status" className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <Label htmlFor="status" className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                     <Settings className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
                     Status
                   </Label>
@@ -1778,12 +1778,12 @@ export default function AdminSchedulePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  <Label htmlFor="date" className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <Label htmlFor="date" className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                     <Calendar className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                     Date
                   </Label>
                   <div className="flex items-center">
-                    <Calendar className="mr-3 h-5 w-5 text-hockey-silver-600 dark:text-hockey-silver-400" />
+                    <Calendar className="mr-3 h-5 w-5 text-field-green-600 dark:text-field-green-400" />
                     <Input
                       id="date"
                       type="date"
@@ -1795,12 +1795,12 @@ export default function AdminSchedulePage() {
                   {formErrors.date && <p className="text-sm text-goal-red-600 dark:text-goal-red-400 font-medium">{formErrors.date}</p>}
                 </div>
                 <div className="space-y-3">
-                  <Label htmlFor="time" className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <Label htmlFor="time" className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                     <Clock className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
                     Time
                   </Label>
                   <div className="flex items-center">
-                    <Clock className="mr-3 h-5 w-5 text-hockey-silver-600 dark:text-hockey-silver-400" />
+                    <Clock className="mr-3 h-5 w-5 text-field-green-600 dark:text-field-green-400" />
                     <Input
                       id="time"
                       type="time"
@@ -1815,7 +1815,7 @@ export default function AdminSchedulePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  <Label htmlFor="homeTeamId" className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <Label htmlFor="homeTeamId" className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                     <Users className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                     Home Team
                   </Label>
@@ -1834,7 +1834,7 @@ export default function AdminSchedulePage() {
                   {formErrors.homeTeamId && <p className="text-sm text-goal-red-600 dark:text-goal-red-400 font-medium">{formErrors.homeTeamId}</p>}
                 </div>
                 <div className="space-y-3">
-                  <Label htmlFor="awayTeamId" className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <Label htmlFor="awayTeamId" className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                     <Users className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
                     Away Team
                   </Label>
@@ -1856,7 +1856,7 @@ export default function AdminSchedulePage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-3">
-                  <Label htmlFor="homeScore" className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <Label htmlFor="homeScore" className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                     <Target className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                     Home Score
                   </Label>
@@ -1871,7 +1871,7 @@ export default function AdminSchedulePage() {
                   {formErrors.homeScore && <p className="text-sm text-goal-red-600 dark:text-goal-red-400 font-medium">{formErrors.homeScore}</p>}
                 </div>
                 <div className="space-y-3">
-                  <Label htmlFor="awayScore" className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <Label htmlFor="awayScore" className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                     <Target className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
                     Away Score
                   </Label>
@@ -1895,11 +1895,11 @@ export default function AdminSchedulePage() {
                     onCheckedChange={(checked) => handleInputChange("overtime", checked === true)}
                     className="data-[state=checked]:bg-gradient-to-r data-[state=checked]:from-ice-blue-500 data-[state=checked]:to-rink-blue-600 data-[state=checked]:border-ice-blue-500"
                   />
-                  <Label htmlFor="overtime" className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <Label htmlFor="overtime" className="text-base font-semibold text-field-green-800 dark:text-field-green-200">
                     Game went to overtime (affects standings calculations)
                   </Label>
                 </div>
-                <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">
+                <p className="text-sm text-field-green-600 dark:text-field-green-400">
                   Check this box if the game was decided in overtime or shootout. This ensures teams get the correct
                   points in standings.
                 </p>
@@ -1909,7 +1909,7 @@ export default function AdminSchedulePage() {
                 <Button 
                   type="button" 
                   onClick={() => setIsDialogOpen(false)}
-                  className="hockey-button bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 hover:from-hockey-silver-600 hover:to-hockey-silver-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                 >
                   Cancel
                 </Button>
@@ -1926,22 +1926,22 @@ export default function AdminSchedulePage() {
 
         {/* Delete Confirmation Dialog */}
         <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-          <DialogContent className="bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:to-rink-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
+          <DialogContent className="bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-field-green-900 dark:to-pitch-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
             <DialogHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-              <DialogTitle className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-3">
+              <DialogTitle className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 flex items-center gap-3">
                 <div className="w-8 h-8 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg flex items-center justify-center">
                   <Trash2 className="h-4 w-4 text-white" />
                 </div>
                 Delete Match
               </DialogTitle>
-              <DialogDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">
+              <DialogDescription className="text-field-green-600 dark:text-field-green-400 text-base">
                 Are you sure you want to delete this match? This action cannot be undone.
               </DialogDescription>
             </DialogHeader>
             <DialogFooter className="pt-4 border-t-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
               <Button 
                 onClick={() => setIsDeleteDialogOpen(false)}
-                className="hockey-button bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 hover:from-hockey-silver-600 hover:to-hockey-silver-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 Cancel
               </Button>
@@ -1957,21 +1957,21 @@ export default function AdminSchedulePage() {
 
         {/* Create Season Dialog */}
         <Dialog open={isSeasonDialogOpen} onOpenChange={setIsSeasonDialogOpen}>
-          <DialogContent className="bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:to-rink-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
+          <DialogContent className="bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-field-green-900 dark:to-pitch-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
             <DialogHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-              <DialogTitle className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-3">
+              <DialogTitle className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 flex items-center gap-3">
                 <div className="w-8 h-8 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg flex items-center justify-center">
                   <Trophy className="h-4 w-4 text-white" />
                 </div>
                 Create Season
               </DialogTitle>
-              <DialogDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">
+              <DialogDescription className="text-field-green-600 dark:text-field-green-400 text-base">
                 Enter a name for the new season.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-6 py-6">
               <div className="space-y-3">
-                <Label htmlFor="seasonName" className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                <Label htmlFor="seasonName" className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                   <Trophy className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                   Season Name
                 </Label>
@@ -1987,7 +1987,7 @@ export default function AdminSchedulePage() {
             <DialogFooter className="pt-4 border-t-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
               <Button 
                 onClick={() => setIsSeasonDialogOpen(false)}
-                className="hockey-button bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 hover:from-hockey-silver-600 hover:to-hockey-silver-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 Cancel
               </Button>
@@ -2003,21 +2003,21 @@ export default function AdminSchedulePage() {
 
         {/* Upload CSV Dialog */}
         <Dialog open={isUploadDialogOpen} onOpenChange={setIsUploadDialogOpen}>
-          <DialogContent className="sm:max-w-[600px] bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:to-rink-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
+          <DialogContent className="sm:max-w-[600px] bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-field-green-900 dark:to-pitch-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
             <DialogHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-              <DialogTitle className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-3">
+              <DialogTitle className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 flex items-center gap-3">
                 <div className="w-8 h-8 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg flex items-center justify-center">
                   <Upload className="h-4 w-4 text-white" />
                 </div>
                 Upload Matches from CSV
               </DialogTitle>
-              <DialogDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">
+              <DialogDescription className="text-field-green-600 dark:text-field-green-400 text-base">
                 Upload a CSV file with match data. The file must include columns for Date, Time, Home Team, and Away Team.
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-6 py-6">
               <div className="space-y-3">
-                <Label htmlFor="csvFile" className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                <Label htmlFor="csvFile" className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                   <Database className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                   CSV File
                 </Label>
@@ -2039,27 +2039,27 @@ export default function AdminSchedulePage() {
                     {csvFile ? csvFile.name : "Select CSV File"}
                   </Button>
                 </div>
-                {csvFile && <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">{csvFile.name}</p>}
+                {csvFile && <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">{csvFile.name}</p>}
               </div>
 
               {isUploading && (
                 <div className="space-y-3 p-4 bg-gradient-to-r from-ice-blue-50/30 to-rink-blue-50/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border-2 border-ice-blue-200/30 dark:border-rink-blue-700/30">
-                  <Label className="flex items-center gap-2 text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <Label className="flex items-center gap-2 text-base font-semibold text-field-green-800 dark:text-field-green-200">
                     <Zap className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
                     Upload Progress
                   </Label>
                   <Progress value={uploadProgress} className="w-full" />
-                  <p className="text-sm text-center text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">{uploadProgress}%</p>
+                  <p className="text-sm text-center text-field-green-600 dark:text-field-green-400 font-medium">{uploadProgress}%</p>
                 </div>
               )}
 
               {uploadResults && (
                 <div className="space-y-4 p-4 bg-gradient-to-r from-assist-green-50/30 to-assist-green-100/30 dark:from-assist-green-900/10 dark:to-assist-green-800/10 rounded-lg border-2 border-assist-green-200/30 dark:border-assist-green-700/30">
-                  <h3 className="font-bold text-lg text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                  <h3 className="font-bold text-lg text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
                     <CheckCircle className="h-5 w-5 text-assist-green-600 dark:text-assist-green-400" />
                     Upload Results
                   </h3>
-                  <p className="text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <p className="text-field-green-600 dark:text-field-green-400 font-medium">
                     Successfully imported {uploadResults.success} of {uploadResults.total} matches.
                   </p>
                   {uploadResults.errors.length > 0 && (
@@ -2078,13 +2078,13 @@ export default function AdminSchedulePage() {
                 </div>
               )}
 
-              <div className="space-y-4 p-4 bg-gradient-to-r from-hockey-silver-50/30 to-hockey-silver-100/30 dark:from-hockey-silver-900/10 dark:to-hockey-silver-800/10 rounded-lg border-2 border-hockey-silver-200/30 dark:border-hockey-silver-700/30">
-                <h3 className="font-bold text-lg text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                  <Settings className="h-5 w-5 text-hockey-silver-600 dark:text-hockey-silver-400" />
+              <div className="space-y-4 p-4 bg-gradient-to-r from-hockey-silver-50/30 to-hockey-silver-100/30 dark:from-hockey-silver-900/10 dark:to-hockey-silver-800/10 rounded-lg border-2 border-field-green-200/30 dark:border-field-green-700/30">
+                <h3 className="font-bold text-lg text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
                   CSV Format
                 </h3>
-                <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Your CSV file should have the following columns:</p>
-                <ul className="text-sm list-disc pl-5 space-y-2 text-hockey-silver-600 dark:text-hockey-silver-400">
+                <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Your CSV file should have the following columns:</p>
+                <ul className="text-sm list-disc pl-5 space-y-2 text-field-green-600 dark:text-field-green-400">
                   <li>
                     <span className="font-bold text-assist-green-600 dark:text-assist-green-400">Required:</span> Date (YYYY-MM-DD), Time (HH:MM), Home Team, Away Team
                   </li>
@@ -2092,7 +2092,7 @@ export default function AdminSchedulePage() {
                     <span className="font-bold text-ice-blue-600 dark:text-ice-blue-400">Optional:</span> Home Score, Away Score, Status, Season
                   </li>
                 </ul>
-                <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                   Team names must match exactly with the teams in the database.
                 </p>
               </div>
@@ -2101,7 +2101,7 @@ export default function AdminSchedulePage() {
               <Button 
                 onClick={() => setIsUploadDialogOpen(false)} 
                 disabled={isUploading}
-                className="hockey-button bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 hover:from-hockey-silver-600 hover:to-hockey-silver-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 Cancel
               </Button>

@@ -25,14 +25,14 @@ export default function UsersPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [roleFilter, setRoleFilter] = useState("")
   const [teamFilter, setTeamFilter] = useState("")
-  const [teams, setTeams] = useState<any[]>([])
+  const [clubs, setClubs] = useState<any[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 20
 
-  // Fetch users and teams on component mount
+  // Fetch users and clubs on component mount
   useEffect(() => {
     fetchUsers()
-    fetchTeams()
+    fetchClubs()
   }, [])
 
   // Apply filters whenever they change
@@ -47,8 +47,8 @@ export default function UsersPage() {
         .from('users')
         .select(`
           *,
-          profiles (*),
-          teams (*)
+          user_roles(role),
+          clubs(id, name)
         `)
         .order('created_at', { ascending: false })
       
@@ -67,18 +67,18 @@ export default function UsersPage() {
     }
   }
 
-  const fetchTeams = async () => {
+  const fetchClubs = async () => {
     const { data, error } = await supabase
-      .from('teams')
+      .from('clubs')
       .select('*')
       .order('name')
     
     if (error) {
-      console.error('Error fetching teams:', error)
+      console.error('Error fetching clubs:', error)
       return
     }
-    
-    setTeams(data || [])
+
+    setClubs(data || [])
   }
 
   const filterUsers = () => {
@@ -89,8 +89,8 @@ export default function UsersPage() {
       const query = searchQuery.toLowerCase()
       result = result.filter(user => 
         user.email?.toLowerCase().includes(query) ||
-        user.profiles?.gamer_tag?.toLowerCase().includes(query) ||
-        user.profiles?.discord_name?.toLowerCase().includes(query)
+        user.gamer_tag?.toLowerCase().includes(query) ||
+        user.discord_name?.toLowerCase().includes(query)
       )
     }
     
@@ -101,10 +101,10 @@ export default function UsersPage() {
       )
     }
     
-    // Apply team filter
+    // Apply club filter
     if (teamFilter) {
       result = result.filter(user => 
-        user.teams?.some((team: any) => team.id === teamFilter)
+        user.clubs?.some((club: any) => club.id === teamFilter)
       )
     }
     
@@ -140,9 +140,9 @@ export default function UsersPage() {
       headers.join(','),
       ...filteredUsers.map(user => [
         `"${user.email}"`,
-        `"${user.profiles?.gamer_tag || 'N/A'}"`,
+        `"${user.gamer_tag || 'N/A'}"`,
         `"${user.roles?.join(', ') || 'None'}"`,
-        `"${user.teams?.[0]?.name || 'No Team'}"`,
+        `"${user.clubs?.[0]?.name || 'No Club'}"`,
         `"${user.last_sign_in_at ? 'Active' : 'Inactive'}"`,
         `"${user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleString() : 'Never'}"`
       ].join(','))
@@ -218,13 +218,13 @@ export default function UsersPage() {
         <div className="w-48">
           <Select value={teamFilter} onValueChange={setTeamFilter}>
             <SelectTrigger>
-              <SelectValue placeholder="All Teams" />
+              <SelectValue placeholder="All Clubs" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Teams</SelectItem>
-              {teams.map((team) => (
-                <SelectItem key={team.id} value={team.id}>
-                  {team.name}
+              <SelectItem value="">All Clubs</SelectItem>
+              {clubs.map((club) => (
+                <SelectItem key={club.id} value={club.id}>
+                  {club.name}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -318,12 +318,12 @@ export default function UsersPage() {
                         </div>
                       </TableCell>
                       <TableCell>
-                        {user.teams?.[0]?.name ? (
+                        {user.clubs?.[0]?.name ? (
                           <Badge variant="secondary">
-                            {user.teams[0].name}
+                            {user.clubs[0].name}
                           </Badge>
                         ) : (
-                          <span className="text-muted-foreground">No team</span>
+                          <span className="text-muted-foreground">No club</span>
                         )}
                       </TableCell>
                       <TableCell>

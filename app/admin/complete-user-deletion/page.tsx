@@ -74,10 +74,10 @@ export default function CompleteUserDeletionPage() {
           subtitle="Permanently remove users from both Auth and Database systems"
         />
 
-        <div className="animate-fade-in-up max-w-2xl mx-auto">
+        <div className="max-w-2xl mx-auto">
 
           {/* Warning Banner */}
-          <div className="animate-fade-in-up mb-8">
+          <div className="mb-8">
             <Card className="fifa-card-hover-enhanced border-2 border-goal-red-200/60 dark:border-goal-red-700/60 bg-gradient-to-r from-goal-red-50/30 to-goal-red-100/30 dark:from-goal-red-900/10 dark:to-goal-red-800/10 shadow-lg">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
@@ -100,7 +100,7 @@ export default function CompleteUserDeletionPage() {
           </div>
 
           {/* Main Deletion Form */}
-          <div className="animate-fade-in-up">
+          <div>
             <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-2xl shadow-field-green-500/20">
               <CardHeader className="relative bg-gradient-to-r from-field-green-500 to-pitch-blue-600 text-white">
                 <div className="absolute inset-0 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20"></div>

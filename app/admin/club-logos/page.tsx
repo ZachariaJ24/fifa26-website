@@ -127,7 +127,7 @@ export default function AdminClubLogosPage() {
         }
 
         // Check for clubs that don't have a mapping in TEAM_LOGOS
-        for (const club of clubsData || []) {
+        for (const club of (clubsData as any[]) || []) {
           if (!TEAM_LOGOS[club.name]) {
             debugData[club.name] = {
               error: "No mapping in TEAM_LOGOS",
@@ -154,7 +154,7 @@ export default function AdminClubLogosPage() {
     checkAuthAndLoadData()
   }, [supabase, session, toast, router])
 
-  // Handle updating all team logos from storage
+  // Handle updating all club logos from storage
   const handleUpdateAllLogos = async () => {
     try {
       setUpdating(true)
@@ -165,23 +165,23 @@ export default function AdminClubLogosPage() {
       for (const [teamName, filename] of Object.entries(TEAM_LOGOS)) {
         try {
           // Get the public URL from storage
-          const { data } = supabase.storage.from("media").getPublicUrl(`teams/${filename}`)
+          const { data } = supabase.storage.from("media").getPublicUrl(`clubs/${filename}`)
 
           if (!data?.publicUrl) {
-            results.push({ team: teamName, success: false, error: "Could not get public URL" })
+            results.push({ club: teamName, success: false, error: "Could not get public URL" })
             continue
           }
 
-          // Update the team's logo_url in the database
-          const { error } = await supabase.from("teams").update({ logo_url: data.publicUrl }).eq("name", teamName)
+          // Update the club's logo_url in the database
+          const { error } = await supabase.from("clubs").update({ logo_url: data.publicUrl } as any).eq("name", teamName)
 
           if (error) {
-            results.push({ team: teamName, success: false, error: error.message })
+            results.push({ club: teamName, success: false, error: error.message })
           } else {
-            results.push({ team: teamName, success: true, url: data.publicUrl })
+            results.push({ club: teamName, success: true, url: data.publicUrl })
           }
         } catch (error: any) {
-          results.push({ team: teamName, success: false, error: error.message })
+          results.push({ club: teamName, success: false, error: error.message })
         }
       }
 
@@ -191,17 +191,17 @@ export default function AdminClubLogosPage() {
 
       toast({
         title: "Logos updated",
-        description: `${successCount} of ${results.length} team logos have been updated.`,
+        description: `${successCount} of ${results.length} club logos have been updated.`,
       })
 
-      // Reload teams to show updated logos
-      const { data: teamsData, error: teamsError } = await supabase
-        .from("teams")
+      // Reload clubs to show updated logos
+      const { data: clubsData, error: clubsError } = await supabase
+        .from("clubs")
         .select("id, name, logo_url")
         .order("name")
 
-      if (teamsError) throw teamsError
-      setTeams(teamsData || [])
+      if (clubsError) throw clubsError
+      setClubs(clubsData || [])
 
       // Set active tab to results
       setActiveTab("results")
@@ -223,16 +223,16 @@ export default function AdminClubLogosPage() {
     if (!file) return
 
     try {
-      setUploadingTeam(teamName)
+      setUploadingClub(teamName)
       setUploadProgress(0)
 
       const filename = TEAM_LOGOS[teamName]
       if (!filename) {
-        throw new Error(`No filename mapping for team: ${teamName}`)
+        throw new Error(`No filename mapping for club: ${teamName}`)
       }
 
       // Upload the file to storage
-      const { data, error } = await supabase.storage.from("media").upload(`teams/${filename}`, file, {
+      const { data, error } = await supabase.storage.from("media").upload(`clubs/${filename}`, file, {
         cacheControl: "3600",
         upsert: true,
         onUploadProgress: (progress) => {
@@ -244,7 +244,7 @@ export default function AdminClubLogosPage() {
       if (error) throw error
 
       // Get the public URL
-      const { data: urlData } = supabase.storage.from("media").getPublicUrl(`teams/${filename}`)
+      const { data: urlData } = supabase.storage.from("media").getPublicUrl(`clubs/${filename}`)
 
       if (!urlData?.publicUrl) {
         throw new Error("Could not get public URL for uploaded file")
@@ -252,7 +252,7 @@ export default function AdminClubLogosPage() {
 
       // Update the team in the database
       const { error: updateError } = await supabase
-        .from("teams")
+        .from("clubs")
         .update({ logo_url: urlData.publicUrl })
         .eq("name", teamName)
 
@@ -264,17 +264,17 @@ export default function AdminClubLogosPage() {
         [teamName]: urlData.publicUrl,
       }))
 
-      // Reload teams to show updated logo
-      const { data: teamsData, error: teamsError } = await supabase
-        .from("teams")
+      // Reload clubs to show updated logo
+      const { data: clubsData, error: clubsError } = await supabase
+        .from("clubs")
         .select("id, name, logo_url")
         .order("name")
 
-      if (teamsError) throw teamsError
-      setTeams(teamsData || [])
+      if (clubsError) throw clubsError
+      setClubs(clubsData || [])
 
       // Update debug info
-      const { data: fileData } = await supabase.storage.from("media").list("teams", {
+      const { data: fileData } = await supabase.storage.from("media").list("clubs", {
         search: filename,
       })
 
@@ -296,53 +296,53 @@ export default function AdminClubLogosPage() {
       console.error("Error uploading logo:", error)
       toast({
         title: "Upload failed",
-        description: error.message || "Failed to upload team logo",
+        description: error.message || "Failed to upload club logo",
         variant: "destructive",
       })
     } finally {
-      setUploadingTeam(null)
+      setUploadingClub(null)
       setUploadProgress(0)
     }
   }
 
-  // Open the edit dialog for a team
-  const openEditDialog = (team: any) => {
-    setEditingTeam({
-      id: team.id,
-      name: team.name,
-      logoUrl: team.logo_url || "",
+  // Open the edit dialog for a club
+  const openEditDialog = (club: any) => {
+    setEditingClub({
+      id: club.id,
+      name: club.name,
+      logoUrl: club.logo_url || "",
     })
-    logoForm.reset({ logoUrl: team.logo_url || "" })
+    logoForm.reset({ logoUrl: club.logo_url || "" })
     setDialogOpen(true)
   }
 
   // Handle manually setting a logo URL
   const handleManualLogoUpdate = async (values: { logoUrl: string }) => {
-    if (!editingTeam) return
+    if (!editingClub) return
 
     try {
       setUpdating(true)
 
       // Update the team in the database
       const { error: updateError } = await supabase
-        .from("teams")
-        .update({ logo_url: values.logoUrl })
-        .eq("name", editingTeam.name)
+        .from("clubs")
+        .update({ logo_url: values.logoUrl } as any)
+        .eq("name", editingClub.name)
 
       if (updateError) throw updateError
 
-      // Reload teams to show updated logo
-      const { data: teamsData, error: teamsError } = await supabase
-        .from("teams")
+      // Reload clubs to show updated logo
+      const { data: clubsData, error: clubsError } = await supabase
+        .from("clubs")
         .select("id, name, logo_url")
         .order("name")
 
-      if (teamsError) throw teamsError
-      setTeams(teamsData || [])
+      if (clubsError) throw clubsError
+      setClubs(clubsData || [])
 
       toast({
         title: "Logo URL updated",
-        description: `Logo URL for ${editingTeam.name} has been updated.`,
+        description: `Logo URL for ${editingClub.name} has been updated.`,
       })
 
       // Close the dialog
@@ -368,7 +368,7 @@ export default function AdminClubLogosPage() {
               <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
                 <ImageIcon className="h-8 w-8 text-white" />
               </div>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Loading Team Logo Management...</p>
+              <p className="text-field-green-600 dark:text-field-green-400 font-medium">Loading Club Logo Management...</p>
             </div>
           </div>
         </div>
@@ -452,7 +452,7 @@ export default function AdminClubLogosPage() {
             ) : (
               <>
                 <RefreshCw className="h-4 w-4 mr-2" />
-                Update All Team Logos from Storage
+                Update All Club Logos from Storage
               </>
             )}
           </Button>
@@ -502,8 +502,8 @@ export default function AdminClubLogosPage() {
                     <Eye className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Current Team Logos</CardTitle>
-                    <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">Current logos assigned to teams in the database</CardDescription>
+                    <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Current Club Logos</CardTitle>
+                    <CardDescription className="text-field-green-600 dark:text-field-green-400">Current logos assigned to clubs in the database</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -512,7 +512,7 @@ export default function AdminClubLogosPage() {
                   <Table>
                     <TableHeader>
                       <TableRow className="bg-gradient-to-r from-ice-blue-50/50 to-rink-blue-50/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
-                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Team Name</TableHead>
+                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Club Name</TableHead>
                         <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Current Logo</TableHead>
                         <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Storage Logo</TableHead>
                         <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Status</TableHead>
@@ -520,24 +520,24 @@ export default function AdminClubLogosPage() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {teams.map((team) => {
-                        const storageUrl = storageLogos[team.name]
+                      {clubs.map((club) => {
+                        const storageUrl = storageLogos[club.name]
                         const hasStorageLogo = !!storageUrl
-                        const isUsingStorageLogo = team.logo_url === storageUrl
+                        const isUsingStorageLogo = club.logo_url === storageUrl
 
                         return (
                           <TableRow 
-                            key={team.id}
+                            key={club.id}
                             className="hover:bg-gradient-to-r hover:from-ice-blue-50/30 hover:to-rink-blue-50/30 dark:hover:from-ice-blue-900/10 dark:hover:to-rink-blue-900/10 transition-all duration-300 border-b border-ice-blue-200/30 dark:border-rink-blue-700/30"
                           >
-                            <TableCell className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{team.name}</TableCell>
+                            <TableCell className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{club.name}</TableCell>
                             <TableCell>
                               <div className="h-16 w-16 relative bg-gradient-to-r from-ice-blue-50/30 to-rink-blue-50/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border-2 border-ice-blue-200/30 dark:border-rink-blue-700/30">
-                                {team.logo_url ? (
+                                {club.logo_url ? (
                                   <>
                                     <Image
-                                      src={team.logo_url || "/placeholder.svg"}
-                                      alt={`${team.name} logo`}
+                                      src={club.logo_url || "/placeholder.svg"}
+                                      alt={`${club.name} logo`}
                                       fill
                                       className="object-contain rounded-lg"
                                       onError={(e) => {
@@ -555,13 +555,13 @@ export default function AdminClubLogosPage() {
                                       variant="ghost"
                                       size="sm"
                                       className="absolute -top-2 -right-2 h-6 w-6 p-0 rounded-full bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
-                                      onClick={() => setSelectedImage(team.logo_url)}
+                                      onClick={() => setSelectedImage(club.logo_url)}
                                     >
                                       <Info className="h-3 w-3" />
                                     </Button>
                                   </>
                                 ) : (
-                                  <TeamLogo teamName={team.name} size="lg" />
+                                  <TeamLogo teamName={club.name} size="lg" />
                                 )}
                               </div>
                             </TableCell>
@@ -570,7 +570,7 @@ export default function AdminClubLogosPage() {
                                 <div className="h-16 w-16 relative bg-gradient-to-r from-assist-green-50/30 to-assist-green-100/30 dark:from-assist-green-900/10 dark:to-assist-green-900/10 rounded-lg border-2 border-assist-green-200/30 dark:border-assist-green-700/30">
                                   <Image
                                     src={storageUrl || "/placeholder.svg"}
-                                    alt={`Storage ${team.name} logo`}
+                                    alt={`Storage ${club.name} logo`}
                                     fill
                                     className="object-contain rounded-lg"
                                     onError={(e) => {
@@ -622,7 +622,7 @@ export default function AdminClubLogosPage() {
                               <Button 
                                 variant="outline" 
                                 size="sm" 
-                                onClick={() => openEditDialog(team)}
+                                      onClick={() => openEditDialog(club)}
                                 className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
                               >
                                 <Edit className="h-4 w-4 mr-1" />
@@ -725,14 +725,14 @@ export default function AdminClubLogosPage() {
                                   className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                                   accept="image/png,image/jpeg,image/gif"
                                   onChange={(e) => handleUploadLogo(teamName, e)}
-                                  disabled={uploadingTeam !== null}
+                                  disabled={uploadingClub !== null}
                                 />
                                 <Button 
                                   variant="outline" 
                                   className="w-full hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300" 
-                                  disabled={uploadingTeam !== null}
+                                  disabled={uploadingClub !== null}
                                 >
-                                  {uploadingTeam === teamName ? (
+                                  {uploadingClub === teamName ? (
                                     <>
                                       <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                                       Uploading...
@@ -746,7 +746,7 @@ export default function AdminClubLogosPage() {
                                 </Button>
                               </div>
 
-                              {uploadingTeam === teamName && (
+                              {uploadingClub === teamName && (
                                 <Progress 
                                   value={uploadProgress} 
                                   className="h-2 bg-gradient-to-r from-ice-blue-100 to-rink-blue-100 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20" 
@@ -870,7 +870,7 @@ export default function AdminClubLogosPage() {
                   <Table>
                     <TableHeader>
                       <TableRow className="bg-gradient-to-r from-hockey-silver-50/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 border-b-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50">
-                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Team Name</TableHead>
+                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Club Name</TableHead>
                         <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Status</TableHead>
                         <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Details</TableHead>
                       </TableRow>
@@ -881,7 +881,7 @@ export default function AdminClubLogosPage() {
                           key={index}
                           className="hover:bg-gradient-to-r hover:from-hockey-silver-50/30 hover:to-hockey-silver-100/30 dark:hover:from-hockey-silver-900/10 dark:hover:to-hockey-silver-900/10 transition-all duration-300 border-b border-hockey-silver-200/30 dark:border-hockey-silver-700/30"
                         >
-                          <TableCell className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{result.team}</TableCell>
+                          <TableCell className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{result.club}</TableCell>
                           <TableCell>
                             {result.success ? (
                               <span className="flex items-center text-assist-green-600 dark:text-assist-green-400">
@@ -924,10 +924,10 @@ export default function AdminClubLogosPage() {
                 <div className="w-8 h-8 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg flex items-center justify-center">
                   <Edit className="h-4 w-4 text-white" />
                 </div>
-                Edit Logo URL for {editingTeam?.name}
+                Edit Logo URL for {editingClub?.name}
               </DialogTitle>
               <DialogDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">
-                Enter a new URL for the team logo. This will update the logo URL in the database.
+                Enter a new URL for the club logo. This will update the logo URL in the database.
               </DialogDescription>
             </DialogHeader>
             <Form {...logoForm}>

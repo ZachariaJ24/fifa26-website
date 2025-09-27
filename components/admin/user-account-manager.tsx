@@ -45,7 +45,6 @@ import {
   Database,
   Activity
 } from "lucide-react"
-import { motion } from "framer-motion"
 
 interface UserAccount {
   id: string
@@ -525,10 +524,8 @@ export function UserAccountManager() {
           ) : (
             <div className="space-y-4">
               {filteredUsers.map((user) => (
-                <motion.div
+                <div
                   key={user.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
                   className="border border-field-green-200 dark:border-field-green-700 rounded-lg p-4 hover:bg-field-green-50 dark:hover:bg-field-green-900/20 transition-colors"
                 >
                   <div className="flex items-center justify-between">
@@ -620,7 +617,7 @@ export function UserAccountManager() {
                       </Button>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}

@@ -116,7 +116,7 @@ export default function UpdateCurrentSeasonPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center items-center h-64">
             <Loader2 className="h-8 w-8 animate-spin text-ice-blue-500" />
@@ -127,10 +127,10 @@ export default function UpdateCurrentSeasonPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       <div className="container mx-auto px-4 py-8">
-        <div className="animate-fade-in-up">
-          <h1 className="text-3xl font-bold mb-6 text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-3">
+        <div className="">
+          <h1 className="text-3xl font-bold mb-6 text-field-green-900 dark:text-field-green-100 flex items-center gap-3">
             <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
               <Trophy className="h-6 w-6 text-white" />
             </div>
@@ -138,13 +138,13 @@ export default function UpdateCurrentSeasonPage() {
           </h1>
           <Card className="max-w-md mx-auto hockey-enhanced-card">
             <CardHeader>
-              <CardTitle className="text-2xl text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-3">
+              <CardTitle className="text-2xl text-field-green-900 dark:text-field-green-100 flex items-center gap-3">
                 <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
                   <Settings className="h-5 w-5 text-white" />
                 </div>
                 Current Season
               </CardTitle>
-              <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+              <CardDescription className="text-field-green-600 dark:text-field-green-400">
                 The current season is used for player registrations and other season-specific features.
               </CardDescription>
             </CardHeader>
@@ -152,8 +152,8 @@ export default function UpdateCurrentSeasonPage() {
           {error && (
             <Alert variant="destructive" className="hockey-enhanced-card border-goal-red-200 dark:border-goal-red-800">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle className="text-hockey-silver-900 dark:text-hockey-silver-100">Error</AlertTitle>
-              <AlertDescription className="text-hockey-silver-700 dark:text-hockey-silver-300">{error}</AlertDescription>
+              <AlertTitle className="text-field-green-900 dark:text-field-green-100">Error</AlertTitle>
+              <AlertDescription className="text-field-green-700 dark:text-field-green-300">{error}</AlertDescription>
             </Alert>
           )}
 
@@ -166,17 +166,17 @@ export default function UpdateCurrentSeasonPage() {
           )}
 
           <div className="space-y-3">
-            <label className="text-sm font-medium text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-2">
+            <label className="text-sm font-medium text-field-green-900 dark:text-field-green-100 flex items-center gap-2">
               <Calendar className="h-4 w-4 text-ice-blue-500" />
               Current Season
             </label>
-            <div className="p-3 border border-ice-blue-200 dark:border-rink-blue-700 rounded-lg bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-800 dark:to-hockey-silver-700 text-hockey-silver-900 dark:text-hockey-silver-100">
+            <div className="p-3 border border-ice-blue-200 dark:border-rink-blue-700 rounded-lg bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-800 dark:to-hockey-silver-700 text-field-green-900 dark:text-field-green-100">
               {getCurrentSeasonName()}
             </div>
           </div>
 
           <div className="space-y-3">
-            <label htmlFor="season" className="text-sm font-medium text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-2">
+            <label htmlFor="season" className="text-sm font-medium text-field-green-900 dark:text-field-green-100 flex items-center gap-2">
               <Trophy className="h-4 w-4 text-rink-blue-500" />
               Select New Season
             </label>

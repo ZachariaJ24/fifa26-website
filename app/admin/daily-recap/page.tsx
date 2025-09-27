@@ -10,12 +10,12 @@ function LoadingSkeleton() {
     <div className="space-y-8">
       <Card className="hockey-card border-2 border-ice-blue-200 dark:border-ice-blue-700 overflow-hidden">
         <CardContent className="p-8">
-          <div className="animate-pulse">
+          <div className="">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 bg-gradient-to-r from-ice-blue-200 to-rink-blue-200 dark:from-ice-blue-800 dark:to-rink-blue-800 rounded-lg"></div>
               <div className="space-y-2 flex-1">
-                <div className="h-6 bg-gradient-to-r from-hockey-silver-200 to-ice-blue-200 dark:from-hockey-silver-700 dark:to-ice-blue-800 rounded w-3/4"></div>
-                <div className="h-4 bg-gradient-to-r from-hockey-silver-200 to-ice-blue-200 dark:from-hockey-silver-700 dark:to-ice-blue-800 rounded w-1/2"></div>
+                <div className="h-6 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-3/4"></div>
+                <div className="h-4 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-1/2"></div>
               </div>
             </div>
             <div className="flex gap-4">
@@ -28,18 +28,18 @@ function LoadingSkeleton() {
       
       <Card className="hockey-card border-2 border-rink-blue-200 dark:border-rink-blue-700 overflow-hidden">
         <CardContent className="p-8">
-          <div className="animate-pulse">
+          <div className="">
             <div className="flex items-center gap-4 mb-6">
               <div className="w-12 h-12 bg-gradient-to-r from-rink-blue-200 to-ice-blue-200 dark:from-rink-blue-800 dark:to-ice-blue-800 rounded-lg"></div>
               <div className="space-y-2 flex-1">
-                <div className="h-6 bg-gradient-to-r from-hockey-silver-200 to-rink-blue-200 dark:from-hockey-silver-700 dark:to-rink-blue-800 rounded w-2/3"></div>
-                <div className="h-4 bg-gradient-to-r from-hockey-silver-200 to-rink-blue-200 dark:from-hockey-silver-700 dark:to-rink-blue-800 rounded w-1/3"></div>
+                <div className="h-6 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-2/3"></div>
+                <div className="h-4 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-1/3"></div>
               </div>
             </div>
             <div className="space-y-4">
-              <div className="h-4 bg-gradient-to-r from-hockey-silver-200 to-rink-blue-200 dark:from-hockey-silver-700 dark:to-rink-blue-800 rounded w-full"></div>
-              <div className="h-4 bg-gradient-to-r from-hockey-silver-200 to-rink-blue-200 dark:from-hockey-silver-700 dark:to-rink-blue-800 rounded w-5/6"></div>
-              <div className="h-4 bg-gradient-to-r from-hockey-silver-200 to-rink-blue-200 dark:from-hockey-silver-700 dark:to-rink-blue-800 rounded w-4/6"></div>
+              <div className="h-4 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-full"></div>
+              <div className="h-4 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-5/6"></div>
+              <div className="h-4 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-4/6"></div>
             </div>
           </div>
         </CardContent>
@@ -50,15 +50,15 @@ function LoadingSkeleton() {
 
 export default function DailyRecapPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl "></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl " style={{ animationDelay: '2s' }}></div>
         
         <div className="container mx-auto text-center relative z-10">
           <div>
