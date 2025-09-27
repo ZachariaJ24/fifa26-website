@@ -46,38 +46,33 @@ export default function AdminNewsPage() {
       return
     }
 
-    // In a real app, you would check for admin role here
-    // For now, we'll assume the logged-in user is an admin
-
     fetchArticles()
-  }, [session, router, toast, filter])
+  }, [session])
 
-  async function fetchArticles() {
+  const fetchArticles = async () => {
     try {
       setLoading(true)
+      const { data, error } = await supabase
+        .from("news_articles")
+        .select("*")
+        .order("created_at", { ascending: false })
 
-      let query = supabase.from("news").select("*")
-
-      // Apply filters
-      if (filter === "published") {
-        query = query.eq("published", true)
-      } else if (filter === "draft") {
-        query = query.eq("published", false)
-      } else if (filter === "featured") {
-        query = query.eq("featured", true)
+      if (error) {
+        console.error("Error fetching articles:", error)
+        toast({
+          title: "Error",
+          description: "Failed to fetch news articles.",
+          variant: "destructive",
+        })
+        return
       }
 
-      // Sort by created_at in descending order
-      query = query.order("created_at", { ascending: false })
-
-      const { data, error } = await query
-
-      if (error) throw error
       setArticles(data || [])
-    } catch (error: any) {
+    } catch (error) {
+      console.error("Error fetching articles:", error)
       toast({
-        title: "Error loading articles",
-        description: error.message || "Failed to load articles.",
+        title: "Error",
+        description: "An unexpected error occurred.",
         variant: "destructive",
       })
     } finally {
@@ -85,30 +80,35 @@ export default function AdminNewsPage() {
     }
   }
 
-  const handleDeleteClick = (id: string) => {
-    setArticleToDelete(id)
-    setDeleteDialogOpen(true)
-  }
-
-  const confirmDelete = async () => {
-    if (!articleToDelete) return
-
+  const handleDelete = async (articleId: string) => {
     try {
-      const { error } = await supabase.from("news").delete().eq("id", articleToDelete)
+      const { error } = await supabase
+        .from("news_articles")
+        .delete()
+        .eq("id", articleId)
 
-      if (error) throw error
+      if (error) {
+        console.error("Error deleting article:", error)
+        toast({
+          title: "Error",
+          description: "Failed to delete article.",
+          variant: "destructive",
+        })
+        return
+      }
 
       toast({
-        title: "Article deleted",
-        description: "The article has been successfully deleted.",
+        title: "Success",
+        description: "Article deleted successfully.",
       })
 
-      // Refresh the articles list
-      fetchArticles()
-    } catch (error: any) {
+      // Refresh articles
+      await fetchArticles()
+    } catch (error) {
+      console.error("Error deleting article:", error)
       toast({
-        title: "Error deleting article",
-        description: error.message || "Failed to delete article.",
+        title: "Error",
+        description: "An unexpected error occurred.",
         variant: "destructive",
       })
     } finally {
@@ -117,386 +117,207 @@ export default function AdminNewsPage() {
     }
   }
 
-  const togglePublishStatus = async (id: string, currentStatus: boolean) => {
-    try {
-      const { error } = await supabase.from("news").update({ published: !currentStatus }).eq("id", id)
-
-      if (error) throw error
-
-      toast({
-        title: currentStatus ? "Article unpublished" : "Article published",
-        description: `The article has been ${currentStatus ? "unpublished" : "published"} successfully.`,
-      })
-
-      // Refresh the articles list
-      fetchArticles()
-    } catch (error: any) {
-      toast({
-        title: "Error updating article",
-        description: error.message || "Failed to update article status.",
-        variant: "destructive",
-      })
-    }
-  }
-
-  const toggleFeaturedStatus = async (id: string, currentStatus: boolean) => {
-    try {
-      const { error } = await supabase.from("news").update({ featured: !currentStatus }).eq("id", id)
-
-      if (error) throw error
-
-      toast({
-        title: currentStatus ? "Article unfeatured" : "Article featured",
-        description: `The article has been ${currentStatus ? "removed from" : "added to"} featured articles.`,
-      })
-
-      // Refresh the articles list
-      fetchArticles()
-    } catch (error: any) {
-      toast({
-        title: "Error updating article",
-        description: error.message || "Failed to update article status.",
-        variant: "destructive",
-      })
-    }
-  }
+  const filteredArticles = articles.filter((article) => {
+    if (filter === "all") return true
+    if (filter === "published") return article.published
+    if (filter === "draft") return !article.published
+    return true
+  })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
-      {/* Enhanced Hero Header Section */}
-      <div className="relative overflow-hidden py-20 px-4">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl "></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl " style={{ animationDelay: '2s' }}></div>
-        
-        <div className="container mx-auto text-center relative z-10">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">
-              News Management Center
-            </h1>
-            <p className="text-lg text-slate-700 dark:text-slate-300 mx-auto mb-12 max-w-4xl">
-              Create, edit, and manage news articles for the league. 
-              Keep the community informed with engaging content, announcements, and updates.
-            </p>
-            
-            {/* Enhanced Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto mb-16">
-              <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
-                    <Newspaper className="h-8 w-8 text-white" />
-                  </div>
-                  <div className="text-3xl font-bold text-slate-700 dark:text-slate-300 mb-2">
-                    {articles.length}
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                    Total Articles
-                  </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
-                </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
+      {/* Header */}
+      <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+        <div className="container mx-auto px-4 py-12">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+                <Newspaper className="h-8 w-8 text-white" />
               </div>
-              
-              <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-pitch-blue-500/25 transition-all duration-300">
-                    <Globe className="h-8 w-8 text-white" />
-                  </div>
-                  <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
-                    {articles.filter(a => a.published).length}
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                    Published
-                  </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
-                </div>
+              <div>
+                <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-200">News Management</h1>
+                <p className="text-lg text-slate-600 dark:text-slate-400">Manage news articles and announcements</p>
               </div>
-              
-              <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-assist-green-500/25 transition-all duration-300">
-                    <FileText className="h-8 w-8 text-white" />
-                  </div>
-                  <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
-                    {articles.filter(a => !a.published).length}
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                    Drafts
-                  </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
-                </div>
-              </div>
-              
-              <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-goal-red-500/25 transition-all duration-300">
-                    <Star className="h-8 w-8 text-white" />
-                  </div>
-                  <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
-                    {articles.filter(a => a.featured).length}
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                    Featured
-                  </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
-                </div>
-              </div>
+            </div>
+            <div className="flex items-center gap-3">
+              <Button variant="outline" onClick={fetchArticles}>
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Refresh
+              </Button>
+              <Button asChild>
+                <Link href="/admin/news/create">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Create Article
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 pb-20">
-        {/* Enhanced Navigation */}
-        <div className="flex items-center gap-2 mb-8">
-          <ArrowLeft className="h-5 w-5 text-slate-600 dark:text-slate-400" />
-          <Link href="/admin" className="text-slate-600 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-400 transition-colors duration-300">
-            Back to Admin Dashboard
-          </Link>
+      <div className="container mx-auto px-4 py-8">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Total Articles</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">{articles.length}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Published</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-green-600">{articles.filter(a => a.published).length}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Drafts</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-orange-600">{articles.filter(a => !a.published).length}</div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Enhanced Header */}
-        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-12">
-          <div className="flex-1">
-            <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-3">
-              News Management
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400">
-              Manage all news articles, announcements, and content
-            </p>
-          </div>
-
-          <Button asChild className="hockey-button hover:scale-105 transition-all duration-200">
-            <Link href="/admin/news/create" className="flex items-center gap-2">
-              <Plus className="h-4 w-4" />
-              Create New Article
-            </Link>
-          </Button>
-        </div>
-
-        {/* Enhanced Tabs */}
-        <Tabs defaultValue="all" className="w-full" onValueChange={setFilter}>
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-              Article Management
-            </h3>
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              Filter and manage your news articles by status and category.
-            </p>
-          </div>
-          
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-8 gap-2 p-2">
-            <TabsTrigger 
-              value="all" 
-              className="flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-semibold"
-            >
-              <Newspaper className="h-4 w-4" />
-              All Articles
-            </TabsTrigger>
-            <TabsTrigger 
-              value="published"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-pitch-blue-500 data-[state=active]:to-field-green-600 data-[state=active]:text-white hover:bg-pitch-blue-200/50 dark:hover:bg-pitch-blue-800/30 transition-all duration-300 flex items-center gap-2"
-            >
-              <Globe className="h-4 w-4" />
-              Published
-            </TabsTrigger>
-            <TabsTrigger 
-              value="draft"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-assist-green-500 data-[state=active]:to-goal-red-600 data-[state=active]:text-white hover:bg-assist-green-200/50 dark:hover:bg-assist-green-800/30 transition-all duration-300 flex items-center gap-2"
-            >
-              <FileText className="h-4 w-4" />
-              Drafts
-            </TabsTrigger>
-            <TabsTrigger 
-              value="featured"
-              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-goal-red-500 data-[state=active]:to-assist-green-600 data-[state=active]:text-white hover:bg-goal-red-200/50 dark:hover:bg-goal-red-800/30 transition-all duration-300 flex items-center gap-2"
-            >
-              <Star className="h-4 w-4" />
-              Featured
-            </TabsTrigger>
-          </TabsList>
-
-          <TabsContent value={filter}>
-            <Card className="hockey-card border-2 border-field-green-200 dark:border-field-green-700 overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 border-b border-field-green-200 dark:border-field-green-700">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg flex items-center justify-center">
-                    <Newspaper className="h-5 w-5 text-white" />
+        {/* Articles Table */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle className="text-slate-800 dark:text-slate-200">All Articles</CardTitle>
+                <CardDescription className="text-slate-600 dark:text-slate-400">
+                  Manage your news articles and announcements
+                </CardDescription>
+              </div>
+              <Tabs value={filter} onValueChange={setFilter}>
+                <TabsList className="bg-white dark:bg-slate-800 border">
+                  <TabsTrigger value="all" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
+                    All
+                  </TabsTrigger>
+                  <TabsTrigger value="published" className="data-[state=active]:bg-green-500 data-[state=active]:text-white">
+                    Published
+                  </TabsTrigger>
+                  <TabsTrigger value="draft" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">
+                    Drafts
+                  </TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {loading ? (
+              <div className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="flex items-center space-x-4">
+                    <Skeleton className="h-4 w-4" />
+                    <Skeleton className="h-4 w-[300px]" />
+                    <Skeleton className="h-4 w-[100px]" />
+                    <Skeleton className="h-4 w-[80px]" />
+                    <Skeleton className="h-8 w-8" />
                   </div>
-                  <div>
-                    <CardTitle className="text-2xl text-slate-800 dark:text-slate-200">
-                      News Articles
-                    </CardTitle>
-                    <CardDescription className="text-slate-600 dark:text-slate-400">
-                      {filter === "all" && "All news articles"}
-                      {filter === "published" && "Published news articles"}
-                      {filter === "draft" && "Draft news articles"}
-                      {filter === "featured" && "Featured news articles"}
-                    </CardDescription>
-                  </div>
-                </div>
-              </CardHeader>
-              <CardContent className="p-0">
-                {loading ? (
-                  <div className="p-8">
-                    <div className="animate-pulse">
-                      <div className="h-4 bg-field-green-200 dark:bg-field-green-700 rounded w-1/4 mb-4"></div>
-                      <div className="space-y-3">
-                        {[...Array(5)].map((_, i) => (
-                          <div key={i} className="h-4 bg-field-green-200 dark:bg-field-green-700 rounded"></div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ) : articles.length > 0 ? (
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader className="bg-gradient-to-r from-field-green-100 to-pitch-blue-100 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
-                        <TableRow className="border-field-green-200 dark:border-field-green-700">
-                          <TableHead className="text-slate-700 dark:text-slate-300 font-bold">Title</TableHead>
-                          <TableHead className="text-slate-700 dark:text-slate-300 font-bold">Status</TableHead>
-                          <TableHead className="text-slate-700 dark:text-slate-300 font-bold">Created</TableHead>
-                          <TableHead className="text-slate-700 dark:text-slate-300 font-bold">Last Updated</TableHead>
-                          <TableHead className="text-center text-slate-700 dark:text-slate-300 font-bold">Actions</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {articles.map((article) => (
-                          <TableRow 
-                            key={article.id} 
-                            className="hover:bg-gradient-to-r hover:from-field-green-50/50 hover:to-pitch-blue-50/50 dark:hover:from-field-green-900/20 dark:hover:to-pitch-blue-900/20 transition-all duration-300 border-field-green-200 dark:border-field-green-700"
-                          >
-                            <TableCell className="font-medium text-slate-800 dark:text-slate-200">{article.title}</TableCell>
-                            <TableCell>
-                              <div className="flex flex-wrap gap-2">
-                                {article.published ? (
-                                  <Badge className="bg-assist-green-100 text-assist-green-800 dark:bg-assist-green-900/30 dark:text-assist-green-300 border-assist-green-300 dark:border-assist-green-600">
-                                    <Globe className="h-3 w-3 mr-1" />
-                                    Published
-                                  </Badge>
-                                ) : (
-                                  <Badge variant="outline" className="border-field-green-300 dark:border-field-green-600 text-slate-700 dark:text-slate-300">
-                                    <FileText className="h-3 w-3 mr-1" />
-                                    Draft
-                                  </Badge>
-                                )}
-                                {article.featured && (
-                                  <Badge className="bg-goal-red-100 text-goal-red-800 dark:bg-goal-red-900/30 dark:text-goal-red-300 border-goal-red-300 dark:border-goal-red-600">
-                                    <Star className="h-3 w-3 mr-1" />
-                                    Featured
-                                  </Badge>
-                                )}
-                              </div>
-                            </TableCell>
-                            <TableCell className="text-slate-600 dark:text-slate-400">
-                              {formatDistanceToNow(new Date(article.created_at), { addSuffix: true })}
-                            </TableCell>
-                            <TableCell className="text-slate-600 dark:text-slate-400">
-                              {formatDistanceToNow(new Date(article.updated_at), { addSuffix: true })}
-                            </TableCell>
-                            <TableCell>
-                              <div className="flex justify-center gap-2 flex-wrap">
-                                <Button variant="outline" size="sm" className="h-8 w-8 p-0 hover:bg-field-green-100 dark:hover:bg-field-green-900/30 hover:scale-110 transition-all duration-200" asChild>
-                                  <Link href={`/news/${article.id}`}>
-                                    <Eye className="h-4 w-4 text-slate-600 dark:text-slate-400" />
-                                    <span className="sr-only">View</span>
-                                  </Link>
-                                </Button>
-                                <Button variant="outline" size="sm" className="h-8 w-8 p-0 hover:bg-pitch-blue-100 dark:hover:bg-pitch-blue-900/30 hover:scale-110 transition-all duration-200" asChild>
-                                  <Link href={`/admin/news/edit/${article.id}`}>
-                                    <Edit className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
-                                    <span className="sr-only">Edit</span>
-                                  </Link>
-                                </Button>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  className="h-8 w-8 p-0 text-goal-red-500 hover:text-goal-red-600 hover:bg-goal-red-100 dark:hover:bg-goal-red-900/30 hover:scale-110 transition-all duration-200"
-                                  onClick={() => handleDeleteClick(article.id)}
-                                >
-                                  <Trash2 className="h-4 w-4" />
-                                  <span className="sr-only">Delete</span>
-                                </Button>
-                                <Button
-                                  variant={article.published ? "default" : "secondary"}
-                                  size="sm"
-                                  className={article.published ? "btn-ice hover:scale-105 transition-all duration-200" : "border-field-green-300 dark:border-field-green-600 hover:scale-105 transition-all duration-200"}
-                                  onClick={() => togglePublishStatus(article.id, article.published)}
-                                >
-                                  {article.published ? (
-                                    <>
-                                      <Send className="h-3 w-3 mr-1" />
-                                      Unpublish
-                                    </>
-                                  ) : (
-                                    <>
-                                      <Globe className="h-3 w-3 mr-1" />
-                                      Publish
-                                    </>
-                                  )}
-                                </Button>
-                                <Button
-                                  variant={article.featured ? "default" : "secondary"}
-                                  size="sm"
-                                  className={article.featured ? "btn-championship hover:scale-105 transition-all duration-200" : "border-field-green-300 dark:border-field-green-600 hover:scale-105 transition-all duration-200"}
-                                  onClick={() => toggleFeaturedStatus(article.id, article.featured)}
-                                >
-                                  {article.featured ? (
-                                    <>
-                                      <Star className="h-3 w-3 mr-1" />
-                                      Unfeature
-                                    </>
-                                  ) : (
-                                    <>
-                                      <Star className="h-3 w-3 mr-1" />
-                                      Feature
-                                    </>
-                                  )}
-                                </Button>
-                              </div>
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                ) : (
-                  <div className="text-center py-12">
-                    <div className="flex flex-col items-center gap-4">
-                      <div className="w-16 h-16 bg-gradient-to-r from-field-green-200 to-field-green-200 dark:from-field-green-700 dark:to-field-green-800 rounded-full flex items-center justify-center">
-                        <Newspaper className="h-8 w-8 text-slate-500 dark:text-slate-400" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                          No Articles Found
-                        </h3>
-                        <p className="text-slate-500 dark:text-slate-500">
-                          No articles found matching your filter. Click "Create New Article" to add one.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+                ))}
+              </div>
+            ) : filteredArticles.length === 0 ? (
+              <div className="text-center py-12">
+                <Newspaper className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200 mb-2">No articles found</h3>
+                <p className="text-slate-600 dark:text-slate-400 mb-4">
+                  {filter === "all" ? "No articles have been created yet." : 
+                   filter === "published" ? "No published articles found." : 
+                   "No draft articles found."}
+                </p>
+                <Button asChild>
+                  <Link href="/admin/news/create">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create First Article
+                  </Link>
+                </Button>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Title</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Status</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Author</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Created</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {filteredArticles.map((article) => (
+                      <TableRow key={article.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                        <TableCell className="font-medium text-slate-800 dark:text-slate-200">
+                          {article.title}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={article.published ? "default" : "secondary"} className={article.published ? "bg-green-500" : "bg-orange-500"}>
+                            {article.published ? "Published" : "Draft"}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-slate-600 dark:text-slate-400">
+                          {article.author || "Unknown"}
+                        </TableCell>
+                        <TableCell className="text-slate-600 dark:text-slate-400">
+                          {formatDistanceToNow(new Date(article.created_at), { addSuffix: true })}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-2">
+                            <Button variant="outline" size="sm" asChild>
+                              <Link href={`/admin/news/${article.id}`}>
+                                <Eye className="h-4 w-4" />
+                              </Link>
+                            </Button>
+                            <Button variant="outline" size="sm" asChild>
+                              <Link href={`/admin/news/${article.id}/edit`}>
+                                <Edit className="h-4 w-4" />
+                              </Link>
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => {
+                                setArticleToDelete(article.id)
+                                setDeleteDialogOpen(true)
+                              }}
+                              className="text-red-600 hover:text-red-700"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </div>
 
+      {/* Delete Confirmation Dialog */}
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogTitle>Delete Article</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the article.
+              Are you sure you want to delete this article? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={confirmDelete} className="bg-red-500 hover:bg-red-600">
+            <AlertDialogAction
+              onClick={() => articleToDelete && handleDelete(articleToDelete)}
+              className="bg-red-500 hover:bg-red-600"
+            >
               Delete
             </AlertDialogAction>
           </AlertDialogFooter>

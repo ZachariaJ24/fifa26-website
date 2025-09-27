@@ -11,6 +11,8 @@ import { useToast } from "@/components/ui/use-toast"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useSupabase } from "@/lib/supabase/client"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 
 export default function AdminFeaturedGamesPage() {
   const { supabase, session } = useSupabase()
@@ -55,20 +57,50 @@ export default function AdminFeaturedGamesPage() {
       }
 
       setIsAdmin(true)
-
-      // Determine the date column name
-      await checkMatchesTableStructure()
-
-      // Check if the featured column exists
-      await checkFeaturedColumn()
-
-      // Fetch matches
-      await fetchMatches()
-    } catch (error: any) {
-      console.error("Error checking authorization:", error)
+    } catch (error) {
+      console.error("Error checking admin status:", error)
       toast({
         title: "Error",
-        description: error.message || "An error occurred",
+        description: "Failed to verify admin status.",
+        variant: "destructive",
+      })
+      router.push("/")
+    }
+  }
+
+  // Fetch matches
+  async function fetchMatches() {
+    try {
+      setLoading(true)
+      const { data, error } = await supabase
+        .from("matches")
+        .select(`
+          id,
+          home_team_id,
+          away_team_id,
+          match_date,
+          is_featured,
+          home_team:home_team_id(name, logo_url),
+          away_team:away_team_id(name, logo_url)
+        `)
+        .order("match_date", { ascending: true })
+
+      if (error) {
+        console.error("Error fetching matches:", error)
+        toast({
+          title: "Error",
+          description: "Failed to fetch matches.",
+          variant: "destructive",
+        })
+        return
+      }
+
+      setMatches(data || [])
+    } catch (error) {
+      console.error("Error fetching matches:", error)
+      toast({
+        title: "Error",
+        description: "An unexpected error occurred.",
         variant: "destructive",
       })
     } finally {
@@ -76,212 +108,37 @@ export default function AdminFeaturedGamesPage() {
     }
   }
 
-  // Check matches table structure to determine date column name
-  const checkMatchesTableStructure = async () => {
+  // Toggle featured status
+  async function toggleFeatured(matchId: string, currentStatus: boolean) {
     try {
-      // Try to get a single match to check the structure
-      const { data, error } = await supabase.from("matches").select("*").limit(1)
+      setUpdatingId(matchId)
+      const { error } = await supabase
+        .from("matches")
+        .update({ is_featured: !currentStatus })
+        .eq("id", matchId)
 
       if (error) {
-        console.error("Error checking matches table:", error)
+        console.error("Error updating featured status:", error)
+        toast({
+          title: "Error",
+          description: "Failed to update featured status.",
+          variant: "destructive",
+        })
         return
       }
 
-      // Check if the table has a date or match_date column
-      if (data && data.length > 0) {
-        const match = data[0]
-        if ("date" in match) {
-          setDateColumnName("date")
-        } else if ("match_date" in match) {
-          setDateColumnName("match_date")
-        }
-      }
-    } catch (error) {
-      console.error("Error checking matches table structure:", error)
-    }
-  }
+      toast({
+        title: "Success",
+        description: `Match ${!currentStatus ? "featured" : "unfeatured"} successfully.`,
+      })
 
-  useEffect(() => {
-    checkAuthorization()
-  }, [supabase, session, toast, router])
-
-  // Set up real-time subscription for matches table
-  useEffect(() => {
-    if (!isAdmin) return
-
-    const channel = supabase
-      .channel('matches-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'matches',
-          filter: 'featured=is.not.null'
-        },
-        (payload) => {
-          console.log('Real-time update received:', payload)
-          // Update the local state with the new data
-          setMatches(prevMatches => 
-            prevMatches.map(match => 
-              match.id === payload.new.id 
-                ? { ...match, featured: payload.new.featured }
-                : match
-            )
-          )
-        }
-      )
-      .subscribe()
-
-    return () => {
-      supabase.removeChannel(channel)
-    }
-  }, [supabase, isAdmin])
-
-  // Check if featured column exists and test permissions
-  const checkFeaturedColumn = async () => {
-    setMigrationStatus("pending")
-    setMigrationError(null)
-    try {
-      // Test if we can query the featured column
-      const { data, error } = await supabase
-        .from("matches")
-        .select("id, featured")
-        .limit(1)
-
-      if (error) {
-        console.error("Column check error:", error)
-        setMigrationStatus("error")
-        setMigrationError(`The 'featured' column doesn't exist: ${error.message}`)
-        return false
-      }
-
-      // Test if we can update the featured column (permission check)
-      if (data && data.length > 0) {
-        const testMatch = data[0]
-        const { error: updateTestError } = await supabase
-          .from("matches")
-          .update({ featured: testMatch.featured }) // Set to same value to test permissions
-          .eq("id", testMatch.id)
-
-        if (updateTestError) {
-          console.error("Update permission test failed:", updateTestError)
-          setMigrationStatus("error")
-          setMigrationError(`Update permissions issue: ${updateTestError.message}`)
-          return false
-        }
-      }
-
-      setMigrationStatus("success")
-      return true
-    } catch (error: any) {
-      console.error("Column check failed:", error)
-      setMigrationStatus("error")
-      setMigrationError(error.message)
-      return false
-    }
-  }
-
-  // Retry column check and reload
-  const retryMigration = async () => {
-    const success = await checkFeaturedColumn()
-    if (success) {
+      // Refresh matches
       await fetchMatches()
-    }
-  }
-
-  // Fetch matches
-  const fetchMatches = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("matches")
-        .select(`
-          id,
-          home_team_id,
-          away_team_id,
-          home_score,
-          away_score,
-          ${dateColumnName},
-          status,
-          featured,
-          home_team:teams!home_team_id(id, name, logo_url),
-          away_team:teams!away_team_id(id, name, logo_url)
-        `)
-        .order(dateColumnName, { ascending: true })
-
-      if (error) {
-        if (error.message.includes("column") && error.message.includes("featured")) {
-          // Column doesn't exist - set error state
-          setMigrationStatus("error")
-          setMigrationError(`The 'featured' column doesn't exist: ${error.message}`)
-          return
-        }
-        throw error
-      }
-      setMatches(data || [])
-    } catch (error: any) {
-      console.error("Error fetching matches:", error)
+    } catch (error) {
+      console.error("Error updating featured status:", error)
       toast({
         title: "Error",
-        description: "Failed to load matches: " + error.message,
-        variant: "destructive",
-      })
-    }
-  }
-
-  // Toggle featured status with immediate UI update
-  const toggleFeatured = async (matchId: string, currentStatus: boolean) => {
-    setUpdatingId(matchId)
-    
-    // Immediately update the local state for instant UI feedback
-    setMatches(prevMatches => 
-      prevMatches.map(match => 
-        match.id === matchId 
-          ? { ...match, featured: !currentStatus }
-          : match
-      )
-    )
-
-    try {
-      console.log(`Updating match ${matchId} featured status from ${currentStatus} to ${!currentStatus}`)
-      
-      // Update the featured status using standard Supabase update
-      const { data, error: updateError } = await supabase
-        .from("matches")
-        .update({ featured: !currentStatus })
-        .eq("id", matchId)
-        .select()
-
-      if (updateError) {
-        console.error('Update error:', updateError)
-        // Revert the local state if the update failed
-        setMatches(prevMatches => 
-          prevMatches.map(match => 
-            match.id === matchId 
-              ? { ...match, featured: currentStatus }
-              : match
-          )
-        )
-        throw new Error(`Failed to update: ${updateError.message}`)
-      }
-
-      console.log('Update successful:', data)
-
-      toast({
-        title: currentStatus ? "Match unfeatured" : "Match featured",
-        description: currentStatus
-          ? "The match has been removed from featured matches."
-          : "The match has been added to featured matches.",
-      })
-
-      // Optional: Refresh matches to ensure data consistency (but UI is already updated)
-      // Uncomment the line below if you want to refresh from database after update
-      // setTimeout(() => fetchMatches(), 1000)
-    } catch (error: any) {
-      console.error("Error toggling featured status:", error)
-      toast({
-        title: "Error",
-        description: error.message || "Failed to update match",
+        description: "An unexpected error occurred.",
         variant: "destructive",
       })
     } finally {
@@ -289,60 +146,24 @@ export default function AdminFeaturedGamesPage() {
     }
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
-        <div className="container mx-auto px-4 py-20">
-          <div className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-800 dark:to-pitch-blue-800 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-              <Gamepad2 className="h-8 w-8 text-slate-600 dark:text-slate-400" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-2">
-              Loading Featured Fixtures
-            </h3>
-            <p className="text-slate-600 dark:text-slate-400">
-              Initializing featured fixtures management interface...
-            </p>
-            <div className="mt-6">
-              <div className="animate-spin h-8 w-8 border-4 border-field-green-500 border-t-transparent rounded-full mx-auto"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  useEffect(() => {
+    checkAuthorization()
+  }, [session])
+
+  useEffect(() => {
+    if (isAdmin) {
+      fetchMatches()
+    }
+  }, [isAdmin])
 
   if (!isAdmin) {
-    return null
-  }
-
-  if (migrationStatus === "error") {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
-        <div className="container mx-auto px-4 py-20">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">Featured Games Management</h1>
-          </div>
-          
-          <div className="hockey-card border-2 border-goal-red-200 dark:border-goal-red-700 overflow-hidden max-w-2xl mx-auto">
-            <div className="p-8 text-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-goal-red-200 to-assist-green-200 dark:from-goal-red-800 dark:to-assist-green-800 rounded-full flex items-center justify-center mx-auto mb-4">
-                <AlertTriangle className="h-8 w-8 text-goal-red-600 dark:text-goal-red-400" />
-              </div>
-              <h3 className="text-xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
-                Database Error
-              </h3>
-              <p className="text-slate-600 dark:text-slate-400 mb-6">
-                {migrationError || "Failed to create or access the 'featured' column in the matches table."}
-              </p>
-              <Button 
-                onClick={retryMigration} 
-                className="btn-championship hover:scale-105 transition-all duration-200"
-              >
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Retry Migration
-              </Button>
-            </div>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center">
+            <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">Access Denied</h1>
+            <p className="text-slate-600 dark:text-slate-400">You don't have permission to access this page.</p>
           </div>
         </div>
       </div>
@@ -350,244 +171,148 @@ export default function AdminFeaturedGamesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
-      {/* Enhanced Hero Header Section */}
-      <div className="relative overflow-hidden py-20 px-4">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
-        
-        {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        
-        <div className="container mx-auto text-center relative z-10">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">
-              Featured Fixtures Management
-            </h1>
-            <p className="text-lg text-slate-700 dark:text-slate-300 mx-auto mb-12 max-w-4xl">
-              Manage featured fixtures and highlight important matches for the league. 
-              Control which fixtures are prominently displayed on the home page to showcase key matchups.
-            </p>
-            
-            {/* Enhanced Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto mb-16">
-              <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
-                    <Gamepad2 className="h-8 w-8 text-white" />
-                  </div>
-                  <div className="text-3xl font-bold text-slate-700 dark:text-slate-300 mb-2">
-                    {matches.length}
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                    Total Fixtures
-                  </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
-                </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
+      {/* Header */}
+      <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+                <Star className="h-6 w-6 text-white" />
               </div>
-              
-              <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-pitch-blue-500/25 transition-all duration-300">
-                    <Star className="h-8 w-8 text-white" />
-                  </div>
-                  <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
-                    {matches.filter(m => m.featured).length}
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                    Featured Fixtures
-                  </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
-                </div>
-              </div>
-              
-              <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-assist-green-500/25 transition-all duration-300">
-                    <Play className="h-8 w-8 text-white" />
-                  </div>
-                  <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
-                    Live
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                    Management
-                  </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
-                </div>
-              </div>
-              
-              <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-goal-red-500/25 transition-all duration-300">
-                    <Eye className="h-8 w-8 text-white" />
-                  </div>
-                  <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
-                    Homepage
-                  </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
-                    Visibility
-                  </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
-                </div>
+              <div>
+                <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-200">Featured Games</h1>
+                <p className="text-slate-600 dark:text-slate-400">Manage which games are featured on the homepage</p>
               </div>
             </div>
+            <Button onClick={fetchMatches} variant="outline" size="sm">
+              <RefreshCw className="h-4 w-4 mr-2" />
+              Refresh
+            </Button>
           </div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-16">
-        {/* Enhanced Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-4">
-            Featured Fixtures Control Center
-          </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-            Manage which fixtures are featured on the home page. Featured fixtures will be displayed prominently 
-            and shown in order of their scheduled date to highlight key matchups.
-          </p>
+      <div className="container mx-auto px-4 py-8">
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Total Matches</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">{matches.length}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Featured Matches</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-blue-600">{matches.filter(m => m.is_featured).length}</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Upcoming Matches</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-purple-600">
+                {matches.filter(m => new Date(m.match_date) > new Date()).length}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
-        {/* Enhanced Alert */}
-        <div className="hockey-card border-2 border-field-green-200 dark:border-field-green-700 overflow-hidden mb-8">
-          <div className="bg-gradient-to-r from-field-green-500 to-pitch-blue-600 text-white p-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center">
-                <Info className="h-5 w-5 text-white" />
+        {/* Matches Table */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-slate-800 dark:text-slate-200">All Matches</CardTitle>
+            <CardDescription className="text-slate-600 dark:text-slate-400">
+              Click the star icon to feature or unfeature a match
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loading ? (
+              <div className="space-y-4">
+                {[...Array(5)].map((_, i) => (
+                  <div key={i} className="flex items-center space-x-4">
+                    <Skeleton className="h-4 w-4" />
+                    <Skeleton className="h-4 w-[200px]" />
+                    <Skeleton className="h-4 w-[200px]" />
+                    <Skeleton className="h-4 w-[100px]" />
+                    <Skeleton className="h-8 w-8" />
+                  </div>
+                ))}
               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-white">About Featured Games</h3>
-                <p className="text-field-green-100">
-                  Featured games will be displayed prominently on the home page. You can feature multiple games, and they will
-                  be shown in order of their scheduled date.
-                </p>
+            ) : matches.length === 0 ? (
+              <div className="text-center py-12">
+                <Trophy className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200 mb-2">No matches found</h3>
+                <p className="text-slate-600 dark:text-slate-400">There are no matches to display.</p>
               </div>
-            </div>
-          </div>
-        </div>
-
-      {matches.length === 0 ? (
-        <div className="hockey-card border-2 border-field-green-200 dark:border-field-green-700 overflow-hidden">
-          <div className="p-8 text-center">
-            <div className="w-16 h-16 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-800 dark:to-pitch-blue-800 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Gamepad2 className="h-8 w-8 text-slate-600 dark:text-slate-400" />
-            </div>
-            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-2">
-              No Matches Found
-            </h3>
-            <p className="text-slate-600 dark:text-slate-400">
-              There are currently no matches available to feature.
-            </p>
-          </div>
-        </div>
-      ) : (
-        <div className="hockey-card border-2 border-field-green-200 dark:border-field-green-700 overflow-hidden">
-          <div className="bg-gradient-to-r from-field-green-500 to-pitch-blue-600 text-white p-4">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                <Gamepad2 className="h-4 w-4 text-white" />
+            ) : (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Featured</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Home Team</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Away Team</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Date</TableHead>
+                      <TableHead className="text-slate-600 dark:text-slate-400">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {matches.map((match) => (
+                      <TableRow key={match.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                        <TableCell>
+                          {match.is_featured ? (
+                            <Badge variant="default" className="bg-blue-500 text-white">
+                              <Star className="h-3 w-3 mr-1" />
+                              Featured
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-slate-500">
+                              <StarOff className="h-3 w-3 mr-1" />
+                              Not Featured
+                            </Badge>
+                          )}
+                        </TableCell>
+                        <TableCell className="font-medium text-slate-800 dark:text-slate-200">
+                          {match.home_team?.name || "Unknown Team"}
+                        </TableCell>
+                        <TableCell className="font-medium text-slate-800 dark:text-slate-200">
+                          {match.away_team?.name || "Unknown Team"}
+                        </TableCell>
+                        <TableCell className="text-slate-600 dark:text-slate-400">
+                          {format(new Date(match.match_date), "MMM dd, yyyy")}
+                        </TableCell>
+                        <TableCell>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => toggleFeatured(match.id, match.is_featured)}
+                            disabled={updatingId === match.id}
+                          >
+                            {updatingId === match.id ? (
+                              <RefreshCw className="h-4 w-4 animate-spin" />
+                            ) : match.is_featured ? (
+                              <StarOff className="h-4 w-4" />
+                            ) : (
+                              <Star className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
-              <h3 className="text-lg font-semibold text-white">Featured Games Management</h3>
-            </div>
-          </div>
-          <Table>
-            <TableHeader>
-              <TableRow className="bg-field-green-50 dark:bg-field-green-800">
-                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Date</TableHead>
-                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Home Team</TableHead>
-                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Away Team</TableHead>
-                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Score</TableHead>
-                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Status</TableHead>
-                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Featured</TableHead>
-                <TableHead className="text-right text-slate-700 dark:text-slate-300 font-semibold">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {matches.map((match, index) => (
-                <TableRow 
-                  key={match.id} 
-                  className={`${match.featured ? "bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20" : ""} ${index % 2 === 0 ? "bg-white dark:bg-field-green-900" : "bg-field-green-50 dark:bg-field-green-800"} hover:bg-field-green-100 dark:hover:bg-field-green-700 transition-colors duration-200`}
-                >
-                  <TableCell className="text-slate-800 dark:text-slate-200">
-                    <div className="flex flex-col">
-                      <span className="font-medium">{format(new Date(match[dateColumnName]), "MMM d, yyyy")}</span>
-                      <span className="text-sm text-slate-600 dark:text-slate-400">
-                        {format(new Date(match[dateColumnName]), "h:mm a")}
-                      </span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-slate-800 dark:text-slate-200 font-medium">
-                    {match.home_team?.name || "Unknown Team"}
-                  </TableCell>
-                  <TableCell className="text-slate-800 dark:text-slate-200 font-medium">
-                    {match.away_team?.name || "Unknown Team"}
-                  </TableCell>
-                  <TableCell className="text-slate-800 dark:text-slate-200">
-                    {match.home_score !== null && match.away_score !== null
-                      ? `${match.home_score} - ${match.away_score}`
-                      : "TBD"}
-                  </TableCell>
-                  <TableCell>
-                    <div className={`capitalize px-2 py-1 rounded-full text-xs font-medium ${
-                      match.status === 'completed' 
-                        ? 'bg-assist-green-100 text-assist-green-800 dark:bg-assist-green-900 dark:text-assist-green-200'
-                        : match.status === 'live'
-                        ? 'bg-goal-red-100 text-goal-red-800 dark:bg-goal-red-900 dark:text-goal-red-200'
-                        : 'bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-200'
-                    }`}>
-                      {match.status}
-                    </div>
-                  </TableCell>
-                  <TableCell>
-                    {match.featured ? (
-                      <div className="flex items-center gap-2">
-                        <Check className="h-5 w-5 text-assist-green-600" />
-                        <span className="text-sm text-assist-green-600 font-medium">Featured</span>
-                      </div>
-                    ) : (
-                      <div className="flex items-center gap-2">
-                        <X className="h-5 w-5 text-field-green-400" />
-                        <span className="text-sm text-field-green-400">Not Featured</span>
-                      </div>
-                    )}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button
-                      variant={match.featured ? "outline" : "default"}
-                      size="sm"
-                      onClick={() => toggleFeatured(match.id, !!match.featured)}
-                      disabled={updatingId === match.id}
-                      className={`${
-                        match.featured 
-                          ? "border-2 border-field-green-300 dark:border-field-green-600 hover:border-field-green-400 dark:hover:border-field-green-500 text-slate-700 dark:text-slate-300" 
-                          : "btn-championship"
-                      } hover:scale-105 transition-all duration-200`}
-                    >
-                      {updatingId === match.id ? (
-                        <>
-                          <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
-                          Updating...
-                        </>
-                      ) : match.featured ? (
-                        <>
-                          <StarOff className="h-4 w-4 mr-2" />
-                          Unfeature
-                        </>
-                      ) : (
-                        <>
-                          <Star className="h-4 w-4 mr-2" />
-                          Feature
-                        </>
-                      )}
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      )}
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
