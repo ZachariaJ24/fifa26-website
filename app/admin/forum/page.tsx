@@ -37,7 +37,7 @@ export default function AdminForumPage() {
                 Manage categories, posts, user interactions, and maintain a healthy discussion environment.
               </CardDescription>
             </CardHeader>
-          <CardContent>
+            <CardContent>
             {/* Feature Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               <Card className="bg-gradient-to-br from-pitch-blue-50 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-800/20 border-pitch-blue-200 dark:border-pitch-blue-700">
