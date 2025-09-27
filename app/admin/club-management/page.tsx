@@ -52,7 +52,6 @@ import {
   Mail,
   ExternalLink
 } from "lucide-react"
-import { motion } from "framer-motion"
 
 interface Club {
   id: string
@@ -534,12 +533,7 @@ export default function ClubManagementPage() {
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div 
-          className="mb-8"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+        <div className="mb-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center shadow-lg">
@@ -618,12 +612,7 @@ export default function ClubManagementPage() {
         </div>
 
         {/* Stats Cards */}
-        <div 
-          className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
           <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-lg">
             <CardContent className="p-4">
               <div className="flex items-center gap-3">
@@ -698,11 +687,7 @@ export default function ClubManagementPage() {
         </div>
 
         {/* Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
+        <div>
           <Card className="fifa-card-hover-enhanced mb-6">
             <CardContent className="p-4">
               <div className="flex flex-col sm:flex-row gap-4">
