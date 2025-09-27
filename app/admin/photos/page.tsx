@@ -35,7 +35,7 @@ export default function AdminPhotosPage() {
 
   return (
     <AdminProtected>
-      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         {/* Header */}
         <div className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 shadow-lg border-b">
           <div className="container mx-auto px-4 py-12">
@@ -94,8 +94,8 @@ export default function AdminPhotosPage() {
                     <Upload className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">Photo Upload</h2>
-                    <p className="text-slate-600 dark:text-slate-400">Upload new photos to the gallery</p>
+                    <h2 className="text-xl font-semibold text-field-green-800 dark:text-field-green-200">Photo Upload</h2>
+                    <p className="text-field-green-600 dark:text-field-green-400">Upload new photos to the gallery</p>
                   </div>
                 </div>
                 <PhotoUploader />
@@ -109,8 +109,8 @@ export default function AdminPhotosPage() {
                     <Images className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">Photo Gallery</h2>
-                    <p className="text-slate-600 dark:text-slate-400">Manage and organize uploaded photos</p>
+                    <h2 className="text-xl font-semibold text-field-green-800 dark:text-field-green-200">Photo Gallery</h2>
+                    <p className="text-field-green-600 dark:text-field-green-400">Manage and organize uploaded photos</p>
                   </div>
                 </div>
                 <PhotoGallery />
@@ -124,8 +124,8 @@ export default function AdminPhotosPage() {
                     <Layout className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">Homepage Carousel</h2>
-                    <p className="text-slate-600 dark:text-slate-400">Manage the homepage image carousel</p>
+                    <h2 className="text-xl font-semibold text-field-green-800 dark:text-field-green-200">Homepage Carousel</h2>
+                    <p className="text-field-green-600 dark:text-field-green-400">Manage the homepage image carousel</p>
                   </div>
                 </div>
                 <CarouselManager />
@@ -139,8 +139,8 @@ export default function AdminPhotosPage() {
                     <Shield className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-200">Team Logos</h2>
-                    <p className="text-slate-600 dark:text-slate-400">Manage team logos and branding</p>
+                    <h2 className="text-xl font-semibold text-field-green-800 dark:text-field-green-200">Team Logos</h2>
+                    <p className="text-field-green-600 dark:text-field-green-400">Manage team logos and branding</p>
                   </div>
                 </div>
                 <LogoManager />

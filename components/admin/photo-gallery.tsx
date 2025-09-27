@@ -310,7 +310,7 @@ export function PhotoGallery() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {photos.map((photo) => (
-            <Card key={photo.id} className="fifa-card overflow-hidden group">
+            <Card key={photo.id} className="overflow-hidden group">
               <div className="aspect-video relative bg-muted">
                 <Image src={photo.url || "/placeholder.svg"} alt={photo.title} fill className="object-cover" />
                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">

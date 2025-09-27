@@ -321,40 +321,40 @@ export function ForumManagement() {
     <div className="space-y-6">
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="fifa-card">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium fifa-gradient-text">Total Posts</CardTitle>
-            <MessageSquare className="h-4 w-4 text-field-green-600" />
+            <CardTitle className="text-sm font-medium">Total Posts</CardTitle>
+            <MessageSquare className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.total_posts}</div>
           </CardContent>
         </Card>
 
-        <Card className="fifa-card">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium fifa-gradient-text">Categories</CardTitle>
-            <Shield className="h-4 w-4 text-pitch-blue-600" />
+            <CardTitle className="text-sm font-medium">Categories</CardTitle>
+            <Shield className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.total_categories}</div>
           </CardContent>
         </Card>
 
-        <Card className="fifa-card">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium fifa-gradient-text">Total Replies</CardTitle>
-            <Users className="h-4 w-4 text-stadium-gold-600" />
+            <CardTitle className="text-sm font-medium">Total Replies</CardTitle>
+            <Users className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.total_replies}</div>
           </CardContent>
         </Card>
 
-        <Card className="fifa-card">
+        <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium fifa-gradient-text">Recent Activity</CardTitle>
-            <TrendingUp className="h-4 w-4 text-goal-orange-600" />
+            <CardTitle className="text-sm font-medium">Recent Activity</CardTitle>
+            <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.recent_activity}</div>
@@ -364,9 +364,9 @@ export function ForumManagement() {
       </div>
 
       <Tabs defaultValue="posts" className="space-y-4">
-        <TabsList className="fifa-tabs-list">
-          <TabsTrigger value="posts" className="fifa-tab-trigger">Posts</TabsTrigger>
-          <TabsTrigger value="categories" className="fifa-tab-trigger">Categories</TabsTrigger>
+        <TabsList>
+          <TabsTrigger value="posts">Posts</TabsTrigger>
+          <TabsTrigger value="categories">Categories</TabsTrigger>
         </TabsList>
 
         <TabsContent value="posts" className="space-y-4">

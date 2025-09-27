@@ -176,12 +176,12 @@ export default function RoleSyncPage() {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">Access Denied</h1>
-            <p className="text-slate-600 dark:text-slate-400">You don't have permission to access this page.</p>
+            <h1 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">Access Denied</h1>
+            <p className="text-field-green-600 dark:text-field-green-400">You don't have permission to access this page.</p>
           </div>
         </div>
       </div>
@@ -189,7 +189,7 @@ export default function RoleSyncPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Header */}
       <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
         <div className="container mx-auto px-4 py-12">
@@ -197,10 +197,10 @@ export default function RoleSyncPage() {
             <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <Shield className="h-8 w-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
+            <h1 className="text-4xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
               Role Sync Fix
             </h1>
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+            <p className="text-lg text-field-green-600 dark:text-field-green-400 max-w-3xl mx-auto">
               Fix role synchronization issues between user roles and player records for individual users or bulk operations.
             </p>
           </div>
@@ -213,15 +213,15 @@ export default function RoleSyncPage() {
           {/* Individual User Check */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-slate-800 dark:text-slate-200">Check Individual User</CardTitle>
-              <CardDescription className="text-slate-600 dark:text-slate-400">
+              <CardTitle className="text-field-green-800 dark:text-field-green-200">Check Individual User</CardTitle>
+              <CardDescription className="text-field-green-600 dark:text-field-green-400">
                 Check and fix role sync issues for a specific user by email
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex gap-4">
                 <div className="flex-1">
-                  <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">Email Address</Label>
+                  <Label htmlFor="email" className="text-field-green-600 dark:text-field-green-400">Email Address</Label>
                   <Input
                     id="email"
                     type="email"
@@ -251,14 +251,14 @@ export default function RoleSyncPage() {
                     ) : (
                       <XCircle className="h-5 w-5 text-goal-orange-500" />
                     )}
-                    <span className="font-medium text-slate-800 dark:text-slate-200">
+                    <span className="font-medium text-field-green-800 dark:text-field-green-200">
                       {roleSyncStatus.isInSync ? "In Sync" : "Needs Fix"}
                     </span>
                   </div>
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                     <div>
-                      <span className="text-slate-600 dark:text-slate-400">User Roles:</span>
+                      <span className="text-field-green-600 dark:text-field-green-400">User Roles:</span>
                       <div className="flex gap-1 mt-1">
                         {roleSyncStatus.userRoles.map((role) => (
                           <Badge key={role} variant="outline" className="text-xs">
@@ -268,7 +268,7 @@ export default function RoleSyncPage() {
                       </div>
                     </div>
                     <div>
-                      <span className="text-slate-600 dark:text-slate-400">Player Role:</span>
+                      <span className="text-field-green-600 dark:text-field-green-400">Player Role:</span>
                       <div className="mt-1">
                         <Badge variant={roleSyncStatus.playerRole ? "default" : "secondary"}>
                           {roleSyncStatus.playerRole || "None"}
@@ -276,13 +276,13 @@ export default function RoleSyncPage() {
                       </div>
                     </div>
                     <div>
-                      <span className="text-slate-600 dark:text-slate-400">Expected Player Role:</span>
+                      <span className="text-field-green-600 dark:text-field-green-400">Expected Player Role:</span>
                       <div className="mt-1">
                         <Badge variant="outline">{roleSyncStatus.expectedPlayerRole}</Badge>
                       </div>
                     </div>
                     <div>
-                      <span className="text-slate-600 dark:text-slate-400">Needs Player Record:</span>
+                      <span className="text-field-green-600 dark:text-field-green-400">Needs Player Record:</span>
                       <div className="mt-1">
                         <Badge variant={roleSyncStatus.needsPlayerRecord ? "destructive" : "default"}>
                           {roleSyncStatus.needsPlayerRecord ? "Yes" : "No"}
@@ -298,8 +298,8 @@ export default function RoleSyncPage() {
           {/* Bulk Sync */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-slate-800 dark:text-slate-200">Bulk Role Sync</CardTitle>
-              <CardDescription className="text-slate-600 dark:text-slate-400">
+              <CardTitle className="text-field-green-800 dark:text-field-green-200">Bulk Role Sync</CardTitle>
+              <CardDescription className="text-field-green-600 dark:text-field-green-400">
                 Run role sync fix for all users in the system
               </CardDescription>
             </CardHeader>
@@ -315,19 +315,19 @@ export default function RoleSyncPage() {
 
               {bulkSyncResult && (
                 <div className="mt-6 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <h3 className="font-medium text-slate-800 dark:text-slate-200 mb-4">Bulk Sync Results</h3>
+                  <h3 className="font-medium text-field-green-800 dark:text-field-green-200 mb-4">Bulk Sync Results</h3>
                   <div className="grid grid-cols-3 gap-4 mb-4">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-pitch-blue-600">{bulkSyncResult.processed}</div>
-                      <div className="text-sm text-slate-600 dark:text-slate-400">Processed</div>
+                      <div className="text-sm text-field-green-600 dark:text-field-green-400">Processed</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-field-green-600">{bulkSyncResult.fixed}</div>
-                      <div className="text-sm text-slate-600 dark:text-slate-400">Fixed</div>
+                      <div className="text-sm text-field-green-600 dark:text-field-green-400">Fixed</div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-goal-orange-600">{bulkSyncResult.errors}</div>
-                      <div className="text-sm text-slate-600 dark:text-slate-400">Errors</div>
+                      <div className="text-sm text-field-green-600 dark:text-field-green-400">Errors</div>
                     </div>
                   </div>
                 </div>

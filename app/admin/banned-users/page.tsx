@@ -476,31 +476,70 @@ export default function BannedUsersPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
-    <div className="container mx-auto px-4 py-8">
-        <HeaderBar
-          title="Banned Users"
-          subtitle="Manage user access and maintain community standards."
-          actions={
-            <div className="flex gap-2">
-              <Button
-                variant="destructive"
-                onClick={bulkUnban}
-                disabled={selected.length === 0 || loadingBannedUsers}
-                title={selected.length === 0 ? 'Select users first' : 'Unban selected users'}
-              >
-                <UserMinus className="mr-2 h-4 w-4" />
-                Bulk Unban ({selected.length})
-              </Button>
-              <Button variant="outline" onClick={exportToCsv}>
-                Export CSV
-              </Button>
-              <Button onClick={fetchBannedUsers} disabled={loadingBannedUsers}>
-                <RefreshCw className={`mr-2 h-4 w-4 ${loadingBannedUsers ? 'animate-spin' : ''}`} />
-                Refresh
-              </Button>
+      {/* Enhanced Hero Header Section */}
+      <div className="relative overflow-hidden py-20 px-4">
+        <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full"></div>
+        <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-goal-orange-500/20 to-goal-orange-500/20 rounded-full" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 rounded-full" style={{ animationDelay: '2s' }}></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <div className="p-6 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-full shadow-2xl shadow-goal-orange-500/30">
+              <UserX className="h-16 w-16 text-white" />
             </div>
-          }
-        />
+          </div>
+          
+          <h1 className="hockey-title mb-4 text-white">
+            Banned Users Management
+          </h1>
+          <p className="hockey-subtitle mb-8 text-white/90">
+            Manage user access and maintain community standards. 
+            View, unban, and track banned users across the platform.
+          </p>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 pb-12">
+        <div className="flex justify-between items-center mb-8">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-xl shadow-lg">
+              <UserX className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">Banned Users</h2>
+              <p className="text-field-green-600 dark:text-field-green-400">Manage user access and maintain community standards</p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant="destructive"
+              onClick={bulkUnban}
+              disabled={selected.length === 0 || loadingBannedUsers}
+              title={selected.length === 0 ? 'Select users first' : 'Unban selected users'}
+              className="hockey-button bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 hover:from-goal-orange-600 hover:to-goal-orange-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+            >
+              <UserMinus className="mr-2 h-4 w-4" />
+              Bulk Unban ({selected.length})
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={exportToCsv}
+              className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+            >
+              Export CSV
+            </Button>
+            <Button 
+              onClick={fetchBannedUsers} 
+              disabled={loadingBannedUsers}
+              className="hockey-button bg-gradient-to-r from-assist-green-500 to-assist-green-600 hover:from-assist-green-600 hover:to-assist-green-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <RefreshCw className={`mr-2 h-4 w-4 ${loadingBannedUsers ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+          </div>
+        </div>
 
         {/* Standardized filter bar for search */}
         <FilterBar onClear={() => setSearchTerm("")}>

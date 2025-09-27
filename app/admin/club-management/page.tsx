@@ -531,7 +531,32 @@ export default function ClubManagementPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
-      <div className="container mx-auto px-4 py-8">
+      {/* Enhanced Hero Header Section */}
+      <div className="relative overflow-hidden py-20 px-4">
+        <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full"></div>
+        <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-assist-green-500/20 to-assist-green-500/20 rounded-full" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 rounded-full" style={{ animationDelay: '2s' }}></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <div className="p-6 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full shadow-2xl shadow-field-green-500/30">
+              <Building2 className="h-16 w-16 text-white" />
+            </div>
+          </div>
+          
+          <h1 className="hockey-title mb-4 text-white">
+            Club Management
+          </h1>
+          <p className="hockey-subtitle mb-8 text-white/90">
+            Manage football clubs, availability, and logos. 
+            Create, edit, and organize team information across the league.
+          </p>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 pb-12">
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -540,10 +565,10 @@ export default function ClubManagementPage() {
                 <Building2 className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 fifa-title">
+                <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
                   Club Management
-                </h1>
-                <p className="text-field-green-600 dark:text-field-green-400 fifa-subtitle">
+                </h2>
+                <p className="text-field-green-600 dark:text-field-green-400">
                   Manage football clubs, availability, and logos
                 </p>
               </div>
@@ -553,14 +578,14 @@ export default function ClubManagementPage() {
                 onClick={fetchData}
                 variant="outline"
                 size="sm"
-                className="fifa-button-enhanced"
+                className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Refresh
               </Button>
               <Dialog open={createDialogOpen} onOpenChange={setCreateDialogOpen}>
                 <DialogTrigger asChild>
-                  <Button className="fifa-button-enhanced">
+                  <Button className="hockey-button bg-gradient-to-r from-assist-green-500 to-assist-green-600 hover:from-assist-green-600 hover:to-assist-green-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300">
                     <Plus className="h-4 w-4 mr-2" />
                     Create Club
                   </Button>

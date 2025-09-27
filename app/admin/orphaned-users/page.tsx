@@ -6,7 +6,7 @@ export default function OrphanedUsersPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent fifa-title">Orphaned User Management</h1>
-          <p className="text-lg text-slate-700 dark:text-slate-300 fifa-subtitle max-w-4xl mx-auto">
+          <p className="text-lg text-field-green-600 dark:text-field-green-400 fifa-subtitle max-w-4xl mx-auto">
             Find and fix users that exist in Supabase Auth but not in your database, or vice versa
           </p>
         </div>

@@ -112,12 +112,12 @@ export default function UpdateCurrentSeasonPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="text-center">
               <Loader2 className="h-8 w-8 animate-spin text-blue-500 mx-auto mb-4" />
-              <p className="text-slate-600 dark:text-slate-400">Loading seasons...</p>
+              <p className="text-field-green-600 dark:text-field-green-400">Loading seasons...</p>
             </div>
           </div>
         </div>
@@ -126,7 +126,7 @@ export default function UpdateCurrentSeasonPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Header */}
       <div className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 shadow-lg border-b">
         <div className="container mx-auto px-4 py-12">
@@ -149,8 +149,8 @@ export default function UpdateCurrentSeasonPage() {
         <div className="max-w-2xl mx-auto">
           <Card>
             <CardHeader>
-              <CardTitle className="text-slate-800 dark:text-slate-200">Season Management</CardTitle>
-              <CardDescription className="text-slate-600 dark:text-slate-400">
+              <CardTitle className="text-field-green-800 dark:text-field-green-200">Season Management</CardTitle>
+              <CardDescription className="text-field-green-600 dark:text-field-green-400">
                 Select the season that should be active for all league operations
               </CardDescription>
             </CardHeader>
@@ -173,18 +173,18 @@ export default function UpdateCurrentSeasonPage() {
 
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
+                  <label className="text-sm font-medium text-field-green-600 dark:text-field-green-400 mb-2 block">
                     Current Season
                   </label>
                   <div className="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
-                    <p className="text-slate-800 dark:text-slate-200">
+                    <p className="text-field-green-800 dark:text-field-green-200">
                       {currentSeason ? seasons.find(s => s.id === currentSeason)?.name || "Unknown" : "No season set"}
                     </p>
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
+                  <label className="text-sm font-medium text-field-green-600 dark:text-field-green-400 mb-2 block">
                     Select New Season
                   </label>
                   <Select value={selectedSeason || ""} onValueChange={setSelectedSeason}>

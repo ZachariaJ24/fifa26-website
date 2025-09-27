@@ -125,7 +125,7 @@ export default function AdminNewsPage() {
   })
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Header */}
       <div className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 shadow-lg border-b">
         <div className="container mx-auto px-4 py-12">
@@ -161,15 +161,15 @@ export default function AdminNewsPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Total Articles</CardTitle>
+              <CardTitle className="text-sm font-medium text-field-green-600 dark:text-field-green-400">Total Articles</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">{articles.length}</div>
+              <div className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">{articles.length}</div>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Published</CardTitle>
+              <CardTitle className="text-sm font-medium text-field-green-600 dark:text-field-green-400">Published</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-field-green-600">{articles.filter(a => a.published).length}</div>
@@ -177,7 +177,7 @@ export default function AdminNewsPage() {
           </Card>
           <Card>
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Drafts</CardTitle>
+              <CardTitle className="text-sm font-medium text-field-green-600 dark:text-field-green-400">Drafts</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold text-goal-orange-600">{articles.filter(a => !a.published).length}</div>
@@ -190,8 +190,8 @@ export default function AdminNewsPage() {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle className="text-slate-800 dark:text-slate-200">All Articles</CardTitle>
-                <CardDescription className="text-slate-600 dark:text-slate-400">
+                <CardTitle className="text-field-green-800 dark:text-field-green-200">All Articles</CardTitle>
+                <CardDescription className="text-field-green-600 dark:text-field-green-400">
                   Manage your news articles and announcements
                 </CardDescription>
               </div>
@@ -226,8 +226,8 @@ export default function AdminNewsPage() {
             ) : filteredArticles.length === 0 ? (
               <div className="text-center py-12">
                 <Newspaper className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200 mb-2">No articles found</h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-4">
+                <h3 className="text-lg font-medium text-field-green-800 dark:text-field-green-200 mb-2">No articles found</h3>
+                <p className="text-field-green-600 dark:text-field-green-400 mb-4">
                   {filter === "all" ? "No articles have been created yet." : 
                    filter === "published" ? "No published articles found." : 
                    "No draft articles found."}
@@ -244,17 +244,17 @@ export default function AdminNewsPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-slate-600 dark:text-slate-400">Title</TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400">Status</TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400">Author</TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400">Created</TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400">Actions</TableHead>
+                      <TableHead className="text-field-green-600 dark:text-field-green-400">Title</TableHead>
+                      <TableHead className="text-field-green-600 dark:text-field-green-400">Status</TableHead>
+                      <TableHead className="text-field-green-600 dark:text-field-green-400">Author</TableHead>
+                      <TableHead className="text-field-green-600 dark:text-field-green-400">Created</TableHead>
+                      <TableHead className="text-field-green-600 dark:text-field-green-400">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredArticles.map((article) => (
                       <TableRow key={article.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
-                        <TableCell className="font-medium text-slate-800 dark:text-slate-200">
+                        <TableCell className="font-medium text-field-green-800 dark:text-field-green-200">
                           {article.title}
                         </TableCell>
                         <TableCell>
@@ -262,10 +262,10 @@ export default function AdminNewsPage() {
                             {article.published ? "Published" : "Draft"}
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-slate-600 dark:text-slate-400">
+                        <TableCell className="text-field-green-600 dark:text-field-green-400">
                           {article.author || "Unknown"}
                         </TableCell>
-                        <TableCell className="text-slate-600 dark:text-slate-400">
+                        <TableCell className="text-field-green-600 dark:text-field-green-400">
                           {formatDistanceToNow(new Date(article.created_at), { addSuffix: true })}
                         </TableCell>
                         <TableCell>

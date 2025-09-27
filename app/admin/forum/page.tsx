@@ -10,33 +10,43 @@ import { AdminProtected } from "@/components/auth/admin-protected"
 export default function AdminForumPage() {
   return (
     <AdminProtected>
-      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
-        {/* Header */}
-        <div className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 shadow-lg border-b">
-          <div className="container mx-auto px-4 py-12">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/30">
-                <MessageSquare className="h-8 w-8 text-white" />
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
+        {/* Enhanced Hero Header Section */}
+        <div className="relative overflow-hidden py-20 px-4">
+          <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
+          <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full"></div>
+          <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-stadium-gold-500/20 to-stadium-gold-500/20 rounded-full" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 rounded-full" style={{ animationDelay: '2s' }}></div>
+          
+          <div className="relative z-10 max-w-7xl mx-auto text-center">
+            <div className="flex justify-center mb-6">
+              <div className="p-6 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-full shadow-2xl shadow-stadium-gold-500/30">
+                <MessageSquare className="h-16 w-16 text-white" />
               </div>
-              <h1 className="text-4xl font-bold text-white mb-4">Forum Management</h1>
-              <p className="text-white/90 text-lg max-w-3xl mx-auto">
-                Comprehensive forum management and moderation tools for the league community. 
-                Manage categories, posts, user interactions, and maintain a healthy discussion environment.
-              </p>
             </div>
+            
+            <h1 className="hockey-title mb-4 text-white">
+              Forum Management
+            </h1>
+            <p className="hockey-subtitle mb-8 text-white/90">
+              Comprehensive forum management and moderation tools for the league community. 
+              Manage categories, posts, user interactions, and maintain a healthy discussion environment.
+            </p>
           </div>
         </div>
 
         {/* Main Content */}
-        <div className="container mx-auto px-4 py-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 pb-12">
           <div className="flex justify-center">
-            <Card className="w-full max-w-6xl">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-2xl">
-                  <MessageSquare className="h-6 w-6" />
+            <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300 w-full max-w-6xl">
+              <CardHeader className="border-b-2 border-field-green-200/50 dark:border-pitch-blue-700/50 pb-4">
+                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                  <div className="p-2 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 rounded-lg">
+                    <MessageSquare className="h-6 w-6 text-white" />
+                  </div>
                   Forum Management
                 </CardTitle>
-                <CardDescription>
+                <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">
                   Comprehensive forum management and moderation tools for the league community. 
                   Manage categories, posts, user interactions, and maintain a healthy discussion environment.
                 </CardDescription>

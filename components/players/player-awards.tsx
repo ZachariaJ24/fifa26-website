@@ -245,9 +245,9 @@ export function PlayerAwards({ playerId }: PlayerAwardsProps) {
   }
 
   return (
-    <Card className="fifa-card">
+    <Card>
       <CardHeader>
-        <CardTitle className="fifa-gradient-text">Player Awards</CardTitle>
+        <CardTitle>Player Awards</CardTitle>
         <CardDescription>Achievements and recognition</CardDescription>
       </CardHeader>
       <CardContent>

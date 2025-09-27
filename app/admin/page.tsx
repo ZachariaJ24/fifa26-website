@@ -105,14 +105,14 @@ export default function AdminDashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="container mx-auto px-4 py-20">
           <div className="flex justify-center items-center h-64">
             <div className="text-center">
               <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
                 <Shield className="h-8 w-8 text-white" />
               </div>
-              <p className="text-slate-600 dark:text-slate-400 font-medium">Loading Admin Dashboard...</p>
+              <p className="text-field-green-600 dark:text-field-green-400 font-medium">Loading Admin Dashboard...</p>
             </div>
           </div>
         </div>
@@ -471,7 +471,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Hero Header Section */}
       <div className="hockey-header relative py-16 px-4">
         <div className="container mx-auto text-center">
@@ -507,10 +507,10 @@ export default function AdminDashboardPage() {
                     </div>
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200">
+                    <h2 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200">
                       {category.name}
                     </h2>
-                    <p className="text-slate-600 dark:text-slate-400">
+                    <p className="text-field-green-600 dark:text-field-green-400">
                       {links.length} tool{links.length !== 1 ? 's' : ''} available
                     </p>
                   </div>
@@ -521,7 +521,7 @@ export default function AdminDashboardPage() {
                     <Link key={index} href={link.href} className="block group">
                       <Card className="fifa-card-hover-enhanced h-full group-hover:scale-105 transition-all duration-300 cursor-pointer">
                         <CardHeader className="flex flex-row items-center justify-between pb-4 relative">
-                          <CardTitle className="text-xl text-slate-800 dark:text-slate-200 group-hover:text-field-green-600 dark:group-hover:text-field-green-400 transition-colors duration-200">
+                          <CardTitle className="text-xl text-field-green-800 dark:text-field-green-200 group-hover:text-field-green-600 dark:group-hover:text-field-green-400 transition-colors duration-200">
                             {link.title}
                           </CardTitle>
                           <div className={`text-white bg-gradient-to-r ${getColorClasses(link.color)} p-3 rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-200`}>
@@ -529,7 +529,7 @@ export default function AdminDashboardPage() {
                           </div>
                         </CardHeader>
                         <CardContent>
-                          <CardDescription className="text-slate-600 dark:text-slate-400 text-base leading-relaxed mb-4">
+                          <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base leading-relaxed mb-4">
                             {link.description}
                           </CardDescription>
                           

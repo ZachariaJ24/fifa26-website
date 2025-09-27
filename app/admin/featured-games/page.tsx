@@ -158,12 +158,12 @@ export default function AdminFeaturedGamesPage() {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">Access Denied</h1>
-            <p className="text-slate-600 dark:text-slate-400">You don't have permission to access this page.</p>
+            <h1 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">Access Denied</h1>
+            <p className="text-field-green-600 dark:text-field-green-400">You don't have permission to access this page.</p>
           </div>
         </div>
       </div>
@@ -171,7 +171,7 @@ export default function AdminFeaturedGamesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Header */}
       <div className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 shadow-lg border-b">
         <div className="container mx-auto px-4 py-12">
@@ -228,8 +228,8 @@ export default function AdminFeaturedGamesPage() {
         {/* Matches Table */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-slate-800 dark:text-slate-200">All Matches</CardTitle>
-            <CardDescription className="text-slate-600 dark:text-slate-400">
+            <CardTitle className="text-field-green-800 dark:text-field-green-200">All Matches</CardTitle>
+            <CardDescription className="text-field-green-600 dark:text-field-green-400">
               Click the star icon to feature or unfeature a match
             </CardDescription>
           </CardHeader>
@@ -249,19 +249,19 @@ export default function AdminFeaturedGamesPage() {
             ) : matches.length === 0 ? (
               <div className="text-center py-12">
                 <Trophy className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200 mb-2">No matches found</h3>
-                <p className="text-slate-600 dark:text-slate-400">There are no matches to display.</p>
+                <h3 className="text-lg font-medium text-field-green-800 dark:text-field-green-200 mb-2">No matches found</h3>
+                <p className="text-field-green-600 dark:text-field-green-400">There are no matches to display.</p>
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="text-slate-600 dark:text-slate-400">Featured</TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400">Home Team</TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400">Away Team</TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400">Date</TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400">Actions</TableHead>
+                      <TableHead className="text-field-green-600 dark:text-field-green-400">Featured</TableHead>
+                      <TableHead className="text-field-green-600 dark:text-field-green-400">Home Team</TableHead>
+                      <TableHead className="text-field-green-600 dark:text-field-green-400">Away Team</TableHead>
+                      <TableHead className="text-field-green-600 dark:text-field-green-400">Date</TableHead>
+                      <TableHead className="text-field-green-600 dark:text-field-green-400">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -280,13 +280,13 @@ export default function AdminFeaturedGamesPage() {
                             </Badge>
                           )}
                         </TableCell>
-                        <TableCell className="font-medium text-slate-800 dark:text-slate-200">
+                        <TableCell className="font-medium text-field-green-800 dark:text-field-green-200">
                           {match.home_team?.name || "Unknown Team"}
                         </TableCell>
-                        <TableCell className="font-medium text-slate-800 dark:text-slate-200">
+                        <TableCell className="font-medium text-field-green-800 dark:text-field-green-200">
                           {match.away_team?.name || "Unknown Team"}
                         </TableCell>
-                        <TableCell className="text-slate-600 dark:text-slate-400">
+                        <TableCell className="text-field-green-600 dark:text-field-green-400">
                           {format(new Date(match.match_date), "MMM dd, yyyy")}
                         </TableCell>
                         <TableCell>

@@ -3,7 +3,7 @@ import { Database, Table, Search, Eye } from "lucide-react"
 
 export default function DatabaseStructurePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Header */}
       <div className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 shadow-lg border-b">
         <div className="container mx-auto px-4 py-12">
@@ -30,8 +30,8 @@ export default function DatabaseStructurePage() {
                 <Table className="h-6 w-6 text-white" />
               </div>
               <div>
-                <div className="text-lg font-semibold text-slate-800 dark:text-slate-200">Table Explorer</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">Browse all tables</div>
+                <div className="text-lg font-semibold text-field-green-800 dark:text-field-green-200">Table Explorer</div>
+                <div className="text-sm text-field-green-600 dark:text-field-green-400">Browse all tables</div>
               </div>
             </div>
           </div>
@@ -42,8 +42,8 @@ export default function DatabaseStructurePage() {
                 <Search className="h-6 w-6 text-white" />
               </div>
               <div>
-                <div className="text-lg font-semibold text-slate-800 dark:text-slate-200">Column Details</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">View structure</div>
+                <div className="text-lg font-semibold text-field-green-800 dark:text-field-green-200">Column Details</div>
+                <div className="text-sm text-field-green-600 dark:text-field-green-400">View structure</div>
               </div>
             </div>
           </div>
@@ -54,8 +54,8 @@ export default function DatabaseStructurePage() {
                 <Eye className="h-6 w-6 text-white" />
               </div>
               <div>
-                <div className="text-lg font-semibold text-slate-800 dark:text-slate-200">Advanced Visualization</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">Detailed view</div>
+                <div className="text-lg font-semibold text-field-green-800 dark:text-field-green-200">Advanced Visualization</div>
+                <div className="text-sm text-field-green-600 dark:text-field-green-400">Detailed view</div>
               </div>
             </div>
           </div>
