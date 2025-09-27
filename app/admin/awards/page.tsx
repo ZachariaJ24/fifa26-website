@@ -80,42 +80,42 @@ export default function AdminAwardsPage() {
   const [activeTab, setActiveTab] = useState("team")
 
   // Check if user is admin
-  async function checkAuthorization() {
-    if (!session?.user) {
-      toast({
-        title: "Unauthorized",
-        description: "You must be logged in to access this page.",
-        variant: "destructive",
-      })
-      router.push("/login")
-      return
-    }
-
-    try {
-      const { data: adminRoleData, error: adminRoleError } = await supabase
-        .from("user_roles")
-        .select("*")
-        .eq("user_id", session.user.id)
-        .eq("role", "Admin")
-
-      if (adminRoleError || !adminRoleData || adminRoleData.length === 0) {
+    async function checkAuthorization() {
+      if (!session?.user) {
         toast({
-          title: "Access denied",
-          description: "You don't have permission to access the admin dashboard.",
+          title: "Unauthorized",
+          description: "You must be logged in to access this page.",
           variant: "destructive",
         })
-        router.push("/")
+        router.push("/login")
         return
       }
 
-      setIsAdmin(true)
+      try {
+        const { data: adminRoleData, error: adminRoleError } = await supabase
+          .from("user_roles")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .eq("role", "Admin")
+
+        if (adminRoleError || !adminRoleData || adminRoleData.length === 0) {
+          toast({
+            title: "Access denied",
+            description: "You don't have permission to access the admin dashboard.",
+            variant: "destructive",
+          })
+          router.push("/")
+          return
+        }
+
+        setIsAdmin(true)
     } catch (error) {
       console.error("Error checking admin status:", error)
-      toast({
-        title: "Error",
+        toast({
+          title: "Error",
         description: "Failed to verify admin status.",
-        variant: "destructive",
-      })
+          variant: "destructive",
+        })
       router.push("/")
     }
   }
@@ -147,7 +147,7 @@ export default function AdminAwardsPage() {
       const { data: playersData, error: playersError } = await supabase
         .from("players")
         .select(`
-          id,
+          id, 
           user_id,
           users!inner(gamer_tag_id),
           team_id,
@@ -220,7 +220,7 @@ export default function AdminAwardsPage() {
           created_at: a.created_at,
         })) || []
       )
-    } catch (error) {
+      } catch (error) {
       console.error("Error fetching data:", error)
       toast({
         title: "Error",
@@ -244,8 +244,8 @@ export default function AdminAwardsPage() {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
-        <div className="container mx-auto px-4 py-8">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+      <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
             <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">Access Denied</h1>
@@ -257,7 +257,7 @@ export default function AdminAwardsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
       {/* Header */}
       <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
         <div className="container mx-auto px-4 py-12">
@@ -272,7 +272,7 @@ export default function AdminAwardsPage() {
               Manage season awards and achievements for teams and players. 
               Create, edit, and track all league awards and recognitions.
             </p>
-          </div>
+                  </div>
         </div>
       </div>
 
@@ -301,8 +301,8 @@ export default function AdminAwardsPage() {
               <CardHeader>
                 <CardTitle className="text-slate-800 dark:text-slate-200">Team Awards</CardTitle>
                 <CardDescription className="text-slate-600 dark:text-slate-400">
-                  Manage team awards like President Trophy and SCS Cup
-                </CardDescription>
+                      Manage team awards like President Trophy and SCS Cup
+                    </CardDescription>
               </CardHeader>
               <CardContent>
                 {loading ? (
@@ -310,52 +310,52 @@ export default function AdminAwardsPage() {
                     {[...Array(3)].map((_, i) => (
                       <div key={i} className="h-16 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
                     ))}
-                  </div>
+                      </div>
                 ) : teamAwards.length === 0 ? (
                   <div className="text-center py-12">
                     <Trophy className="h-12 w-12 text-slate-400 mx-auto mb-4" />
                     <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200 mb-2">No team awards found</h3>
                     <p className="text-slate-600 dark:text-slate-400">Team awards will appear here once created.</p>
-                  </div>
+                      </div>
                 ) : (
                   <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
+              <Table>
+                <TableHeader>
+                  <TableRow>
                           <TableHead className="text-slate-600 dark:text-slate-400">Team</TableHead>
                           <TableHead className="text-slate-600 dark:text-slate-400">Award Type</TableHead>
                           <TableHead className="text-slate-600 dark:text-slate-400">Season</TableHead>
                           <TableHead className="text-slate-600 dark:text-slate-400">Date</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
                         {teamAwards.map((award) => (
                           <TableRow key={award.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                             <TableCell className="font-medium text-slate-800 dark:text-slate-200">
                               {award.team_name}
                             </TableCell>
                             <TableCell className="text-slate-600 dark:text-slate-400">
-                              {award.award_type}
-                            </TableCell>
+                            {award.award_type}
+                        </TableCell>
                             <TableCell className="text-slate-600 dark:text-slate-400">
                               {award.season_name}
-                            </TableCell>
+                        </TableCell>
                             <TableCell className="text-slate-600 dark:text-slate-400">
                               {new Date(award.created_at).toLocaleDateString()}
-                            </TableCell>
-                          </TableRow>
+                      </TableCell>
+                    </TableRow>
                         ))}
-                      </TableBody>
-                    </Table>
+                </TableBody>
+              </Table>
                   </div>
                 )}
-              </CardContent>
-            </Card>
-          </TabsContent>
+            </CardContent>
+          </Card>
+        </TabsContent>
 
           <TabsContent value="player" className="space-y-6">
-            <Card>
-              <CardHeader>
+          <Card>
+            <CardHeader>
                 <CardTitle className="text-slate-800 dark:text-slate-200">Player Awards</CardTitle>
                 <CardDescription className="text-slate-600 dark:text-slate-400">
                   Manage individual player awards and achievements
@@ -367,26 +367,26 @@ export default function AdminAwardsPage() {
                     {[...Array(3)].map((_, i) => (
                       <div key={i} className="h-16 bg-slate-200 dark:bg-slate-700 rounded animate-pulse"></div>
                     ))}
-                  </div>
+                      </div>
                 ) : playerAwards.length === 0 ? (
                   <div className="text-center py-12">
                     <Medal className="h-12 w-12 text-slate-400 mx-auto mb-4" />
                     <h3 className="text-lg font-medium text-slate-800 dark:text-slate-200 mb-2">No player awards found</h3>
                     <p className="text-slate-600 dark:text-slate-400">Player awards will appear here once created.</p>
-                  </div>
+                      </div>
                 ) : (
                   <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
+              <Table>
+                <TableHeader>
+                  <TableRow>
                           <TableHead className="text-slate-600 dark:text-slate-400">Player</TableHead>
                           <TableHead className="text-slate-600 dark:text-slate-400">Team</TableHead>
                           <TableHead className="text-slate-600 dark:text-slate-400">Award Type</TableHead>
                           <TableHead className="text-slate-600 dark:text-slate-400">Season</TableHead>
                           <TableHead className="text-slate-600 dark:text-slate-400">Date</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
                         {playerAwards.map((award) => (
                           <TableRow key={award.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                             <TableCell className="font-medium text-slate-800 dark:text-slate-200">
@@ -396,24 +396,24 @@ export default function AdminAwardsPage() {
                               {award.team_name || "Free Agent"}
                             </TableCell>
                             <TableCell className="text-slate-600 dark:text-slate-400">
-                              {award.award_type}
-                            </TableCell>
+                            {award.award_type}
+                        </TableCell>
                             <TableCell className="text-slate-600 dark:text-slate-400">
                               {award.season_name}
-                            </TableCell>
+                        </TableCell>
                             <TableCell className="text-slate-600 dark:text-slate-400">
                               {new Date(award.created_at).toLocaleDateString()}
-                            </TableCell>
-                          </TableRow>
+                      </TableCell>
+                    </TableRow>
                         ))}
-                      </TableBody>
-                    </Table>
+                </TableBody>
+              </Table>
                   </div>
                 )}
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
       </div>
     </div>
   )

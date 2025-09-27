@@ -3,7 +3,7 @@ import { Settings, Database, Shield, Zap } from "lucide-react"
 
 export default function EnsureSystemSettingsRecapPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
       {/* Header */}
       <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
         <div className="container mx-auto px-4 py-12">

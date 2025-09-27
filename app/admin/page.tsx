@@ -206,6 +206,14 @@ export default function AdminDashboardPage() {
       color: "stadium-gold"
     },
     {
+      title: "Transfer Recap",
+      description: "View comprehensive transfer activity and club acquisitions",
+      icon: <DollarSign className="h-6 w-6" />,
+      href: "/admin/transfer-recap",
+      category: "finance",
+      color: "goal-orange"
+    },
+    {
       title: "Manage Tokens",
       description: "Manage player tokens, redeemables, and redemption requests",
       icon: <Coins className="h-6 w-6" />,
