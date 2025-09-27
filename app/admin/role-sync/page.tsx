@@ -215,7 +215,7 @@ export default function RoleSyncPage() {
       case "would_fix":
         return <RefreshCw className="h-4 w-4 text-blue-500" />
       default:
-        return <User className="h-4 w-4 text-gray-500" />
+        return <User className="h-4 w-4 text-field-green-500" />
     }
   }
 
@@ -231,7 +231,7 @@ export default function RoleSyncPage() {
       case "would_fix":
         return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
       default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200"
+        return "bg-field-green-100 text-field-green-800 dark:bg-field-green-900 dark:text-field-green-200"
     }
   }
 

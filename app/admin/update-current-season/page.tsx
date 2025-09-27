@@ -119,7 +119,7 @@ export default function UpdateCurrentSeasonPage() {
       <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center items-center h-64">
-            <Loader2 className="h-8 w-8 animate-spin text-ice-blue-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-field-green-500" />
           </div>
         </div>
       </div>
@@ -131,7 +131,7 @@ export default function UpdateCurrentSeasonPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="">
           <h1 className="text-3xl font-bold mb-6 text-field-green-900 dark:text-field-green-100 flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+            <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
               <Trophy className="h-6 w-6 text-white" />
             </div>
             Update Current Season
@@ -139,7 +139,7 @@ export default function UpdateCurrentSeasonPage() {
           <Card className="max-w-md mx-auto hockey-enhanced-card">
             <CardHeader>
               <CardTitle className="text-2xl text-field-green-900 dark:text-field-green-100 flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+                <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
                   <Settings className="h-5 w-5 text-white" />
                 </div>
                 Current Season
@@ -167,17 +167,17 @@ export default function UpdateCurrentSeasonPage() {
 
           <div className="space-y-3">
             <label className="text-sm font-medium text-field-green-900 dark:text-field-green-100 flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-ice-blue-500" />
+              <Calendar className="h-4 w-4 text-field-green-500" />
               Current Season
             </label>
-            <div className="p-3 border border-ice-blue-200 dark:border-rink-blue-700 rounded-lg bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-800 dark:to-hockey-silver-700 text-field-green-900 dark:text-field-green-100">
+            <div className="p-3 border border-field-green-200 dark:border-pitch-blue-700 rounded-lg bg-gradient-to-br from-field-green-50 to-pitch-blue-50 dark:from-field-green-800 dark:to-field-green-700 text-field-green-900 dark:text-field-green-100">
               {getCurrentSeasonName()}
             </div>
           </div>
 
           <div className="space-y-3">
             <label htmlFor="season" className="text-sm font-medium text-field-green-900 dark:text-field-green-100 flex items-center gap-2">
-              <Trophy className="h-4 w-4 text-rink-blue-500" />
+              <Trophy className="h-4 w-4 text-pitch-blue-500" />
               Select New Season
             </label>
             <Select value={selectedSeason || "none"} onValueChange={setSelectedSeason}>
@@ -196,7 +196,7 @@ export default function UpdateCurrentSeasonPage() {
           </div>
         </CardContent>
         <CardFooter>
-          <Button onClick={handleUpdateSeason} disabled={isUpdating || !selectedSeason || selectedSeason === "none"} className="w-full hockey-button-enhanced bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white">
+          <Button onClick={handleUpdateSeason} disabled={isUpdating || !selectedSeason || selectedSeason === "none"} className="w-full hockey-button-enhanced bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white">
             {isUpdating ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
