@@ -6,7 +6,6 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/components/ui/use-toast"
 import { Loader2, AlertCircle, CheckCircle, Trophy, Calendar, Settings, Zap } from "lucide-react"
-// import { motion } from "framer-motion" - replaced with CSS animations
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useSupabase } from "@/lib/supabase/client"
 
@@ -51,25 +50,24 @@ export default function UpdateCurrentSeasonPage() {
           setCurrentSeason(settingData.value)
           setSelectedSeason(settingData.value)
         }
-      } catch (error: any) {
-        console.error("Error fetching data:", error)
-        setError(error.message || "An error occurred while fetching data")
-        toast({
-          title: "Error",
-          description: error.message || "Failed to load data",
-          variant: "destructive",
-        })
+      } catch (err) {
+        console.error("Error fetching data:", err)
+        setError(err instanceof Error ? err.message : "An error occurred")
       } finally {
         setIsLoading(false)
       }
     }
 
     fetchData()
-  }, [supabase, toast])
+  }, [supabase])
 
-  const handleUpdateSeason = async () => {
+  const handleUpdate = async () => {
     if (!selectedSeason) {
-      setError("Please select a season")
+      toast({
+        title: "Error",
+        description: "Please select a season to update.",
+        variant: "destructive",
+      })
       return
     }
 
@@ -78,30 +76,33 @@ export default function UpdateCurrentSeasonPage() {
     setSuccess(null)
 
     try {
-      const { error: updateError } = await supabase.from("system_settings").upsert(
-        {
+      // Update the current season setting
+      const { error: updateError } = await supabase
+        .from("system_settings")
+        .upsert({
           key: "current_season",
           value: selectedSeason,
-        },
-        { onConflict: "key" },
-      )
+          updated_at: new Date().toISOString(),
+        })
 
       if (updateError) {
-        throw new Error(`Error updating season: ${updateError.message}`)
+        throw new Error(`Error updating current season: ${updateError.message}`)
       }
 
       setCurrentSeason(selectedSeason)
-      setSuccess("Current season updated successfully")
+      setSuccess(`Current season updated to: ${seasons.find(s => s.id === selectedSeason)?.name || selectedSeason}`)
+      
       toast({
         title: "Success",
-        description: "Current season updated successfully",
+        description: "Current season updated successfully!",
       })
-    } catch (error: any) {
-      console.error("Error updating season:", error)
-      setError(error.message || "An error occurred while updating the season")
+    } catch (err) {
+      console.error("Error updating current season:", err)
+      const errorMessage = err instanceof Error ? err.message : "An error occurred"
+      setError(errorMessage)
       toast({
         title: "Error",
-        description: error.message || "Failed to update season",
+        description: errorMessage,
         variant: "destructive",
       })
     } finally {
@@ -109,17 +110,15 @@ export default function UpdateCurrentSeasonPage() {
     }
   }
 
-  const getCurrentSeasonName = () => {
-    const season = seasons.find((s) => s.id === currentSeason)
-    return season ? `${season.name} (${season.id})` : "Unknown"
-  }
-
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
         <div className="container mx-auto px-4 py-8">
-          <div className="flex justify-center items-center h-64">
-            <Loader2 className="h-8 w-8 animate-spin text-slate-500" />
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="text-center">
+              <Loader2 className="h-8 w-8 animate-spin text-blue-500 mx-auto mb-4" />
+              <p className="text-slate-600 dark:text-slate-400">Loading seasons...</p>
+            </div>
           </div>
         </div>
       </div>
@@ -127,90 +126,102 @@ export default function UpdateCurrentSeasonPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
-      <div className="container mx-auto px-4 py-8">
-        <div className="">
-          <h1 className="text-3xl font-bold mb-6 text-field-green-900 dark:text-field-green-100 flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
-              <Trophy className="h-6 w-6 text-white" />
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
+      {/* Header */}
+      <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center">
+            <div className="w-16 h-16 bg-gradient-to-r from-stadium-gold-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Trophy className="h-8 w-8 text-white" />
             </div>
-            Update Current Season
-          </h1>
-          <Card className="max-w-md mx-auto hockey-enhanced-card">
+            <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
+              Update Current Season
+            </h1>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+              Manage the current active season for the league. This affects all league operations and data display.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-2xl mx-auto">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-2xl text-field-green-900 dark:text-field-green-100 flex items-center gap-3">
-                <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
-                  <Settings className="h-5 w-5 text-white" />
-                </div>
-                Current Season
-              </CardTitle>
-              <CardDescription className="text-field-green-600 dark:text-field-green-400">
-                The current season is used for player registrations and other season-specific features.
+              <CardTitle className="text-slate-800 dark:text-slate-200">Season Management</CardTitle>
+              <CardDescription className="text-slate-600 dark:text-slate-400">
+                Select the season that should be active for all league operations
               </CardDescription>
             </CardHeader>
-        <CardContent className="space-y-4">
-          {error && (
-            <Alert variant="destructive" className="hockey-enhanced-card border-goal-red-200 dark:border-goal-red-800">
-              <AlertCircle className="h-4 w-4" />
-              <AlertTitle className="text-field-green-900 dark:text-field-green-100">Error</AlertTitle>
-              <AlertDescription className="text-field-green-700 dark:text-field-green-300">{error}</AlertDescription>
-            </Alert>
-          )}
+            <CardContent className="space-y-6">
+              {error && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>{error}</AlertDescription>
+                </Alert>
+              )}
 
-          {success && (
-            <Alert className="hockey-enhanced-card border-assist-green-200 dark:border-assist-green-800 bg-assist-green-50 dark:bg-assist-green-900/20">
-              <CheckCircle className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-              <AlertTitle className="text-assist-green-600 dark:text-assist-green-400">Success</AlertTitle>
-              <AlertDescription className="text-assist-green-600 dark:text-assist-green-400">{success}</AlertDescription>
-            </Alert>
-          )}
+              {success && (
+                <Alert className="border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <AlertTitle className="text-green-800 dark:text-green-200">Success</AlertTitle>
+                  <AlertDescription className="text-green-700 dark:text-green-300">{success}</AlertDescription>
+                </Alert>
+              )}
 
-          <div className="space-y-3">
-            <label className="text-sm font-medium text-field-green-900 dark:text-field-green-100 flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-slate-500" />
-              Current Season
-            </label>
-            <div className="p-3 border border-field-green-200 dark:border-pitch-blue-700 rounded-lg bg-gradient-to-br from-field-green-50 to-pitch-blue-50 dark:from-field-green-800 dark:to-field-green-700 text-field-green-900 dark:text-field-green-100">
-              {getCurrentSeasonName()}
-            </div>
-          </div>
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
+                    Current Season
+                  </label>
+                  <div className="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
+                    <p className="text-slate-800 dark:text-slate-200">
+                      {currentSeason ? seasons.find(s => s.id === currentSeason)?.name || "Unknown" : "No season set"}
+                    </p>
+                  </div>
+                </div>
 
-          <div className="space-y-3">
-            <label htmlFor="season" className="text-sm font-medium text-field-green-900 dark:text-field-green-100 flex items-center gap-2">
-              <Trophy className="h-4 w-4 text-pitch-blue-500" />
-              Select New Season
-            </label>
-            <Select value={selectedSeason || "none"} onValueChange={setSelectedSeason}>
-              <SelectTrigger className="hockey-search">
-                <SelectValue placeholder="Select a season" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="none">Select a season</SelectItem>
-                {seasons.map((season) => (
-                  <SelectItem key={season.id} value={season.id}>
-                    {season.name} ({season.id})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </CardContent>
-        <CardFooter>
-          <Button onClick={handleUpdateSeason} disabled={isUpdating || !selectedSeason || selectedSeason === "none"} className="w-full hockey-button-enhanced bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white">
-            {isUpdating ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Updating...
-              </>
-            ) : (
-              <>
-                <Zap className="mr-2 h-4 w-4" />
-                Update Current Season
-              </>
-            )}
-          </Button>
-        </CardFooter>
-      </Card>
+                <div>
+                  <label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
+                    Select New Season
+                  </label>
+                  <Select value={selectedSeason || ""} onValueChange={setSelectedSeason}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose a season..." />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {seasons.map((season) => (
+                        <SelectItem key={season.id} value={season.id}>
+                          {season.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button 
+                onClick={handleUpdate} 
+                disabled={isUpdating || !selectedSeason || selectedSeason === currentSeason}
+                className="w-full"
+              >
+                {isUpdating ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Updating...
+                  </>
+                ) : (
+                  <>
+                    <Settings className="mr-2 h-4 w-4" />
+                    Update Current Season
+                  </>
+                )}
+              </Button>
+            </CardFooter>
+          </Card>
         </div>
       </div>
     </div>

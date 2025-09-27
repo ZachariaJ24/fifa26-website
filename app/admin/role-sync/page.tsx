@@ -10,7 +10,6 @@ import { useToast } from "@/components/ui/use-toast"
 import { useSupabase } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
 import { RefreshCw, CheckCircle, XCircle, AlertTriangle, Search, User, Shield } from "lucide-react"
-import { motion } from "framer-motion"
 
 interface RoleSyncStatus {
   userId: string
@@ -48,76 +47,85 @@ export default function RoleSyncPage() {
   const router = useRouter()
 
   const [loading, setLoading] = useState(false)
-  const [isAdmin, setIsAdmin] = useState(false)
-  const [userId, setUserId] = useState("")
+  const [searchEmail, setSearchEmail] = useState("")
   const [roleSyncStatus, setRoleSyncStatus] = useState<RoleSyncStatus | null>(null)
-  const [bulkResults, setBulkResults] = useState<BulkSyncResult | null>(null)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [filteredResults, setFilteredResults] = useState<any[]>([])
+  const [bulkSyncResult, setBulkSyncResult] = useState<BulkSyncResult | null>(null)
+  const [isAdmin, setIsAdmin] = useState(false)
 
-  // Check admin authorization
+  // Check if user is admin
   useEffect(() => {
-    const checkAuth = async () => {
-      if (!session?.user?.id) {
+    async function checkAdmin() {
+      if (!session?.user) {
+        toast({
+          title: "Unauthorized",
+          description: "You must be logged in to access this page.",
+          variant: "destructive",
+        })
         router.push("/login")
         return
       }
 
-      const { data: adminRole } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", session.user.id)
-        .eq("role", "Admin")
-        .single()
+      try {
+        const { data: adminRoleData, error: adminRoleError } = await supabase
+          .from("user_roles")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .eq("role", "Admin")
 
-      if (!adminRole) {
+        if (adminRoleError || !adminRoleData || adminRoleData.length === 0) {
+          toast({
+            title: "Access denied",
+            description: "You don't have permission to access the admin dashboard.",
+            variant: "destructive",
+          })
+          router.push("/")
+          return
+        }
+
+        setIsAdmin(true)
+      } catch (error) {
+        console.error("Error checking admin status:", error)
         toast({
-          title: "Access Denied",
-          description: "You need admin privileges to access this page.",
+          title: "Error",
+          description: "Failed to verify admin status.",
           variant: "destructive",
         })
         router.push("/")
-        return
       }
-
-      setIsAdmin(true)
     }
 
-    checkAuth()
-  }, [session, supabase, router, toast])
-
-  // Filter results based on search query
-  useEffect(() => {
-    if (bulkResults?.details) {
-      const filtered = bulkResults.details.filter(detail =>
-        detail.gamerTag.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        detail.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        detail.userId.toLowerCase().includes(searchQuery.toLowerCase())
-      )
-      setFilteredResults(filtered)
-    }
-  }, [bulkResults, searchQuery])
+    checkAdmin()
+  }, [session, supabase, toast, router])
 
   const checkRoleSync = async () => {
-    if (!userId.trim()) {
+    if (!searchEmail.trim()) {
       toast({
         title: "Error",
-        description: "Please enter a user ID",
+        description: "Please enter an email address.",
         variant: "destructive",
       })
       return
     }
 
     setLoading(true)
+    setRoleSyncStatus(null)
+
     try {
-      const response = await fetch(`/api/admin/fix-role-sync?userId=${userId}`)
-      const data = await response.json()
+      const response = await fetch("/api/admin/fix-role-sync", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: searchEmail }),
+      })
+
+      const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to check role sync")
+        throw new Error(result.error || "Failed to check role sync")
       }
 
-      setRoleSyncStatus(data)
+      setRoleSyncStatus(result)
     } catch (error) {
       console.error("Error checking role sync:", error)
       toast({
@@ -130,66 +138,29 @@ export default function RoleSyncPage() {
     }
   }
 
-  const fixRoleSync = async () => {
-    if (!userId.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a user ID",
-        variant: "destructive",
-      })
-      return
-    }
-
+  const runBulkSync = async () => {
     setLoading(true)
+    setBulkSyncResult(null)
+
     try {
       const response = await fetch("/api/admin/fix-role-sync", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, forceSync: true }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ bulk: true }),
       })
-      const data = await response.json()
+
+      const result = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.error || "Failed to fix role sync")
+        throw new Error(result.error || "Failed to run bulk sync")
       }
 
+      setBulkSyncResult(result)
       toast({
         title: "Success",
-        description: "Role synchronization fixed successfully",
-      })
-
-      // Refresh the status
-      await checkRoleSync()
-    } catch (error) {
-      console.error("Error fixing role sync:", error)
-      toast({
-        title: "Error",
-        description: error instanceof Error ? error.message : "Failed to fix role sync",
-        variant: "destructive",
-      })
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const runBulkSync = async (dryRun = false) => {
-    setLoading(true)
-    try {
-      const response = await fetch("/api/admin/bulk-fix-role-sync", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ dryRun, limit: 100 }),
-      })
-      const data = await response.json()
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to run bulk sync")
-      }
-
-      setBulkResults(data.results)
-      toast({
-        title: dryRun ? "Dry Run Completed" : "Bulk Sync Completed",
-        description: `Processed ${data.results.processed} users, fixed ${data.results.fixed}, errors: ${data.results.errors}`,
+        description: `Bulk sync completed. Processed: ${result.processed}, Fixed: ${result.fixed}, Errors: ${result.errors}`,
       })
     } catch (error) {
       console.error("Error running bulk sync:", error)
@@ -203,186 +174,160 @@ export default function RoleSyncPage() {
     }
   }
 
-  const getActionIcon = (action: string) => {
-    switch (action) {
-      case "updated":
-      case "created":
-        return <CheckCircle className="h-4 w-4 text-green-500" />
-      case "skipped":
-        return <AlertTriangle className="h-4 w-4 text-yellow-500" />
-      case "error":
-        return <XCircle className="h-4 w-4 text-red-500" />
-      case "would_fix":
-        return <RefreshCw className="h-4 w-4 text-blue-500" />
-      default:
-        return <User className="h-4 w-4 text-slate-500" />
-    }
-  }
-
-  const getActionColor = (action: string) => {
-    switch (action) {
-      case "updated":
-      case "created":
-        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-      case "skipped":
-        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200"
-      case "error":
-        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200"
-      case "would_fix":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-      default:
-        return "bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200"
-    }
-  }
-
   if (!isAdmin) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <Card>
-          <CardContent className="p-8 text-center">
-            <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
-            <p className="text-muted-foreground">
-              You need admin privileges to access this page.
-            </p>
-          </CardContent>
-        </Card>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center">
+            <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">Access Denied</h1>
+            <p className="text-slate-600 dark:text-slate-400">You don't have permission to access this page.</p>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold mb-2">Role Synchronization</h1>
-          <p className="text-muted-foreground">
-            Fix role synchronization issues between user_roles and players tables
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/30">
+      {/* Header */}
+      <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center">
+            <div className="w-16 h-16 bg-gradient-to-r from-stadium-gold-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Shield className="h-8 w-8 text-white" />
+            </div>
+            <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
+              Role Sync Fix
+            </h1>
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+              Fix role synchronization issues between user roles and player records for individual users or bulk operations.
+            </p>
+          </div>
         </div>
+      </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          {/* Single User Fix */}
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto space-y-8">
+          {/* Individual User Check */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
-                Single User Fix
-              </CardTitle>
-              <CardDescription>
-                Check and fix role synchronization for a specific user
+              <CardTitle className="text-slate-800 dark:text-slate-200">Check Individual User</CardTitle>
+              <CardDescription className="text-slate-600 dark:text-slate-400">
+                Check and fix role sync issues for a specific user by email
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="userId">User ID</Label>
-                <Input
-                  id="userId"
-                  value={userId}
-                  onChange={(e) => setUserId(e.target.value)}
-                  placeholder="Enter user ID"
-                />
-              </div>
-              <div className="flex gap-2">
-                <Button
-                  onClick={checkRoleSync}
-                  disabled={loading || !userId.trim()}
-                  variant="outline"
-                >
-                  <Search className="h-4 w-4 mr-2" />
-                  Check Status
-                </Button>
-                <Button
-                  onClick={fixRoleSync}
-                  disabled={loading || !userId.trim()}
-                >
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Fix Sync
-                </Button>
+              <div className="flex gap-4">
+                <div className="flex-1">
+                  <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">Email Address</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter user email..."
+                    value={searchEmail}
+                    onChange={(e) => setSearchEmail(e.target.value)}
+                    className="mt-1"
+                  />
+                </div>
+                <div className="flex items-end">
+                  <Button onClick={checkRoleSync} disabled={loading} className="min-w-[120px]">
+                    {loading ? (
+                      <RefreshCw className="h-4 w-4 animate-spin mr-2" />
+                    ) : (
+                      <Search className="h-4 w-4 mr-2" />
+                    )}
+                    {loading ? "Checking..." : "Check"}
+                  </Button>
+                </div>
               </div>
 
               {roleSyncStatus && (
-                <div className="mt-4 p-4 border rounded-lg">
-                  <h4 className="font-medium mb-2">Sync Status</h4>
-                  <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span>User Roles:</span>
-                      <span>{roleSyncStatus.userRoles.join(", ")}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Player Role:</span>
-                      <span>{roleSyncStatus.playerRole || "None"}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>Expected Player Role:</span>
-                      <span>{roleSyncStatus.expectedPlayerRole}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span>In Sync:</span>
-                      <Badge variant={roleSyncStatus.isInSync ? "default" : "destructive"}>
-                        {roleSyncStatus.isInSync ? "Yes" : "No"}
-                      </Badge>
-                    </div>
-                    {roleSyncStatus.needsPlayerRecord && (
-                      <div className="flex justify-between">
-                        <span>Needs Player Record:</span>
-                        <Badge variant="destructive">Yes</Badge>
-                      </div>
+                <div className="mt-6 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                  <div className="flex items-center gap-2 mb-4">
+                    {roleSyncStatus.isInSync ? (
+                      <CheckCircle className="h-5 w-5 text-field-green-500" />
+                    ) : (
+                      <XCircle className="h-5 w-5 text-goal-orange-500" />
                     )}
+                    <span className="font-medium text-slate-800 dark:text-slate-200">
+                      {roleSyncStatus.isInSync ? "In Sync" : "Needs Fix"}
+                    </span>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <span className="text-slate-600 dark:text-slate-400">User Roles:</span>
+                      <div className="flex gap-1 mt-1">
+                        {roleSyncStatus.userRoles.map((role) => (
+                          <Badge key={role} variant="outline" className="text-xs">
+                            {role}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-slate-600 dark:text-slate-400">Player Role:</span>
+                      <div className="mt-1">
+                        <Badge variant={roleSyncStatus.playerRole ? "default" : "secondary"}>
+                          {roleSyncStatus.playerRole || "None"}
+                        </Badge>
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-slate-600 dark:text-slate-400">Expected Player Role:</span>
+                      <div className="mt-1">
+                        <Badge variant="outline">{roleSyncStatus.expectedPlayerRole}</Badge>
+                      </div>
+                    </div>
+                    <div>
+                      <span className="text-slate-600 dark:text-slate-400">Needs Player Record:</span>
+                      <div className="mt-1">
+                        <Badge variant={roleSyncStatus.needsPlayerRecord ? "destructive" : "default"}>
+                          {roleSyncStatus.needsPlayerRecord ? "Yes" : "No"}
+                        </Badge>
+                      </div>
+                    </div>
                   </div>
                 </div>
               )}
             </CardContent>
           </Card>
 
-          {/* Bulk Fix */}
+          {/* Bulk Sync */}
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Shield className="h-5 w-5" />
-                Bulk Fix
-              </CardTitle>
-              <CardDescription>
-                Fix role synchronization for all users
+              <CardTitle className="text-slate-800 dark:text-slate-200">Bulk Role Sync</CardTitle>
+              <CardDescription className="text-slate-600 dark:text-slate-400">
+                Run role sync fix for all users in the system
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex gap-2">
-                <Button
-                  onClick={() => runBulkSync(true)}
-                  disabled={loading}
-                  variant="outline"
-                >
-                  <Search className="h-4 w-4 mr-2" />
-                  Dry Run
-                </Button>
-                <Button
-                  onClick={() => runBulkSync(false)}
-                  disabled={loading}
-                >
-                  <RefreshCw className="h-4 w-4 mr-2" />
-                  Run Fix
-                </Button>
-              </div>
+            <CardContent>
+              <Button onClick={runBulkSync} disabled={loading} className="w-full">
+                {loading ? (
+                  <RefreshCw className="h-4 w-4 animate-spin mr-2" />
+                ) : (
+                  <Shield className="h-4 w-4 mr-2" />
+                )}
+                {loading ? "Running Bulk Sync..." : "Run Bulk Role Sync"}
+              </Button>
 
-              {bulkResults && (
-                <div className="mt-4 p-4 border rounded-lg">
-                  <h4 className="font-medium mb-2">Bulk Sync Results</h4>
-                  <div className="grid grid-cols-3 gap-4 text-sm">
+              {bulkSyncResult && (
+                <div className="mt-6 p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
+                  <h3 className="font-medium text-slate-800 dark:text-slate-200 mb-4">Bulk Sync Results</h3>
+                  <div className="grid grid-cols-3 gap-4 mb-4">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-blue-600">{bulkResults.processed}</div>
-                      <div className="text-muted-foreground">Processed</div>
+                      <div className="text-2xl font-bold text-pitch-blue-600">{bulkSyncResult.processed}</div>
+                      <div className="text-sm text-slate-600 dark:text-slate-400">Processed</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-blue-600">{bulkResults.fixed}</div>
-                      <div className="text-muted-foreground">Fixed</div>
+                      <div className="text-2xl font-bold text-field-green-600">{bulkSyncResult.fixed}</div>
+                      <div className="text-sm text-slate-600 dark:text-slate-400">Fixed</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-red-600">{bulkResults.errors}</div>
-                      <div className="text-muted-foreground">Errors</div>
+                      <div className="text-2xl font-bold text-goal-orange-600">{bulkSyncResult.errors}</div>
+                      <div className="text-sm text-slate-600 dark:text-slate-400">Errors</div>
                     </div>
                   </div>
                 </div>
@@ -390,63 +335,7 @@ export default function RoleSyncPage() {
             </CardContent>
           </Card>
         </div>
-
-        {/* Results Table */}
-        {bulkResults && bulkResults.details.length > 0 && (
-          <Card>
-            <CardHeader>
-              <CardTitle>Sync Results</CardTitle>
-              <CardDescription>
-                Detailed results from the bulk sync operation
-              </CardDescription>
-              <div className="mt-4">
-                <Input
-                  placeholder="Search by gamer tag, email, or user ID..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="max-w-md"
-                />
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2 max-h-96 overflow-y-auto">
-                {filteredResults.map((detail, index) => (
-                  <div
-                    key={`${detail.userId}-${index}`}
-                    className="flex items-center justify-between p-3 border rounded-lg"
-                  >
-                    <div className="flex items-center gap-3">
-                      {getActionIcon(detail.action)}
-                      <div>
-                        <div className="font-medium">{detail.gamerTag}</div>
-                        <div className="text-sm text-muted-foreground">{detail.email}</div>
-                        <div className="text-xs text-muted-foreground">
-                          Roles: {detail.userRoles.join(", ")}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Badge className={getActionColor(detail.action)}>
-                        {detail.action.replace("_", " ").toUpperCase()}
-                      </Badge>
-                      {detail.reason && (
-                        <div className="text-xs text-muted-foreground mt-1">
-                          {detail.reason}
-                        </div>
-                      )}
-                      {detail.error && (
-                        <div className="text-xs text-red-500 mt-1">
-                          {detail.error}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
-      </motion.div>
+      </div>
     </div>
   )
 }

@@ -177,7 +177,7 @@ export default function AdminFeaturedGamesPage() {
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-r from-stadium-gold-500 to-pitch-blue-600 rounded-xl flex items-center justify-center">
                 <Star className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -210,7 +210,7 @@ export default function AdminFeaturedGamesPage() {
               <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Featured Matches</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-blue-600">{matches.filter(m => m.is_featured).length}</div>
+              <div className="text-2xl font-bold text-stadium-gold-600">{matches.filter(m => m.is_featured).length}</div>
             </CardContent>
           </Card>
           <Card>
@@ -218,7 +218,7 @@ export default function AdminFeaturedGamesPage() {
               <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Upcoming Matches</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-purple-600">
+              <div className="text-2xl font-bold text-pitch-blue-600">
                 {matches.filter(m => new Date(m.match_date) > new Date()).length}
               </div>
             </CardContent>
@@ -269,7 +269,7 @@ export default function AdminFeaturedGamesPage() {
                       <TableRow key={match.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50">
                         <TableCell>
                           {match.is_featured ? (
-                            <Badge variant="default" className="bg-blue-500 text-white">
+                            <Badge variant="default" className="bg-stadium-gold-500 text-white">
                               <Star className="h-3 w-3 mr-1" />
                               Featured
                             </Badge>

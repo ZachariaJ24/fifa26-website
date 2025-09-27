@@ -262,7 +262,7 @@ export default function AdminAwardsPage() {
       <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
         <div className="container mx-auto px-4 py-12">
           <div className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <div className="w-16 h-16 bg-gradient-to-r from-stadium-gold-500 to-goal-orange-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <Trophy className="h-8 w-8 text-white" />
             </div>
             <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
@@ -282,14 +282,14 @@ export default function AdminAwardsPage() {
           <TabsList className="grid w-full grid-cols-2 max-w-md mx-auto bg-white dark:bg-slate-800 border shadow-sm">
             <TabsTrigger 
               value="team" 
-              className="data-[state=active]:bg-blue-500 data-[state=active]:text-white hover:bg-slate-100 dark:hover:bg-slate-700 transition-all duration-300 flex items-center gap-2"
+                className="data-[state=active]:bg-pitch-blue-500 data-[state=active]:text-white hover:bg-slate-100 dark:hover:bg-slate-700 transition-all duration-300 flex items-center gap-2"
             >
               <Trophy className="h-4 w-4" />
               Team Awards
             </TabsTrigger>
             <TabsTrigger 
               value="player"
-              className="data-[state=active]:bg-purple-500 data-[state=active]:text-white hover:bg-slate-100 dark:hover:bg-slate-700 transition-all duration-300 flex items-center gap-2"
+                className="data-[state=active]:bg-stadium-gold-500 data-[state=active]:text-white hover:bg-slate-100 dark:hover:bg-slate-700 transition-all duration-300 flex items-center gap-2"
             >
               <Medal className="h-4 w-4" />
               Player Awards

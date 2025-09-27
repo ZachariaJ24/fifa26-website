@@ -131,7 +131,7 @@ export default function AdminNewsPage() {
         <div className="container mx-auto px-4 py-12">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 bg-gradient-to-r from-stadium-gold-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center">
                 <Newspaper className="h-8 w-8 text-white" />
               </div>
               <div>
@@ -172,7 +172,7 @@ export default function AdminNewsPage() {
               <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Published</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">{articles.filter(a => a.published).length}</div>
+              <div className="text-2xl font-bold text-field-green-600">{articles.filter(a => a.published).length}</div>
             </CardContent>
           </Card>
           <Card>
@@ -180,7 +180,7 @@ export default function AdminNewsPage() {
               <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Drafts</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-orange-600">{articles.filter(a => !a.published).length}</div>
+              <div className="text-2xl font-bold text-goal-orange-600">{articles.filter(a => !a.published).length}</div>
             </CardContent>
           </Card>
         </div>
@@ -197,13 +197,13 @@ export default function AdminNewsPage() {
               </div>
               <Tabs value={filter} onValueChange={setFilter}>
                 <TabsList className="bg-white dark:bg-slate-800 border">
-                  <TabsTrigger value="all" className="data-[state=active]:bg-blue-500 data-[state=active]:text-white">
+                  <TabsTrigger value="all" className="data-[state=active]:bg-pitch-blue-500 data-[state=active]:text-white">
                     All
                   </TabsTrigger>
-                  <TabsTrigger value="published" className="data-[state=active]:bg-green-500 data-[state=active]:text-white">
+                  <TabsTrigger value="published" className="data-[state=active]:bg-field-green-500 data-[state=active]:text-white">
                     Published
                   </TabsTrigger>
-                  <TabsTrigger value="draft" className="data-[state=active]:bg-orange-500 data-[state=active]:text-white">
+                  <TabsTrigger value="draft" className="data-[state=active]:bg-goal-orange-500 data-[state=active]:text-white">
                     Drafts
                   </TabsTrigger>
                 </TabsList>
@@ -258,7 +258,7 @@ export default function AdminNewsPage() {
                           {article.title}
                         </TableCell>
                         <TableCell>
-                          <Badge variant={article.published ? "default" : "secondary"} className={article.published ? "bg-green-500" : "bg-orange-500"}>
+                          <Badge variant={article.published ? "default" : "secondary"} className={article.published ? "bg-field-green-500" : "bg-goal-orange-500"}>
                             {article.published ? "Published" : "Draft"}
                           </Badge>
                         </TableCell>
