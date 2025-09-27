@@ -438,7 +438,7 @@ export default function UserManagementPage() {
                       <CardTitle className="text-xl text-white fifa-title">
                         User Management
                       </CardTitle>
-                      <CardDescription className="text-field-green-100">
+                      <CardDescription className="text-slate-600 dark:text-slate-400">
                         Manage all users in the system
                       </CardDescription>
                     </div>
@@ -463,7 +463,7 @@ export default function UserManagementPage() {
                         Search Users
                       </Label>
                       <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-field-green-400" />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-500" />
                         <Input
                           id="search"
                           placeholder="Search by email, gamer tag, or Discord username..."
@@ -553,7 +553,7 @@ export default function UserManagementPage() {
                           <tr>
                             <td colSpan={7} className="text-center p-8">
                               <div className="flex items-center justify-center">
-                                <RefreshCw className="h-6 w-6 animate-spin text-field-green-500 mr-2" />
+                                <RefreshCw className="h-6 w-6 animate-spin text-blue-500 mr-2" />
                                 Loading users...
                               </div>
                             </td>
@@ -648,7 +648,7 @@ export default function UserManagementPage() {
                                     {user.club.name}
                                   </Badge>
                                 ) : (
-                                  <span className="text-sm text-field-green-400">No Club</span>
+                                  <span className="text-sm text-slate-500">No Club</span>
                                 )}
                               </td>
                               <td className="p-3">
@@ -658,7 +658,7 @@ export default function UserManagementPage() {
                                     {user.season_registrations.length} Season(s)
                                   </Badge>
                                 ) : (
-                                  <span className="text-sm text-field-green-400">Not Registered</span>
+                                  <span className="text-sm text-slate-500">Not Registered</span>
                                 )}
                               </td>
                               <td className="p-3">
@@ -726,7 +726,7 @@ export default function UserManagementPage() {
                   <CardDescription>Manage banned users and their restrictions</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-field-green-600">Banned users management will be implemented here.</p>
+                  <p className="text-slate-600 dark:text-slate-400">Banned users management will be implemented here.</p>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -738,7 +738,7 @@ export default function UserManagementPage() {
                   <CardDescription>Detect and manage orphaned authentication users</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-field-green-600">Orphaned users management will be implemented here.</p>
+                  <p className="text-slate-600 dark:text-slate-400">Orphaned users management will be implemented here.</p>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -750,7 +750,7 @@ export default function UserManagementPage() {
                   <CardDescription>Analyze and manage season registration data</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-field-green-600">Season registration diagnostics will be implemented here.</p>
+                  <p className="text-slate-600 dark:text-slate-400">Season registration diagnostics will be implemented here.</p>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -801,7 +801,7 @@ export default function UserManagementPage() {
                         Export Selected ({selectedUsers.length})
                       </Button>
                     </div>
-                    <p className="text-sm text-field-green-600">
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
                       Select users from the table above to perform bulk actions.
                     </p>
                   </div>

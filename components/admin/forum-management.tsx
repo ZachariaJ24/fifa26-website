@@ -324,7 +324,7 @@ export function ForumManagement() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Posts</CardTitle>
-            <MessageSquare className="h-4 w-4 text-muted-foreground" />
+            <MessageSquare className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.total_posts}</div>
@@ -334,7 +334,7 @@ export function ForumManagement() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Categories</CardTitle>
-            <Shield className="h-4 w-4 text-muted-foreground" />
+            <Shield className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.total_categories}</div>
@@ -344,7 +344,7 @@ export function ForumManagement() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Replies</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <Users className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.total_replies}</div>
@@ -354,11 +354,11 @@ export function ForumManagement() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Recent Activity</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <TrendingUp className="h-4 w-4 text-gray-600 dark:text-gray-400" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{stats.recent_activity}</div>
-            <p className="text-xs text-muted-foreground">Posts this week</p>
+            <p className="text-xs text-gray-600 dark:text-gray-400">Posts this week</p>
           </CardContent>
         </Card>
       </div>
@@ -373,7 +373,7 @@ export function ForumManagement() {
           {/* Search and Filters */}
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
-              <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-600 dark:text-gray-400" />
               <Input
                 placeholder="Search posts or authors..."
                 value={searchQuery}
@@ -403,10 +403,10 @@ export function ForumManagement() {
             </CardHeader>
             <CardContent>
               {filteredPosts.length === 0 ? (
-                <div className="text-center py-8 text-muted-foreground">
+                <div className="text-center py-8 text-gray-600 dark:text-gray-400">
                   <MessageSquare className="h-12 w-12 mx-auto mb-4 opacity-50" />
                   <p>No posts found</p>
-                  <p className="text-sm">Posts will appear here when users create them</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Posts will appear here when users create them</p>
                 </div>
               ) : (
                 <Table>
@@ -553,8 +553,8 @@ export function ForumManagement() {
             <Card>
               <CardContent className="text-center py-8">
                 <Shield className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p className="text-muted-foreground mb-4">No categories found</p>
-                <p className="text-sm text-muted-foreground">Create your first forum category to get started</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-4">No categories found</p>
+                <p className="text-sm text-gray-600 dark:text-gray-400">Create your first forum category to get started</p>
               </CardContent>
             </Card>
           ) : (
@@ -600,7 +600,7 @@ export function ForumManagement() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                       <span>Posts: {category.post_count || 0}</span>
                       <span>Created: {new Date(category.created_at).toLocaleDateString()}</span>
                     </div>

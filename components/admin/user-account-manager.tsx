@@ -434,10 +434,10 @@ export function UserAccountManager() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 fifa-title">
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200 fifa-title">
             User Account Manager
           </h2>
-          <p className="text-field-green-600 dark:text-field-green-400 fifa-subtitle">
+          <p className="text-slate-600 dark:text-slate-400 fifa-subtitle">
             Comprehensive user account management and administration
           </p>
         </div>
@@ -459,7 +459,7 @@ export function UserAccountManager() {
             <div className="flex-1">
               <Label htmlFor="search">Search Users</Label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-field-green-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-500" />
                 <Input
                   id="search"
                   placeholder="Search by email, gamer tag, or Discord username..."

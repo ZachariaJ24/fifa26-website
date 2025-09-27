@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Trophy, Medal, Trash2, Plus, Pencil, Award, Crown, Star, Target, Zap, Shield, Database, Activity, TrendingUp, Users, Settings, BarChart3, Clock, Calendar, FileText, BookOpen, Globe, Publish, AlertTriangle, CheckCircle, Edit, Save, X, Search, Filter, Download, Upload } from "lucide-react"
+import { Trophy, Medal, Trash2, Plus, Pencil, Award, Crown, Star, Target, Zap, Shield, Database, Activity, TrendingUp, Users, Settings, BarChart3, Clock, Calendar, FileText, BookOpen, Globe, AlertTriangle, CheckCircle, Edit, Save, X, Search, Filter, Download, Upload } from "lucide-react"
 import {
   Dialog,
   DialogContent,
@@ -220,7 +220,7 @@ export default function AdminAwardsPage() {
 
       if (playersError) throw playersError
 
-      const formattedPlayers = playersData.map((player) => ({
+      const formattedPlayers = (playersData as any[]).map((player) => ({
         id: player.id,
         user_id: player.user_id,
         gamer_tag_id: player.users?.gamer_tag_id || "Unknown",
@@ -248,7 +248,7 @@ export default function AdminAwardsPage() {
 
       if (teamAwardsError) throw teamAwardsError
 
-      const formattedTeamAwards = teamAwardsData.map((award) => ({
+      const formattedTeamAwards = (teamAwardsData as any[]).map((award) => ({
         id: award.id,
         team_id: award.team_id,
         team_name: award.teams?.name || "Unknown Team",
@@ -281,7 +281,7 @@ export default function AdminAwardsPage() {
 
       if (playerAwardsError) throw playerAwardsError
 
-      const formattedPlayerAwards = playerAwardsData.map((award) => ({
+      const formattedPlayerAwards = (playerAwardsData as any[]).map((award) => ({
         id: award.id,
         player_id: award.player_id,
         gamer_tag_id: award.players?.users?.gamer_tag_id || "Unknown Player",
@@ -305,7 +305,7 @@ export default function AdminAwardsPage() {
           console.log("Fetched seasons from DB:", seasonsData)
 
           // Extract season numbers from names and sort by those numbers
-          const processedSeasons = seasonsData
+          const processedSeasons = (seasonsData as any[])
             .map((season) => {
               // Extract number from season name (e.g., "Season 3" -> 3)
               const nameMatch = season.name.match(/Season\s+(\d+)/i)
@@ -384,7 +384,7 @@ export default function AdminAwardsPage() {
             year: newTeamAward.year,
             description: newTeamAward.description || null,
           },
-        ])
+        ] as any)
         .select()
 
       if (error) throw error
@@ -434,7 +434,7 @@ export default function AdminAwardsPage() {
             year: newPlayerAward.year,
             description: newPlayerAward.description || null,
           },
-        ])
+        ] as any)
         .select()
 
       if (error) throw error
@@ -531,7 +531,7 @@ export default function AdminAwardsPage() {
           season_number: seasonNumber,
           year: editingTeamAward.year,
           description: editingTeamAward.description || null,
-        })
+        } as any)
         .eq("id", editingTeamAward.id)
 
       if (error) throw error
@@ -581,7 +581,7 @@ export default function AdminAwardsPage() {
           season_number: seasonNumber,
           year: editingPlayerAward.year,
           description: editingPlayerAward.description || null,
-        })
+        } as any)
         .eq("id", editingPlayerAward.id)
 
       if (error) throw error
@@ -659,7 +659,7 @@ export default function AdminAwardsPage() {
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">
               Awards Management Center
             </h1>
-            <p className="text-lg text-slate-700 dark:text-slate-300 mx-auto mb-12 max-w-4xl">
+            <p className="text-lg text-gray-700 dark:text-gray-300 mx-auto mb-12 max-w-4xl">
               Comprehensive awards management system for the league. 
               Manage team awards, player achievements, and recognize outstanding performance across all seasons.
             </p>
@@ -667,14 +667,14 @@ export default function AdminAwardsPage() {
             {/* Enhanced Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto mb-16">
               <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
+                <div className="fifa-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
                   <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
                     <Trophy className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-slate-700 dark:text-slate-300 mb-2">
+                  <div className="text-3xl font-bold text-gray-700 dark:text-gray-300 mb-2">
                     {teamAwards.length}
                   </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                     Team Awards
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -682,14 +682,14 @@ export default function AdminAwardsPage() {
               </div>
               
               <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
+                <div className="fifa-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
                   <div className="w-16 h-16 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-pitch-blue-500/25 transition-all duration-300">
                     <Medal className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
+                  <div className="text-3xl font-bold text-gray-700 dark:text-gray-300 mb-2">
                     {playerAwards.length}
                   </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                     Player Awards
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -697,14 +697,14 @@ export default function AdminAwardsPage() {
               </div>
               
               <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
+                <div className="fifa-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
                   <div className="w-16 h-16 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-assist-green-500/25 transition-all duration-300">
                     <Award className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
+                  <div className="text-3xl font-bold text-gray-700 dark:text-gray-300 mb-2">
                     {seasons.length}
                   </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                     Active Seasons
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -712,14 +712,14 @@ export default function AdminAwardsPage() {
               </div>
               
               <div className="group">
-                <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
+                <div className="fifa-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
                   <div className="w-16 h-16 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-goal-red-500/25 transition-all duration-300">
                     <Crown className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
+                  <div className="text-3xl font-bold text-gray-700 dark:text-gray-300 mb-2">
                     {teams.length}
                   </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                  <div className="text-sm text-gray-600 dark:text-gray-400 font-medium">
                     Teams
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -734,10 +734,10 @@ export default function AdminAwardsPage() {
       <div className="container mx-auto px-4 py-16">
         {/* Enhanced Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-4">
+          <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-4">
             Awards Management System
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
             Manage team awards, player achievements, and recognize outstanding performance. 
             Create, edit, and track awards across all seasons and categories.
           </p>
@@ -762,7 +762,7 @@ export default function AdminAwardsPage() {
           </TabsList>
 
         <TabsContent value="team-awards">
-          <Card className="hockey-card border-2 border-field-green-200 dark:border-field-green-700 overflow-hidden">
+          <Card className="fifa-card border-2 border-field-green-200 dark:border-field-green-700 overflow-hidden">
             <CardHeader className="bg-gradient-to-r from-field-green-500 to-pitch-blue-600 text-white">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
@@ -783,15 +783,15 @@ export default function AdminAwardsPage() {
                       Add Team Award
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="hockey-card border-2 border-field-green-200 dark:border-field-green-700">
+                  <DialogContent className="fifa-card border-2 border-field-green-200 dark:border-field-green-700">
                     <DialogHeader className="pb-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center">
                           <Trophy className="h-5 w-5 text-white" />
                         </div>
                         <div>
-                          <DialogTitle className="text-slate-800 dark:text-slate-200">Add Team Award</DialogTitle>
-                          <DialogDescription className="text-slate-600 dark:text-slate-400">
+                          <DialogTitle className="text-gray-800 dark:text-gray-200">Add Team Award</DialogTitle>
+                          <DialogDescription className="text-gray-600 dark:text-gray-400">
                             Create a new team award for a specific season
                           </DialogDescription>
                         </div>
@@ -800,15 +800,15 @@ export default function AdminAwardsPage() {
 
                     <div className="grid gap-6 py-4">
                       <div className="grid gap-3">
-                        <Label htmlFor="team" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
-                          <Users className="h-4 w-4 text-slate-600" />
+                        <Label htmlFor="team" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                          <Users className="h-4 w-4 text-gray-600" />
                           Team
                         </Label>
                         <Select
                           value={newTeamAward.team_id}
                           onValueChange={(value) => setNewTeamAward({ ...newTeamAward, team_id: value })}
                         >
-                          <SelectTrigger className="hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300">
+                          <SelectTrigger className="fifa-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300">
                             <SelectValue placeholder="Select team" />
                           </SelectTrigger>
                           <SelectContent>
@@ -822,7 +822,7 @@ export default function AdminAwardsPage() {
                       </div>
 
                       <div className="grid gap-3">
-                        <Label htmlFor="award-type" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                        <Label htmlFor="award-type" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                           <Award className="h-4 w-4 text-pitch-blue-600" />
                           Award Type
                         </Label>
@@ -830,7 +830,7 @@ export default function AdminAwardsPage() {
                           value={newTeamAward.award_type}
                           onValueChange={(value) => setNewTeamAward({ ...newTeamAward, award_type: value })}
                         >
-                          <SelectTrigger className="hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300">
+                          <SelectTrigger className="fifa-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300">
                             <SelectValue placeholder="Select award type" />
                           </SelectTrigger>
                           <SelectContent>
@@ -845,15 +845,15 @@ export default function AdminAwardsPage() {
 
                       <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-3">
-                          <Label htmlFor="season" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                          <Label htmlFor="season" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                             <Calendar className="h-4 w-4 text-assist-green-600" />
                             Season
                           </Label>
                           <Select
                             value={String(newTeamAward.season_number)}
-                            onValueChange={(value) => setNewTeamAward({ ...newTeamAward, season_number: value })}
+                            onValueChange={(value) => setNewTeamAward({ ...newTeamAward, season_number: parseInt(value, 10) })}
                           >
-                            <SelectTrigger className="hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300">
+                            <SelectTrigger className="fifa-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300">
                               <SelectValue placeholder="Select season" />
                             </SelectTrigger>
                             <SelectContent>
@@ -867,7 +867,7 @@ export default function AdminAwardsPage() {
                         </div>
 
                         <div className="grid gap-3">
-                          <Label htmlFor="year" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                          <Label htmlFor="year" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
                             <Clock className="h-4 w-4 text-goal-red-600" />
                             Year
                           </Label>
@@ -882,21 +882,21 @@ export default function AdminAwardsPage() {
                             }
                             min={2000}
                             max={2100}
-                            className="hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300"
+                            className="fifa-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300"
                           />
                         </div>
                       </div>
 
                       <div className="grid gap-3">
-                        <Label htmlFor="description" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
-                          <FileText className="h-4 w-4 text-slate-600" />
+                        <Label htmlFor="description" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex items-center gap-2">
+                          <FileText className="h-4 w-4 text-gray-600" />
                           Description (Optional)
                         </Label>
                         <Input
                           value={newTeamAward.description}
                           onChange={(e) => setNewTeamAward({ ...newTeamAward, description: e.target.value })}
                           placeholder="Add details about this award"
-                          className="hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300"
+                          className="fifa-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300"
                         />
                       </div>
                     </div>
@@ -1092,7 +1092,7 @@ export default function AdminAwardsPage() {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={6} className="text-center py-4 text-muted-foreground">
+                      <TableCell colSpan={6} className="text-center py-4 text-gray-600 dark:text-gray-400">
                         No team awards found. Create one to get started.
                       </TableCell>
                     </TableRow>
@@ -1168,7 +1168,7 @@ export default function AdminAwardsPage() {
                           <Label htmlFor="season">Season</Label>
                           <Select
                             value={String(newPlayerAward.season_number)}
-                            onValueChange={(value) => setNewPlayerAward({ ...newPlayerAward, season_number: value })}
+                            onValueChange={(value) => setNewPlayerAward({ ...newPlayerAward, season_number: parseInt(value, 10) })}
                           >
                             <SelectTrigger>
                               <SelectValue placeholder="Select season" />
@@ -1387,7 +1387,7 @@ export default function AdminAwardsPage() {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={6} className="text-center py-4 text-muted-foreground">
+                      <TableCell colSpan={6} className="text-center py-4 text-gray-600 dark:text-gray-400">
                         No player awards found. Create one to get started.
                       </TableCell>
                     </TableRow>

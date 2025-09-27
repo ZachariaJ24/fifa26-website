@@ -660,12 +660,12 @@ export default function BannedUsersPage() {
                                   </p>
                             )}
                             {!user.email && !user.gamer_tag && !user.gamer_tag_id && !user.discord_name && (
-                                  <p className="text-sm text-field-green-500 dark:text-field-green-500 italic">No display name</p>
+                                  <p className="text-sm text-slate-500 italic">No display name</p>
                             )}
                           </div>
                         </TableCell>
                             <TableCell className="py-4">
-                              <p className="text-sm max-w-xs break-words text-field-green-700 dark:text-field-green-300 bg-field-green-100 dark:bg-field-green-800 p-2 rounded">
+                              <p className="text-sm max-w-xs break-words text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 p-2 rounded">
                                 {user.ban_reason}
                               </p>
                         </TableCell>
@@ -673,7 +673,7 @@ export default function BannedUsersPage() {
                           {user.ban_expiration ? (
                             <div className="flex items-center gap-2">
                                   <Clock className="h-4 w-4 text-ice-blue-500" />
-                                  <span className="text-sm text-field-green-700 dark:text-field-green-300">{formatDate(user.ban_expiration)}</span>
+                                  <span className="text-sm text-slate-700 dark:text-slate-300">{formatDate(user.ban_expiration)}</span>
                             </div>
                           ) : (
                                 <Badge className="bg-goal-red-500 text-white">Permanent</Badge>
@@ -832,14 +832,14 @@ export default function BannedUsersPage() {
                                 <TableCell className="py-4">
                                   <p className="font-semibold text-slate-900 dark:text-slate-100">
                                     {user.gamer_tag_id || (
-                                      <span className="text-field-green-500 dark:text-field-green-500 italic">Not set</span>
+                                      <span className="text-slate-500 italic">Not set</span>
                                     )}
                                   </p>
                             </TableCell>
                                 <TableCell className="py-4">
-                                  <p className="text-field-green-700 dark:text-field-green-300">
+                                  <p className="text-slate-700 dark:text-slate-300">
                                     {user.discord_name || (
-                                      <span className="text-field-green-500 dark:text-field-green-500 italic">Not set</span>
+                                      <span className="text-slate-500 italic">Not set</span>
                                     )}
                                   </p>
                             </TableCell>
@@ -974,7 +974,7 @@ export default function BannedUsersPage() {
               <div className="space-y-4 p-4 bg-field-green-50 dark:bg-field-green-800/50 rounded-lg">
                 <div className="flex items-center gap-3">
                   <span className="font-semibold text-slate-900 dark:text-slate-100 min-w-[80px]">User:</span>
-                  <span className="text-field-green-700 dark:text-field-green-300">
+                  <span className="text-slate-700 dark:text-slate-300">
                 {selectedUserForUnban.gamer_tag_id ||
                   selectedUserForUnban.discord_name ||
                   selectedUserForUnban.email ||
@@ -990,7 +990,7 @@ export default function BannedUsersPage() {
               {selectedUserForUnban.ban_expiration && (
                   <div className="flex items-center gap-3">
                     <span className="font-semibold text-slate-900 dark:text-slate-100 min-w-[80px]">Expires:</span>
-                    <span className="text-field-green-700 dark:text-field-green-300">
+                    <span className="text-slate-700 dark:text-slate-300">
                       {formatDate(selectedUserForUnban.ban_expiration)}
                     </span>
                   </div>

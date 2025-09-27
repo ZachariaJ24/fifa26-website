@@ -65,13 +65,16 @@ export async function POST(request: Request) {
       "PlayStation 5": "PS5",
       PlayStation: "PS5",
       PS5: "PS5",
-      "Xbox Series X": "XSX",
-      "Xbox Series X/S": "XSX",
-      Xbox: "XSX",
-      XSX: "XSX",
-      XBOX: "XSX",
-      xbox: "XSX",
+      "Xbox Series X": "Xbox",
+      "Xbox Series X/S": "Xbox",
+      Xbox: "Xbox",
+      XSX: "Xbox",
+      XBOX: "Xbox",
+      xbox: "Xbox",
       playstation: "PS5",
+      PC: "PC",
+      Steam: "PC",
+      "Epic Games": "PC",
     }
 
     // Track used gamer tags to handle duplicates
@@ -107,7 +110,7 @@ export async function POST(request: Request) {
         const metadata = authUser.user_metadata || {}
 
         // Fix console value
-        let consoleValue = metadata.console || "PS5" // Default to PS5
+        let consoleValue = metadata.console || "Xbox" // Default to Xbox
         if (consoleMapping[consoleValue]) {
           consoleValue = consoleMapping[consoleValue]
           results.consoleFixed++

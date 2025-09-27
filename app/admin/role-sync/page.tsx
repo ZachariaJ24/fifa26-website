@@ -215,7 +215,7 @@ export default function RoleSyncPage() {
       case "would_fix":
         return <RefreshCw className="h-4 w-4 text-blue-500" />
       default:
-        return <User className="h-4 w-4 text-field-green-500" />
+        return <User className="h-4 w-4 text-slate-500" />
     }
   }
 
@@ -231,7 +231,7 @@ export default function RoleSyncPage() {
       case "would_fix":
         return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
       default:
-        return "bg-field-green-100 text-field-green-800 dark:bg-field-green-900 dark:text-field-green-200"
+        return "bg-slate-100 text-slate-800 dark:bg-slate-900 dark:text-slate-200"
     }
   }
 
@@ -377,7 +377,7 @@ export default function RoleSyncPage() {
                       <div className="text-muted-foreground">Processed</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-green-600">{bulkResults.fixed}</div>
+                      <div className="text-2xl font-bold text-blue-600">{bulkResults.fixed}</div>
                       <div className="text-muted-foreground">Fixed</div>
                     </div>
                     <div className="text-center">

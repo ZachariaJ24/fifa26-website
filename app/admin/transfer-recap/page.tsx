@@ -29,19 +29,19 @@ export default function TransferRecapPage() {
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-pitch-blue-100/50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20 px-4 py-2 rounded-full border border-field-green-200/50 dark:border-pitch-blue-700/50">
               <Trophy className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
-              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Club Statistics</span>
+              <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Club Statistics</span>
             </div>
             <div className="flex items-center gap-2 bg-gradient-to-r from-assist-green-100/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 px-4 py-2 rounded-full border border-assist-green-200/50 dark:border-assist-green-700/50">
               <Users className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Player Analysis</span>
+              <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Player Analysis</span>
             </div>
             <div className="flex items-center gap-2 bg-gradient-to-r from-goal-red-100/50 to-goal-red-100/50 dark:from-goal-red-900/20 dark:to-goal-red-900/20 px-4 py-2 rounded-full border border-goal-red-200/50 dark:border-goal-red-700/50">
               <BarChart3 className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Financial Overview</span>
+              <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Financial Overview</span>
             </div>
             <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-field-green-100/50 dark:from-field-green-900/20 dark:to-field-green-900/20 px-4 py-2 rounded-full border border-field-green-200/50 dark:border-field-green-700/50">
               <Activity className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
-              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Transfer History</span>
+              <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Transfer History</span>
             </div>
           </div>
         </div>

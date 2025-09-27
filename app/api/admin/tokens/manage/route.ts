@@ -34,7 +34,7 @@ export async function GET(request: NextRequest) {
         console,
         created_at,
         is_active,
-        tokens(balance),
+        tokens(balance, season_id),
         players(
           team_id,
           role,

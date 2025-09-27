@@ -15,17 +15,6 @@ export async function POST(request: Request) {
       process.env.SUPABASE_SERVICE_ROLE_KEY || "",
     )
 
-    const failedEmails = [
-      "dakotajwaardenburg@gmail.com",
-      "xzmax69@live.com",
-      "iofreeze123@outlook.com",
-      "sethmcgettigan@gmail.com",
-      "christian_flett97@hotmail.com",
-      "ethaneira9@gmail.com",
-      "porterhopson@icloid.com",
-      "calebmayorga1994@gmail.com",
-    ]
-
     const results = {
       checked: 0,
       fixed: 0,
@@ -33,22 +22,22 @@ export async function POST(request: Request) {
       errors: [] as string[],
     }
 
-    for (const email of failedEmails) {
+    // Get all users from auth
+    const { data: authUsers, error: listError } = await supabaseAdmin.auth.admin.listUsers()
+
+    if (listError) {
+      return NextResponse.json({ error: `Error listing users: ${listError.message}` }, { status: 500 })
+    }
+
+    console.log(`Processing ${authUsers.users.length} users for console value validation`)
+
+    for (const authUser of authUsers.users) {
+      const email = authUser.email
       try {
         results.checked++
 
-        // Check if user exists in auth
-        const { data: authUsers, error: listError } = await supabaseAdmin.auth.admin.listUsers()
-
-        if (listError) {
-          results.errors.push(`Error listing users: ${listError.message}`)
-          continue
-        }
-
-        const authUser = authUsers.users.find((u) => u.email === email)
-
-        if (!authUser) {
-          results.errors.push(`Auth user not found: ${email}`)
+        if (!email) {
+          results.errors.push(`User has no email`)
           continue
         }
 

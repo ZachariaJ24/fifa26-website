@@ -259,7 +259,7 @@ export function PhotoGallery() {
         <>
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
         <div className="relative flex-1">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-600 dark:text-gray-400" />
           <Input
             type="search"
             placeholder="Search photos..."
@@ -299,9 +299,9 @@ export function PhotoGallery() {
         </div>
       ) : photos.length === 0 ? (
         <div className="text-center py-12">
-          <ImageIcon className="mx-auto h-12 w-12 text-muted-foreground" />
+          <ImageIcon className="mx-auto h-12 w-12 text-gray-600 dark:text-gray-400" />
           <h3 className="mt-4 text-lg font-semibold">No photos found</h3>
-          <p className="text-muted-foreground">
+          <p className="text-gray-600 dark:text-gray-400">
             {searchTerm || categoryFilter !== "all"
               ? "Try adjusting your search or filter"
               : "Upload some photos to get started"}
@@ -342,7 +342,7 @@ export function PhotoGallery() {
                 <h3 className="font-medium truncate" title={photo.title}>
                   {photo.title}
                 </h3>
-                <div className="flex items-center justify-between mt-1 text-sm text-muted-foreground">
+                <div className="flex items-center justify-between mt-1 text-sm text-gray-600 dark:text-gray-400">
                   <span>{getCategoryLabel(photo.category)}</span>
                   <span>{formatDate(photo.created_at)}</span>
                 </div>

@@ -303,7 +303,7 @@ export default function DailyRecap() {
                 <Brain className="h-4 w-4 text-blue-500" />
                 <span className="font-semibold text-sm">Intelligent Analysis Generated</span>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-muted-foreground">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-600 dark:text-gray-400">
                 <div>
                   <strong>Date:</strong> {recapData.date}
                 </div>
@@ -318,7 +318,7 @@ export default function DailyRecap() {
                 </div>
               </div>
               {recapData.generation_timestamp && (
-                <div className="text-xs text-muted-foreground mt-2">
+                <div className="text-xs text-gray-600 dark:text-gray-400 mt-2">
                   <strong>Generated:</strong> {new Date(recapData.generation_timestamp).toLocaleString()}
                 </div>
               )}
