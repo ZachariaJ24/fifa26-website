@@ -296,10 +296,10 @@ export default function UserManagementPage() {
               <Users className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 fifa-title">
+              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent fifa-title">
                 User Management
               </h1>
-              <p className="text-field-green-600 dark:text-field-green-400 fifa-subtitle">
+              <p className="text-lg text-slate-700 dark:text-slate-300 fifa-subtitle max-w-4xl mx-auto">
                 Comprehensive user administration and management
               </p>
             </div>
@@ -315,10 +315,10 @@ export default function UserManagementPage() {
                   <Users className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                  <p className="text-2xl font-bold text-slate-800 dark:text-slate-200">
                     {stats.total}
                   </p>
-                  <p className="text-sm text-field-green-600 dark:text-field-green-400">
+                  <p className="text-sm text-slate-600 dark:text-slate-400">
                     Total Users
                   </p>
                 </div>
@@ -459,7 +459,7 @@ export default function UserManagementPage() {
                   {/* Search and Filters */}
                   <div className="flex flex-col sm:flex-row gap-4 mb-6">
                     <div className="flex-1">
-                      <Label htmlFor="search" className="text-sm font-medium text-field-green-700 dark:text-field-green-300">
+                      <Label htmlFor="search" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                         Search Users
                       </Label>
                       <div className="relative">
@@ -474,7 +474,7 @@ export default function UserManagementPage() {
                       </div>
                     </div>
                     <div className="sm:w-48">
-                      <Label htmlFor="role-filter" className="text-sm font-medium text-field-green-700 dark:text-field-green-300">
+                      <Label htmlFor="role-filter" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                         Filter by Role
                       </Label>
                       <select
@@ -491,7 +491,7 @@ export default function UserManagementPage() {
                       </select>
                     </div>
                     <div className="sm:w-48">
-                      <Label htmlFor="status-filter" className="text-sm font-medium text-field-green-700 dark:text-field-green-300">
+                      <Label htmlFor="status-filter" className="text-sm font-medium text-slate-700 dark:text-slate-300">
                         Filter by Status
                       </Label>
                       <select
@@ -515,7 +515,7 @@ export default function UserManagementPage() {
                     <table className="w-full">
                       <thead>
                         <tr className="border-b-2 border-field-green-200 dark:border-field-green-700 bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-slate-800 dark:text-slate-200">
                             <input
                               type="checkbox"
                               className="rounded border-2 border-field-green-300 focus:border-field-green-500"
@@ -528,22 +528,22 @@ export default function UserManagementPage() {
                               }}
                             />
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-slate-800 dark:text-slate-200">
                             User
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-slate-800 dark:text-slate-200">
                             Roles
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-slate-800 dark:text-slate-200">
                             Status
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-slate-800 dark:text-slate-200">
                             Club
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-slate-800 dark:text-slate-200">
                             Season Reg
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-slate-800 dark:text-slate-200">
                             Actions
                           </th>
                         </tr>
@@ -560,7 +560,7 @@ export default function UserManagementPage() {
                           </tr>
                         ) : filteredUsers.length === 0 ? (
                           <tr>
-                            <td colSpan={7} className="text-center p-8 text-field-green-600 dark:text-field-green-400">
+                            <td colSpan={7} className="text-center p-8 text-slate-600 dark:text-slate-400">
                               No users found matching your criteria.
                             </td>
                           </tr>
@@ -589,10 +589,10 @@ export default function UserManagementPage() {
                                     </span>
                                   </div>
                                   <div>
-                                    <p className="font-medium text-field-green-800 dark:text-field-green-200">
+                                    <p className="font-medium text-slate-800 dark:text-slate-200">
                                       {user.gamer_tag || user.email}
                                     </p>
-                                    <p className="text-sm text-field-green-600 dark:text-field-green-400">
+                                    <p className="text-sm text-slate-600 dark:text-slate-400">
                                       {user.email}
                                     </p>
                                     {user.discord_username && (

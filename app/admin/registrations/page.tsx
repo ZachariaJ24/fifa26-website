@@ -438,13 +438,13 @@ export default function RegistrationsPage() {
         <div className="">
           <Card className="hockey-enhanced-card">
             <CardHeader>
-              <CardTitle className="text-3xl text-field-green-900 dark:text-field-green-100 flex items-center gap-3">
+              <CardTitle className="text-3xl text-slate-900 dark:text-slate-100 flex items-center gap-3">
                 <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
                   <Trophy className="h-6 w-6 text-white" />
                 </div>
                 Season Registrations
               </CardTitle>
-              <CardDescription className="text-field-green-600 dark:text-field-green-400">
+              <CardDescription className="text-slate-600 dark:text-slate-400">
                 {activeSeason ? `Managing registrations for ${activeSeason.name}` : "Loading active season..."}
               </CardDescription>
             </CardHeader>
@@ -452,29 +452,29 @@ export default function RegistrationsPage() {
           {error && (
             <Alert variant="destructive" className="mb-6 hockey-enhanced-card border-goal-red-200 dark:border-goal-red-800">
               <AlertCircle className="h-4 w-4" />
-              <AlertTitle className="text-field-green-900 dark:text-field-green-100">Error</AlertTitle>
-              <AlertDescription className="text-field-green-700 dark:text-field-green-300">{error}</AlertDescription>
+              <AlertTitle className="text-slate-900 dark:text-slate-100">Error</AlertTitle>
+              <AlertDescription className="text-slate-700 dark:text-slate-300">{error}</AlertDescription>
             </Alert>
           )}
 
           <div className="flex flex-col md:flex-row gap-4 mb-6 items-end">
             <div className="w-full md:w-1/3">
-              <Label htmlFor="active-season" className="mb-2 block text-field-green-900 dark:text-field-green-100 font-semibold flex items-center gap-2">
+              <Label htmlFor="active-season" className="mb-2 block text-slate-900 dark:text-slate-100 font-semibold flex items-center gap-2">
                 <Calendar className="h-4 w-4 text-ice-blue-500" />
                 Active Season
               </Label>
-              <div id="active-season" className="p-3 border border-ice-blue-200 dark:border-rink-blue-700 rounded-lg bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700 text-field-green-900 dark:text-field-green-100">
+              <div id="active-season" className="p-3 border border-ice-blue-200 dark:border-rink-blue-700 rounded-lg bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700 text-slate-900 dark:text-slate-100">
                 {activeSeason ? activeSeason.name : "Loading..."}
               </div>
             </div>
 
             <div className="w-full md:w-1/3">
-              <Label htmlFor="search" className="mb-2 block text-field-green-900 dark:text-field-green-100 font-semibold flex items-center gap-2">
+              <Label htmlFor="search" className="mb-2 block text-slate-900 dark:text-slate-100 font-semibold flex items-center gap-2">
                 <Search className="h-4 w-4 text-assist-green-500" />
                 Search
               </Label>
               <div className="relative">
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-field-green-500" />
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
                 <Input
                   id="search"
                   placeholder="Search by name or email"
@@ -486,13 +486,13 @@ export default function RegistrationsPage() {
             </div>
 
             <div className="w-full md:w-1/3">
-              <Label htmlFor="status-filter" className="mb-2 block text-field-green-900 dark:text-field-green-100 font-semibold flex items-center gap-2">
+              <Label htmlFor="status-filter" className="mb-2 block text-slate-900 dark:text-slate-100 font-semibold flex items-center gap-2">
                 <Target className="h-4 w-4 text-rink-blue-500" />
                 Filter by Status
               </Label>
               <select
                 id="status-filter"
-                className="w-full p-3 border border-ice-blue-200 dark:border-rink-blue-700 rounded-lg bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700 text-field-green-900 dark:text-field-green-100 focus:ring-2 focus:ring-ice-blue-500 focus:border-ice-blue-500"
+                className="w-full p-3 border border-ice-blue-200 dark:border-rink-blue-700 rounded-lg bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-ice-blue-500 focus:border-ice-blue-500"
                 value={statusFilter || "all"}
                 onChange={(e) => setStatusFilter(e.target.value === "all" ? null : e.target.value)}
               >
@@ -521,7 +521,7 @@ export default function RegistrationsPage() {
           </div>
 
           <div className="mb-4">
-            <p className="text-sm text-field-green-600 dark:text-field-green-400">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               Showing {filteredRegistrations.length} of {registrations.length} registrations
             </p>
           </div>
@@ -531,7 +531,7 @@ export default function RegistrationsPage() {
               <Loader2 className="h-8 w-8 animate-spin text-ice-blue-500" />
             </div>
           ) : filteredRegistrations.length === 0 ? (
-            <div className="text-center py-12 text-field-green-600 dark:text-field-green-400">
+            <div className="text-center py-12 text-slate-600 dark:text-slate-400">
               {registrations.length === 0
                 ? "No registrations found for this season."
                 : "No registrations match your search criteria."}
@@ -541,13 +541,13 @@ export default function RegistrationsPage() {
               <Table className="overflow-hidden rounded-xl border border-field-green-200 dark:border-field-green-700">
                 <TableHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700">
                   <TableRow className="border-field-green-200 dark:border-field-green-600">
-                    <TableHead className="text-field-green-900 dark:text-field-green-100 font-semibold">Player</TableHead>
-                    <TableHead className="text-field-green-900 dark:text-field-green-100 font-semibold">Email</TableHead>
-                    <TableHead className="text-field-green-900 dark:text-field-green-100 font-semibold">Primary Position</TableHead>
-                    <TableHead className="text-field-green-900 dark:text-field-green-100 font-semibold">Secondary Position</TableHead>
-                    <TableHead className="text-field-green-900 dark:text-field-green-100 font-semibold">Console</TableHead>
-                    <TableHead className="text-field-green-900 dark:text-field-green-100 font-semibold">Status</TableHead>
-                    <TableHead className="text-field-green-900 dark:text-field-green-100 font-semibold">Actions</TableHead>
+                    <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Player</TableHead>
+                    <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Email</TableHead>
+                    <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Primary Position</TableHead>
+                    <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Secondary Position</TableHead>
+                    <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Console</TableHead>
+                    <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Status</TableHead>
+                    <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -556,7 +556,7 @@ export default function RegistrationsPage() {
                       key={registration.id}
                       className="border-field-green-200 dark:border-field-green-600 hover:bg-field-green-50 dark:hover:bg-field-green-800/50 transition-colors"
                     >
-                      <TableCell className="font-semibold text-field-green-900 dark:text-field-green-100">
+                      <TableCell className="font-semibold text-slate-900 dark:text-slate-100">
                         <div className="flex items-center gap-2">
                           <Button
                             variant="link"
@@ -576,8 +576,8 @@ export default function RegistrationsPage() {
                           </Button>
                         </div>
                       </TableCell>
-                      <TableCell className="text-field-green-700 dark:text-field-green-300">{registration.users?.email}</TableCell>
-                      <TableCell className="text-field-green-700 dark:text-field-green-300">
+                      <TableCell className="text-slate-700 dark:text-slate-300">{registration.users?.email}</TableCell>
+                      <TableCell className="text-slate-700 dark:text-slate-300">
                         <div className="flex items-center gap-2">
                           <span className="bg-ice-blue-100 dark:bg-ice-blue-900/30 px-2 py-1 rounded text-sm">{registration.primary_position}</span>
                           <Button
@@ -591,14 +591,14 @@ export default function RegistrationsPage() {
                           </Button>
                         </div>
                       </TableCell>
-                      <TableCell className="text-field-green-700 dark:text-field-green-300">
+                      <TableCell className="text-slate-700 dark:text-slate-300">
                         {registration.secondary_position ? (
                           <span className="bg-rink-blue-100 dark:bg-rink-blue-900/30 px-2 py-1 rounded text-sm">{registration.secondary_position}</span>
                         ) : (
                           "—"
                         )}
                       </TableCell>
-                      <TableCell className="text-field-green-700 dark:text-field-green-300">
+                      <TableCell className="text-slate-700 dark:text-slate-300">
                         <div className="flex items-center gap-2">
                           <span className="bg-assist-green-100 dark:bg-assist-green-900/30 px-2 py-1 rounded text-sm">{registration.console}</span>
                           <Button
@@ -658,13 +658,13 @@ export default function RegistrationsPage() {
           )}
           {process.env.NODE_ENV === "development" && (
             <div className="mt-4 p-4 bg-field-green-100 dark:bg-field-green-800 rounded text-xs font-mono overflow-auto max-h-60">
-              <p className="font-bold mb-2 text-field-green-900 dark:text-field-green-100">Debug Information:</p>
-              <p className="text-field-green-700 dark:text-field-green-300">Active Season: {JSON.stringify(activeSeason)}</p>
-              <p className="text-field-green-700 dark:text-field-green-300">Total Registrations: {registrations.length}</p>
-              <p className="text-field-green-700 dark:text-field-green-300">Filtered Registrations: {filteredRegistrations.length}</p>
+              <p className="font-bold mb-2 text-slate-900 dark:text-slate-100">Debug Information:</p>
+              <p className="text-slate-700 dark:text-slate-300">Active Season: {JSON.stringify(activeSeason)}</p>
+              <p className="text-slate-700 dark:text-slate-300">Total Registrations: {registrations.length}</p>
+              <p className="text-slate-700 dark:text-slate-300">Filtered Registrations: {filteredRegistrations.length}</p>
               <details>
-                <summary className="text-field-green-900 dark:text-field-green-100">All Registrations Data</summary>
-                <pre className="text-field-green-700 dark:text-field-green-300">{JSON.stringify(registrations, null, 2)}</pre>
+                <summary className="text-slate-900 dark:text-slate-100">All Registrations Data</summary>
+                <pre className="text-slate-700 dark:text-slate-300">{JSON.stringify(registrations, null, 2)}</pre>
               </details>
             </div>
           )}
