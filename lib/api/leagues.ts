@@ -68,9 +68,9 @@ export async function getLeagueById(id: string): Promise<League | null> {
 export async function getLeagueStandings(leagueId: string): Promise<TeamStanding[]> {
   const supabase = createClient();
 
-  // Pull Standings directly from teams table by conference
+  // Pull Standings directly from clubs table by conference
   const { data: teams, error } = await supabase
-    .from('teams')
+    .from('clubs')
     .select('id, name, logo_url, games_played, wins, losses, otl, goals_for, goals_against, points')
     .eq('conference_id', leagueId)
     .order('points', { ascending: false });
@@ -121,7 +121,7 @@ export async function getUpcomingMatches(leagueId: string, limit = 10): Promise<
   const today = new Date().toISOString().split('T')[0];
 
   const { data: teamRows, error: teamErr } = await supabase
-    .from('teams')
+    .from('clubs')
     .select('id')
     .eq('conference_id', leagueId);
   if (teamErr) {
@@ -258,7 +258,7 @@ export async function getTopScorers(leagueId: string, limit = 10) {
 
   // Resolve team IDs for this conference/league
   const { data: teamRows, error: teamErr } = await supabase
-    .from('teams')
+    .from('clubs')
     .select('id, name, logo_url')
     .eq('conference_id', leagueId);
   if (teamErr) {
@@ -274,8 +274,8 @@ export async function getTopScorers(leagueId: string, limit = 10) {
   // Fetch per-match player stats for those teams
   const { data: rows, error } = await supabase
     .from('ea_player_stats')
-    .select('player_name, team_id, goals, assists')
-    .or(`team_id.in.(${idsCsv})`)
+    .select('player_name, club_id, goals, assists')
+    .or(`club_id.in.(${idsCsv})`)
     .limit(5000);
 
   if (error) {
@@ -283,12 +283,12 @@ export async function getTopScorers(leagueId: string, limit = 10) {
     return [];
   }
 
-  // Aggregate goals/assists by player_name + team_id
+  // Aggregate goals/assists by player_name + club_id
   const agg = new Map<string, { id: string; name: string; team: { id: string; name: string; logo_url?: string }; goals: number; assists: number; matches_played: number; minutes_played: number }>();
   (rows || []).forEach((r: any) => {
-    const key = `${r.team_id}::${r.player_name || 'Unknown'}`;
+    const key = `${r.club_id}::${r.player_name || 'Unknown'}`;
     if (!agg.has(key)) {
-      const team = teamMap.get(r.team_id) || { id: r.team_id, name: 'Unknown', logo_url: undefined };
+      const team = teamMap.get(r.club_id) || { id: r.club_id, name: 'Unknown', logo_url: undefined };
       agg.set(key, {
         id: key,
         name: r.player_name || 'Unknown',
@@ -348,7 +348,7 @@ export async function getLeagueStats(leagueId: string): Promise<LeagueStats> {
   try {
     // 1. Get all teams in the conference
     const { data: teamRows, error: teamErr } = await supabase
-      .from('teams')
+      .from('clubs')
       .select('id')
       .eq('conference_id', leagueId);
 
@@ -362,9 +362,9 @@ export async function getLeagueStats(leagueId: string): Promise<LeagueStats> {
 
     // 2. Get all matches involving these teams
     const { data: matches, error: matchesError } = await supabase
-      .from('matches')
-      .select('id, home_team_id, away_team_id, home_score, away_score')
-      .or(`home_team_id.in.(${teamIdCsv}),away_team_id.in.(${teamIdCsv})`);
+      .from('fixtures')
+      .select('id, home_club_id, away_club_id, home_score, away_score')
+      .or(`home_club_id.in.(${teamIdCsv}),away_club_id.in.(${teamIdCsv})`);
 
     if (matchesError || !matches?.length) {
       console.error('Error or no matches found for teams', matchesError);

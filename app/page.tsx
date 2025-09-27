@@ -13,8 +13,8 @@ export default async function Home() {
 
   // Fetch stats
   const { count: players } = await supabase.from('players').select('*', { count: 'exact', head: true })
-  const { count: teams } = await supabase.from('teams').select('*', { count: 'exact', head: true })
-  const { count: matches } = await supabase.from('matches').select('*', { count: 'exact', head: true })
+  const { count: teams } = await supabase.from('clubs').select('*', { count: 'exact', head: true })
+  const { count: matches } = await supabase.from('fixtures').select('*', { count: 'exact', head: true })
 
   const stats = {
     players: players || 0,
@@ -25,11 +25,11 @@ export default async function Home() {
   // Fetch featured games (next 2 upcoming matches)
   // Fetch featured games (next 2 upcoming matches)
   const { data: featuredGames } = await supabase
-    .from('matches')
+    .from('fixtures')
     .select(`
       *,
-      home_team:teams!matches_home_team_id_fkey (*),
-      away_team:teams!matches_away_team_id_fkey (*)
+      home_team:clubs!fixtures_home_club_id_fkey (*),
+      away_team:clubs!fixtures_away_club_id_fkey (*)
     `)
     .eq('status', 'Scheduled')
     .order('match_date', { ascending: true })
@@ -37,11 +37,11 @@ export default async function Home() {
 
   // Fetch upcoming fixtures (next 4 after the featured games)
   const { data: upcomingFixtures } = await supabase
-    .from('matches')
+    .from('fixtures')
     .select(`
       *,
-      home_team:teams!matches_home_team_id_fkey (*),
-      away_team:teams!matches_away_team_id_fkey (*)
+      home_team:clubs!fixtures_home_club_id_fkey (*),
+      away_team:clubs!fixtures_away_club_id_fkey (*)
     `)
     .eq('status', 'Scheduled')
     .order('match_date', { ascending: true })
@@ -49,11 +49,11 @@ export default async function Home() {
 
   // Fetch recent results (last 4 completed matches)
   const { data: recentResults } = await supabase
-    .from('matches')
+    .from('fixtures')
     .select(`
       *,
-      home_team:teams!matches_home_team_id_fkey (*),
-      away_team:teams!matches_away_team_id_fkey (*)
+      home_team:clubs!fixtures_home_club_id_fkey (*),
+      away_team:clubs!fixtures_away_club_id_fkey (*)
     `)
     .eq('status', 'Completed')
     .order('match_date', { ascending: false })
@@ -61,7 +61,7 @@ export default async function Home() {
 
   // Fetch standings data
   const { data: standingsData } = await supabase
-    .from('teams')
+    .from('clubs')
     .select('*, conferences(name)')
     .eq('is_active', true)
     .order('points', { ascending: false });

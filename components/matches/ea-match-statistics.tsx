@@ -255,16 +255,16 @@ export function EaMatchStatistics({
 
       // Fetch the match details first
       const { data: matchData, error: matchError } = await supabase
-        .from("matches")
+        .from("fixtures")
         .select(`
           id,
-          home_team_id,
-          away_team_id,
+          home_club_id,
+          away_club_id,
           home_score,
           away_score,
           ea_match_id,
-          home_team:teams!home_team_id(id, name, logo_url, ea_club_id),
-          away_team:teams!away_team_id(id, name, logo_url, ea_club_id)
+          home_team:clubs!home_club_id(id, name, logo_url, ea_club_id),
+          away_team:clubs!away_club_id(id, name, logo_url, ea_club_id)
         `)
         .eq("id", matchId)
         .single()
@@ -341,7 +341,7 @@ export function EaMatchStatistics({
           // Calculate team stats from player stats
           if (playerStatsData && playerStatsData.length > 0) {
             const homeStats: TeamStats = {
-              team_id: matchData.home_team_id,
+              team_id: matchData.home_club_id,
               team_name: matchData.home_team.name,
               goals: 0,
               shots: 0,
@@ -365,7 +365,7 @@ export function EaMatchStatistics({
             }
 
             const awayStats: TeamStats = {
-              team_id: matchData.away_team_id,
+              team_id: matchData.away_club_id,
               team_name: matchData.away_team.name,
               goals: 0,
               shots: 0,
@@ -389,7 +389,7 @@ export function EaMatchStatistics({
             }
 
             playerStatsData.forEach((stat) => {
-              const teamStat = stat.team_id === matchData.home_team_id ? homeStats : awayStats
+              const teamStat = stat.team_id === matchData.home_club_id ? homeStats : awayStats
 
               teamStat.goals += stat.goals || 0
               teamStat.shots += stat.shots || 0
@@ -600,7 +600,7 @@ export function EaMatchStatistics({
           const club = matchInfo.clubs[clubId]
           // Determine if this is home or away team based on clubId
           const isHomeTeam = clubId === homeClubId.toString()
-          const teamId = isHomeTeam ? matchData.home_team_id : matchData.away_team_id
+          const teamId = isHomeTeam ? matchData.home_club_id : matchData.away_club_id
           const teamName = isHomeTeam ? matchData.home_team.name : matchData.away_team.name
 
           console.log(`Processing club ${clubId} (${isHomeTeam ? "Home" : "Away"} team):`, club)
@@ -660,7 +660,7 @@ export function EaMatchStatistics({
           Object.keys(matchInfo.players).forEach((clubId) => {
             const clubPlayers = matchInfo.players[clubId]
             const isHomeTeam = clubId === homeClubId.toString()
-            const teamId = isHomeTeam ? matchData.home_team_id : matchData.away_team_id
+            const teamId = isHomeTeam ? matchData.home_club_id : matchData.away_club_id
 
             console.log(
               `Processing players for club ${clubId} (${isHomeTeam ? "Home" : "Away"} team)`,
@@ -766,7 +766,7 @@ export function EaMatchStatistics({
             if (!club.players) return
 
             const isHomeTeam = clubId === homeClubId.toString()
-            const teamId = isHomeTeam ? matchData.home_team_id : matchData.away_team_id
+            const teamId = isHomeTeam ? matchData.home_club_id : matchData.away_club_id
 
             // Process each player in this club
             Object.entries(club.players).forEach(([playerId, player]) => {
@@ -1239,7 +1239,7 @@ export function EaMatchStatistics({
       // Also update the match with EA match ID if not already set
       if (match && !match.ea_match_id) {
         const { error: matchUpdateError } = await supabase
-          .from("matches")
+          .from("fixtures")
           .update({ ea_match_id: eaMatchId })
           .eq("id", matchId)
 
@@ -1402,24 +1402,24 @@ export function EaMatchStatistics({
   }
 
   // Get home and away team stats
-  const homeTeamStats = teamStats.find((team) => team.team_id === match?.home_team_id) || teamStats[0]
-  const awayTeamStats = teamStats.find((team) => team.team_id === match?.away_team_id) || teamStats[1]
+  const homeTeamStats = teamStats.find((team) => team.team_id === match?.home_club_id) || teamStats[0]
+  const awayTeamStats = teamStats.find((team) => team.team_id === match?.away_club_id) || teamStats[1]
 
   // Get skaters and goalies for each team - properly filter goalies
   const homeSkaters = playerStats.filter(
-    (player) => player.team_id === match?.home_team_id && !isGoalie(player.position || ""),
+    (player) => player.team_id === match?.home_club_id && !isGoalie(player.position || ""),
   )
 
   const awaySkaters = playerStats.filter(
-    (player) => player.team_id === match?.away_team_id && !isGoalie(player.position || ""),
+    (player) => player.team_id === match?.away_club_id && !isGoalie(player.position || ""),
   )
 
   const homeGoalies = playerStats.filter(
-    (player) => player.team_id === match?.home_team_id && isGoalie(player.position || ""),
+    (player) => player.team_id === match?.home_club_id && isGoalie(player.position || ""),
   )
 
   const awayGoalies = playerStats.filter(
-    (player) => player.team_id === match?.away_team_id && isGoalie(player.position || ""),
+    (player) => player.team_id === match?.away_club_id && isGoalie(player.position || ""),
   )
 
   // Check if we have generic player names (Player One, Player Two, etc.)

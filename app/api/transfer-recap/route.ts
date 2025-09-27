@@ -15,8 +15,8 @@ export async function GET() {
       .from('transfer_listings')
       .select(`
         *,
-        players (*, teams (*)),
-        teams (*)
+        players (*, clubs (*)),
+        clubs (*)
       `)
       .eq('status', 'completed')
       .order('listing_date', { ascending: false })

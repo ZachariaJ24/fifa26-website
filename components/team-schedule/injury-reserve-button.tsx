@@ -86,7 +86,7 @@ export function InjuryReserveButton({ teamId, isUserOnTeam, matches, currentSeas
           .from("injury_reserves")
           .select("*")
           .eq("user_id", session.user.id)
-          .eq("team_id", teamId)
+          .eq("club_id", teamId)
           .eq("season_id", currentSeasonId.toString())
           .eq("status", "active")
           .gte("week_end_date", weekDates.weekStart.toISOString().split("T")[0])

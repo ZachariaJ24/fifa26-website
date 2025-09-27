@@ -150,8 +150,8 @@ export default function AdminAwardsPage() {
           id, 
           user_id,
           users!inner(gamer_tag_id),
-          team_id,
-          clubs:team_id(name)
+          club_id,
+          clubs:club_id(name)
         `)
 
       if (playersError) throw playersError
@@ -160,7 +160,7 @@ export default function AdminAwardsPage() {
           id: p.id,
           user_id: p.user_id,
           gamer_tag_id: p.users.gamer_tag_id,
-          team_id: p.team_id,
+          team_id: p.club_id,
           team_name: p.clubs?.name || null,
         })) || []
       )

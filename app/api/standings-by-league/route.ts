@@ -12,8 +12,8 @@ interface Team {
 }
 
 interface Match {
-  home_team_id: string;
-  away_team_id: string;
+  home_club_id: string;
+  away_club_id: string;
   home_score: number;
   away_score: number;
 }
@@ -53,15 +53,15 @@ export async function GET() {
 
     // 2. Fetch all teams
     const { data: teams, error: teamsError } = await supabase
-      .from('teams')
+      .from('clubs')
       .select('id, name, logo_url, conference_id')
 
     if (teamsError) throw new Error(teamsError.message)
 
     // 3. Fetch all matches
     const { data: matches, error: matchesError } = await supabase
-      .from('matches')
-      .select('home_team_id, away_team_id, home_score, away_score')
+      .from('fixtures')
+      .select('home_club_id, away_club_id, home_score, away_score')
       .eq('status', 'Completed')
 
     if (matchesError) throw new Error(matchesError.message)
@@ -78,13 +78,13 @@ export async function GET() {
         let goals_against = 0
 
         matches.forEach(match => {
-          if (match.home_team_id === team.id) {
+          if (match.home_club_id === team.id) {
             goals_for += match.home_score
             goals_against += match.away_score
             if (match.home_score > match.away_score) wins++
             else if (match.home_score < match.away_score) losses++
             else draws++
-          } else if (match.away_team_id === team.id) {
+          } else if (match.away_club_id === team.id) {
             goals_for += match.away_score
             goals_against += match.home_score
             if (match.away_score > match.home_score) wins++
@@ -99,13 +99,13 @@ export async function GET() {
 
         // Calculate Form and Streak
         const teamMatches = matches
-          .filter(m => m.home_team_id === team.id || m.away_team_id === team.id)
+          .filter(m => m.home_club_id === team.id || m.away_club_id === team.id)
           // Assuming matches have a date, which they don't in this context.
           // This will need to be added to the matches table to be accurate.
           // For now, we'll proceed without sorting by date, which is not ideal.
 
         const form: string[] = teamMatches.slice(-5).map(m => {
-          if (m.home_team_id === team.id) {
+          if (m.home_club_id === team.id) {
             if (m.home_score > m.away_score) return 'W';
             if (m.home_score < m.away_score) return 'L';
             return 'D';

@@ -65,7 +65,7 @@ export async function calculateUnifiedStandings(): Promise<{
 
   // Get teams with conference data
   const { data: teamsData, error: teamsError } = await supabase
-    .from("teams")
+    .from("clubs")
     .select(`
       id,
       name,
@@ -86,11 +86,11 @@ export async function calculateUnifiedStandings(): Promise<{
 
   // Get completed matches for the current season
   const { data: matchesData, error: matchesError } = await supabase
-    .from("matches")
+    .from("fixtures")
     .select(`
       id,
-      home_team_id,
-      away_team_id,
+      home_club_id,
+      away_club_id,
       home_score,
       away_score,
       status
@@ -112,7 +112,7 @@ export async function calculateUnifiedStandings(): Promise<{
 
     // Calculate stats from matches
     matchesData.forEach((match: any) => {
-      if (match.home_team_id === team.id) {
+      if (match.home_club_id === team.id) {
         goalsFor += match.home_score || 0
         goalsAgainst += match.away_score || 0
         
@@ -123,7 +123,7 @@ export async function calculateUnifiedStandings(): Promise<{
         } else {
           otl++
         }
-      } else if (match.away_team_id === team.id) {
+      } else if (match.away_club_id === team.id) {
         goalsFor += match.away_score || 0
         goalsAgainst += match.home_score || 0
         
@@ -231,7 +231,7 @@ export async function calculateUnifiedStandingsClient(supabase: any): Promise<{
 
   // Get teams with conference data
   const { data: teamsData, error: teamsError } = await supabase
-    .from("teams")
+    .from("clubs")
     .select(`
       id,
       name,
@@ -252,11 +252,11 @@ export async function calculateUnifiedStandingsClient(supabase: any): Promise<{
 
   // Get completed matches for the current season
   const { data: matchesData, error: matchesError } = await supabase
-    .from("matches")
+    .from("fixtures")
     .select(`
       id,
-      home_team_id,
-      away_team_id,
+      home_club_id,
+      away_club_id,
       home_score,
       away_score,
       status
@@ -278,7 +278,7 @@ export async function calculateUnifiedStandingsClient(supabase: any): Promise<{
 
     // Calculate stats from matches
     matchesData.forEach((match: any) => {
-      if (match.home_team_id === team.id) {
+      if (match.home_club_id === team.id) {
         goalsFor += match.home_score || 0
         goalsAgainst += match.away_score || 0
         
@@ -289,7 +289,7 @@ export async function calculateUnifiedStandingsClient(supabase: any): Promise<{
         } else {
           otl++
         }
-      } else if (match.away_team_id === team.id) {
+      } else if (match.away_club_id === team.id) {
         goalsFor += match.away_score || 0
         goalsAgainst += match.home_score || 0
         

@@ -333,11 +333,11 @@ export async function GET(request: NextRequest) {
     console.log("Current time:", new Date().toISOString())
 
     const { data: matches, error: matchesError } = await supabase
-      .from("matches")
+      .from("fixtures")
       .select(`
         id,
-        home_team_id,
-        away_team_id,
+        home_club_id,
+        away_club_id,
         home_score,
         away_score,
         status,
@@ -345,8 +345,8 @@ export async function GET(request: NextRequest) {
         has_overtime,
         created_at,
         updated_at,
-        home_team:home_team_id(name),
-        away_team:away_team_id(name)
+        home_team:clubs!home_club_id(name),
+        away_team:clubs!away_club_id(name)
       `)
       .eq("status", "Completed")
       .gte("updated_at", fortyEightHoursAgo)
@@ -380,8 +380,8 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // Get all teams - we'll map by internal team ID since that's what ea_player_stats uses
-    const { data: teams, error: teamsError } = await supabase.from("teams").select("id, name, ea_club_id")
+    // Get all clubs - we'll map by internal club ID since that's what ea_player_stats uses
+    const { data: teams, error: teamsError } = await supabase.from("clubs").select("id, name, ea_club_id")
 
     if (teamsError) {
       throw new Error(`Error fetching teams: ${teamsError.message}`)
@@ -509,10 +509,10 @@ export async function GET(request: NextRequest) {
         let opponentScore: number | undefined
 
         if (match) {
-          const isHome = match.home_team_id === stat.team_id
+          const isHome = match.home_club_id === stat.team_id
           opponent = isHome
-            ? teamIdToTeam.get(match.away_team_id)?.name || "Unknown"
-            : teamIdToTeam.get(match.home_team_id)?.name || "Unknown"
+            ? teamIdToTeam.get(match.away_club_id)?.name || "Unknown"
+            : teamIdToTeam.get(match.home_club_id)?.name || "Unknown"
 
           teamScore = isHome ? match.home_score : match.away_score
           opponentScore = isHome ? match.away_score : match.home_score
@@ -547,10 +547,10 @@ export async function GET(request: NextRequest) {
         let opponentScore: number | undefined
 
         if (match) {
-          const isHome = match.home_team_id === stat.team_id
+          const isHome = match.home_club_id === stat.team_id
           opponent = isHome
-            ? teamIdToTeam.get(match.away_team_id)?.name || "Unknown"
-            : teamIdToTeam.get(match.home_team_id)?.name || "Unknown"
+            ? teamIdToTeam.get(match.away_club_id)?.name || "Unknown"
+            : teamIdToTeam.get(match.home_club_id)?.name || "Unknown"
 
           teamScore = isHome ? match.home_score : match.away_score
           opponentScore = isHome ? match.away_score : match.home_score
@@ -616,11 +616,11 @@ export async function GET(request: NextRequest) {
       if (!teamId) continue
 
       matches.forEach((match) => {
-        if (match.home_team_id === teamId || match.away_team_id === teamId) {
-          const isHome = match.home_team_id === teamId
+        if (match.home_club_id === teamId || match.away_club_id === teamId) {
+          const isHome = match.home_club_id === teamId
           const opponent = isHome
-            ? teamIdToTeam.get(match.away_team_id)?.name
-            : teamIdToTeam.get(match.home_team_id)?.name
+            ? teamIdToTeam.get(match.away_club_id)?.name
+            : teamIdToTeam.get(match.home_club_id)?.name
           const teamScore = isHome ? match.home_score : match.away_score
           const oppScore = isHome ? match.away_score : match.home_score
           const goalDiff = teamScore - oppScore

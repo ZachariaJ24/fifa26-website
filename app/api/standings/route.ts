@@ -18,9 +18,9 @@ export async function GET() {
       return NextResponse.json({ error: "No active season found" }, { status: 404 })
     }
 
-    // Get teams with conference data
+    // Get clubs with conference data
     const { data: teamsData, error: teamsError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select(`
         id,
         name,
@@ -47,13 +47,13 @@ export async function GET() {
       return NextResponse.json({ error: teamsError.message }, { status: 500 })
     }
 
-    // Get completed matches for the current season
+    // Get completed fixtures for the current season
     const { data: matchesData, error: matchesError } = await supabase
-      .from("matches")
+      .from("fixtures")
       .select(`
         id,
-        home_team_id,
-        away_team_id,
+        home_club_id,
+        away_club_id,
         home_score,
         away_score,
         status,
@@ -75,9 +75,9 @@ export async function GET() {
       let goalsFor = 0
       let goalsAgainst = 0
 
-      // Calculate stats from matches
+      // Calculate stats from fixtures
       matchesData.forEach((match: any) => {
-        if (match.home_team_id === team.id) {
+        if (match.home_club_id === team.id) {
           goalsFor += match.home_score || 0
           goalsAgainst += match.away_score || 0
           
@@ -93,7 +93,7 @@ export async function GET() {
             // Tie counts as loss if no overtime/shootout
             losses++
           }
-        } else if (match.away_team_id === team.id) {
+        } else if (match.away_club_id === team.id) {
           goalsFor += match.away_score || 0
           goalsAgainst += match.home_score || 0
           

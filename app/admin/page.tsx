@@ -190,14 +190,6 @@ export default function AdminDashboardPage() {
       color: "pitch-blue"
     },
     {
-      title: "Bidding Recap",
-      description: "View comprehensive bidding statistics and player bid history",
-      icon: <DollarSign className="h-6 w-6" />,
-      href: "/admin/bidding-recap",
-      category: "finance",
-      color: "goal-orange"
-    },
-    {
       title: "Daily Recap",
       description: "Generate nightly recap for all clubs based on recent matches",
       icon: <Newspaper className="h-6 w-6" />,

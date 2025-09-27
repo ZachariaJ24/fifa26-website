@@ -11,7 +11,7 @@ export async function GET() {
     // Get team awards
     const { data: awards, error: awardsError } = await supabase
       .from("team_awards")
-      .select("id, team_id, award_type, season_number, year")
+      .select("id, club_id, award_type, season_number, year")
       .order("year", { ascending: false })
 
     if (awardsError) {

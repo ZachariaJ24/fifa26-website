@@ -22,7 +22,7 @@ export async function POST() {
 
     // Get all active teams
     const { data: teamsData, error: teamsError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("id, name")
       .eq("is_active", true)
 
@@ -32,11 +32,11 @@ export async function POST() {
 
     // Get completed matches for current season
     const { data: matchesData, error: matchesError } = await supabase
-      .from("matches")
+      .from("fixtures")
       .select(`
         id,
-        home_team_id,
-        away_team_id,
+        home_club_id,
+        away_club_id,
         home_score,
         away_score,
         status
@@ -62,7 +62,7 @@ export async function POST() {
 
       // Calculate stats from matches
       matchesData.forEach((match) => {
-        if (match.home_team_id === team.id) {
+        if (match.home_club_id === team.id) {
           goalsFor += match.home_score || 0
           goalsAgainst += match.away_score || 0
           
@@ -73,7 +73,7 @@ export async function POST() {
           } else {
             otl++
           }
-        } else if (match.away_team_id === team.id) {
+        } else if (match.away_club_id === team.id) {
           goalsFor += match.away_score || 0
           goalsAgainst += match.home_score || 0
           
@@ -92,7 +92,7 @@ export async function POST() {
 
       // Update team stats in database
       const { error: updateError } = await supabase
-        .from("teams")
+        .from("clubs")
         .update({
           wins,
           losses,
@@ -160,7 +160,7 @@ export async function GET() {
 
     // Get teams with current stats
     const { data: teamsData, error: teamsError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select(`
         id,
         name,
@@ -182,7 +182,7 @@ export async function GET() {
 
     // Get completed matches count
     const { data: matchesData, error: matchesError } = await supabase
-      .from("matches")
+      .from("fixtures")
       .select("id")
       .eq("season_id", seasonData.id)
       .eq("status", "completed")

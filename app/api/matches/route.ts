@@ -13,15 +13,15 @@ export async function GET(request: Request) {
 
   try {
     let query = supabase
-      .from('matches')
+      .from('fixtures')
       .select(`
         id,
         match_date,
         status,
         home_score,
         away_score,
-        home_team:teams!home_team_id(id, name, logo_url),
-        away_team:teams!away_team_id(id, name, logo_url)
+        home_team:clubs!home_club_id(id, name, logo_url),
+        away_team:clubs!away_club_id(id, name, logo_url)
       `)
 
     if (seasonId) {
@@ -79,20 +79,20 @@ export async function POST(request: Request) {
 
     const body = await request.json()
     const { 
-      home_team_id, 
-      away_team_id, 
+      home_club_id, 
+      away_club_id, 
       season_id, 
       match_date, 
       venue, 
       referee 
     } = body
 
-    if (!home_team_id || !away_team_id) {
-      return NextResponse.json({ error: "Home and away team IDs are required" }, { status: 400 })
+    if (!home_club_id || !away_club_id) {
+      return NextResponse.json({ error: "Home and away club IDs are required" }, { status: 400 })
     }
 
-    if (home_team_id === away_team_id) {
-      return NextResponse.json({ error: "Home and away teams must be different" }, { status: 400 })
+    if (home_club_id === away_club_id) {
+      return NextResponse.json({ error: "Home and away clubs must be different" }, { status: 400 })
     }
 
     // Get current season if not provided
@@ -111,10 +111,10 @@ export async function POST(request: Request) {
     }
 
     const { data: match, error } = await supabase
-      .from("matches")
+      .from("fixtures")
       .insert({
-        home_team_id,
-        away_team_id,
+        home_club_id,
+        away_club_id,
         season_id: actualSeasonId,
         match_date: match_date || new Date().toISOString(),
         venue,
@@ -123,15 +123,15 @@ export async function POST(request: Request) {
       })
       .select(`
         id,
-        home_team_id,
-        away_team_id,
+        home_club_id,
+        away_club_id,
         home_score,
         away_score,
         status,
         match_date,
         venue,
         referee,
-        home_team:teams!home_team_id(
+        home_team:clubs!home_club_id(
           id,
           name,
           logo_url,
@@ -141,7 +141,7 @@ export async function POST(request: Request) {
             color
           )
         ),
-        away_team:teams!away_team_id(
+        away_team:clubs!away_club_id(
           id,
           name,
           logo_url,

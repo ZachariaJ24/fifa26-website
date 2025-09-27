@@ -102,7 +102,7 @@ export default function TeamsPage() {
             className="text-center"
           >
             <h1 className="fifa-title-enhanced mb-6">
-              Team Directory
+              Club Directory
             </h1>
             <p className="text-xl md:text-2xl text-field-green-700 dark:text-field-green-300 mb-8 max-w-3xl mx-auto">
               Explore the clubs competing in the world's most prestigious virtual football league.
@@ -126,7 +126,7 @@ export default function TeamsPage() {
                 <Trophy className="h-8 w-8 text-white" />
               </div>
               <div className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">{totalTeams}</div>
-              <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Total Teams</div>
+              <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Total Clubs</div>
             </div>
           </div>
           
@@ -164,7 +164,7 @@ export default function TeamsPage() {
               Search Directory
             </h2>
             <Input 
-              placeholder="Search teams by name..." 
+              placeholder="Search clubs by name..." 
               value={searchQuery} 
               onChange={(e) => setSearchQuery(e.target.value)} 
               className="fifa-search w-full" 
@@ -238,7 +238,7 @@ export default function TeamsPage() {
               <div className="col-span-full text-center py-20">
                 <div className="fifa-card-hover-enhanced p-12">
                   <Search className="h-12 w-12 mx-auto text-field-green-400 dark:text-field-green-500 mb-4" />
-                  <h3 className="text-xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">No teams found</h3>
+                  <h3 className="text-xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">No clubs found</h3>
                   <p className="text-field-green-600 dark:text-field-green-400">Try adjusting your search terms.</p>
                 </div>
               </div>

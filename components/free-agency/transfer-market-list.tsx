@@ -123,7 +123,7 @@ export function TransferMarketList({ userId, searchParams = {} }: TransferMarket
       const { error: updateError } = await supabase
         .from("players")
         .update({
-          team_id: offer.team_id,
+          club_id: offer.team_id,
           salary: offer.offer_amount,
         })
         .eq("id", offer.player_id)
@@ -132,7 +132,7 @@ export function TransferMarketList({ userId, searchParams = {} }: TransferMarket
 
       // Get team name for notification
       const { data: team } = await supabase
-        .from("teams")
+        .from("clubs")
         .select("name")
         .eq("id", offer.team_id)
         .single()
@@ -149,7 +149,7 @@ export function TransferMarketList({ userId, searchParams = {} }: TransferMarket
       const { data: managers } = await supabase
         .from("players")
         .select("user_id")
-        .eq("team_id", offer.team_id)
+        .eq("club_id", offer.team_id)
         .in("role", ["GM", "AGM", "Owner"])
 
       if (managers && managers.length > 0) {
@@ -256,8 +256,8 @@ export function TransferMarketList({ userId, searchParams = {} }: TransferMarket
       const { data: teamData, error } = await supabase
         .from("players")
         .select(`
-          team_id,
-          teams (
+          club_id,
+          clubs (
             id,
             name,
             logo_url,
@@ -289,7 +289,7 @@ export function TransferMarketList({ userId, searchParams = {} }: TransferMarket
       const { data: stats, error } = await supabase
         .from("team_stats")
         .select("*")
-        .eq("team_id", userTeam.id)
+        .eq("club_id", userTeam.id)
         .single()
 
       if (error) {
