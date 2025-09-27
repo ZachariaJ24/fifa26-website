@@ -248,8 +248,8 @@ export default function AdminAwardsPage() {
       <div className="container mx-auto px-4 py-8">
           <div className="text-center">
             <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-            <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">Access Denied</h1>
-            <p className="text-slate-600 dark:text-slate-400">You don't have permission to access this page.</p>
+            <h1 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">Access Denied</h1>
+            <p className="text-field-green-600 dark:text-field-green-400">You don't have permission to access this page.</p>
           </div>
         </div>
       </div>

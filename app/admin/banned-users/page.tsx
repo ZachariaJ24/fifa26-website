@@ -591,14 +591,14 @@ export default function BannedUsersPage() {
                       <UserX className="h-6 w-6 text-white" />
                     </div>
                 <div>
-                      <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+                      <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
                         Banned Users
                         <span className="bg-goal-red-500 text-white text-sm px-3 py-1 rounded-full">
                           {filteredBannedUsers.length}
                           {bannedUsers.length !== filteredBannedUsers.length ? ` of ${bannedUsers.length}` : ""}
                         </span>
                       </h2>
-                      <p className="text-slate-600 dark:text-slate-400">View and manage banned users</p>
+                      <p className="text-field-green-600 dark:text-field-green-400">View and manage banned users</p>
                 </div>
                   </div>
                   <Button 
@@ -621,7 +621,7 @@ export default function BannedUsersPage() {
                   <div className="flex justify-center items-center py-12">
                     <div className="text-center">
                       <Loader2 className="h-8 w-8 animate-spin text-ice-blue-500 mx-auto mb-4" />
-                      <p className="text-slate-600 dark:text-slate-400">Loading banned users...</p>
+                      <p className="text-field-green-600 dark:text-field-green-400">Loading banned users...</p>
                     </div>
                 </div>
               ) : filteredBannedUsers.length === 0 ? (
@@ -630,10 +630,10 @@ export default function BannedUsersPage() {
                       <UserX className="h-16 w-16 mx-auto mb-4 text-ice-blue-500 opacity-60" />
                   {searchTerm ? (
                     <div>
-                          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                          <h3 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200 mb-2">
                             No banned users found
                           </h3>
-                          <p className="text-slate-600 dark:text-slate-400 mb-4">
+                          <p className="text-field-green-600 dark:text-field-green-400 mb-4">
                             No banned users match "{searchTerm}"
                           </p>
                           <Button 
@@ -647,10 +647,10 @@ export default function BannedUsersPage() {
                     </div>
                   ) : (
                         <div>
-                          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                          <h3 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200 mb-2">
                             No banned users
                           </h3>
-                          <p className="text-slate-600 dark:text-slate-400">
+                          <p className="text-field-green-600 dark:text-field-green-400">
                             All users are currently active
                           </p>
                         </div>
@@ -662,11 +662,11 @@ export default function BannedUsersPage() {
                 <Table>
                       <TableHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700">
                         <TableRow className="border-field-green-200 dark:border-field-green-600">
-                          <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">User Details</TableHead>
-                          <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Ban Reason</TableHead>
-                          <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Expiration</TableHead>
-                          <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Status</TableHead>
-                          <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Actions</TableHead>
+                          <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">User Details</TableHead>
+                          <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">Ban Reason</TableHead>
+                          <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">Expiration</TableHead>
+                          <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">Status</TableHead>
+                          <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -678,33 +678,33 @@ export default function BannedUsersPage() {
                             <TableCell className="py-4">
                               <div className="space-y-2">
                                 {user.email && (
-                                  <p className="font-semibold text-slate-900 dark:text-slate-100">{user.email}</p>
+                                  <p className="font-semibold text-field-green-800 dark:text-field-green-200">{user.email}</p>
                                 )}
                                 {user.gamer_tag && (
-                                  <p className="text-sm text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                                  <p className="text-sm text-field-green-600 dark:text-field-green-400 flex items-center gap-2">
                                     <span className="bg-ice-blue-100 dark:bg-ice-blue-900 text-ice-blue-700 dark:text-ice-blue-300 px-2 py-1 rounded text-xs font-medium">GT</span>
                                     {user.gamer_tag}
                                   </p>
                                 )}
                             {user.gamer_tag_id && (
-                                  <p className="text-sm text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                                  <p className="text-sm text-field-green-600 dark:text-field-green-400 flex items-center gap-2">
                                     <span className="bg-rink-blue-100 dark:bg-rink-blue-900 text-rink-blue-700 dark:text-rink-blue-300 px-2 py-1 rounded text-xs font-medium">ID</span>
                                     {user.gamer_tag_id}
                                   </p>
                             )}
                             {user.discord_name && (
-                                  <p className="text-sm text-slate-600 dark:text-slate-400 flex items-center gap-2">
+                                  <p className="text-sm text-field-green-600 dark:text-field-green-400 flex items-center gap-2">
                                     <span className="bg-assist-green-100 dark:bg-assist-green-900 text-assist-green-700 dark:text-assist-green-300 px-2 py-1 rounded text-xs font-medium">Discord</span>
                                     {user.discord_name}
                                   </p>
                             )}
                             {!user.email && !user.gamer_tag && !user.gamer_tag_id && !user.discord_name && (
-                                  <p className="text-sm text-slate-500 italic">No display name</p>
+                                  <p className="text-sm text-field-green-500 italic">No display name</p>
                             )}
                           </div>
                         </TableCell>
                             <TableCell className="py-4">
-                              <p className="text-sm max-w-xs break-words text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 p-2 rounded">
+                              <p className="text-sm max-w-xs break-words text-field-green-700 dark:text-field-green-300 bg-slate-100 dark:bg-slate-800 p-2 rounded">
                                 {user.ban_reason}
                               </p>
                         </TableCell>
@@ -712,7 +712,7 @@ export default function BannedUsersPage() {
                           {user.ban_expiration ? (
                             <div className="flex items-center gap-2">
                                   <Clock className="h-4 w-4 text-ice-blue-500" />
-                                  <span className="text-sm text-slate-700 dark:text-slate-300">{formatDate(user.ban_expiration)}</span>
+                                  <span className="text-sm text-field-green-700 dark:text-field-green-300">{formatDate(user.ban_expiration)}</span>
                             </div>
                           ) : (
                                 <Badge className="bg-goal-red-500 text-white">Permanent</Badge>
@@ -769,16 +769,16 @@ export default function BannedUsersPage() {
                     <Ban className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+                    <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
                 User Management
                     </h2>
-                    <p className="text-slate-600 dark:text-slate-400">Ban or unban users from the platform</p>
+                    <p className="text-field-green-600 dark:text-field-green-400">Ban or unban users from the platform</p>
                   </div>
                 </div>
                 <div className="space-y-6">
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                      <h4 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
+                      <h4 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200">
                         All Users
                   </h4>
                       <span className="bg-assist-green-500 text-white text-sm px-3 py-1 rounded-full">
@@ -798,7 +798,7 @@ export default function BannedUsersPage() {
                       Refresh
                     </Button>
                     {!userSearchTerm.trim() && (
-                        <div className="text-sm text-slate-600 dark:text-slate-400 bg-field-green-100 dark:bg-field-green-800 px-3 py-1 rounded">
+                        <div className="text-sm text-field-green-600 dark:text-field-green-400 bg-field-green-100 dark:bg-field-green-800 px-3 py-1 rounded">
                         Page {currentPage} of {totalPages}
                       </div>
                     )}
@@ -830,10 +830,10 @@ export default function BannedUsersPage() {
                     <div className="text-center py-8">
                       <div className="p-6 bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700 rounded-xl">
                         <Users className="h-12 w-12 mx-auto mb-4 text-ice-blue-500 opacity-60" />
-                        <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                        <h3 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200 mb-2">
                           No Users Loaded
                         </h3>
-                        <p className="text-slate-600 dark:text-slate-400 mb-4">
+                        <p className="text-field-green-600 dark:text-field-green-400 mb-4">
                           Click the button below to load users from the database
                         </p>
                         <Button onClick={() => fetchUsers(1)} className="hockey-button-enhanced">
@@ -847,7 +847,7 @@ export default function BannedUsersPage() {
                     <div className="flex justify-center items-center py-12">
                       <div className="text-center">
                         <Loader2 className="h-8 w-8 animate-spin text-ice-blue-500 mx-auto mb-4" />
-                        <p className="text-slate-600 dark:text-slate-400">Loading users...</p>
+                        <p className="text-field-green-600 dark:text-field-green-400">Loading users...</p>
                       </div>
                   </div>
                 ) : filteredUsers.length > 0 ? (
@@ -856,10 +856,10 @@ export default function BannedUsersPage() {
                     <Table>
                           <TableHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700">
                             <TableRow className="border-field-green-200 dark:border-field-green-600">
-                              <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Gamer Tag ID</TableHead>
-                              <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Discord Name</TableHead>
-                              <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Status</TableHead>
-                              <TableHead className="text-slate-900 dark:text-slate-100 font-semibold">Actions</TableHead>
+                              <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">Gamer Tag ID</TableHead>
+                              <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">Discord Name</TableHead>
+                              <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">Status</TableHead>
+                              <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -869,16 +869,16 @@ export default function BannedUsersPage() {
                                 className="border-field-green-200 dark:border-field-green-600 hover:bg-field-green-50 dark:hover:bg-field-green-800/50 transition-colors "
                               >
                                 <TableCell className="py-4">
-                                  <p className="font-semibold text-slate-900 dark:text-slate-100">
+                                  <p className="font-semibold text-field-green-800 dark:text-field-green-200">
                                     {user.gamer_tag_id || (
-                                      <span className="text-slate-500 italic">Not set</span>
+                                      <span className="text-field-green-500 italic">Not set</span>
                                     )}
                                   </p>
                             </TableCell>
                                 <TableCell className="py-4">
-                                  <p className="text-slate-700 dark:text-slate-300">
+                                  <p className="text-field-green-700 dark:text-field-green-300">
                                     {user.discord_name || (
-                                      <span className="text-slate-500 italic">Not set</span>
+                                      <span className="text-field-green-500 italic">Not set</span>
                                     )}
                                   </p>
                             </TableCell>
@@ -958,7 +958,7 @@ export default function BannedUsersPage() {
                             Next
                           </Button>
                         </div>
-                            <div className="text-sm text-slate-600 dark:text-slate-400">
+                            <div className="text-sm text-field-green-600 dark:text-field-green-400">
                           Showing {(currentPage - 1) * usersPerPage + 1} to{" "}
                           {Math.min(currentPage * usersPerPage, totalUsers)} of {totalUsers} users
                         </div>
@@ -970,10 +970,10 @@ export default function BannedUsersPage() {
                     <div className="text-center py-12">
                       <div className="p-6 bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700 rounded-xl">
                         <Users className="h-16 w-16 mx-auto mb-4 text-ice-blue-500 opacity-60" />
-                        <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-2">
+                        <h3 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200 mb-2">
                           No users found
                         </h3>
-                        <p className="text-slate-600 dark:text-slate-400 mb-4">
+                        <p className="text-field-green-600 dark:text-field-green-400 mb-4">
                           No users match "{userSearchTerm}"
                         </p>
                         <Button 
@@ -1002,18 +1002,18 @@ export default function BannedUsersPage() {
                   <UserCheck className="h-8 w-8 text-white" />
                 </div>
               </div>
-              <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+              <DialogTitle className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
                 Unban User
               </DialogTitle>
-              <DialogDescription className="text-slate-600 dark:text-slate-400">
+              <DialogDescription className="text-field-green-600 dark:text-field-green-400">
               Are you sure you want to unban this user? This will immediately restore their access to the platform.
             </DialogDescription>
           </DialogHeader>
           {selectedUserForUnban && (
               <div className="space-y-4 p-4 bg-field-green-50 dark:bg-field-green-800/50 rounded-lg">
                 <div className="flex items-center gap-3">
-                  <span className="font-semibold text-slate-900 dark:text-slate-100 min-w-[80px]">User:</span>
-                  <span className="text-slate-700 dark:text-slate-300">
+                  <span className="font-semibold text-field-green-800 dark:text-field-green-200 min-w-[80px]">User:</span>
+                  <span className="text-field-green-700 dark:text-field-green-300">
                 {selectedUserForUnban.gamer_tag_id ||
                   selectedUserForUnban.discord_name ||
                   selectedUserForUnban.email ||
@@ -1021,15 +1021,15 @@ export default function BannedUsersPage() {
                   </span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <span className="font-semibold text-slate-900 dark:text-slate-100 min-w-[80px]">Reason:</span>
+                  <span className="font-semibold text-field-green-800 dark:text-field-green-200 min-w-[80px]">Reason:</span>
                   <span className="text-field-green-700 dark:text-field-green-300 bg-hockey-silver-100 dark:bg-hockey-silver-700 p-2 rounded text-sm">
                     {selectedUserForUnban.ban_reason}
                   </span>
                 </div>
               {selectedUserForUnban.ban_expiration && (
                   <div className="flex items-center gap-3">
-                    <span className="font-semibold text-slate-900 dark:text-slate-100 min-w-[80px]">Expires:</span>
-                    <span className="text-slate-700 dark:text-slate-300">
+                    <span className="font-semibold text-field-green-800 dark:text-field-green-200 min-w-[80px]">Expires:</span>
+                    <span className="text-field-green-700 dark:text-field-green-300">
                       {formatDate(selectedUserForUnban.ban_expiration)}
                     </span>
                   </div>
@@ -1076,18 +1076,18 @@ export default function BannedUsersPage() {
                   <UserMinus className="h-8 w-8 text-white" />
                 </div>
               </div>
-              <DialogTitle className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+              <DialogTitle className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
                 Ban User
               </DialogTitle>
-              <DialogDescription className="text-slate-600 dark:text-slate-400">
+              <DialogDescription className="text-field-green-600 dark:text-field-green-400">
               {selectedUserForBan && (
-                  <>Ban user: <span className="font-semibold text-slate-900 dark:text-slate-100">{selectedUserForBan.gamer_tag_id || selectedUserForBan.discord_name || "Unknown"}</span></>
+                  <>Ban user: <span className="font-semibold text-field-green-800 dark:text-field-green-200">{selectedUserForBan.gamer_tag_id || selectedUserForBan.discord_name || "Unknown"}</span></>
               )}
             </DialogDescription>
           </DialogHeader>
             <div className="space-y-6">
               <div className="space-y-3">
-                <Label htmlFor="banReason" className="text-slate-900 dark:text-slate-100 font-semibold flex items-center gap-2">
+                <Label htmlFor="banReason" className="text-field-green-800 dark:text-field-green-200 font-semibold flex items-center gap-2">
                   <AlertCircle className="h-4 w-4 text-goal-red-500" />
                   Ban Reason
                 </Label>
@@ -1102,7 +1102,7 @@ export default function BannedUsersPage() {
             </div>
 
               <div className="space-y-3">
-                <Label htmlFor="banDuration" className="text-slate-900 dark:text-slate-100 font-semibold flex items-center gap-2">
+                <Label htmlFor="banDuration" className="text-field-green-800 dark:text-field-green-200 font-semibold flex items-center gap-2">
                   <Clock className="h-4 w-4 text-ice-blue-500" />
                   Ban Duration
                 </Label>
@@ -1127,7 +1127,7 @@ export default function BannedUsersPage() {
 
             {banDuration === "custom" && (
                 <div className="space-y-3">
-                  <Label htmlFor="customDuration" className="text-slate-900 dark:text-slate-100 font-semibold flex items-center gap-2">
+                  <Label htmlFor="customDuration" className="text-field-green-800 dark:text-field-green-200 font-semibold flex items-center gap-2">
                     <Clock className="h-4 w-4 text-rink-blue-500" />
                     Custom Duration
                   </Label>
@@ -1139,7 +1139,7 @@ export default function BannedUsersPage() {
                   required
                     className="hockey-search"
                 />
-                  <p className="text-xs text-slate-600 dark:text-slate-400 bg-field-green-100 dark:bg-field-green-800 p-2 rounded">
+                  <p className="text-xs text-field-green-600 dark:text-field-green-400 bg-field-green-100 dark:bg-field-green-800 p-2 rounded">
                     Examples: "45 days", "2 months", "1.5 years"
                   </p>
               </div>

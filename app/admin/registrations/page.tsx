@@ -438,7 +438,7 @@ export default function RegistrationsPage() {
         <div className="">
           <Card className="hockey-enhanced-card">
             <CardHeader>
-              <CardTitle className="text-3xl text-field-green-800 dark:text-field-green-200 flex items-center gap-3">
+              <CardTitle className="text-3xl text-white flex items-center gap-3">
                 <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
                   <Trophy className="h-6 w-6 text-white" />
                 </div>
@@ -474,7 +474,7 @@ export default function RegistrationsPage() {
                 Search
               </Label>
               <div className="relative">
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+                <Search className="absolute left-3 top-2.5 h-4 w-4 text-field-green-500" />
                 <Input
                   id="search"
                   placeholder="Search by name or email"

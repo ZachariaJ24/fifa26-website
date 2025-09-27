@@ -162,7 +162,7 @@ export function OrphanedAuthUsersManager() {
         >
           <Card className="hockey-enhanced-card">
             <CardHeader>
-              <CardTitle className="text-3xl text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-3">
+              <CardTitle className="text-3xl text-white flex items-center gap-3">
                 <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
                   <AlertTriangle className="h-6 w-6 text-white" />
                 </div>

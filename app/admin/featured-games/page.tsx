@@ -248,7 +248,7 @@ export default function AdminFeaturedGamesPage() {
               </div>
             ) : matches.length === 0 ? (
               <div className="text-center py-12">
-                <Trophy className="h-12 w-12 text-slate-400 mx-auto mb-4" />
+                <Trophy className="h-12 w-12 text-field-green-400 mx-auto mb-4" />
                 <h3 className="text-lg font-medium text-field-green-800 dark:text-field-green-200 mb-2">No matches found</h3>
                 <p className="text-field-green-600 dark:text-field-green-400">There are no matches to display.</p>
               </div>
@@ -274,7 +274,7 @@ export default function AdminFeaturedGamesPage() {
                               Featured
                             </Badge>
                           ) : (
-                            <Badge variant="outline" className="text-slate-500">
+                            <Badge variant="outline" className="text-field-green-500">
                               <StarOff className="h-3 w-3 mr-1" />
                               Not Featured
                             </Badge>

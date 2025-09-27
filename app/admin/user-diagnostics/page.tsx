@@ -10,7 +10,7 @@ export default function UserDiagnosticsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       <div className="container mx-auto py-10">
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent fifa-title">User Diagnostics</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white fifa-title">User Diagnostics</h1>
         <p className="text-lg text-field-green-600 dark:text-field-green-400 mb-8 fifa-subtitle max-w-4xl mx-auto">
           Use this tool to diagnose and fix issues with user accounts. You can look up users by email, check their
           verification status, and perform actions like sending verification emails or creating missing user records.

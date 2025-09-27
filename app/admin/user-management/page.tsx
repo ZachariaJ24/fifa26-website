@@ -296,7 +296,7 @@ export default function UserManagementPage() {
               <Users className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent fifa-title">
+              <h1 className="text-4xl md:text-5xl font-bold text-white fifa-title">
                 User Management
               </h1>
               <p className="text-lg text-field-green-600 dark:text-field-green-400 fifa-subtitle max-w-4xl mx-auto">
@@ -463,7 +463,7 @@ export default function UserManagementPage() {
                         Search Users
                       </Label>
                       <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-slate-500" />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-field-green-500" />
                         <Input
                           id="search"
                           placeholder="Search by email, gamer tag, or Discord username..."
@@ -648,7 +648,7 @@ export default function UserManagementPage() {
                                     {user.club.name}
                                   </Badge>
                                 ) : (
-                                  <span className="text-sm text-slate-500">No Club</span>
+                                  <span className="text-sm text-field-green-500">No Club</span>
                                 )}
                               </td>
                               <td className="p-3">
@@ -658,7 +658,7 @@ export default function UserManagementPage() {
                                     {user.season_registrations.length} Season(s)
                                   </Badge>
                                 ) : (
-                                  <span className="text-sm text-slate-500">Not Registered</span>
+                                  <span className="text-sm text-field-green-500">Not Registered</span>
                                 )}
                               </td>
                               <td className="p-3">
