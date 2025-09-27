@@ -80,17 +80,17 @@ export function FixConsoleValues() {
           <div className="space-y-6">
             <h3 className="hockey-title text-xl text-center">Repair Results</h3>
             <div className="grid grid-cols-3 gap-4">
-              <div className="hockey-stats-enhanced bg-gradient-to-br from-ice-blue-50 to-ice-blue-100 dark:from-ice-blue-900/20 dark:to-ice-blue-800/20 border-ice-blue-200 dark:border-ice-blue-700">
-                <div className="text-2xl font-bold text-ice-blue-700 dark:text-ice-blue-300">{results.checked}</div>
-                <div className="text-sm text-ice-blue-600 dark:text-ice-blue-400 font-medium">Checked</div>
+              <div className="hockey-stats-enhanced bg-gradient-to-br from-field-green-50 to-field-green-100 dark:from-field-green-900/20 dark:to-field-green-800/20 border-field-green-200 dark:border-field-green-700">
+                <div className="text-2xl font-bold text-field-green-700 dark:text-field-green-300">{results.checked}</div>
+                <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Checked</div>
               </div>
               <div className="hockey-stats-enhanced bg-gradient-to-br from-assist-green-50 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-800/20 border-assist-green-200 dark:border-assist-green-700">
                 <div className="text-2xl font-bold text-assist-green-700 dark:text-assist-green-300">{results.fixed}</div>
                 <div className="text-sm text-assist-green-600 dark:text-assist-green-400 font-medium">Fixed</div>
               </div>
-              <div className="hockey-stats-enhanced bg-gradient-to-br from-rink-blue-50 to-rink-blue-100 dark:from-rink-blue-900/20 dark:to-rink-blue-800/20 border-rink-blue-200 dark:border-rink-blue-700">
-                <div className="text-2xl font-bold text-rink-blue-700 dark:text-rink-blue-300">{results.created}</div>
-                <div className="text-sm text-rink-blue-600 dark:text-rink-blue-400 font-medium">Created</div>
+              <div className="hockey-stats-enhanced bg-gradient-to-br from-pitch-blue-50 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-800/20 border-pitch-blue-200 dark:border-pitch-blue-700">
+                <div className="text-2xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300">{results.created}</div>
+                <div className="text-sm text-pitch-blue-600 dark:text-pitch-blue-400 font-medium">Created</div>
               </div>
             </div>
 

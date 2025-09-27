@@ -236,13 +236,13 @@ export default function AdminEmailVerificationPage() {
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
-        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-ice-blue-500/20 to-rink-blue-500/20 rounded-full "></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full "></div>
         <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-assist-green-500/20 to-goal-red-500/20 rounded-full " style={{ animationDelay: '1s' }}></div>
         <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full " style={{ animationDelay: '2s' }}></div>
         
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <div className="flex justify-center mb-6">
-            <div className="p-6 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full shadow-2xl shadow-ice-blue-500/30">
+            <div className="p-6 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full shadow-2xl shadow-field-green-500/30">
               <Mail className="h-16 w-16 text-white" />
             </div>
           </div>
@@ -256,21 +256,21 @@ export default function AdminEmailVerificationPage() {
           
           {/* Feature Highlights */}
           <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <div className="flex items-center gap-2 bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-4 py-2 rounded-full border border-ice-blue-200/50 dark:border-rink-blue-700/50">
-              <Database className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Email Diagnostics</span>
+            <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-pitch-blue-100/50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20 px-4 py-2 rounded-full border border-field-green-200/50 dark:border-pitch-blue-700/50">
+              <Database className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Email Diagnostics</span>
             </div>
             <div className="flex items-center gap-2 bg-gradient-to-r from-assist-green-100/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 px-4 py-2 rounded-full border border-assist-green-200/50 dark:border-assist-green-700/50">
               <Shield className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Manual Verification</span>
+              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Manual Verification</span>
             </div>
-            <div className="flex items-center gap-2 bg-gradient-to-r from-rink-blue-100/50 to-rink-blue-100/50 dark:from-rink-blue-900/20 dark:to-rink-blue-900/20 px-4 py-2 rounded-full border border-rink-blue-200/50 dark:border-rink-blue-700/50">
-              <Zap className="h-4 w-4 text-rink-blue-600 dark:text-rink-blue-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Direct Verification</span>
+            <div className="flex items-center gap-2 bg-gradient-to-r from-pitch-blue-100/50 to-pitch-blue-100/50 dark:from-pitch-blue-900/20 dark:to-pitch-blue-900/20 px-4 py-2 rounded-full border border-pitch-blue-200/50 dark:border-pitch-blue-700/50">
+              <Zap className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
+              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Direct Verification</span>
             </div>
-            <div className="flex items-center gap-2 bg-gradient-to-r from-hockey-silver-100/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 px-4 py-2 rounded-full border border-hockey-silver-200/50 dark:border-hockey-silver-700/50">
-              <Users className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">User Management</span>
+            <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-field-green-100/50 dark:from-field-green-900/20 dark:to-field-green-900/20 px-4 py-2 rounded-full border border-field-green-200/50 dark:border-field-green-700/50">
+              <Users className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">User Management</span>
             </div>
           </div>
         </div>
@@ -279,11 +279,11 @@ export default function AdminEmailVerificationPage() {
       {/* Main Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 pb-12">
         <Tabs defaultValue="debug" onValueChange={handleTabChange}>
-          <div className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg rounded-xl p-2 mb-6">
+          <div className="hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg rounded-xl p-2 mb-6">
             <TabsList className="grid w-full grid-cols-3 bg-transparent">
               <TabsTrigger 
                 value="debug" 
-                className="hockey-button data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white hover:scale-105 transition-all duration-300"
+                className="hockey-button data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white hover:scale-105 transition-all duration-300"
               >
                 <Database className="mr-2 h-4 w-4" />
                 Debug Email
@@ -306,28 +306,28 @@ export default function AdminEmailVerificationPage() {
           </div>
 
         <TabsContent value="debug">
-          <Card className="hockey-card hockey-card-hover border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-            <CardHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+          <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+            <CardHeader className="border-b-2 border-field-green-200/50 dark:border-pitch-blue-700/50 pb-4">
+              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
                   <Database className="h-6 w-6 text-white" />
                 </div>
                 Email Verification Diagnostics
               </CardTitle>
-              <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Check the status of a user's email verification</CardDescription>
+              <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Check the status of a user's email verification</CardDescription>
             </CardHeader>
             <form onSubmit={handleDebugSubmit(onDebugSubmit)}>
               <CardContent className="pt-6 space-y-6">
                 <div className="space-y-3">
-                  <Label htmlFor="debug-email" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                  <Label htmlFor="debug-email" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                    <Mail className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                     Email Address
                   </Label>
                   <Input
                     id="debug-email"
                     type="email"
                     placeholder="user.email@example.com"
-                    className="hockey-search border-ice-blue-200/50 dark:border-rink-blue-700/50 focus:ring-ice-blue-500/20 focus:border-ice-blue-500"
+                    className="hockey-search border-field-green-200/50 dark:border-pitch-blue-700/50 focus:ring-field-green-500/20 focus:border-field-green-500"
                     {...registerDebug("email")}
                   />
                   {debugErrors.email && <p className="text-sm text-goal-red-600 dark:text-goal-red-400">{debugErrors.email.message}</p>}
@@ -335,16 +335,16 @@ export default function AdminEmailVerificationPage() {
 
                 {debugResult && (
                   <div className="mt-6 space-y-6">
-                    <h3 className="text-xl font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                      <Target className="h-5 w-5 text-ice-blue-600 dark:text-ice-blue-400" />
+                    <h3 className="text-xl font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                      <Target className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
                       Diagnostic Results
                     </h3>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <Alert variant={debugResult.userExists ? "default" : "destructive"} className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20">
+                      <Alert variant={debugResult.userExists ? "default" : "destructive"} className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20">
                         <Info className="h-4 w-4" />
-                        <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200">User Status</AlertTitle>
-                        <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                        <AlertTitle className="text-field-green-800 dark:text-field-green-200">User Status</AlertTitle>
+                        <AlertDescription className="text-field-green-600 dark:text-field-green-400">
                           {debugResult.userExists
                             ? `User exists (created ${new Date(debugResult.userDetails.createdAt).toLocaleString()})`
                             : "User does not exist in the auth system"}
@@ -352,29 +352,29 @@ export default function AdminEmailVerificationPage() {
                       </Alert>
 
                       {debugResult.userExists && (
-                        <Alert variant={debugResult.userDetails.emailConfirmed ? "default" : "destructive"} className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20">
+                        <Alert variant={debugResult.userDetails.emailConfirmed ? "default" : "destructive"} className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20">
                           <Info className="h-4 w-4" />
-                          <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200">Email Verification Status</AlertTitle>
-                          <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                          <AlertTitle className="text-field-green-800 dark:text-field-green-200">Email Verification Status</AlertTitle>
+                          <AlertDescription className="text-field-green-600 dark:text-field-green-400">
                             {debugResult.userDetails.emailConfirmed ? "Email is verified" : "Email is NOT verified"}
                           </AlertDescription>
                         </Alert>
                       )}
 
-                      <Alert variant={debugResult.smtpConfigured ? "default" : "destructive"} className="hockey-card border-rink-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-rink-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
+                      <Alert variant={debugResult.smtpConfigured ? "default" : "destructive"} className="hockey-card border-pitch-blue-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-pitch-blue-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20">
                         <Settings className="h-4 w-4" />
-                        <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200">SMTP Configuration</AlertTitle>
-                        <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                        <AlertTitle className="text-field-green-800 dark:text-field-green-200">SMTP Configuration</AlertTitle>
+                        <AlertDescription className="text-field-green-600 dark:text-field-green-400">
                           {debugResult.smtpConfigured
                             ? "SMTP appears to be configured"
                             : "SMTP configuration is missing or incomplete"}
                         </AlertDescription>
                       </Alert>
 
-                      <Alert variant={debugResult.testEmailSent ? "default" : "destructive"} className="hockey-card border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/50 dark:from-hockey-silver-900 dark:to-hockey-silver-900/20">
+                      <Alert variant={debugResult.testEmailSent ? "default" : "destructive"} className="hockey-card border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-field-green-900/20">
                         <Globe className="h-4 w-4" />
-                        <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200">Test Email</AlertTitle>
-                        <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                        <AlertTitle className="text-field-green-800 dark:text-field-green-200">Test Email</AlertTitle>
+                        <AlertDescription className="text-field-green-600 dark:text-field-green-400">
                           {debugResult.testEmailSent
                             ? "Test password reset email was sent successfully"
                             : `Failed to send test email: ${debugResult.testEmailError}`}
@@ -388,7 +388,7 @@ export default function AdminEmailVerificationPage() {
                 <Button 
                   type="submit" 
                   disabled={isDebugLoading}
-                  className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                  className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                 >
                   {isDebugLoading ? (
                     <>
@@ -408,29 +408,29 @@ export default function AdminEmailVerificationPage() {
         </TabsContent>
 
         <TabsContent value="verify">
-          <Card className="hockey-card hockey-card-hover border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="hockey-card hockey-card-hover border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
             <CardHeader className="border-b-2 border-assist-green-200/50 dark:border-assist-green-700/50 pb-4">
-              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
+              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
                 <div className="p-2 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
                 Manual Email Verification
               </CardTitle>
-              <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Manually verify a user's email address (admin only)</CardDescription>
+              <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Manually verify a user's email address (admin only)</CardDescription>
             </CardHeader>
             <form onSubmit={handleVerifySubmit(onVerifySubmit)}>
               <CardContent className="pt-6 space-y-6">
-                <Alert className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
+                <Alert className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20">
                   <AlertCircle className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                  <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200">Admin Only</AlertTitle>
-                  <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                  <AlertTitle className="text-field-green-800 dark:text-field-green-200">Admin Only</AlertTitle>
+                  <AlertDescription className="text-field-green-600 dark:text-field-green-400">
                     This tool should only be used by administrators when users cannot verify their email through normal
                     means.
                   </AlertDescription>
                 </Alert>
 
                 <div className="space-y-3">
-                  <Label htmlFor="verify-email" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                  <Label htmlFor="verify-email" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
                     <Mail className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                     User Email
                   </Label>
@@ -445,7 +445,7 @@ export default function AdminEmailVerificationPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <Label htmlFor="admin-key" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                  <Label htmlFor="admin-key" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
                     <Key className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                     Admin Key
                   </Label>
@@ -459,20 +459,20 @@ export default function AdminEmailVerificationPage() {
                 </div>
 
                 {verifyError && (
-                  <Alert variant="destructive" className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
+                  <Alert variant="destructive" className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20">
                     <AlertCircle className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                    <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200">Verification Failed</AlertTitle>
-                    <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">{verifyError}</AlertDescription>
+                    <AlertTitle className="text-field-green-800 dark:text-field-green-200">Verification Failed</AlertTitle>
+                    <AlertDescription className="text-field-green-600 dark:text-field-green-400">{verifyError}</AlertDescription>
                   </Alert>
                 )}
 
                 {verifyResult && (
-                  <Alert variant="default" className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20">
+                  <Alert variant="default" className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20">
                     <CheckCircle2 className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-                    <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200">
+                    <AlertTitle className="text-field-green-800 dark:text-field-green-200">
                       {verifyResult.alreadyVerified ? "Already Verified" : "Verification Successful"}
                     </AlertTitle>
-                    <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                    <AlertDescription className="text-field-green-600 dark:text-field-green-400">
                       {verifyResult.alreadyVerified
                         ? "This user's email was already confirmed."
                         : `User ${verifiedEmail || emailValue} has been manually verified.`}
@@ -509,15 +509,15 @@ export default function AdminEmailVerificationPage() {
         </TabsContent>
 
         <TabsContent value="direct">
-          <Card className="hockey-card hockey-card-hover border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="hockey-card hockey-card-hover border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
             <CardHeader className="border-b-2 border-goal-red-200/50 dark:border-goal-red-700/50 pb-4">
-              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
+              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
                 <div className="p-2 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
                   <Zap className="h-6 w-6 text-white" />
                 </div>
                 Direct Verification (Fallback Method)
               </CardTitle>
-              <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Use this method if the standard verification fails</CardDescription>
+              <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Use this method if the standard verification fails</CardDescription>
             </CardHeader>
             <form
               onSubmit={(e) => {
@@ -529,10 +529,10 @@ export default function AdminEmailVerificationPage() {
               }}
             >
               <CardContent className="pt-6 space-y-6">
-                <Alert variant="warning" className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
+                <Alert variant="warning" className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20">
                   <Key className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                  <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200">Alternative Method</AlertTitle>
-                  <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                  <AlertTitle className="text-field-green-800 dark:text-field-green-200">Alternative Method</AlertTitle>
+                  <AlertDescription className="text-field-green-600 dark:text-field-green-400">
                     This is an alternative verification method that bypasses the standard flow. Use only if the regular
                     verification method fails. This method will work even if the user cannot be found through the normal
                     API.
@@ -540,7 +540,7 @@ export default function AdminEmailVerificationPage() {
                 </Alert>
 
                 <div className="space-y-3">
-                  <Label htmlFor="direct-email" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                  <Label htmlFor="direct-email" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
                     <Mail className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
                     User Email
                   </Label>
@@ -555,7 +555,7 @@ export default function AdminEmailVerificationPage() {
                 </div>
 
                 <div className="space-y-3">
-                  <Label htmlFor="direct-admin-key" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                  <Label htmlFor="direct-admin-key" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
                     <Key className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
                     Admin Key
                   </Label>
@@ -570,18 +570,18 @@ export default function AdminEmailVerificationPage() {
                 </div>
 
                 {verifyError && (
-                  <Alert variant="destructive" className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
+                  <Alert variant="destructive" className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20">
                     <AlertCircle className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                    <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200">Verification Failed</AlertTitle>
-                    <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">{verifyError}</AlertDescription>
+                    <AlertTitle className="text-field-green-800 dark:text-field-green-200">Verification Failed</AlertTitle>
+                    <AlertDescription className="text-field-green-600 dark:text-field-green-400">{verifyError}</AlertDescription>
                   </Alert>
                 )}
 
                 {verifyResult && (
-                  <Alert variant="default" className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20">
+                  <Alert variant="default" className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20">
                     <CheckCircle2 className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-                    <AlertTitle className="text-hockey-silver-800 dark:text-hockey-silver-200">Verification Successful</AlertTitle>
-                    <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                    <AlertTitle className="text-field-green-800 dark:text-field-green-200">Verification Successful</AlertTitle>
+                    <AlertDescription className="text-field-green-600 dark:text-field-green-400">
                       User {verifiedEmail} has been manually verified using the direct method.
                     </AlertDescription>
                   </Alert>

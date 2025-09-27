@@ -88,13 +88,13 @@ export default function AdminPasswordResetPage() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-field-green-800 dark:to-pitch-blue-900/30">
         {/* Enhanced Hero Header Section */}
         <div className="relative overflow-hidden py-20 px-4">
           <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
-          <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-assist-green-500/20 to-assist-green-500/20 rounded-full animate-float"></div>
-          <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-ice-blue-500/20 to-rink-blue-500/20 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-hockey-silver-500/20 to-ice-blue-500/20 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-assist-green-500/20 to-assist-green-500/20 rounded-full "></div>
+          <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full " style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 rounded-full " style={{ animationDelay: '2s' }}></div>
           
           <div className="relative z-10 max-w-4xl mx-auto text-center">
             <div className="flex justify-center mb-6">
@@ -114,31 +114,31 @@ export default function AdminPasswordResetPage() {
 
         {/* Main Content */}
         <div className="relative z-10 max-w-2xl mx-auto px-4 pb-12">
-          <Card className="hockey-card hockey-card-hover border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="hockey-card hockey-card-hover border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
             <CardHeader className="border-b-2 border-assist-green-200/50 dark:border-assist-green-700/50 pb-4">
-              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
+              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
                 <div className="p-2 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
                 Password Reset Complete
               </CardTitle>
-              <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">The user account has been successfully updated</CardDescription>
+              <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">The user account has been successfully updated</CardDescription>
             </CardHeader>
             <CardContent className="pt-6">
               <div className="space-y-4">
-                <div className="flex items-center gap-3 p-4 hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/30 dark:from-hockey-silver-900 dark:to-ice-blue-900/10 rounded-lg">
-                  <Mail className="h-5 w-5 text-ice-blue-600 dark:text-ice-blue-400" />
+                <div className="flex items-center gap-3 p-4 hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/30 dark:from-field-green-900 dark:to-field-green-900/10 rounded-lg">
+                  <Mail className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
                   <div>
-                    <div className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">User Email</div>
-                    <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">{email}</div>
+                    <div className="font-medium text-field-green-800 dark:text-field-green-200">User Email</div>
+                    <div className="text-sm text-field-green-600 dark:text-field-green-400">{email}</div>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3 p-4 hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/30 dark:from-hockey-silver-900 dark:to-assist-green-900/10 rounded-lg">
+                <div className="flex items-center gap-3 p-4 hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/30 dark:from-field-green-900 dark:to-assist-green-900/10 rounded-lg">
                   <CheckCircle2 className="h-5 w-5 text-assist-green-600 dark:text-assist-green-400" />
                   <div>
-                    <div className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Status</div>
-                    <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">Password successfully updated</div>
+                    <div className="font-medium text-field-green-800 dark:text-field-green-200">Status</div>
+                    <div className="text-sm text-field-green-600 dark:text-field-green-400">Password successfully updated</div>
                   </div>
                 </div>
               </div>
@@ -152,7 +152,7 @@ export default function AdminPasswordResetPage() {
                   setConfirmPassword("")
                   setAdminKey("")
                 }}
-                className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Reset Another Password
@@ -165,17 +165,17 @@ export default function AdminPasswordResetPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-field-green-800 dark:to-pitch-blue-900/30">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
-        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-ice-blue-500/20 to-rink-blue-500/20 rounded-full animate-float"></div>
-        <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-assist-green-500/20 to-goal-red-500/20 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-hockey-silver-500/20 to-ice-blue-500/20 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full "></div>
+        <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-assist-green-500/20 to-goal-red-500/20 rounded-full " style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 rounded-full " style={{ animationDelay: '2s' }}></div>
         
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <div className="flex justify-center mb-6">
-            <div className="p-6 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full shadow-2xl shadow-ice-blue-500/30">
+            <div className="p-6 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full shadow-2xl shadow-field-green-500/30">
               <ShieldAlert className="h-16 w-16 text-white" />
             </div>
           </div>
@@ -189,21 +189,21 @@ export default function AdminPasswordResetPage() {
           
           {/* Feature Highlights */}
           <div className="flex flex-wrap justify-center gap-4 mb-8">
-            <div className="flex items-center gap-2 bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-4 py-2 rounded-full border border-ice-blue-200/50 dark:border-rink-blue-700/50">
-              <Shield className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Admin Only</span>
+            <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-pitch-blue-100/50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20 px-4 py-2 rounded-full border border-field-green-200/50 dark:border-pitch-blue-700/50">
+              <Shield className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Admin Only</span>
             </div>
             <div className="flex items-center gap-2 bg-gradient-to-r from-assist-green-100/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 px-4 py-2 rounded-full border border-assist-green-200/50 dark:border-assist-green-700/50">
               <Users className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">User Management</span>
+              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">User Management</span>
             </div>
-            <div className="flex items-center gap-2 bg-gradient-to-r from-rink-blue-100/50 to-rink-blue-100/50 dark:from-rink-blue-900/20 dark:to-rink-blue-900/20 px-4 py-2 rounded-full border border-rink-blue-200/50 dark:border-rink-blue-700/50">
-              <Key className="h-4 w-4 text-rink-blue-600 dark:text-rink-blue-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Secure Reset</span>
+            <div className="flex items-center gap-2 bg-gradient-to-r from-pitch-blue-100/50 to-pitch-blue-100/50 dark:from-pitch-blue-900/20 dark:to-pitch-blue-900/20 px-4 py-2 rounded-full border border-pitch-blue-200/50 dark:border-pitch-blue-700/50">
+              <Key className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
+              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Secure Reset</span>
             </div>
-            <div className="flex items-center gap-2 bg-gradient-to-r from-hockey-silver-100/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 px-4 py-2 rounded-full border border-hockey-silver-200/50 dark:border-hockey-silver-700/50">
-              <Settings className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Direct Access</span>
+            <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-field-green-100/50 dark:from-field-green-900/20 dark:to-field-green-900/20 px-4 py-2 rounded-full border border-field-green-200/50 dark:border-field-green-700/50">
+              <Settings className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Direct Access</span>
             </div>
           </div>
         </div>
@@ -211,21 +211,21 @@ export default function AdminPasswordResetPage() {
 
       {/* Main Content */}
       <div className="relative z-10 max-w-2xl mx-auto px-4 pb-12">
-        <Card className="hockey-card hockey-card-hover border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-          <CardHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-            <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-              <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+        <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+          <CardHeader className="border-b-2 border-field-green-200/50 dark:border-pitch-blue-700/50 pb-4">
+            <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+              <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
                 <ShieldAlert className="h-6 w-6 text-white" />
               </div>
               Admin Password Reset
             </CardTitle>
-            <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Reset a user's password directly by email</CardDescription>
+            <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Reset a user's password directly by email</CardDescription>
           </CardHeader>
           <CardContent className="pt-6">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-3">
-                <Label htmlFor="email" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                <Label htmlFor="email" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                  <Mail className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                   User Email
                 </Label>
                 <Input
@@ -234,14 +234,14 @@ export default function AdminPasswordResetPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="user@example.com"
-                  className="hockey-search border-ice-blue-200/50 dark:border-rink-blue-700/50 focus:ring-ice-blue-500/20 focus:border-ice-blue-500"
+                  className="hockey-search border-field-green-200/50 dark:border-pitch-blue-700/50 focus:ring-field-green-500/20 focus:border-field-green-500"
                   required
                 />
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="password" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                  <Lock className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                <Label htmlFor="password" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                  <Lock className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                   New Password
                 </Label>
                 <div className="relative">
@@ -251,7 +251,7 @@ export default function AdminPasswordResetPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="hockey-search border-ice-blue-200/50 dark:border-rink-blue-700/50 focus:ring-ice-blue-500/20 focus:border-ice-blue-500 pr-12"
+                    className="hockey-search border-field-green-200/50 dark:border-pitch-blue-700/50 focus:ring-field-green-500/20 focus:border-field-green-500 pr-12"
                     required
                     minLength={8}
                   />
@@ -259,18 +259,18 @@ export default function AdminPasswordResetPage() {
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-ice-blue-600 dark:text-ice-blue-400"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-field-green-600 dark:text-field-green-400"
                     onClick={() => setShowPassword(!showPassword)}
                   >
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                   </Button>
                 </div>
-                <p className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">Password must be at least 8 characters long</p>
+                <p className="text-xs text-field-green-600 dark:text-field-green-400">Password must be at least 8 characters long</p>
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="confirmPassword" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                <Label htmlFor="confirmPassword" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                  <CheckCircle2 className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                   Confirm Password
                 </Label>
                 <div className="relative">
@@ -280,14 +280,14 @@ export default function AdminPasswordResetPage() {
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••"
-                    className="hockey-search border-ice-blue-200/50 dark:border-rink-blue-700/50 focus:ring-ice-blue-500/20 focus:border-ice-blue-500 pr-12"
+                    className="hockey-search border-field-green-200/50 dark:border-pitch-blue-700/50 focus:ring-field-green-500/20 focus:border-field-green-500 pr-12"
                     required
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-ice-blue-600 dark:text-ice-blue-400"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-field-green-600 dark:text-field-green-400"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
                     {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -296,8 +296,8 @@ export default function AdminPasswordResetPage() {
               </div>
 
               <div className="space-y-3">
-                <Label htmlFor="adminKey" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                  <Key className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                <Label htmlFor="adminKey" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                  <Key className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                   Admin Verification Key
                 </Label>
                 <div className="relative">
@@ -307,14 +307,14 @@ export default function AdminPasswordResetPage() {
                     value={adminKey}
                     onChange={(e) => setAdminKey(e.target.value)}
                     placeholder="Enter admin key"
-                    className="hockey-search border-ice-blue-200/50 dark:border-rink-blue-700/50 focus:ring-ice-blue-500/20 focus:border-ice-blue-500 pr-12"
+                    className="hockey-search border-field-green-200/50 dark:border-pitch-blue-700/50 focus:ring-field-green-500/20 focus:border-field-green-500 pr-12"
                     required
                   />
                   <Button
                     type="button"
                     variant="ghost"
                     size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-ice-blue-600 dark:text-ice-blue-400"
+                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent text-field-green-600 dark:text-field-green-400"
                     onClick={() => setShowAdminKey(!showAdminKey)}
                   >
                     {showAdminKey ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -323,15 +323,15 @@ export default function AdminPasswordResetPage() {
               </div>
 
               {error && (
-                <Alert variant="destructive" className="border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
+                <Alert variant="destructive" className="border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20">
                   <AlertCircle className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                  <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">{error}</AlertDescription>
+                  <AlertDescription className="text-field-green-600 dark:text-field-green-400">{error}</AlertDescription>
                 </Alert>
               )}
 
               <Button 
                 type="submit" 
-                className="w-full hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300" 
+                className="w-full hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300" 
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (

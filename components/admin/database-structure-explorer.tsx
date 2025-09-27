@@ -155,17 +155,17 @@ export function DatabaseStructureExplorer() {
               <Table className="hockey-standings-table">
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Column Name</TableHead>
-                    <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Data Type</TableHead>
-                    <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Nullable</TableHead>
+                    <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Column Name</TableHead>
+                    <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Data Type</TableHead>
+                    <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Nullable</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {tableInfo.columns.map((column, index) => (
-                    <TableRow key={index} className="hover:bg-gradient-to-r hover:from-ice-blue-50/50 hover:to-rink-blue-50/50 dark:hover:from-ice-blue-900/20 dark:hover:to-rink-blue-900/20 transition-all duration-200">
-                      <TableCell className="font-medium text-hockey-silver-900 dark:text-hockey-silver-100">{column.column_name}</TableCell>
-                      <TableCell className="text-hockey-silver-700 dark:text-hockey-silver-300">{column.data_type}</TableCell>
-                      <TableCell className="text-hockey-silver-700 dark:text-hockey-silver-300">{column.is_nullable}</TableCell>
+                    <TableRow key={index} className="hover:bg-gradient-to-r hover:from-field-green-50/50 hover:to-pitch-blue-50/50 dark:hover:from-field-green-900/20 dark:hover:to-pitch-blue-900/20 transition-all duration-200">
+                      <TableCell className="font-medium text-field-green-900 dark:text-field-green-100">{column.column_name}</TableCell>
+                      <TableCell className="text-field-green-700 dark:text-field-green-300">{column.data_type}</TableCell>
+                      <TableCell className="text-field-green-700 dark:text-field-green-300">{column.is_nullable}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

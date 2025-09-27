@@ -83,8 +83,8 @@ export default function FixUserConstraints() {
             className="space-y-6"
           >
             <div className="space-y-3">
-              <Label htmlFor="admin-key" className="text-hockey-silver-900 dark:text-hockey-silver-100 font-semibold flex items-center gap-2">
-                <Database className="h-4 w-4 text-ice-blue-500" />
+              <Label htmlFor="admin-key" className="text-field-green-900 dark:text-field-green-100 font-semibold flex items-center gap-2">
+                <Database className="h-4 w-4 text-field-green-500" />
                 Admin Verification Key
               </Label>
               <Input
@@ -113,18 +113,18 @@ export default function FixUserConstraints() {
             </Button>
           </form>
 
-          <div className="hockey-premium-card bg-gradient-to-br from-ice-blue-25 to-rink-blue-25 dark:from-ice-blue-950/30 dark:to-rink-blue-950/30">
+          <div className="hockey-premium-card bg-gradient-to-br from-field-green-25 to-pitch-blue-25 dark:from-field-green-950/30 dark:to-pitch-blue-950/30">
             <h3 className="hockey-title text-lg mb-3 flex items-center gap-2">
-              <CheckCircle className="h-4 w-4 text-ice-blue-500" />
+              <CheckCircle className="h-4 w-4 text-field-green-500" />
               What this tool does:
             </h3>
             <ul className="hockey-subtitle text-sm space-y-2">
               <li className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-ice-blue-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-field-green-500 rounded-full"></div>
                 Maps console values (PlayStation 5 → PS5, Xbox Series X → XSX)
               </li>
               <li className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-rink-blue-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-pitch-blue-500 rounded-full"></div>
                 Handles duplicate gamer tags by adding numbers (player1, player2, etc.)
               </li>
               <li className="flex items-center gap-2">
@@ -136,7 +136,7 @@ export default function FixUserConstraints() {
                 Skips users that already exist in the database
               </li>
               <li className="flex items-center gap-2">
-                <div className="w-2 h-2 bg-hockey-silver-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-field-green-500 rounded-full"></div>
                 Provides detailed error reporting
               </li>
             </ul>
@@ -156,12 +156,12 @@ export default function FixUserConstraints() {
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-              <div className="hockey-stats-enhanced bg-gradient-to-br from-ice-blue-50 to-ice-blue-100 dark:from-ice-blue-900/20 dark:to-ice-blue-800/20 border-ice-blue-200 dark:border-ice-blue-700">
+              <div className="hockey-stats-enhanced bg-gradient-to-br from-field-green-50 to-field-green-100 dark:from-field-green-900/20 dark:to-field-green-800/20 border-field-green-200 dark:border-field-green-700">
                 <div className="flex items-center justify-center mb-2">
-                  <Users className="h-6 w-6 text-ice-blue-600 dark:text-ice-blue-400" />
+                  <Users className="h-6 w-6 text-field-green-600 dark:text-field-green-400" />
                 </div>
-                <div className="text-2xl font-bold text-ice-blue-700 dark:text-ice-blue-300">{results.authUsers}</div>
-                <div className="text-sm text-ice-blue-600 dark:text-ice-blue-400 font-medium">Auth Users Found</div>
+                <div className="text-2xl font-bold text-field-green-700 dark:text-field-green-300">{results.authUsers}</div>
+                <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Auth Users Found</div>
               </div>
               <div className="hockey-stats-enhanced bg-gradient-to-br from-assist-green-50 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-800/20 border-assist-green-200 dark:border-assist-green-700">
                 <div className="flex items-center justify-center mb-2">
@@ -170,12 +170,12 @@ export default function FixUserConstraints() {
                 <div className="text-2xl font-bold text-assist-green-700 dark:text-assist-green-300">{results.usersCreated}</div>
                 <div className="text-sm text-assist-green-600 dark:text-assist-green-400 font-medium">Users Created</div>
               </div>
-              <div className="hockey-stats-enhanced bg-gradient-to-br from-rink-blue-50 to-rink-blue-100 dark:from-rink-blue-900/20 dark:to-rink-blue-800/20 border-rink-blue-200 dark:border-rink-blue-700">
+              <div className="hockey-stats-enhanced bg-gradient-to-br from-pitch-blue-50 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-800/20 border-pitch-blue-200 dark:border-pitch-blue-700">
                 <div className="flex items-center justify-center mb-2">
-                  <Console className="h-6 w-6 text-rink-blue-600 dark:text-rink-blue-400" />
+                  <Console className="h-6 w-6 text-pitch-blue-600 dark:text-pitch-blue-400" />
                 </div>
-                <div className="text-2xl font-bold text-rink-blue-700 dark:text-rink-blue-300">{results.consoleFixed}</div>
-                <div className="text-sm text-rink-blue-600 dark:text-rink-blue-400 font-medium">Console Values Fixed</div>
+                <div className="text-2xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300">{results.consoleFixed}</div>
+                <div className="text-sm text-pitch-blue-600 dark:text-pitch-blue-400 font-medium">Console Values Fixed</div>
               </div>
               <div className="hockey-stats-enhanced bg-gradient-to-br from-goal-red-50 to-goal-red-100 dark:from-goal-red-900/20 dark:to-goal-red-800/20 border-goal-red-200 dark:border-goal-red-700">
                 <div className="flex items-center justify-center mb-2">
@@ -187,13 +187,13 @@ export default function FixUserConstraints() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="hockey-stats-enhanced bg-gradient-to-br from-hockey-silver-50 to-hockey-silver-100 dark:from-hockey-silver-900/20 dark:to-hockey-silver-800/20 border-hockey-silver-200 dark:border-hockey-silver-700">
-                <div className="text-2xl font-bold text-hockey-silver-700 dark:text-hockey-silver-300">{results.playersCreated}</div>
-                <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Player Records Created</div>
+              <div className="hockey-stats-enhanced bg-gradient-to-br from-field-green-50 to-field-green-100 dark:from-field-green-900/20 dark:to-field-green-800/20 border-field-green-200 dark:border-field-green-700">
+                <div className="text-2xl font-bold text-field-green-700 dark:text-field-green-300">{results.playersCreated}</div>
+                <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Player Records Created</div>
               </div>
-              <div className="hockey-stats-enhanced bg-gradient-to-br from-hockey-silver-50 to-hockey-silver-100 dark:from-hockey-silver-900/20 dark:to-hockey-silver-800/20 border-hockey-silver-200 dark:border-hockey-silver-700">
-                <div className="text-2xl font-bold text-hockey-silver-700 dark:text-hockey-silver-300">{results.rolesCreated}</div>
-                <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Role Records Created</div>
+              <div className="hockey-stats-enhanced bg-gradient-to-br from-field-green-50 to-field-green-100 dark:from-field-green-900/20 dark:to-field-green-800/20 border-field-green-200 dark:border-field-green-700">
+                <div className="text-2xl font-bold text-field-green-700 dark:text-field-green-300">{results.rolesCreated}</div>
+                <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Role Records Created</div>
               </div>
             </div>
 

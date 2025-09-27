@@ -153,15 +153,15 @@ export default function PlayerMappingManager() {
   return (
     <div className="space-y-8">
       {/* Enhanced Main Mapping Card */}
-      <Card className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
+      <Card className="hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20">
         <CardHeader className="enhanced-card-header">
           <CardTitle className="flex items-center gap-3">
-            <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+            <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
               <Link className="h-5 w-5 text-white" />
             </div>
             <span>EA Player Mappings</span>
           </CardTitle>
-          <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+          <CardDescription className="text-field-green-600 dark:text-field-green-400">
             Manage critical connections between EA player IDs and SCS player profiles for seamless data synchronization
           </CardDescription>
           
@@ -179,10 +179,10 @@ export default function PlayerMappingManager() {
             </Button>
 
             <div className="flex items-center relative w-full max-w-md">
-              <Search className="absolute left-3 h-5 w-5 text-hockey-silver-400 z-10" />
+              <Search className="absolute left-3 h-5 w-5 text-field-green-400 z-10" />
               <Input
                 placeholder="Search mappings by name, EA ID, or SCS ID..."
-                className="pl-10 pr-4 py-2 hockey-search border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300"
+                className="pl-10 pr-4 py-2 hockey-search border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -215,38 +215,38 @@ export default function PlayerMappingManager() {
               <div className="p-2 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-lg">
                 <Plus className="h-5 w-5 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">Add New Mapping</h3>
+              <h3 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200">Add New Mapping</h3>
             </div>
             
             <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300 flex items-center gap-2">
-                  <Database className="h-4 w-4 text-ice-blue-600" />
+                <label className="text-sm font-medium text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                  <Database className="h-4 w-4 text-field-green-600" />
                   EA Player ID
                 </label>
                 <Input
                   placeholder="e.g., 1005699228134"
                   value={eaPlayerId}
                   onChange={(e) => setEaPlayerId(e.target.value)}
-                  className="hockey-input border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300"
+                  className="hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300"
                 />
               </div>
               
               <div className="space-y-2">
-                <label className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300 flex items-center gap-2">
-                  <Users className="h-4 w-4 text-rink-blue-600" />
+                <label className="text-sm font-medium text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                  <Users className="h-4 w-4 text-pitch-blue-600" />
                   SCS Player ID (UUID)
                 </label>
                 <Input
                   placeholder="e.g., 657dbb12-0db5-4a8b-94da-7dea7eba7409"
                   value={playerId}
                   onChange={(e) => setPlayerId(e.target.value)}
-                  className="hockey-input border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300"
+                  className="hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300"
                 />
               </div>
               
               <div className="space-y-2">
-                <label className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300 flex items-center gap-2">
+                <label className="text-sm font-medium text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
                   <Target className="h-4 w-4 text-assist-green-600" />
                   Player Name (Optional)
                 </label>
@@ -255,7 +255,7 @@ export default function PlayerMappingManager() {
                     placeholder="e.g., DarkWolf"
                     value={playerName}
                     onChange={(e) => setPlayerName(e.target.value)}
-                    className="hockey-input border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300"
+                    className="hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300"
                   />
                   <Button 
                     type="submit" 
@@ -272,47 +272,47 @@ export default function PlayerMappingManager() {
           {/* Enhanced Data Display Section */}
           {loading ? (
             <div className="flex flex-col items-center justify-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ice-blue-600 mb-4"></div>
-              <h3 className="text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 mb-2">Loading Mappings</h3>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400">Synchronizing player data...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-field-green-600 mb-4"></div>
+              <h3 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200 mb-2">Loading Mappings</h3>
+              <p className="text-field-green-600 dark:text-field-green-400">Synchronizing player data...</p>
             </div>
           ) : filteredMappings.length > 0 ? (
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                  <Activity className="h-5 w-5 text-ice-blue-600" />
+                <h3 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                  <Activity className="h-5 w-5 text-field-green-600" />
                   Active Mappings ({filteredMappings.length})
                 </h3>
                 {searchQuery && (
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400">
                     Filtered from {mappings.length} total mappings
                   </div>
                 )}
               </div>
               
-              <div className="rounded-xl border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 overflow-hidden bg-gradient-to-br from-white to-ice-blue-50/30 dark:from-hockey-silver-800 dark:to-rink-blue-900/10">
+              <div className="rounded-xl border-2 border-field-green-200/50 dark:border-pitch-blue-700/50 overflow-hidden bg-gradient-to-br from-white to-field-green-50/30 dark:from-field-green-800 dark:to-pitch-blue-900/10">
                 <Table>
                   <TableHeader>
-                    <TableRow className="bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/30 dark:to-rink-blue-900/30">
-                      <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-semibold">
+                    <TableRow className="bg-gradient-to-r from-field-green-100/50 to-pitch-blue-100/50 dark:from-field-green-900/30 dark:to-pitch-blue-900/30">
+                      <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">
                         <div className="flex items-center gap-2">
-                          <Database className="h-4 w-4 text-ice-blue-600" />
+                          <Database className="h-4 w-4 text-field-green-600" />
                           EA Player ID
                         </div>
                       </TableHead>
-                      <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-semibold">
+                      <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">
                         <div className="flex items-center gap-2">
-                          <Users className="h-4 w-4 text-rink-blue-600" />
+                          <Users className="h-4 w-4 text-pitch-blue-600" />
                           SCS Player ID
                         </div>
                       </TableHead>
-                      <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-semibold">
+                      <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">
                         <div className="flex items-center gap-2">
                           <Target className="h-4 w-4 text-assist-green-600" />
                           Player Name
                         </div>
                       </TableHead>
-                      <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-semibold">
+                      <TableHead className="text-field-green-800 dark:text-field-green-200 font-semibold">
                         <div className="flex items-center gap-2">
                           <Settings className="h-4 w-4 text-goal-red-600" />
                           Created At
@@ -324,19 +324,19 @@ export default function PlayerMappingManager() {
                     {filteredMappings.map((mapping, index) => (
                       <TableRow 
                         key={mapping.id} 
-                        className={`hover:bg-gradient-to-r hover:from-ice-blue-50/50 hover:to-rink-blue-50/50 dark:hover:from-ice-blue-900/20 dark:hover:to-rink-blue-900/20 transition-all duration-200 ${
-                          index % 2 === 0 ? 'bg-white/50 dark:bg-hockey-silver-800/30' : 'bg-ice-blue-50/20 dark:bg-rink-blue-900/10'
+                        className={`hover:bg-gradient-to-r hover:from-field-green-50/50 hover:to-pitch-blue-50/50 dark:hover:from-field-green-900/20 dark:hover:to-pitch-blue-900/20 transition-all duration-200 ${
+                          index % 2 === 0 ? 'bg-white/50 dark:bg-field-green-800/30' : 'bg-field-green-50/20 dark:bg-pitch-blue-900/10'
                         }`}
                       >
                         <TableCell className="font-mono text-sm">
                           <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-ice-blue-500 rounded-full"></div>
+                            <div className="w-2 h-2 bg-field-green-500 rounded-full"></div>
                             {mapping.ea_player_id}
                           </div>
                         </TableCell>
                         <TableCell className="font-mono text-sm">
                           <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 bg-rink-blue-500 rounded-full"></div>
+                            <div className="w-2 h-2 bg-pitch-blue-500 rounded-full"></div>
                             {mapping.player_id}
                           </div>
                         </TableCell>
@@ -345,16 +345,16 @@ export default function PlayerMappingManager() {
                             {mapping.player_name ? (
                               <>
                                 <div className="w-2 h-2 bg-assist-green-500 rounded-full"></div>
-                                <span className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">
+                                <span className="font-medium text-field-green-800 dark:text-field-green-200">
                                   {mapping.player_name}
                                 </span>
                               </>
                             ) : (
-                              <span className="text-hockey-silver-500 dark:text-hockey-silver-500 italic">-</span>
+                              <span className="text-field-green-500 dark:text-field-green-500 italic">-</span>
                             )}
                           </div>
                         </TableCell>
-                        <TableCell className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">
+                        <TableCell className="text-sm text-field-green-600 dark:text-field-green-400">
                           {new Date(mapping.created_at).toLocaleString()}
                         </TableCell>
                       </TableRow>
@@ -365,13 +365,13 @@ export default function PlayerMappingManager() {
             </div>
           ) : (
             <div className="text-center py-12">
-              <div className="w-20 h-20 bg-gradient-to-r from-hockey-silver-200 to-ice-blue-200 dark:from-hockey-silver-700 dark:to-ice-blue-800 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Search className="h-10 w-10 text-hockey-silver-500 dark:text-hockey-silver-400" />
+              <div className="w-20 h-20 bg-gradient-to-r from-field-green-200 to-field-green-200 dark:from-field-green-700 dark:to-field-green-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Search className="h-10 w-10 text-field-green-500 dark:text-field-green-400" />
               </div>
-              <h3 className="text-xl font-semibold text-hockey-silver-700 dark:text-hockey-silver-300 mb-3">
+              <h3 className="text-xl font-semibold text-field-green-700 dark:text-field-green-300 mb-3">
                 No player mappings found
               </h3>
-              <p className="text-hockey-silver-500 dark:text-hockey-silver-500 text-lg">
+              <p className="text-field-green-500 dark:text-field-green-500 text-lg">
                 {searchQuery ? "Try adjusting your search query or clear the search to see all mappings." : "Start by adding your first player mapping above."}
               </p>
             </div>
@@ -380,7 +380,7 @@ export default function PlayerMappingManager() {
       </Card>
 
       {/* Enhanced Setup Required Mappings Card */}
-      <Card className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
+      <Card className="hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20">
         <CardHeader className="enhanced-card-header">
           <CardTitle className="flex items-center gap-3">
             <div className="p-2 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-lg">
@@ -388,7 +388,7 @@ export default function PlayerMappingManager() {
             </div>
             <span>Setup Required Mappings</span>
           </CardTitle>
-          <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+          <CardDescription className="text-field-green-600 dark:text-field-green-400">
             Configure essential player mappings for system functionality and data synchronization
           </CardDescription>
         </CardHeader>
@@ -410,10 +410,10 @@ export default function PlayerMappingManager() {
                   {hasDarkWolfMapping ? <CheckCircle className="h-6 w-6" /> : <RefreshCw className="h-6 w-6" />}
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 mb-2">
+                  <h3 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200 mb-2">
                     DarkWolf Mapping
                   </h3>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 mb-4">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 mb-4">
                     {hasDarkWolfMapping ? (
                       <p className="flex items-center gap-2">
                         <Shield className="h-4 w-4 text-assist-green-600" />
@@ -429,14 +429,14 @@ export default function PlayerMappingManager() {
                   {hasDarkWolfMapping && (
                     <div className="space-y-2">
                       <div className="flex items-center gap-2 text-sm">
-                        <Database className="h-4 w-4 text-ice-blue-600" />
-                        <span className="font-mono text-ice-blue-700 dark:text-ice-blue-300">
+                        <Database className="h-4 w-4 text-field-green-600" />
+                        <span className="font-mono text-field-green-700 dark:text-field-green-300">
                           EA Player ID: 1005699228134
                         </span>
                       </div>
                       <div className="flex items-center gap-2 text-sm">
-                        <Users className="h-4 w-4 text-rink-blue-600" />
-                        <span className="font-mono text-rink-blue-700 dark:text-rink-blue-300">
+                        <Users className="h-4 w-4 text-pitch-blue-600" />
+                        <span className="font-mono text-pitch-blue-700 dark:text-pitch-blue-300">
                           SCS Player ID: 657dbb12-0db5-4a8b-94da-7dea7eba7409
                         </span>
                       </div>

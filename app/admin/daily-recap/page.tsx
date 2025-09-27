@@ -8,29 +8,29 @@ import { Newspaper, Calendar, Trophy, Star, Medal, Crown, Activity, TrendingUp, 
 function LoadingSkeleton() {
   return (
     <div className="space-y-8">
-      <Card className="hockey-card border-2 border-ice-blue-200 dark:border-ice-blue-700 overflow-hidden">
+      <Card className="hockey-card border-2 border-field-green-200 dark:border-field-green-700 overflow-hidden">
         <CardContent className="p-8">
           <div className="">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-r from-ice-blue-200 to-rink-blue-200 dark:from-ice-blue-800 dark:to-rink-blue-800 rounded-lg"></div>
+              <div className="w-12 h-12 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-800 dark:to-pitch-blue-800 rounded-lg"></div>
               <div className="space-y-2 flex-1">
                 <div className="h-6 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-3/4"></div>
                 <div className="h-4 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-1/2"></div>
               </div>
             </div>
             <div className="flex gap-4">
-              <div className="h-12 bg-gradient-to-r from-ice-blue-200 to-rink-blue-200 dark:from-ice-blue-800 dark:to-rink-blue-800 rounded-lg w-32"></div>
+              <div className="h-12 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-800 dark:to-pitch-blue-800 rounded-lg w-32"></div>
               <div className="h-12 bg-gradient-to-r from-assist-green-200 to-goal-red-200 dark:from-assist-green-800 dark:to-goal-red-800 rounded-lg w-32"></div>
             </div>
           </div>
         </CardContent>
       </Card>
       
-      <Card className="hockey-card border-2 border-rink-blue-200 dark:border-rink-blue-700 overflow-hidden">
+      <Card className="hockey-card border-2 border-pitch-blue-200 dark:border-pitch-blue-700 overflow-hidden">
         <CardContent className="p-8">
           <div className="">
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-gradient-to-r from-rink-blue-200 to-ice-blue-200 dark:from-rink-blue-800 dark:to-ice-blue-800 rounded-lg"></div>
+              <div className="w-12 h-12 bg-gradient-to-r from-pitch-blue-200 to-field-green-200 dark:from-pitch-blue-800 dark:to-field-green-800 rounded-lg"></div>
               <div className="space-y-2 flex-1">
                 <div className="h-6 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-2/3"></div>
                 <div className="h-4 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-700 dark:to-pitch-blue-800 rounded w-1/3"></div>
@@ -57,7 +57,7 @@ export default function DailyRecapPage() {
         <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl "></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl "></div>
         <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl " style={{ animationDelay: '2s' }}></div>
         
         <div className="container mx-auto text-center relative z-10">
@@ -74,31 +74,31 @@ export default function DailyRecapPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto mb-16">
               <div className="group">
                 <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-ice-blue-500/25 transition-all duration-300">
+                  <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
                     <Newspaper className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-ice-blue-700 dark:text-ice-blue-300 mb-2">
+                  <div className="text-3xl font-bold text-field-green-700 dark:text-field-green-300 mb-2">
                     Daily
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Recaps
                   </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
+                  <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
                 </div>
               </div>
               
               <div className="group">
                 <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-rink-blue-500 to-ice-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-rink-blue-500/25 transition-all duration-300">
+                  <div className="w-16 h-16 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-pitch-blue-500/25 transition-all duration-300">
                     <Calendar className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-rink-blue-700 dark:text-rink-blue-300 mb-2">
+                  <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
                     Match
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Coverage
                   </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-rink-blue-500 to-ice-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
+                  <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
                 </div>
               </div>
               
@@ -110,7 +110,7 @@ export default function DailyRecapPage() {
                   <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
                     Player
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Highlights
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -125,7 +125,7 @@ export default function DailyRecapPage() {
                   <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                     League
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Updates
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -140,10 +140,10 @@ export default function DailyRecapPage() {
       <div className="container mx-auto px-4 py-16">
         {/* Enhanced Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-4">
+          <h2 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
             Recap Management Center
           </h2>
-          <p className="text-xl text-hockey-silver-600 dark:text-hockey-silver-400 max-w-3xl mx-auto">
+          <p className="text-xl text-field-green-600 dark:text-field-green-400 max-w-3xl mx-auto">
             Create engaging daily recaps that capture the excitement of recent matches, 
             highlight standout performances, and keep the league community informed.
           </p>
@@ -154,13 +154,13 @@ export default function DailyRecapPage() {
           {/* Daily Recaps Table Migration */}
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Database className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-2">
+              <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
                 Recap Data Management
               </h3>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400">
+              <p className="text-field-green-600 dark:text-field-green-400">
                 Manage and organize daily recap data and migration tools.
               </p>
             </div>
@@ -173,10 +173,10 @@ export default function DailyRecapPage() {
               <div className="w-16 h-16 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Newspaper className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-2">
+              <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
                 Daily Recap Generator
               </h3>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400">
+              <p className="text-field-green-600 dark:text-field-green-400">
                 Generate comprehensive daily recaps for recent matches and league activities.
               </p>
             </div>
