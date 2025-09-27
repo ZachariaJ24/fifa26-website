@@ -3,7 +3,7 @@ import { Shield, Users, Target, Database, Settings, CheckCircle, AlertTriangle, 
 
 export default function RbacDebugPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-field-green-800 dark:to-pitch-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>

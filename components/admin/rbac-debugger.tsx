@@ -210,10 +210,10 @@ export function RbacDebugger() {
 
   return (
     <div className="space-y-6">
-      <Card className="hockey-card hockey-card-hover border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-        <CardHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-          <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-            <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+      <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+        <CardHeader className="border-b-2 border-field-green-200/50 dark:border-pitch-blue-700/50 pb-4">
+          <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+            <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
               <Shield className="h-6 w-6 text-white" />
             </div>
             RBAC Permission Debugger
@@ -221,11 +221,11 @@ export function RbacDebugger() {
         </CardHeader>
         <CardContent className="pt-6">
           <Tabs defaultValue="test" className="w-full">
-            <div className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 p-1 rounded-lg mb-6">
+            <div className="hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-r from-field-green-100/50 to-pitch-blue-100/50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20 p-1 rounded-lg mb-6">
               <TabsList className="grid w-full grid-cols-3 bg-transparent">
                 <TabsTrigger 
                   value="test" 
-                  className="hockey-button data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white hover:scale-105 transition-all duration-300"
+                  className="hockey-button data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white hover:scale-105 transition-all duration-300"
                 >
                   <Target className="h-4 w-4 mr-2" />
                   Test Permissions
@@ -239,7 +239,7 @@ export function RbacDebugger() {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="matches" 
-                  className="hockey-button data-[state=active]:bg-gradient-to-r data-[state=active]:from-rink-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white hover:scale-105 transition-all duration-300"
+                  className="hockey-button data-[state=active]:bg-gradient-to-r data-[state=active]:from-pitch-blue-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white hover:scale-105 transition-all duration-300"
                 >
                   <Trophy className="h-4 w-4 mr-2" />
                   Recent Matches
@@ -248,18 +248,18 @@ export function RbacDebugger() {
             </div>
 
             <TabsContent value="test" className="space-y-6">
-              <Card className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/30 dark:from-hockey-silver-900 dark:to-ice-blue-900/10">
+              <Card className="hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/30 dark:from-field-green-900 dark:to-field-green-900/10">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg text-hockey-silver-800 dark:text-hockey-silver-200">
-                    <Target className="h-5 w-5 text-ice-blue-600 dark:text-ice-blue-400" />
+                  <CardTitle className="flex items-center gap-2 text-lg text-field-green-800 dark:text-field-green-200">
+                    <Target className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
                     Test Parameters
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="userId" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                        <User className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                      <Label htmlFor="userId" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                        <User className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                         User ID
                       </Label>
                       <Input
@@ -267,12 +267,12 @@ export function RbacDebugger() {
                         value={userId}
                         onChange={(e) => setUserId(e.target.value)}
                         placeholder="Enter user ID"
-                        className="hockey-search border-ice-blue-200/50 dark:border-rink-blue-700/50 focus:ring-ice-blue-500/20 focus:border-ice-blue-500"
+                        className="hockey-search border-field-green-200/50 dark:border-pitch-blue-700/50 focus:ring-field-green-500/20 focus:border-field-green-500"
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="matchId" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                        <Trophy className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                      <Label htmlFor="matchId" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                        <Trophy className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                         Match ID
                       </Label>
                       <Input
@@ -280,7 +280,7 @@ export function RbacDebugger() {
                         value={matchId}
                         onChange={(e) => setMatchId(e.target.value)}
                         placeholder="Enter match ID"
-                        className="hockey-search border-ice-blue-200/50 dark:border-rink-blue-700/50 focus:ring-ice-blue-500/20 focus:border-ice-blue-500"
+                        className="hockey-search border-field-green-200/50 dark:border-pitch-blue-700/50 focus:ring-field-green-500/20 focus:border-field-green-500"
                       />
                     </div>
                   </div>
@@ -289,7 +289,7 @@ export function RbacDebugger() {
                     <Button 
                       onClick={testPermissions} 
                       disabled={loading}
-                      className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+                      className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
                     >
                       {loading ? (
                         <>
@@ -307,7 +307,7 @@ export function RbacDebugger() {
                       onClick={testMatchUpdate} 
                       disabled={loading}
                       variant="outline"
-                      className="hockey-button border-ice-blue-200/50 dark:border-rink-blue-700/50 text-ice-blue-600 dark:text-ice-blue-400 hover:bg-ice-blue-50 dark:hover:bg-ice-blue-900/20 hover:scale-105 transition-all duration-300"
+                      className="hockey-button border-field-green-200/50 dark:border-pitch-blue-700/50 text-field-green-600 dark:text-field-green-400 hover:bg-field-green-50 dark:hover:bg-field-green-900/20 hover:scale-105 transition-all duration-300"
                     >
                       <Activity className="h-4 w-4 mr-2" />
                       Test Match Update
@@ -318,12 +318,12 @@ export function RbacDebugger() {
 
               {permissionResults && (
                 <Card className={`hockey-card ${permissionResults.canManageMatch 
-                  ? "border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20" 
-                  : "border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20"
+                  ? "border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20" 
+                  : "border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20"
                 }`}>
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-lg text-hockey-silver-800 dark:text-hockey-silver-200">
-                      <Database className="h-5 w-5 text-ice-blue-600 dark:text-ice-blue-400" />
+                    <CardTitle className="flex items-center gap-2 text-lg text-field-green-800 dark:text-field-green-200">
+                      <Database className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
                       Permission Results
                       {permissionResults.canManageMatch ? (
                         <CheckCircle className="h-5 w-5 text-assist-green-600 dark:text-assist-green-400" />
@@ -346,8 +346,8 @@ export function RbacDebugger() {
                       <Badge 
                         variant={permissionResults.isAdmin ? "default" : "secondary"}
                         className={`${permissionResults.isAdmin 
-                          ? "bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 text-white" 
-                          : "bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 text-white"
+                          ? "bg-gradient-to-r from-field-green-500 to-pitch-blue-600 text-white" 
+                          : "bg-gradient-to-r from-field-green-500 to-field-green-600 text-white"
                         }`}
                       >
                         Admin: {permissionResults.isAdmin ? "Yes" : "No"}
@@ -355,8 +355,8 @@ export function RbacDebugger() {
                       <Badge 
                         variant={permissionResults.isTeamManager ? "default" : "secondary"}
                         className={`${permissionResults.isTeamManager 
-                          ? "bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 text-white" 
-                          : "bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 text-white"
+                          ? "bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 text-white" 
+                          : "bg-gradient-to-r from-field-green-500 to-field-green-600 text-white"
                         }`}
                       >
                         Team Manager: {permissionResults.isTeamManager ? "Yes" : "No"}
@@ -365,12 +365,12 @@ export function RbacDebugger() {
 
                     {permissionResults.userTeams && (
                       <div className="space-y-2">
-                        <h4 className="font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                          <Users className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                        <h4 className="font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                          <Users className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                           User Teams for this Match:
                         </h4>
-                        <div className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/30 dark:from-hockey-silver-900 dark:to-ice-blue-900/10 p-3 rounded-lg">
-                          <pre className="text-xs font-mono text-hockey-silver-700 dark:text-hockey-silver-300 overflow-x-auto">
+                        <div className="hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/30 dark:from-field-green-900 dark:to-field-green-900/10 p-3 rounded-lg">
+                          <pre className="text-xs font-mono text-field-green-700 dark:text-field-green-300 overflow-x-auto">
                             {JSON.stringify(permissionResults.userTeams, null, 2)}
                           </pre>
                         </div>
@@ -379,14 +379,14 @@ export function RbacDebugger() {
 
                     {permissionResults.debug && (
                       <div className="space-y-2">
-                        <h4 className="font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                          <Settings className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                        <h4 className="font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                          <Settings className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                           Debug Info:
                         </h4>
                         <Textarea
                           value={JSON.stringify(permissionResults.debug, null, 2)}
                           readOnly
-                          className="h-40 text-xs font-mono hockey-search border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/30 dark:from-hockey-silver-900 dark:to-ice-blue-900/10"
+                          className="h-40 text-xs font-mono hockey-search border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/30 dark:from-field-green-900 dark:to-field-green-900/10"
                         />
                       </div>
                     )}
@@ -397,9 +397,9 @@ export function RbacDebugger() {
 
             <TabsContent value="user" className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/30 dark:from-hockey-silver-900 dark:to-assist-green-900/10">
+                <Card className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/30 dark:from-field-green-900 dark:to-assist-green-900/10">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-lg text-hockey-silver-800 dark:text-hockey-silver-200">
+                    <CardTitle className="flex items-center gap-2 text-lg text-field-green-800 dark:text-field-green-200">
                       <Users className="h-5 w-5 text-assist-green-600 dark:text-assist-green-400" />
                       User Roles
                     </CardTitle>
@@ -408,27 +408,27 @@ export function RbacDebugger() {
                     {userRoles.length > 0 ? (
                       <div className="space-y-3">
                         {userRoles.map((role, index) => (
-                          <div key={index} className="flex items-center gap-3 p-3 hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/30 dark:from-hockey-silver-900 dark:to-ice-blue-900/10 rounded-lg">
+                          <div key={index} className="flex items-center gap-3 p-3 hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/30 dark:from-field-green-900 dark:to-field-green-900/10 rounded-lg">
                             <Badge className="bg-gradient-to-r from-assist-green-500 to-assist-green-600 text-white">
                               {role.role}
                             </Badge>
-                            <span className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">({normalizeRole(role.role)})</span>
+                            <span className="text-sm text-field-green-600 dark:text-field-green-400">({normalizeRole(role.role)})</span>
                           </div>
                         ))}
                       </div>
                     ) : (
-                      <Alert className="border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
+                      <Alert className="border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20">
                         <AlertCircle className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                        <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">No user roles found</AlertDescription>
+                        <AlertDescription className="text-field-green-600 dark:text-field-green-400">No user roles found</AlertDescription>
                       </Alert>
                     )}
                   </CardContent>
                 </Card>
 
-                <Card className="hockey-card border-rink-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-rink-blue-50/30 dark:from-hockey-silver-900 dark:to-rink-blue-900/10">
+                <Card className="hockey-card border-pitch-blue-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-pitch-blue-50/30 dark:from-field-green-900 dark:to-pitch-blue-900/10">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-2 text-lg text-hockey-silver-800 dark:text-hockey-silver-200">
-                      <Target className="h-5 w-5 text-rink-blue-600 dark:text-rink-blue-400" />
+                    <CardTitle className="flex items-center gap-2 text-lg text-field-green-800 dark:text-field-green-200">
+                      <Target className="h-5 w-5 text-pitch-blue-600 dark:text-pitch-blue-400" />
                       Team Manager Roles
                     </CardTitle>
                   </CardHeader>
@@ -436,20 +436,20 @@ export function RbacDebugger() {
                     {teamManagers.length > 0 ? (
                       <div className="space-y-3">
                         {teamManagers.map((manager, index) => (
-                          <div key={index} className="space-y-2 p-3 hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/30 dark:from-hockey-silver-900 dark:to-ice-blue-900/10 rounded-lg">
+                          <div key={index} className="space-y-2 p-3 hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/30 dark:from-field-green-900 dark:to-field-green-900/10 rounded-lg">
                             <div className="flex items-center gap-2">
                               <Badge 
                                 variant={hasManagerRole(manager.role) ? "default" : "secondary"}
                                 className={`${hasManagerRole(manager.role) 
-                                  ? "bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 text-white" 
-                                  : "bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 text-white"
+                                  ? "bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 text-white" 
+                                  : "bg-gradient-to-r from-field-green-500 to-field-green-600 text-white"
                                 }`}
                               >
                                 {manager.role}
                               </Badge>
-                              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">{manager.teams?.name}</span>
+                              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">{manager.teams?.name}</span>
                             </div>
-                            <div className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400 space-y-1">
+                            <div className="text-xs text-field-green-600 dark:text-field-green-400 space-y-1">
                               <div>Team ID: <span className="font-mono">{manager.team_id}</span></div>
                               <div>Normalized: <span className="font-mono">{normalizeRole(manager.role)}</span></div>
                               <div>Has Manager Role: <span className={`font-semibold ${hasManagerRole(manager.role) ? "text-assist-green-600 dark:text-assist-green-400" : "text-goal-red-600 dark:text-goal-red-400"}`}>
@@ -460,9 +460,9 @@ export function RbacDebugger() {
                         ))}
                       </div>
                     ) : (
-                      <Alert className="border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
+                      <Alert className="border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20">
                         <AlertCircle className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                        <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">No team manager roles found</AlertDescription>
+                        <AlertDescription className="text-field-green-600 dark:text-field-green-400">No team manager roles found</AlertDescription>
                       </Alert>
                     )}
                   </CardContent>
@@ -471,10 +471,10 @@ export function RbacDebugger() {
             </TabsContent>
 
             <TabsContent value="matches" className="space-y-6">
-              <Card className="hockey-card border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/30 dark:from-hockey-silver-900 dark:to-hockey-silver-900/10">
+              <Card className="hockey-card border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/30 dark:from-field-green-900 dark:to-field-green-900/10">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg text-hockey-silver-800 dark:text-hockey-silver-200">
-                    <Trophy className="h-5 w-5 text-hockey-silver-600 dark:text-hockey-silver-400" />
+                  <CardTitle className="flex items-center gap-2 text-lg text-field-green-800 dark:text-field-green-200">
+                    <Trophy className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
                     Recent Matches
                   </CardTitle>
                 </CardHeader>
@@ -484,15 +484,15 @@ export function RbacDebugger() {
                       {allMatches.map((match) => (
                         <div
                           key={match.id}
-                          className="flex items-center justify-between p-4 hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/30 dark:from-hockey-silver-900 dark:to-ice-blue-900/10 rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg transition-all duration-300"
+                          className="flex items-center justify-between p-4 hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/30 dark:from-field-green-900 dark:to-field-green-900/10 rounded-lg cursor-pointer hover:scale-105 hover:shadow-lg transition-all duration-300"
                           onClick={() => setMatchId(match.id)}
                         >
                           <div className="flex-1">
-                            <div className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                              <Trophy className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                            <div className="font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                              <Trophy className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                               {match.home_team?.name} vs {match.away_team?.name}
                             </div>
-                            <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 flex items-center gap-2 mt-1">
+                            <div className="text-sm text-field-green-600 dark:text-field-green-400 flex items-center gap-2 mt-1">
                               <Calendar className="h-3 w-3" />
                               {match.match_date ? new Date(match.match_date).toLocaleDateString() : "Date TBD"} |{" "}
                               <Badge 
@@ -501,24 +501,24 @@ export function RbacDebugger() {
                                   match.status === 'Completed' 
                                     ? 'border-assist-green-200 text-assist-green-700 bg-assist-green-50 dark:border-assist-green-700 dark:text-assist-green-400 dark:bg-assist-green-900/20'
                                     : match.status === 'Scheduled'
-                                    ? 'border-ice-blue-200 text-ice-blue-700 bg-ice-blue-50 dark:border-ice-blue-700 dark:text-ice-blue-400 dark:bg-ice-blue-900/20'
-                                    : 'border-hockey-silver-200 text-hockey-silver-700 bg-hockey-silver-50 dark:border-hockey-silver-700 dark:text-hockey-silver-400 dark:bg-hockey-silver-900/20'
+                                    ? 'border-field-green-200 text-field-green-700 bg-field-green-50 dark:border-field-green-700 dark:text-field-green-400 dark:bg-field-green-900/20'
+                                    : 'border-field-green-200 text-field-green-700 bg-field-green-50 dark:border-field-green-700 dark:text-field-green-400 dark:bg-field-green-900/20'
                                 }`}
                               >
                                 {match.status}
                               </Badge>
                             </div>
                           </div>
-                          <div className="text-xs text-hockey-silver-500 dark:text-hockey-silver-500 font-mono bg-gradient-to-r from-ice-blue-100 to-rink-blue-100 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-2 py-1 rounded">
+                          <div className="text-xs text-field-green-500 dark:text-field-green-500 font-mono bg-gradient-to-r from-field-green-100 to-pitch-blue-100 dark:from-field-green-900/20 dark:to-pitch-blue-900/20 px-2 py-1 rounded">
                             {match.id}
                           </div>
                         </div>
                       ))}
                     </div>
                   ) : (
-                    <Alert className="border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20">
+                    <Alert className="border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20">
                       <AlertCircle className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                      <AlertDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">No matches found</AlertDescription>
+                      <AlertDescription className="text-field-green-600 dark:text-field-green-400">No matches found</AlertDescription>
                     </Alert>
                   )}
                 </CardContent>
