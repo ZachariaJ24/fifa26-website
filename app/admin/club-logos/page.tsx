@@ -396,7 +396,7 @@ export default function AdminClubLogosPage() {
             <div className="w-20 h-20 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-field-green-500/25">
               <ImageIcon className="h-10 w-10 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-field-green-800 dark:text-field-green-200 mb-6 fifa-title">
+            <h1 className="text-4xl font-bold text-white mb-6 fifa-title">
               Club Logo Management
             </h1>
             <p className="text-xl text-field-green-600 dark:text-field-green-400 mx-auto mb-8 max-w-3xl fifa-subtitle">

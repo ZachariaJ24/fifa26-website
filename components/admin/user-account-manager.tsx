@@ -437,7 +437,7 @@ export function UserAccountManager() {
           <h2 className="text-2xl font-bold text-white fifa-title">
             User Account Manager
           </h2>
-          <p className="text-field-green-600 dark:text-field-green-400 fifa-subtitle">
+          <p className="text-white fifa-subtitle">
             Comprehensive user account management and administration
           </p>
         </div>

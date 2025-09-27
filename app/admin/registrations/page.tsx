@@ -444,7 +444,7 @@ export default function RegistrationsPage() {
                 </div>
                 Season Registrations
               </CardTitle>
-              <CardDescription className="text-field-green-600 dark:text-field-green-400">
+              <CardDescription className="text-white">
                 {activeSeason ? `Managing registrations for ${activeSeason.name}` : "Loading active season..."}
               </CardDescription>
             </CardHeader>

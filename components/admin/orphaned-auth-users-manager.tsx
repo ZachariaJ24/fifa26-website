@@ -168,7 +168,7 @@ export function OrphanedAuthUsersManager() {
                 </div>
                 Orphaned Auth Users Manager
               </CardTitle>
-              <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+              <CardDescription className="text-white">
                 Find and fix users that exist in Supabase Auth but not in the public.users table. These are typically from
                 the old auth system.
               </CardDescription>

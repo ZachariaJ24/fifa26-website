@@ -1360,7 +1360,7 @@ export default function AdminSchedulePage() {
             <div className="w-20 h-20 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-ice-blue-500/25">
               <Calendar className="h-10 w-10 text-white" />
             </div>
-            <h1 className="hockey-title mb-6">
+            <h1 className="hockey-title mb-6 text-white">
               Schedule Management
             </h1>
             <p className="hockey-subtitle mx-auto mb-8 max-w-3xl">

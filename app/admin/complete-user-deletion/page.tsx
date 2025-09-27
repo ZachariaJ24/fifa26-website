@@ -110,7 +110,7 @@ export default function CompleteUserDeletionPage() {
                   </div>
                   <div>
                     <CardTitle className="text-2xl text-white fifa-title">User Deletion Form</CardTitle>
-                    <CardDescription className="text-lg text-field-green-100 fifa-subtitle">
+                    <CardDescription className="text-lg text-white fifa-subtitle">
                       Enter user email and admin verification key to proceed
                     </CardDescription>
                   </div>

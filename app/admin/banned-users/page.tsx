@@ -493,7 +493,7 @@ export default function BannedUsersPage() {
           <h1 className="hockey-title mb-4 text-white">
             Banned Users Management
           </h1>
-          <p className="hockey-subtitle mb-8 text-white/90">
+          <p className="hockey-subtitle mb-8 text-white">
             Manage user access and maintain community standards. 
             View, unban, and track banned users across the platform.
           </p>

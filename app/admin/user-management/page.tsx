@@ -299,7 +299,7 @@ export default function UserManagementPage() {
               <h1 className="text-4xl md:text-5xl font-bold text-white fifa-title">
                 User Management
               </h1>
-              <p className="text-lg text-field-green-600 dark:text-field-green-400 fifa-subtitle max-w-4xl mx-auto">
+              <p className="text-lg text-white fifa-subtitle max-w-4xl mx-auto">
                 Comprehensive user administration and management
               </p>
             </div>
