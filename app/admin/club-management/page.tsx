@@ -550,7 +550,7 @@ export default function ClubManagementPage() {
           </h1>
           <p className="hockey-subtitle mb-8 text-white/90">
             Manage football clubs, availability, and logos. 
-            Create, edit, and organize team information across the league.
+            Create, edit, and organize club information across the league.
           </p>
         </div>
       </div>
@@ -565,10 +565,10 @@ export default function ClubManagementPage() {
                 <Building2 className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h2 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                <h2 className="text-2xl font-bold text-white">
                   Club Management
                 </h2>
-                <p className="text-field-green-600 dark:text-field-green-400">
+                <p className="text-white/80">
                   Manage football clubs, availability, and logos
                 </p>
               </div>
@@ -645,10 +645,10 @@ export default function ClubManagementPage() {
                   <Building2 className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                  <p className="text-2xl font-bold text-white">
                     {clubs.length}
                   </p>
-                  <p className="text-sm text-field-green-600 dark:text-field-green-400">
+                  <p className="text-sm text-white/80">
                     Total Clubs
                   </p>
                 </div>
@@ -719,7 +719,7 @@ export default function ClubManagementPage() {
                 <div className="flex-1">
                   <Label htmlFor="search">Search Clubs</Label>
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-field-green-400" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/60" />
                     <Input
                       id="search"
                       placeholder="Search by name, stadium, or location..."
@@ -773,12 +773,12 @@ export default function ClubManagementPage() {
             <CardContent>
               {loading ? (
                 <div className="text-center p-8">
-                  <RefreshCw className="h-6 w-6 animate-spin text-field-green-500 mx-auto mb-2" />
+                  <RefreshCw className="h-6 w-6 animate-spin text-white/70 mx-auto mb-2" />
                   <p className="text-field-green-600">Loading clubs...</p>
                 </div>
               ) : filteredClubs.length === 0 ? (
                 <div className="text-center p-8">
-                  <Building2 className="h-12 w-12 text-field-green-400 mx-auto mb-4" />
+                  <Building2 className="h-12 w-12 text-white/60 mx-auto mb-4" />
                   <p className="text-field-green-600">No clubs found</p>
                 </div>
               ) : (
@@ -802,11 +802,11 @@ export default function ClubManagementPage() {
                             </div>
                           )}
                           <div>
-                            <h3 className="font-semibold text-field-green-800 dark:text-field-green-200">
+                            <h3 className="font-semibold text-white">
                               {club.name}
                             </h3>
                             {club.short_name && (
-                              <p className="text-sm text-field-green-600 dark:text-field-green-400">
+                              <p className="text-sm text-white/80">
                                 {club.short_name}
                               </p>
                             )}
@@ -817,13 +817,13 @@ export default function ClubManagementPage() {
 
                       <div className="space-y-2 mb-4">
                         {club.home_stadium && (
-                          <p className="text-sm text-field-green-600 dark:text-field-green-400 flex items-center gap-2">
+                          <p className="text-sm text-white/80 flex items-center gap-2">
                             <MapPin className="h-4 w-4" />
                             {club.home_stadium}
                           </p>
                         )}
                         {club.founded_year && (
-                          <p className="text-sm text-field-green-600 dark:text-field-green-400 flex items-center gap-2">
+                          <p className="text-sm text-white/80 flex items-center gap-2">
                             <Calendar className="h-4 w-4" />
                             Founded {club.founded_year}
                           </p>
@@ -863,10 +863,10 @@ export default function ClubManagementPage() {
                         </div>
                         {club.stats && (
                           <div className="text-right">
-                            <p className="text-xs text-field-green-500">
+                            <p className="text-xs text-white/70">
                               {club.stats.wins}W - {club.stats.losses}L - {club.stats.draws}D
                             </p>
-                            <p className="text-xs text-field-green-500">
+                            <p className="text-xs text-white/70">
                               {club.stats.points} pts
                             </p>
                           </div>
