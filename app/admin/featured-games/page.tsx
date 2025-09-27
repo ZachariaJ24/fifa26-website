@@ -173,19 +173,19 @@ export default function AdminFeaturedGamesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
       {/* Header */}
-      <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
-        <div className="container mx-auto px-4 py-8">
+      <div className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 shadow-lg border-b">
+        <div className="container mx-auto px-4 py-12">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center">
-                <Star className="h-6 w-6 text-white" />
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30">
+                <Star className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-slate-800 dark:text-slate-200">Featured Games</h1>
-                <p className="text-slate-600 dark:text-slate-400">Manage which games are featured on the homepage</p>
+                <h1 className="text-4xl font-bold text-white">Featured Games</h1>
+                <p className="text-white/90 text-lg">Manage which games are featured on the homepage</p>
               </div>
             </div>
-            <Button onClick={fetchMatches} variant="outline" size="sm">
+            <Button onClick={fetchMatches} variant="outline" size="sm" className="bg-white/20 hover:bg-white/30 text-white border-white/30">
               <RefreshCw className="h-4 w-4 mr-2" />
               Refresh
             </Button>
@@ -197,28 +197,28 @@ export default function AdminFeaturedGamesPage() {
       <div className="container mx-auto px-4 py-8">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card>
+          <Card className="bg-gradient-to-br from-pitch-blue-50 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-800/20 border-pitch-blue-200 dark:border-pitch-blue-700">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Total Matches</CardTitle>
+              <CardTitle className="text-sm font-medium text-pitch-blue-700 dark:text-pitch-blue-300">Total Matches</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-slate-800 dark:text-slate-200">{matches.length}</div>
+              <div className="text-2xl font-bold text-pitch-blue-600 dark:text-pitch-blue-400">{matches.length}</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-gradient-to-br from-field-green-50 to-field-green-100 dark:from-field-green-900/20 dark:to-field-green-800/20 border-field-green-200 dark:border-field-green-700">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Featured Matches</CardTitle>
+              <CardTitle className="text-sm font-medium text-field-green-700 dark:text-field-green-300">Featured Matches</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-field-green-600">{matches.filter(m => m.is_featured).length}</div>
+              <div className="text-2xl font-bold text-field-green-600 dark:text-field-green-400">{matches.filter(m => m.is_featured).length}</div>
             </CardContent>
           </Card>
-          <Card>
+          <Card className="bg-gradient-to-br from-pitch-blue-50 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-800/20 border-pitch-blue-200 dark:border-pitch-blue-700">
             <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600 dark:text-slate-400">Upcoming Matches</CardTitle>
+              <CardTitle className="text-sm font-medium text-pitch-blue-700 dark:text-pitch-blue-300">Upcoming Matches</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-pitch-blue-600">
+              <div className="text-2xl font-bold text-pitch-blue-600 dark:text-pitch-blue-400">
                 {matches.filter(m => new Date(m.match_date) > new Date()).length}
               </div>
             </CardContent>

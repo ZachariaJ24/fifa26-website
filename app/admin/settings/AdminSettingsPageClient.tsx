@@ -86,25 +86,28 @@ export function AdminSettingsPageClient() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Enhanced Hero Section */}
-      <div className="relative overflow-hidden py-20 px-4">
+      <div className="relative overflow-hidden py-20 px-4 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600">
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
+        <div className="absolute inset-0 bg-fifa-pattern opacity-10"></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl "></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl " style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-white/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-white/20 rounded-full blur-3xl" style={{ animationDelay: '2s' }}></div>
         
         <div className="container mx-auto text-center relative z-10">
           <div>
-            <h1 className="hockey-title mb-6">
+            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/30">
+              <Shield className="h-8 w-8 text-white" />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
               System Settings
             </h1>
-            <p className="hockey-subtitle mx-auto mb-8">
+            <p className="text-white/90 text-lg md:text-xl max-w-3xl mx-auto mb-8">
               Configure and manage all system settings, transfer parameters, and administrative controls
             </p>
             
             {/* Admin Status Badge */}
-            <div className="inline-flex items-center gap-2 bg-gradient-to-r from-assist-green-500 to-assist-green-600 text-white px-6 py-3 rounded-full shadow-lg shadow-assist-green-500/25 border-2 border-white dark:border-field-green-800">
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-full shadow-lg border border-white/30">
               <Shield className="h-5 w-5" />
               <span className="font-semibold">Administrator Access Granted</span>
             </div>

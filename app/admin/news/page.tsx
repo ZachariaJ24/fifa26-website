@@ -127,24 +127,24 @@ export default function AdminNewsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
       {/* Header */}
-      <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+      <div className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 shadow-lg border-b">
         <div className="container mx-auto px-4 py-12">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30">
                 <Newspaper className="h-8 w-8 text-white" />
               </div>
               <div>
-                <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-200">News Management</h1>
-                <p className="text-lg text-slate-600 dark:text-slate-400">Manage news articles and announcements</p>
+                <h1 className="text-4xl font-bold text-white">News Management</h1>
+                <p className="text-white/90 text-lg">Manage news articles and announcements</p>
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" onClick={fetchArticles}>
+              <Button variant="outline" onClick={fetchArticles} className="bg-white/20 hover:bg-white/30 text-white border-white/30">
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Refresh
               </Button>
-              <Button asChild>
+              <Button asChild className="bg-white/20 hover:bg-white/30 text-white border-white/30">
                 <Link href="/admin/news/create">
                   <Plus className="h-4 w-4 mr-2" />
                   Create Article

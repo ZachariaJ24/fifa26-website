@@ -48,16 +48,16 @@ export default function AdminDailyRecapPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
       {/* Header */}
-      <div className="bg-white dark:bg-slate-800 shadow-sm border-b">
+      <div className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 shadow-lg border-b">
         <div className="container mx-auto px-4 py-12">
           <div className="text-center">
-            <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/30">
               <Newspaper className="h-8 w-8 text-white" />
             </div>
-            <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-200 mb-4">
+            <h1 className="text-4xl font-bold text-white mb-4">
               Daily Recap Management
             </h1>
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+            <p className="text-white/90 text-lg max-w-3xl mx-auto">
               Generate and manage daily recaps for league activities, match results, and important announcements.
             </p>
           </div>
