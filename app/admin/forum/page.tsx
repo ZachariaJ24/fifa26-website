@@ -5,7 +5,7 @@ import { SimpleForumManagement } from "@/components/admin/simple-forum-managemen
 import { ErrorBoundary } from "@/components/error-boundary"
 import { MessageSquare, Users, Shield, Settings } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { AdminProtected } from "@/components/admin/admin-protected"
+import { AdminProtected } from "@/components/auth/admin-protected"
 
 export default function AdminForumPage() {
   return (
