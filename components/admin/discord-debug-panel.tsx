@@ -90,21 +90,21 @@ export default function DiscordDebugPanel() {
   return (
     <div className="space-y-8">
       {/* Debug Information Card */}
-      <Card className="hockey-card hockey-card-hover border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-        <CardHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-          <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-            <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+      <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+        <CardHeader className="border-b-2 border-field-green-200/50 dark:border-pitch-blue-700/50 pb-4">
+          <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+            <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
               <Bug className="h-6 w-6 text-white" />
             </div>
             Debug Information
           </CardTitle>
-          <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Check bot permissions and configuration status.</CardDescription>
+          <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Check bot permissions and configuration status.</CardDescription>
         </CardHeader>
         <CardContent className="pt-6 space-y-6">
           <Button 
             onClick={runDebug} 
             disabled={loading}
-            className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
+            className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300"
           >
             {loading ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : <Bug className="mr-2 h-4 w-4" />}
             Run Debug Check
@@ -114,9 +114,9 @@ export default function DiscordDebugPanel() {
             <div className="space-y-6 mt-6">
               {/* Guild and Bot Information Grid */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20">
+                <Card className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20">
                   <CardHeader className="border-b border-assist-green-200/50 dark:border-assist-green-700/50 pb-3">
-                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-field-green-800 dark:text-field-green-200">
                       <div className="p-1.5 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded">
                         <Globe className="h-4 w-4 text-white" />
                       </div>
@@ -125,15 +125,15 @@ export default function DiscordDebugPanel() {
                   </CardHeader>
                   <CardContent className="pt-4 space-y-3">
                     <div className="flex items-center justify-between p-3 bg-gradient-to-r from-assist-green-100/30 to-assist-green-100/30 dark:from-assist-green-900/10 dark:to-assist-green-900/10 rounded-lg border border-assist-green-200/30 dark:border-assist-green-700/30">
-                      <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Name</span>
-                      <span className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-mono">{debugData.guild?.name}</span>
+                      <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Name</span>
+                      <span className="text-sm text-field-green-600 dark:text-field-green-400 font-mono">{debugData.guild?.name}</span>
                     </div>
                     <div className="flex items-center justify-between p-3 bg-gradient-to-r from-assist-green-100/30 to-assist-green-100/30 dark:from-assist-green-900/10 dark:to-assist-green-900/10 rounded-lg border border-assist-green-200/30 dark:border-assist-green-700/30">
-                      <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">ID</span>
-                      <span className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-mono">{debugData.guild?.id}</span>
+                      <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">ID</span>
+                      <span className="text-sm text-field-green-600 dark:text-field-green-400 font-mono">{debugData.guild?.id}</span>
                     </div>
                     <div className="flex items-center justify-between p-3 bg-gradient-to-r from-assist-green-100/30 to-assist-green-100/30 dark:from-assist-green-900/10 dark:to-assist-green-900/10 rounded-lg border border-assist-green-200/30 dark:border-assist-green-700/30">
-                      <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Members</span>
+                      <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Members</span>
                       <Badge variant="outline" className="bg-gradient-to-r from-assist-green-100 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-900/20 text-assist-green-700 dark:text-assist-green-300 border-assist-green-200 dark:border-assist-green-700">
                         {debugData.guild?.member_count}
                       </Badge>
@@ -141,27 +141,27 @@ export default function DiscordDebugPanel() {
                   </CardContent>
                 </Card>
 
-                <Card className="hockey-card border-rink-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-rink-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20">
-                  <CardHeader className="border-b border-rink-blue-200/50 dark:border-rink-blue-700/50 pb-3">
-                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
-                      <div className="p-1.5 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded">
+                <Card className="hockey-card border-pitch-blue-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-pitch-blue-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20">
+                  <CardHeader className="border-b border-pitch-blue-200/50 dark:border-pitch-blue-700/50 pb-3">
+                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-field-green-800 dark:text-field-green-200">
+                      <div className="p-1.5 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded">
                         <Settings className="h-4 w-4 text-white" />
                       </div>
                       Bot Information
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="pt-4 space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-gradient-to-r from-rink-blue-100/30 to-rink-blue-100/30 dark:from-rink-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border border-rink-blue-200/30 dark:border-rink-blue-700/30">
-                      <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Username</span>
-                      <span className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-mono">{debugData.bot?.username}</span>
+                    <div className="flex items-center justify-between p-3 bg-gradient-to-r from-pitch-blue-100/30 to-pitch-blue-100/30 dark:from-pitch-blue-900/10 dark:to-pitch-blue-900/10 rounded-lg border border-pitch-blue-200/30 dark:border-pitch-blue-700/30">
+                      <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Username</span>
+                      <span className="text-sm text-field-green-600 dark:text-field-green-400 font-mono">{debugData.bot?.username}</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-gradient-to-r from-rink-blue-100/30 to-rink-blue-100/30 dark:from-rink-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border border-rink-blue-200/30 dark:border-rink-blue-700/30">
-                      <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">ID</span>
-                      <span className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-mono">{debugData.bot?.id}</span>
+                    <div className="flex items-center justify-between p-3 bg-gradient-to-r from-pitch-blue-100/30 to-pitch-blue-100/30 dark:from-pitch-blue-900/10 dark:to-pitch-blue-900/10 rounded-lg border border-pitch-blue-200/30 dark:border-pitch-blue-700/30">
+                      <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">ID</span>
+                      <span className="text-sm text-field-green-600 dark:text-field-green-400 font-mono">{debugData.bot?.id}</span>
                     </div>
-                    <div className="flex items-center justify-between p-3 bg-gradient-to-r from-rink-blue-100/30 to-rink-blue-100/30 dark:from-rink-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border border-rink-blue-200/30 dark:border-rink-blue-700/30">
-                      <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Roles</span>
-                      <Badge variant="outline" className="bg-gradient-to-r from-rink-blue-100 to-rink-blue-100 dark:from-rink-blue-900/20 dark:to-rink-blue-900/20 text-rink-blue-700 dark:text-rink-blue-300 border-rink-blue-200 dark:border-rink-blue-700">
+                    <div className="flex items-center justify-between p-3 bg-gradient-to-r from-pitch-blue-100/30 to-pitch-blue-100/30 dark:from-pitch-blue-900/10 dark:to-pitch-blue-900/10 rounded-lg border border-pitch-blue-200/30 dark:border-pitch-blue-700/30">
+                      <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Roles</span>
+                      <Badge variant="outline" className="bg-gradient-to-r from-pitch-blue-100 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-900/20 text-pitch-blue-700 dark:text-pitch-blue-300 border-pitch-blue-200 dark:border-pitch-blue-700">
                         {debugData.bot?.roles?.length || 0}
                       </Badge>
                     </div>
@@ -170,10 +170,10 @@ export default function DiscordDebugPanel() {
               </div>
 
               {/* Configuration Status */}
-              <Card className="hockey-card border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/50 dark:from-hockey-silver-900 dark:to-hockey-silver-900/20">
-                <CardHeader className="border-b border-hockey-silver-200/50 dark:border-hockey-silver-700/50 pb-3">
-                  <CardTitle className="flex items-center gap-2 text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
-                    <div className="p-1.5 bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 rounded">
+              <Card className="hockey-card border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-field-green-900/20">
+                <CardHeader className="border-b border-field-green-200/50 dark:border-field-green-700/50 pb-3">
+                  <CardTitle className="flex items-center gap-2 text-lg font-semibold text-field-green-800 dark:text-field-green-200">
+                    <div className="p-1.5 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded">
                       <Shield className="h-4 w-4 text-white" />
                     </div>
                     Configuration Status
@@ -195,11 +195,11 @@ export default function DiscordDebugPanel() {
                       )}
                       Registered Role: {debugData.config?.registered_role_name || "Not Found"}
                     </Badge>
-                    <Badge variant="outline" className="bg-gradient-to-r from-ice-blue-100 to-ice-blue-100 dark:from-ice-blue-900/20 dark:to-ice-blue-900/20 text-ice-blue-700 dark:text-ice-blue-300 border-ice-blue-200 dark:border-ice-blue-700">
+                    <Badge variant="outline" className="bg-gradient-to-r from-field-green-100 to-field-green-100 dark:from-field-green-900/20 dark:to-field-green-900/20 text-field-green-700 dark:text-field-green-300 border-field-green-200 dark:border-field-green-700">
                       <Users className="mr-1 h-3 w-3" />
                       Discord Users: {debugData.database?.discord_users_count || 0}
                     </Badge>
-                    <Badge variant="outline" className="bg-gradient-to-r from-rink-blue-100 to-rink-blue-100 dark:from-rink-blue-900/20 dark:to-rink-blue-900/20 text-rink-blue-700 dark:text-rink-blue-300 border-rink-blue-200 dark:border-rink-blue-700">
+                    <Badge variant="outline" className="bg-gradient-to-r from-pitch-blue-100 to-pitch-blue-100 dark:from-pitch-blue-900/20 dark:to-pitch-blue-900/20 text-pitch-blue-700 dark:text-pitch-blue-300 border-pitch-blue-200 dark:border-pitch-blue-700">
                       <Crown className="mr-1 h-3 w-3" />
                       Total Roles: {debugData.roles?.total || 0}
                     </Badge>
@@ -209,9 +209,9 @@ export default function DiscordDebugPanel() {
 
               {/* Available Roles */}
               {debugData.roles?.all_roles && (
-                <Card className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20">
+                <Card className="hockey-card border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20">
                   <CardHeader className="border-b border-assist-green-200/50 dark:border-assist-green-700/50 pb-3">
-                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">
+                    <CardTitle className="flex items-center gap-2 text-lg font-semibold text-field-green-800 dark:text-field-green-200">
                       <div className="p-1.5 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded">
                         <Hash className="h-4 w-4 text-white" />
                       </div>
@@ -223,7 +223,7 @@ export default function DiscordDebugPanel() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {debugData.roles.all_roles.map((role: any) => (
                           <div key={role.id} className="flex justify-between items-center p-3 bg-gradient-to-r from-assist-green-100/30 to-assist-green-100/30 dark:from-assist-green-900/10 dark:to-assist-green-900/10 rounded-lg border border-assist-green-200/30 dark:border-assist-green-700/30 hover:shadow-md transition-all duration-200">
-                            <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">{role.name}</span>
+                            <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">{role.name}</span>
                             <Badge variant="outline" className="text-xs bg-gradient-to-r from-assist-green-100 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-900/20 text-assist-green-700 dark:text-assist-green-300 border-assist-green-200 dark:border-assist-green-700">
                               {role.id}
                             </Badge>
@@ -240,19 +240,19 @@ export default function DiscordDebugPanel() {
       </Card>
 
       {/* Test Role Assignment Card */}
-      <Card className="hockey-card hockey-card-hover border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+      <Card className="hockey-card hockey-card-hover border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
         <CardHeader className="border-b-2 border-goal-red-200/50 dark:border-goal-red-700/50 pb-4">
-          <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
+          <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
             <div className="p-2 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
               <Target className="h-6 w-6 text-white" />
             </div>
             Test Role Assignment
           </CardTitle>
-          <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Test assigning the registered role to a specific Discord user.</CardDescription>
+          <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Test assigning the registered role to a specific Discord user.</CardDescription>
         </CardHeader>
         <CardContent className="pt-6 space-y-6">
           <div className="space-y-3">
-            <Label htmlFor="test_user_id" className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+            <Label htmlFor="test_user_id" className="text-sm font-medium text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
               <Users className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
               Discord User ID
             </Label>

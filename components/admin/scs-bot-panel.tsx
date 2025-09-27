@@ -618,14 +618,14 @@ export default function SCSBotPanel() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="flex flex-col justify-center items-center h-64 space-y-4">
-          <div className="p-4 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full shadow-lg">
+          <div className="p-4 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full shadow-lg">
             <RefreshCw className="h-8 w-8 text-white animate-spin" />
           </div>
           <div className="text-center">
-            <h3 className="text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">Loading SCS Bot Management</h3>
-            <p className="text-hockey-silver-600 dark:text-hockey-silver-400">Connecting to Discord and gathering data...</p>
+            <h3 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200">Loading SCS Bot Management</h3>
+            <p className="text-field-green-600 dark:text-field-green-400">Connecting to Discord and gathering data...</p>
           </div>
         </div>
       </div>
@@ -633,17 +633,17 @@ export default function SCSBotPanel() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
-        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-ice-blue-500/20 to-rink-blue-500/20 rounded-full animate-float"></div>
-        <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-assist-green-500/20 to-goal-red-500/20 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-hockey-silver-500/20 to-ice-blue-500/20 rounded-full animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full "></div>
+        <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-assist-green-500/20 to-goal-red-500/20 rounded-full " style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 rounded-full " style={{ animationDelay: '2s' }}></div>
         
         <div className="relative z-10 max-w-7xl mx-auto text-center">
           <div className="flex justify-center mb-6">
-            <div className="p-6 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full shadow-2xl shadow-ice-blue-500/30">
+            <div className="p-6 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full shadow-2xl shadow-field-green-500/30">
               <Bot className="h-16 w-16 text-white" />
             </div>
           </div>
@@ -660,22 +660,22 @@ export default function SCSBotPanel() {
             {botStatus && botStatus.connected && (
               <div className="flex items-center gap-2 bg-gradient-to-r from-assist-green-100/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 px-4 py-2 rounded-full border border-assist-green-200/50 dark:border-assist-green-700/50">
                 <Wifi className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-                <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Bot Online</span>
+                <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Bot Online</span>
               </div>
             )}
             {botStatus && botStatus.config?.configCount > 1 && (
               <div className="flex items-center gap-2 bg-gradient-to-r from-goal-red-100/50 to-goal-red-100/50 dark:from-goal-red-900/20 dark:to-goal-red-900/20 px-4 py-2 rounded-full border border-goal-red-200/50 dark:border-goal-red-700/50">
                 <AlertTriangle className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">{botStatus.config.configCount} Configs</span>
+                <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">{botStatus.config.configCount} Configs</span>
               </div>
             )}
-            <div className="flex items-center gap-2 bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-4 py-2 rounded-full border border-ice-blue-200/50 dark:border-rink-blue-700/50">
-              <Users className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">{connectionStats.connected_users} Connected</span>
+            <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-pitch-blue-100/50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20 px-4 py-2 rounded-full border border-field-green-200/50 dark:border-pitch-blue-700/50">
+              <Users className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">{connectionStats.connected_users} Connected</span>
             </div>
-            <div className="flex items-center gap-2 bg-gradient-to-r from-hockey-silver-100/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 px-4 py-2 rounded-full border border-hockey-silver-200/50 dark:border-hockey-silver-700/50">
-              <Activity className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
-              <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Real-time Sync</span>
+            <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-field-green-100/50 dark:from-field-green-900/20 dark:to-field-green-900/20 px-4 py-2 rounded-full border border-field-green-200/50 dark:border-field-green-700/50">
+              <Activity className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Real-time Sync</span>
             </div>
           </div>
         </div>
@@ -686,67 +686,67 @@ export default function SCSBotPanel() {
 
         {/* Enhanced Connection Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
-          <Card className="hockey-card hockey-card-hover border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-gradient-to-r from-ice-blue-500/20 to-rink-blue-500/20 rounded-xl">
-                  <Users className="h-6 w-6 text-ice-blue-600 dark:text-ice-blue-400" />
+                <div className="p-3 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-xl">
+                  <Users className="h-6 w-6 text-field-green-600 dark:text-field-green-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Total Users</p>
-                  <p className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{connectionStats.total_users}</p>
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Total Users</p>
+                  <p className="text-3xl font-bold text-field-green-800 dark:text-field-green-200">{connectionStats.total_users}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card className="hockey-card hockey-card-hover border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="hockey-card hockey-card-hover border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-gradient-to-r from-assist-green-500/20 to-assist-green-500/20 rounded-xl">
                   <MessageSquare className="h-6 w-6 text-assist-green-600 dark:text-assist-green-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Discord Connected</p>
-                  <p className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{connectionStats.connected_users}</p>
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Discord Connected</p>
+                  <p className="text-3xl font-bold text-field-green-800 dark:text-field-green-200">{connectionStats.connected_users}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card className="hockey-card hockey-card-hover border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="hockey-card hockey-card-hover border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div className="p-3 bg-gradient-to-r from-goal-red-500/20 to-goal-red-500/20 rounded-xl">
                   <UserX className="h-6 w-6 text-goal-red-600 dark:text-goal-red-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Not Connected</p>
-                  <p className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{connectionStats.unconnected_users}</p>
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Not Connected</p>
+                  <p className="text-3xl font-bold text-field-green-800 dark:text-field-green-200">{connectionStats.unconnected_users}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card className="hockey-card hockey-card-hover border-rink-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-rink-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="hockey-card hockey-card-hover border-pitch-blue-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-pitch-blue-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-gradient-to-r from-rink-blue-500/20 to-rink-blue-500/20 rounded-xl">
-                  <UserPlus className="h-6 w-6 text-rink-blue-600 dark:text-rink-blue-400" />
+                <div className="p-3 bg-gradient-to-r from-pitch-blue-500/20 to-pitch-blue-500/20 rounded-xl">
+                  <UserPlus className="h-6 w-6 text-pitch-blue-600 dark:text-pitch-blue-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Recent (7 days)</p>
-                  <p className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{connectionStats.recent_connections}</p>
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Recent (7 days)</p>
+                  <p className="text-3xl font-bold text-field-green-800 dark:text-field-green-200">{connectionStats.recent_connections}</p>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card className="hockey-card hockey-card-hover border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/50 dark:from-hockey-silver-900 dark:to-hockey-silver-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+          <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-field-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-gradient-to-r from-hockey-silver-500/20 to-hockey-silver-500/20 rounded-xl">
-                  <TrendingUp className="h-6 w-6 text-hockey-silver-600 dark:text-hockey-silver-400" />
+                <div className="p-3 bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 rounded-xl">
+                  <TrendingUp className="h-6 w-6 text-field-green-600 dark:text-field-green-400" />
                 </div>
                 <div>
-                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Connection Rate</p>
-                  <p className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Connection Rate</p>
+                  <p className="text-3xl font-bold text-field-green-800 dark:text-field-green-200">
                     {connectionStats.total_users > 0
                       ? Math.round((connectionStats.connected_users / connectionStats.total_users) * 100)
                       : 0}
@@ -760,10 +760,10 @@ export default function SCSBotPanel() {
 
         {/* Enhanced Sync Results */}
         {syncResults && (
-          <Card className="hockey-card hockey-card-hover border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
-            <CardHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+          <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300 mb-8">
+            <CardHeader className="border-b-2 border-field-green-200/50 dark:border-pitch-blue-700/50 pb-4">
+              <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
                   <RefreshCw className="h-6 w-6 text-white" />
                 </div>
                 Last Sync Results
@@ -773,15 +773,15 @@ export default function SCSBotPanel() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                 <div className="text-center p-4 bg-gradient-to-r from-assist-green-100/30 to-assist-green-100/30 dark:from-assist-green-900/10 dark:to-assist-green-900/10 rounded-xl border border-assist-green-200/30 dark:border-assist-green-700/30">
                   <p className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300">{syncResults.successful}</p>
-                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Successful</p>
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Successful</p>
                 </div>
                 <div className="text-center p-4 bg-gradient-to-r from-goal-red-100/30 to-goal-red-100/30 dark:from-goal-red-900/10 dark:to-goal-red-900/10 rounded-xl border border-goal-red-200/30 dark:border-goal-red-700/30">
                   <p className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300">{syncResults.failed}</p>
-                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Failed</p>
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Failed</p>
                 </div>
-                <div className="text-center p-4 bg-gradient-to-r from-ice-blue-100/30 to-rink-blue-100/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-xl border border-ice-blue-200/30 dark:border-rink-blue-700/30">
-                  <p className="text-3xl font-bold text-ice-blue-700 dark:text-ice-blue-300">{syncResults.processed}</p>
-                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">Total Processed</p>
+                <div className="text-center p-4 bg-gradient-to-r from-field-green-100/30 to-pitch-blue-100/30 dark:from-field-green-900/10 dark:to-pitch-blue-900/10 rounded-xl border border-field-green-200/30 dark:border-pitch-blue-700/30">
+                  <p className="text-3xl font-bold text-field-green-700 dark:text-field-green-300">{syncResults.processed}</p>
+                  <p className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">Total Processed</p>
                 </div>
               </div>
 
@@ -815,7 +815,7 @@ export default function SCSBotPanel() {
                       </div>
                     ))}
                     {syncResults.errors.length > 5 && (
-                      <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">... and {syncResults.errors.length - 5} more errors</p>
+                      <p className="text-sm text-field-green-600 dark:text-field-green-400">... and {syncResults.errors.length - 5} more errors</p>
                     )}
                   </div>
                 </div>
@@ -825,11 +825,11 @@ export default function SCSBotPanel() {
         )}
 
         <Tabs defaultValue="discord" className="w-full">
-          <div className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg rounded-xl p-2">
-            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 h-10 bg-hockey-silver-800 dark:bg-hockey-silver-900 rounded-lg p-1">
+          <div className="hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg rounded-xl p-2">
+            <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 h-10 bg-field-green-800 dark:bg-field-green-900 rounded-lg p-1">
               <TabsTrigger 
                 value="discord" 
-                className="text-sm font-medium px-3 py-1 rounded-md transition-all duration-200 data-[state=active]:bg-ice-blue-500 data-[state=active]:text-white text-hockey-silver-300 hover:text-white flex items-center gap-2"
+                className="text-sm font-medium px-3 py-1 rounded-md transition-all duration-200 data-[state=active]:bg-field-green-500 data-[state=active]:text-white text-field-green-300 hover:text-white flex items-center gap-2"
               >
                 <Users className="h-4 w-4" />
                 <span className="hidden sm:inline">Discord Users</span>
@@ -837,7 +837,7 @@ export default function SCSBotPanel() {
               </TabsTrigger>
               <TabsTrigger 
                 value="unconnected" 
-                className="text-sm font-medium px-3 py-1 rounded-md transition-all duration-200 data-[state=active]:bg-ice-blue-500 data-[state=active]:text-white text-hockey-silver-300 hover:text-white flex items-center gap-2"
+                className="text-sm font-medium px-3 py-1 rounded-md transition-all duration-200 data-[state=active]:bg-field-green-500 data-[state=active]:text-white text-field-green-300 hover:text-white flex items-center gap-2"
               >
                 <UserX className="h-4 w-4" />
                 <span className="hidden sm:inline">Unconnected Users</span>
@@ -845,7 +845,7 @@ export default function SCSBotPanel() {
               </TabsTrigger>
               <TabsTrigger 
                 value="config" 
-                className="text-sm font-medium px-3 py-1 rounded-md transition-all duration-200 data-[state=active]:bg-ice-blue-500 data-[state=active]:text-white text-hockey-silver-300 hover:text-white flex items-center gap-2"
+                className="text-sm font-medium px-3 py-1 rounded-md transition-all duration-200 data-[state=active]:bg-field-green-500 data-[state=active]:text-white text-field-green-300 hover:text-white flex items-center gap-2"
               >
                 <Settings className="h-4 w-4" />
                 <span className="hidden sm:inline">Bot Config</span>
@@ -853,7 +853,7 @@ export default function SCSBotPanel() {
               </TabsTrigger>
               <TabsTrigger 
                 value="roles" 
-                className="text-sm font-medium px-3 py-1 rounded-md transition-all duration-200 data-[state=active]:bg-ice-blue-500 data-[state=active]:text-white text-hockey-silver-300 hover:text-white flex items-center gap-2"
+                className="text-sm font-medium px-3 py-1 rounded-md transition-all duration-200 data-[state=active]:bg-field-green-500 data-[state=active]:text-white text-field-green-300 hover:text-white flex items-center gap-2"
               >
                 <Shield className="h-4 w-4" />
                 <span className="hidden lg:inline">Role Mapping</span>
@@ -861,7 +861,7 @@ export default function SCSBotPanel() {
               </TabsTrigger>
               <TabsTrigger 
                 value="twitch" 
-                className="text-sm font-medium px-3 py-1 rounded-md transition-all duration-200 data-[state=active]:bg-ice-blue-500 data-[state=active]:text-white text-hockey-silver-300 hover:text-white flex items-center gap-2"
+                className="text-sm font-medium px-3 py-1 rounded-md transition-all duration-200 data-[state=active]:bg-field-green-500 data-[state=active]:text-white text-field-green-300 hover:text-white flex items-center gap-2"
               >
                 <Twitch className="h-4 w-4" />
                 <span className="hidden lg:inline">Twitch Integration</span>
@@ -871,24 +871,24 @@ export default function SCSBotPanel() {
           </div>
 
           <TabsContent value="discord" className="space-y-6">
-            <Card className="hockey-card hockey-card-hover border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
+            <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="border-b-2 border-field-green-200/50 dark:border-pitch-blue-700/50 pb-4">
                 <div className="flex justify-between items-center">
                   <div>
-                    <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                      <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+                    <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                      <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
                         <Users className="h-6 w-6 text-white" />
                       </div>
                       Discord Connections ({discordConnections.length})
                     </CardTitle>
-                    <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Users who have connected their Discord accounts to SCS Bot</CardDescription>
+                    <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Users who have connected their Discord accounts to SCS Bot</CardDescription>
                   </div>
                   <div className="flex gap-3">
                     <Button 
                       variant="outline" 
                       size="sm" 
                       onClick={loadData}
-                      className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+                      className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
                     >
                       <RefreshCw className="h-4 w-4 mr-2" />
                       Refresh
@@ -907,19 +907,19 @@ export default function SCSBotPanel() {
                 </div>
               </CardHeader>
               <CardContent className="pt-6">
-                <div className="hockey-card border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 rounded-xl overflow-hidden shadow-lg">
+                <div className="hockey-card border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 rounded-xl overflow-hidden shadow-lg">
                   <Table>
                     <TableHeader>
-                      <TableRow className="bg-gradient-to-r from-ice-blue-50/50 to-rink-blue-50/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">SCS User</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Discord User</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Position</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Console</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Team</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Connected Via</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Connected</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Status</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Actions</TableHead>
+                      <TableRow className="bg-gradient-to-r from-field-green-50/50 to-pitch-blue-50/50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20 border-b-2 border-field-green-200/50 dark:border-pitch-blue-700/50">
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">SCS User</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Discord User</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Position</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Console</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Team</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Connected Via</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Connected</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Status</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -929,31 +929,31 @@ export default function SCSBotPanel() {
                         return (
                           <TableRow 
                             key={connection.id}
-                            className="hover:bg-gradient-to-r hover:from-ice-blue-50/30 hover:to-rink-blue-50/30 dark:hover:from-ice-blue-900/10 dark:hover:to-rink-blue-900/10 transition-all duration-300 border-b border-ice-blue-200/30 dark:border-rink-blue-700/30"
+                            className="hover:bg-gradient-to-r hover:from-field-green-50/30 hover:to-pitch-blue-50/30 dark:hover:from-field-green-900/10 dark:hover:to-pitch-blue-900/10 transition-all duration-300 border-b border-field-green-200/30 dark:border-pitch-blue-700/30"
                           >
                             <TableCell>
                               <div>
-                                <div className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">{connection.users?.gamer_tag_id || "Unknown"}</div>
-                                <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400">{connection.users?.email}</div>
+                                <div className="font-medium text-field-green-800 dark:text-field-green-200">{connection.users?.gamer_tag_id || "Unknown"}</div>
+                                <div className="text-sm text-field-green-600 dark:text-field-green-400">{connection.users?.email}</div>
                               </div>
                             </TableCell>
                             <TableCell>
                               <div>
-                                <div className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">
+                                <div className="font-medium text-field-green-800 dark:text-field-green-200">
                                   {connection.discord_username}#{connection.discord_discriminator}
                                 </div>
-                                <div className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400 font-mono">{connection.discord_id}</div>
+                                <div className="text-xs text-field-green-600 dark:text-field-green-400 font-mono">{connection.discord_id}</div>
                               </div>
                             </TableCell>
                             <TableCell>
                               <div className="flex flex-col gap-1">
                                 {connection.users?.primary_position && (
-                                  <Badge variant="outline" className="text-xs border-ice-blue-300 dark:border-rink-blue-600 text-ice-blue-700 dark:text-rink-blue-300">
+                                  <Badge variant="outline" className="text-xs border-field-green-300 dark:border-pitch-blue-600 text-field-green-700 dark:text-pitch-blue-300">
                                     {connection.users.primary_position}
                                   </Badge>
                                 )}
                                 {connection.users?.secondary_position && (
-                                  <Badge variant="secondary" className="text-xs bg-gradient-to-r from-hockey-silver-100 to-hockey-silver-100 dark:from-hockey-silver-800 dark:to-hockey-silver-800 text-hockey-silver-700 dark:text-hockey-silver-300">
+                                  <Badge variant="secondary" className="text-xs bg-gradient-to-r from-field-green-100 to-field-green-100 dark:from-field-green-800 dark:to-field-green-800 text-field-green-700 dark:text-field-green-300">
                                     {connection.users.secondary_position}
                                   </Badge>
                                 )}
@@ -961,7 +961,7 @@ export default function SCSBotPanel() {
                             </TableCell>
                             <TableCell>
                               {connection.users?.console && (
-                                <Badge variant="outline" className="border-rink-blue-300 dark:border-rink-blue-600 text-rink-blue-700 dark:text-rink-blue-300">
+                                <Badge variant="outline" className="border-pitch-blue-300 dark:border-pitch-blue-600 text-pitch-blue-700 dark:text-pitch-blue-300">
                                   {connection.users.console}
                                 </Badge>
                               )}
@@ -969,7 +969,7 @@ export default function SCSBotPanel() {
                             <TableCell>
                               <Badge 
                                 variant="outline" 
-                                className={team === "Free Agent" ? "text-hockey-silver-600 dark:text-hockey-silver-400 border-hockey-silver-300 dark:border-hockey-silver-600" : "border-assist-green-300 dark:border-assist-green-600 text-assist-green-700 dark:text-assist-green-300"}
+                                className={team === "Free Agent" ? "text-field-green-600 dark:text-field-green-400 border-field-green-300 dark:border-field-green-600" : "border-assist-green-300 dark:border-assist-green-600 text-assist-green-700 dark:text-assist-green-300"}
                               >
                                 {team}
                               </Badge>
@@ -977,14 +977,14 @@ export default function SCSBotPanel() {
                             <TableCell>
                               <Badge 
                                 variant="outline" 
-                                className={sourceInfo.source === "Registration" ? "bg-gradient-to-r from-ice-blue-100 to-ice-blue-100 dark:from-ice-blue-900/20 dark:to-ice-blue-900/20 text-ice-blue-700 dark:text-ice-blue-300 border-ice-blue-200 dark:border-ice-blue-700" : "bg-gradient-to-r from-assist-green-100 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-900/20 text-assist-green-700 dark:text-assist-green-300 border-assist-green-200 dark:border-assist-green-700"}
+                                className={sourceInfo.source === "Registration" ? "bg-gradient-to-r from-field-green-100 to-field-green-100 dark:from-field-green-900/20 dark:to-field-green-900/20 text-field-green-700 dark:text-field-green-300 border-field-green-200 dark:border-field-green-700" : "bg-gradient-to-r from-assist-green-100 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-900/20 text-assist-green-700 dark:text-assist-green-300 border-assist-green-200 dark:border-assist-green-700"}
                               >
                                 {sourceInfo.source}
                               </Badge>
                             </TableCell>
                             <TableCell>
-                              <div className="text-sm text-hockey-silver-800 dark:text-hockey-silver-200">{new Date(connection.created_at).toLocaleDateString()}</div>
-                              <div className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">
+                              <div className="text-sm text-field-green-800 dark:text-field-green-200">{new Date(connection.created_at).toLocaleDateString()}</div>
+                              <div className="text-xs text-field-green-600 dark:text-field-green-400">
                                 {new Date(connection.created_at).toLocaleTimeString()}
                               </div>
                             </TableCell>
@@ -1013,11 +1013,11 @@ export default function SCSBotPanel() {
                   </Table>
                 </div>
                 {discordConnections.length === 0 && (
-                  <div className="text-center py-12 text-hockey-silver-600 dark:text-hockey-silver-400">
-                    <div className="p-4 bg-gradient-to-r from-ice-blue-500/20 to-rink-blue-500/20 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-                      <MessageSquare className="h-8 w-8 text-ice-blue-600 dark:text-ice-blue-400" />
+                  <div className="text-center py-12 text-field-green-600 dark:text-field-green-400">
+                    <div className="p-4 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                      <MessageSquare className="h-8 w-8 text-field-green-600 dark:text-field-green-400" />
                     </div>
-                    <p className="text-lg font-medium text-hockey-silver-800 dark:text-hockey-silver-200">No Discord connections found</p>
+                    <p className="text-lg font-medium text-field-green-800 dark:text-field-green-200">No Discord connections found</p>
                     <p className="text-sm">Users can connect their Discord accounts during registration or in settings</p>
                   </div>
                 )}
@@ -1026,17 +1026,17 @@ export default function SCSBotPanel() {
           </TabsContent>
 
           <TabsContent value="unconnected" className="space-y-6">
-            <Card className="hockey-card hockey-card-hover border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+            <Card className="hockey-card hockey-card-hover border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
               <CardHeader className="border-b-2 border-goal-red-200/50 dark:border-goal-red-700/50 pb-4">
                 <div className="flex justify-between items-center">
                   <div>
-                    <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
+                    <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
                       <div className="p-2 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
                         <UserX className="h-6 w-6 text-white" />
                       </div>
                       Unconnected Users ({unconnectedUsers.length})
                     </CardTitle>
-                    <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Active users who have not connected their Discord accounts</CardDescription>
+                    <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Active users who have not connected their Discord accounts</CardDescription>
                   </div>
                   <div className="flex gap-3">
                     <Button 
@@ -1052,17 +1052,17 @@ export default function SCSBotPanel() {
                 </div>
               </CardHeader>
               <CardContent className="pt-6">
-                <div className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-hockey-silver-900 dark:to-goal-red-900/20 rounded-xl overflow-hidden shadow-lg">
+                <div className="hockey-card border-goal-red-200/50 dark:border-goal-red-700/50 bg-gradient-to-br from-white to-goal-red-50/50 dark:from-field-green-900 dark:to-goal-red-900/20 rounded-xl overflow-hidden shadow-lg">
                   <Table>
                     <TableHeader>
                       <TableRow className="bg-gradient-to-r from-goal-red-50/50 to-goal-red-50/50 dark:from-goal-red-900/20 dark:to-goal-red-900/20 border-b-2 border-goal-red-200/50 dark:border-goal-red-700/50">
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">SCS User</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Email</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Position</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Console</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Team</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Registered</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Status</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">SCS User</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Email</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Position</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Console</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Team</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Registered</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Status</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -1075,22 +1075,22 @@ export default function SCSBotPanel() {
                           >
                             <TableCell>
                               <div>
-                                <div className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">{user.gamer_tag_id || "Unknown"}</div>
-                                <div className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">ID: {user.id}</div>
+                                <div className="font-medium text-field-green-800 dark:text-field-green-200">{user.gamer_tag_id || "Unknown"}</div>
+                                <div className="text-xs text-field-green-600 dark:text-field-green-400">ID: {user.id}</div>
                               </div>
                             </TableCell>
                             <TableCell>
-                              <div className="text-sm text-hockey-silver-800 dark:text-hockey-silver-200">{user.email}</div>
+                              <div className="text-sm text-field-green-800 dark:text-field-green-200">{user.email}</div>
                             </TableCell>
                             <TableCell>
                               <div className="flex flex-col gap-1">
                                 {user.primary_position && (
-                                  <Badge variant="outline" className="text-xs border-ice-blue-300 dark:border-rink-blue-600 text-ice-blue-700 dark:text-rink-blue-300">
+                                  <Badge variant="outline" className="text-xs border-field-green-300 dark:border-pitch-blue-600 text-field-green-700 dark:text-pitch-blue-300">
                                     {user.primary_position}
                                   </Badge>
                                 )}
                                 {user.secondary_position && (
-                                  <Badge variant="secondary" className="text-xs bg-gradient-to-r from-hockey-silver-100 to-hockey-silver-100 dark:from-hockey-silver-800 dark:to-hockey-silver-800 text-hockey-silver-700 dark:text-hockey-silver-300">
+                                  <Badge variant="secondary" className="text-xs bg-gradient-to-r from-field-green-100 to-field-green-100 dark:from-field-green-800 dark:to-field-green-800 text-field-green-700 dark:text-field-green-300">
                                     {user.secondary_position}
                                   </Badge>
                                 )}
@@ -1098,7 +1098,7 @@ export default function SCSBotPanel() {
                             </TableCell>
                             <TableCell>
                               {user.console && (
-                                <Badge variant="outline" className="border-rink-blue-300 dark:border-rink-blue-600 text-rink-blue-700 dark:text-rink-blue-300">
+                                <Badge variant="outline" className="border-pitch-blue-300 dark:border-pitch-blue-600 text-pitch-blue-700 dark:text-pitch-blue-300">
                                   {user.console}
                                 </Badge>
                               )}
@@ -1106,14 +1106,14 @@ export default function SCSBotPanel() {
                             <TableCell>
                               <Badge 
                                 variant="outline" 
-                                className={team === "Free Agent" ? "text-hockey-silver-600 dark:text-hockey-silver-400 border-hockey-silver-300 dark:border-hockey-silver-600" : "border-assist-green-300 dark:border-assist-green-600 text-assist-green-700 dark:text-assist-green-300"}
+                                className={team === "Free Agent" ? "text-field-green-600 dark:text-field-green-400 border-field-green-300 dark:border-field-green-600" : "border-assist-green-300 dark:border-assist-green-600 text-assist-green-700 dark:text-assist-green-300"}
                               >
                                 {team}
                               </Badge>
                             </TableCell>
                             <TableCell>
-                              <div className="text-sm text-hockey-silver-800 dark:text-hockey-silver-200">{new Date(user.created_at).toLocaleDateString()}</div>
-                              <div className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">
+                              <div className="text-sm text-field-green-800 dark:text-field-green-200">{new Date(user.created_at).toLocaleDateString()}</div>
+                              <div className="text-xs text-field-green-600 dark:text-field-green-400">
                                 {new Date(user.created_at).toLocaleTimeString()}
                               </div>
                             </TableCell>
@@ -1130,11 +1130,11 @@ export default function SCSBotPanel() {
                   </Table>
                 </div>
                 {unconnectedUsers.length === 0 && (
-                  <div className="text-center py-12 text-hockey-silver-600 dark:text-hockey-silver-400">
+                  <div className="text-center py-12 text-field-green-600 dark:text-field-green-400">
                     <div className="p-4 bg-gradient-to-r from-assist-green-500/20 to-assist-green-500/20 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
                       <CheckCircle className="h-8 w-8 text-assist-green-600 dark:text-assist-green-400" />
                     </div>
-                    <p className="text-lg font-medium text-hockey-silver-800 dark:text-hockey-silver-200">All active users have Discord connections!</p>
+                    <p className="text-lg font-medium text-field-green-800 dark:text-field-green-200">All active users have Discord connections!</p>
                     <p className="text-sm">Great job on Discord adoption</p>
                   </div>
                 )}
@@ -1143,20 +1143,20 @@ export default function SCSBotPanel() {
           </TabsContent>
 
           <TabsContent value="config" className="space-y-6">
-            <Card className="hockey-card hockey-card-hover border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-hockey-silver-900 dark:to-assist-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+            <Card className="hockey-card hockey-card-hover border-assist-green-200/50 dark:border-assist-green-700/50 bg-gradient-to-br from-white to-assist-green-50/50 dark:from-field-green-900 dark:to-assist-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
               <CardHeader className="border-b-2 border-assist-green-200/50 dark:border-assist-green-700/50 pb-4">
-                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
+                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
                   <div className="p-2 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg">
                     <Settings className="h-6 w-6 text-white" />
                   </div>
                   Bot Configuration
                 </CardTitle>
-                <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Configure the Discord bot settings and authentication.</CardDescription>
+                <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Configure the Discord bot settings and authentication.</CardDescription>
               </CardHeader>
               <CardContent className="pt-6 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-3">
-                    <Label htmlFor="guild_id" className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                    <Label htmlFor="guild_id" className="text-base font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
                       <Globe className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                       Discord Server ID
                     </Label>
@@ -1169,7 +1169,7 @@ export default function SCSBotPanel() {
                     />
                   </div>
                   <div className="space-y-3">
-                    <Label htmlFor="registered_role_id" className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                    <Label htmlFor="registered_role_id" className="text-base font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
                       <Shield className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                       Registered Role ID
                     </Label>
@@ -1183,7 +1183,7 @@ export default function SCSBotPanel() {
                   </div>
                 </div>
                 <div className="space-y-3">
-                  <Label htmlFor="bot_token" className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                  <Label htmlFor="bot_token" className="text-base font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
                     <Zap className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                     Bot Token
                   </Label>
@@ -1209,7 +1209,7 @@ export default function SCSBotPanel() {
                     variant="outline" 
                     onClick={testConnection} 
                     disabled={testing}
-                    className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {testing ? (
                       <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
@@ -1222,7 +1222,7 @@ export default function SCSBotPanel() {
                     variant="outline" 
                     onClick={syncAllRoles} 
                     disabled={syncing}
-                    className="hockey-button bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 hover:from-hockey-silver-600 hover:to-hockey-silver-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="hockey-button bg-gradient-to-r from-field-green-500 to-field-green-600 hover:from-field-green-600 hover:to-field-green-700 text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <RefreshCw className={`mr-2 h-4 w-4 ${syncing ? "animate-spin" : ""}`} />
                     {syncing ? "Syncing..." : "Sync All Roles"}
@@ -1231,35 +1231,35 @@ export default function SCSBotPanel() {
               </CardContent>
           </Card>
 
-            <Card className="hockey-card hockey-card-hover border-rink-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-rink-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="border-b-2 border-rink-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  <div className="p-2 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg">
+            <Card className="hockey-card hockey-card-hover border-pitch-blue-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-pitch-blue-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="border-b-2 border-pitch-blue-200/50 dark:border-pitch-blue-700/50 pb-4">
+                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                  <div className="p-2 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg">
                     <Database className="h-6 w-6 text-white" />
                   </div>
                   OAuth Configuration
                 </CardTitle>
-                <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Discord OAuth settings for user authentication.</CardDescription>
+                <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Discord OAuth settings for user authentication.</CardDescription>
               </CardHeader>
               <CardContent className="pt-6 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
-                    <Label className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2 mb-3">
-                      <Target className="h-4 w-4 text-rink-blue-600 dark:text-rink-blue-400" />
+                    <Label className="text-base font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2 mb-3">
+                      <Target className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
                       Client ID
                     </Label>
                     <div className="flex items-center gap-3">
                       <Input 
                         value="1423504252508307476" 
                         disabled 
-                        className="hockey-search border-2 border-rink-blue-200/50 dark:border-rink-blue-700/50"
+                        className="hockey-search border-2 border-pitch-blue-200/50 dark:border-pitch-blue-700/50"
                       />
                       <Badge variant="secondary" className="bg-gradient-to-r from-assist-green-100 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-900/20 text-assist-green-700 dark:text-assist-green-300 border-assist-green-200 dark:border-assist-green-700">Configured</Badge>
                     </div>
                   </div>
                   <div>
-                    <Label className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2 mb-3">
-                      <Shield className="h-4 w-4 text-rink-blue-600 dark:text-rink-blue-400" />
+                    <Label className="text-base font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2 mb-3">
+                      <Shield className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
                       Client Secret
                     </Label>
                     <div className="flex items-center gap-3">
@@ -1267,7 +1267,7 @@ export default function SCSBotPanel() {
                         value="[CONFIGURED]" 
                         type="password" 
                         disabled 
-                        className="hockey-search border-2 border-rink-blue-200/50 dark:border-rink-blue-700/50"
+                        className="hockey-search border-2 border-pitch-blue-200/50 dark:border-pitch-blue-700/50"
                       />
                       <Badge variant="secondary" className="bg-gradient-to-r from-assist-green-100 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-900/20 text-assist-green-700 dark:text-assist-green-300 border-assist-green-200 dark:border-assist-green-700">Configured</Badge>
                     </div>
@@ -1277,43 +1277,43 @@ export default function SCSBotPanel() {
             </Card>
 
             {botStatus && (
-              <Card className="hockey-card hockey-card-hover border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/50 dark:from-hockey-silver-900 dark:to-hockey-silver-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-                <CardHeader className="border-b-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50 pb-4">
-                  <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                    <div className="p-2 bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 rounded-lg">
+              <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-field-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+                <CardHeader className="border-b-2 border-field-green-200/50 dark:border-field-green-700/50 pb-4">
+                  <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                    <div className="p-2 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg">
                       <Activity className="h-6 w-6 text-white" />
                     </div>
                     Bot Status
                   </CardTitle>
-                  <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Current status of the SCS Discord bot.</CardDescription>
+                  <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Current status of the SCS Discord bot.</CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
-                      <Label className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2 mb-3">
-                        <Globe className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
+                      <Label className="text-base font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2 mb-3">
+                        <Globe className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                         Server Name
                       </Label>
                       <Input 
                         value={botStatus.guild?.name || "Unknown"} 
                         disabled 
-                        className="hockey-search border-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50"
+                        className="hockey-search border-2 border-field-green-200/50 dark:border-field-green-700/50"
                       />
                     </div>
                     <div>
-                      <Label className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2 mb-3">
-                        <Users className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
+                      <Label className="text-base font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2 mb-3">
+                        <Users className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                         Member Count
                       </Label>
                       <Input 
                         value={botStatus.guild?.memberCount || "Unknown"} 
                         disabled 
-                        className="hockey-search border-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50"
+                        className="hockey-search border-2 border-field-green-200/50 dark:border-field-green-700/50"
                       />
                     </div>
                     <div>
-                      <Label className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2 mb-3">
-                        <Wifi className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
+                      <Label className="text-base font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2 mb-3">
+                        <Wifi className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                         Bot Status
                       </Label>
                       <div className="flex items-center gap-2">
@@ -1330,36 +1330,36 @@ export default function SCSBotPanel() {
           </TabsContent>
 
           <TabsContent value="roles" className="space-y-6">
-            <Card className="hockey-card hockey-card-hover border-rink-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-rink-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="border-b-2 border-rink-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  <div className="p-2 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg">
+            <Card className="hockey-card hockey-card-hover border-pitch-blue-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-pitch-blue-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="border-b-2 border-pitch-blue-200/50 dark:border-pitch-blue-700/50 pb-4">
+                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                  <div className="p-2 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg">
                     <Shield className="h-6 w-6 text-white" />
                   </div>
                   Team Role Mapping
                 </CardTitle>
-                <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Map Discord roles to SCS teams.</CardDescription>
+                <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Map Discord roles to SCS teams.</CardDescription>
               </CardHeader>
               <CardContent className="pt-6">
-                <div className="hockey-card border-rink-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-rink-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 rounded-xl overflow-hidden shadow-lg">
+                <div className="hockey-card border-pitch-blue-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-pitch-blue-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 rounded-xl overflow-hidden shadow-lg">
                   <Table>
                     <TableHeader>
-                      <TableRow className="bg-gradient-to-r from-rink-blue-50/50 to-rink-blue-50/50 dark:from-rink-blue-900/20 dark:to-rink-blue-900/20 border-b-2 border-rink-blue-200/50 dark:border-rink-blue-700/50">
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Team</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Discord Role</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Role ID</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Actions</TableHead>
+                      <TableRow className="bg-gradient-to-r from-pitch-blue-50/50 to-pitch-blue-50/50 dark:from-pitch-blue-900/20 dark:to-pitch-blue-900/20 border-b-2 border-pitch-blue-200/50 dark:border-pitch-blue-700/50">
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Team</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Discord Role</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Role ID</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {teamRoles.map((role) => (
                         <TableRow 
                           key={role.id}
-                          className="hover:bg-gradient-to-r hover:from-rink-blue-50/30 hover:to-rink-blue-50/30 dark:hover:from-rink-blue-900/10 dark:hover:to-rink-blue-900/10 transition-all duration-300 border-b border-rink-blue-200/30 dark:border-rink-blue-700/30"
+                          className="hover:bg-gradient-to-r hover:from-pitch-blue-50/30 hover:to-pitch-blue-50/30 dark:hover:from-pitch-blue-900/10 dark:hover:to-pitch-blue-900/10 transition-all duration-300 border-b border-pitch-blue-200/30 dark:border-pitch-blue-700/30"
                         >
-                          <TableCell className="text-hockey-silver-800 dark:text-hockey-silver-200">{role.teams?.name}</TableCell>
-                          <TableCell className="text-hockey-silver-800 dark:text-hockey-silver-200">{role.role_name}</TableCell>
-                          <TableCell className="font-mono text-sm text-hockey-silver-600 dark:text-hockey-silver-400">{role.discord_role_id}</TableCell>
+                          <TableCell className="text-field-green-800 dark:text-field-green-200">{role.teams?.name}</TableCell>
+                          <TableCell className="text-field-green-800 dark:text-field-green-200">{role.role_name}</TableCell>
+                          <TableCell className="font-mono text-sm text-field-green-600 dark:text-field-green-400">{role.discord_role_id}</TableCell>
                           <TableCell>
                             <Button 
                               variant="outline" 
@@ -1378,38 +1378,38 @@ export default function SCSBotPanel() {
               </CardContent>
             </Card>
 
-            <Card className="hockey-card hockey-card-hover border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/50 dark:from-hockey-silver-900 dark:to-hockey-silver-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="border-b-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50 pb-4">
-                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  <div className="p-2 bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 rounded-lg">
+            <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-field-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="border-b-2 border-field-green-200/50 dark:border-field-green-700/50 pb-4">
+                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                  <div className="p-2 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg">
                     <Users className="h-6 w-6 text-white" />
                   </div>
                   Management Role Mapping
                 </CardTitle>
-                <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Map Discord roles to management positions.</CardDescription>
+                <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Map Discord roles to management positions.</CardDescription>
               </CardHeader>
               <CardContent className="pt-6">
-                <div className="hockey-card border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/50 dark:from-hockey-silver-900 dark:to-hockey-silver-900/20 rounded-xl overflow-hidden shadow-lg">
+                <div className="hockey-card border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-field-green-900/20 rounded-xl overflow-hidden shadow-lg">
                   <Table>
                     <TableHeader>
-                      <TableRow className="bg-gradient-to-r from-hockey-silver-50/50 to-hockey-silver-50/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 border-b-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50">
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Position</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Discord Role</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Role ID</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Actions</TableHead>
+                      <TableRow className="bg-gradient-to-r from-field-green-50/50 to-field-green-50/50 dark:from-field-green-900/20 dark:to-field-green-900/20 border-b-2 border-field-green-200/50 dark:border-field-green-700/50">
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Position</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Discord Role</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Role ID</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {managementRoles.map((role) => (
                         <TableRow 
                           key={role.id}
-                          className="hover:bg-gradient-to-r hover:from-hockey-silver-50/30 hover:to-hockey-silver-50/30 dark:hover:from-hockey-silver-900/10 dark:hover:to-hockey-silver-900/10 transition-all duration-300 border-b border-hockey-silver-200/30 dark:border-hockey-silver-700/30"
+                          className="hover:bg-gradient-to-r hover:from-field-green-50/30 hover:to-field-green-50/30 dark:hover:from-field-green-900/10 dark:hover:to-field-green-900/10 transition-all duration-300 border-b border-field-green-200/30 dark:border-field-green-700/30"
                         >
                           <TableCell>
-                            <Badge variant="outline" className="border-ice-blue-300 dark:border-rink-blue-600 text-ice-blue-700 dark:text-rink-blue-300">{role.role_type}</Badge>
+                            <Badge variant="outline" className="border-field-green-300 dark:border-pitch-blue-600 text-field-green-700 dark:text-pitch-blue-300">{role.role_type}</Badge>
                           </TableCell>
-                          <TableCell className="text-hockey-silver-800 dark:text-hockey-silver-200">{role.role_name}</TableCell>
-                          <TableCell className="font-mono text-sm text-hockey-silver-600 dark:text-hockey-silver-400">{role.discord_role_id}</TableCell>
+                          <TableCell className="text-field-green-800 dark:text-field-green-200">{role.role_name}</TableCell>
+                          <TableCell className="font-mono text-sm text-field-green-600 dark:text-field-green-400">{role.discord_role_id}</TableCell>
                           <TableCell>
                             <Button 
                               variant="outline" 
@@ -1429,42 +1429,42 @@ export default function SCSBotPanel() {
           </TabsContent>
 
           <TabsContent value="twitch" className="space-y-6">
-            <Card className="hockey-card hockey-card-hover border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/50 dark:from-hockey-silver-900 dark:to-hockey-silver-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-              <CardHeader className="border-b-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50 pb-4">
-                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-                  <div className="p-2 bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 rounded-lg">
+            <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-field-green-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="border-b-2 border-field-green-200/50 dark:border-field-green-700/50 pb-4">
+                <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                  <div className="p-2 bg-gradient-to-r from-field-green-500 to-field-green-600 rounded-lg">
                     <Twitch className="h-6 w-6 text-white" />
                   </div>
                   Twitch Connections ({twitchConnections.length})
                 </CardTitle>
-                <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Users who have connected their Twitch accounts for streaming.</CardDescription>
+                <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Users who have connected their Twitch accounts for streaming.</CardDescription>
               </CardHeader>
               <CardContent className="pt-6">
-                <div className="hockey-card border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-br from-white to-hockey-silver-50/50 dark:from-hockey-silver-900 dark:to-hockey-silver-900/20 rounded-xl overflow-hidden shadow-lg">
+                <div className="hockey-card border-field-green-200/50 dark:border-field-green-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-field-green-900/20 rounded-xl overflow-hidden shadow-lg">
                   <Table>
                     <TableHeader>
-                      <TableRow className="bg-gradient-to-r from-hockey-silver-50/50 to-hockey-silver-50/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 border-b-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50">
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">SCS User</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Twitch Username</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Status</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Last Checked</TableHead>
-                        <TableHead className="text-hockey-silver-800 dark:text-hockey-silver-200 font-bold">Actions</TableHead>
+                      <TableRow className="bg-gradient-to-r from-field-green-50/50 to-field-green-50/50 dark:from-field-green-900/20 dark:to-field-green-900/20 border-b-2 border-field-green-200/50 dark:border-field-green-700/50">
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">SCS User</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Twitch Username</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Status</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Last Checked</TableHead>
+                        <TableHead className="text-field-green-800 dark:text-field-green-200 font-bold">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {twitchConnections.map((connection) => (
                         <TableRow 
                           key={connection.id}
-                          className="hover:bg-gradient-to-r hover:from-hockey-silver-50/30 hover:to-hockey-silver-50/30 dark:hover:from-hockey-silver-900/10 dark:hover:to-hockey-silver-900/10 transition-all duration-300 border-b border-hockey-silver-200/30 dark:border-hockey-silver-700/30"
+                          className="hover:bg-gradient-to-r hover:from-field-green-50/30 hover:to-field-green-50/30 dark:hover:from-field-green-900/10 dark:hover:to-field-green-900/10 transition-all duration-300 border-b border-field-green-200/30 dark:border-field-green-700/30"
                         >
-                          <TableCell className="text-hockey-silver-800 dark:text-hockey-silver-200">{connection.discord_users?.users?.gamer_tag_id}</TableCell>
+                          <TableCell className="text-field-green-800 dark:text-field-green-200">{connection.discord_users?.users?.gamer_tag_id}</TableCell>
                           <TableCell className="flex items-center gap-2">
-                            <span className="text-hockey-silver-800 dark:text-hockey-silver-200">{connection.twitch_username}</span>
+                            <span className="text-field-green-800 dark:text-field-green-200">{connection.twitch_username}</span>
                             <Button 
                               variant="ghost" 
                               size="sm" 
                               asChild
-                              className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+                              className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
                             >
                               <a
                                 href={`https://twitch.tv/${connection.twitch_username}`}
@@ -1482,10 +1482,10 @@ export default function SCSBotPanel() {
                                 Live
                               </Badge>
                             ) : (
-                              <Badge variant="secondary" className="bg-gradient-to-r from-hockey-silver-100 to-hockey-silver-100 dark:from-hockey-silver-800 dark:to-hockey-silver-800 text-hockey-silver-700 dark:text-hockey-silver-300">Offline</Badge>
+                              <Badge variant="secondary" className="bg-gradient-to-r from-field-green-100 to-field-green-100 dark:from-field-green-800 dark:to-field-green-800 text-field-green-700 dark:text-field-green-300">Offline</Badge>
                             )}
                           </TableCell>
-                          <TableCell className="text-hockey-silver-800 dark:text-hockey-silver-200">{new Date(connection.last_checked).toLocaleString()}</TableCell>
+                          <TableCell className="text-field-green-800 dark:text-field-green-200">{new Date(connection.last_checked).toLocaleString()}</TableCell>
                           <TableCell>
                             <Button 
                               variant="outline" 

@@ -46,15 +46,15 @@ export default function SetupBotConfig() {
   return (
     <div className="space-y-8">
       {/* Main Setup Card */}
-      <Card className="hockey-card hockey-card-hover border-ice-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-ice-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-        <CardHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-          <CardTitle className="flex items-center gap-3 text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-            <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+      <Card className="hockey-card hockey-card-hover border-field-green-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-field-green-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+        <CardHeader className="border-b-2 border-field-green-200/50 dark:border-pitch-blue-700/50 pb-4">
+          <CardTitle className="flex items-center gap-3 text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+            <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
               <Settings className="h-6 w-6 text-white" />
             </div>
             Setup Bot Configuration
           </CardTitle>
-          <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">Initialize the Discord bot configuration with the correct settings for SCS.</CardDescription>
+          <CardDescription className="text-field-green-600 dark:text-field-green-400 text-base">Initialize the Discord bot configuration with the correct settings for SCS.</CardDescription>
         </CardHeader>
         <CardContent className="pt-6 space-y-6">
           {/* Status Display */}
@@ -82,29 +82,29 @@ export default function SetupBotConfig() {
 
           {/* Configuration Details */}
           <div className="space-y-4">
-            <h4 className="text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-              <Database className="h-5 w-5 text-ice-blue-600 dark:text-ice-blue-400" />
+            <h4 className="text-lg font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+              <Database className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
               Configuration Details
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="p-4 bg-gradient-to-r from-ice-blue-100/30 to-rink-blue-100/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border border-ice-blue-200/30 dark:border-rink-blue-700/30">
+              <div className="p-4 bg-gradient-to-r from-field-green-100/30 to-pitch-blue-100/30 dark:from-field-green-900/10 dark:to-pitch-blue-900/10 rounded-lg border border-field-green-200/30 dark:border-pitch-blue-700/30">
                 <div className="flex items-center gap-2 mb-2">
-                  <Globe className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
-                  <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Guild ID</span>
+                  <Globe className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+                  <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Guild ID</span>
                 </div>
-                <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-mono">1345946042281234442</p>
+                <p className="text-sm text-field-green-600 dark:text-field-green-400 font-mono">1345946042281234442</p>
               </div>
               <div className="p-4 bg-gradient-to-r from-assist-green-100/30 to-assist-green-100/30 dark:from-assist-green-900/10 dark:to-assist-green-900/10 rounded-lg border border-assist-green-200/30 dark:border-assist-green-700/30">
                 <div className="flex items-center gap-2 mb-2">
                   <Shield className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-                  <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Registered Role ID</span>
+                  <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Registered Role ID</span>
                 </div>
-                <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-mono">1376351990354804848</p>
+                <p className="text-sm text-field-green-600 dark:text-field-green-400 font-mono">1376351990354804848</p>
               </div>
-              <div className="p-4 bg-gradient-to-r from-hockey-silver-100/30 to-hockey-silver-100/30 dark:from-hockey-silver-900/10 dark:to-hockey-silver-900/10 rounded-lg border border-hockey-silver-200/30 dark:border-hockey-silver-700/30">
+              <div className="p-4 bg-gradient-to-r from-field-green-100/30 to-field-green-100/30 dark:from-field-green-900/10 dark:to-field-green-900/10 rounded-lg border border-field-green-200/30 dark:border-field-green-700/30">
                 <div className="flex items-center gap-2 mb-2">
-                  <Zap className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
-                  <span className="text-sm font-medium text-hockey-silver-800 dark:text-hockey-silver-200">Bot Token</span>
+                  <Zap className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+                  <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Bot Token</span>
                 </div>
                 <Badge variant="outline" className="bg-gradient-to-r from-assist-green-100 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-900/20 text-assist-green-700 dark:text-assist-green-300 border-assist-green-200 dark:border-assist-green-700">
                   Configured Securely
@@ -119,7 +119,7 @@ export default function SetupBotConfig() {
             disabled={isLoading || isSetup} 
             className={`w-full hockey-button ${isSetup 
               ? "bg-gradient-to-r from-assist-green-500 to-assist-green-600 hover:from-assist-green-600 hover:to-assist-green-700" 
-              : "bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 hover:from-ice-blue-600 hover:to-rink-blue-700"
+              : "bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700"
             } text-white border-0 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed`}
           >
             {isLoading ? (
@@ -143,10 +143,10 @@ export default function SetupBotConfig() {
       </Card>
 
       {/* Additional Information Card */}
-      <Card className="hockey-card hockey-card-hover border-rink-blue-200/50 dark:border-rink-blue-700/50 bg-gradient-to-br from-white to-rink-blue-50/50 dark:from-hockey-silver-900 dark:to-rink-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
-        <CardHeader className="border-b-2 border-rink-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-          <CardTitle className="flex items-center gap-3 text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
-            <div className="p-2 bg-gradient-to-r from-rink-blue-500 to-rink-blue-600 rounded-lg">
+      <Card className="hockey-card hockey-card-hover border-pitch-blue-200/50 dark:border-pitch-blue-700/50 bg-gradient-to-br from-white to-pitch-blue-50/50 dark:from-field-green-900 dark:to-pitch-blue-900/20 shadow-lg hover:shadow-xl transition-all duration-300">
+        <CardHeader className="border-b-2 border-pitch-blue-200/50 dark:border-pitch-blue-700/50 pb-4">
+          <CardTitle className="flex items-center gap-3 text-xl font-bold text-field-green-800 dark:text-field-green-200">
+            <div className="p-2 bg-gradient-to-r from-pitch-blue-500 to-pitch-blue-600 rounded-lg">
               <Target className="h-5 w-5 text-white" />
             </div>
             What This Setup Does
@@ -155,41 +155,41 @@ export default function SetupBotConfig() {
         <CardContent className="pt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <h4 className="font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                <Users className="h-4 w-4 text-rink-blue-600 dark:text-rink-blue-400" />
+              <h4 className="font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                <Users className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
                 User Management
               </h4>
-              <ul className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 space-y-2">
+              <ul className="text-sm text-field-green-600 dark:text-field-green-400 space-y-2">
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-rink-blue-500 rounded-full mt-2"></div>
+                  <div className="w-1.5 h-1.5 bg-pitch-blue-500 rounded-full mt-2"></div>
                   <span>Enables Discord user connection tracking</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-rink-blue-500 rounded-full mt-2"></div>
+                  <div className="w-1.5 h-1.5 bg-pitch-blue-500 rounded-full mt-2"></div>
                   <span>Automatic role assignment based on team membership</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-rink-blue-500 rounded-full mt-2"></div>
+                  <div className="w-1.5 h-1.5 bg-pitch-blue-500 rounded-full mt-2"></div>
                   <span>Real-time synchronization with SCS database</span>
                 </li>
               </ul>
             </div>
             <div className="space-y-4">
-              <h4 className="font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
-                <Shield className="h-4 w-4 text-rink-blue-600 dark:text-rink-blue-400" />
+              <h4 className="font-semibold text-field-green-800 dark:text-field-green-200 flex items-center gap-2">
+                <Shield className="h-4 w-4 text-pitch-blue-600 dark:text-pitch-blue-400" />
                 Security Features
               </h4>
-              <ul className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 space-y-2">
+              <ul className="text-sm text-field-green-600 dark:text-field-green-400 space-y-2">
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-rink-blue-500 rounded-full mt-2"></div>
+                  <div className="w-1.5 h-1.5 bg-pitch-blue-500 rounded-full mt-2"></div>
                   <span>Secure token storage and management</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-rink-blue-500 rounded-full mt-2"></div>
+                  <div className="w-1.5 h-1.5 bg-pitch-blue-500 rounded-full mt-2"></div>
                   <span>Encrypted communication with Discord API</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 bg-rink-blue-500 rounded-full mt-2"></div>
+                  <div className="w-1.5 h-1.5 bg-pitch-blue-500 rounded-full mt-2"></div>
                   <span>Role-based access control integration</span>
                 </li>
               </ul>
