@@ -6,12 +6,13 @@ export interface TeamStanding {
   logo_url?: string
   wins: number
   losses: number
-  otl: number
+  draws: number
   points: number
-  goals_for: number
-  goals_against: number
-  games_played: number
-  goal_differential: number
+  goals_scored: number
+  goals_conceded: number
+  matches_played: number
+  goal_difference: number
+  clean_sheets?: number
   conference?: string
   conference_id?: string
   conference_color?: string
@@ -152,7 +153,7 @@ export async function calculateUnifiedStandings(): Promise<{
       points,
       goals_for: goalsFor,
       goals_against: goalsAgainst,
-      goal_differential: goalDifferential,
+      goal_difference: goalDifferential,
       conference: team.conferences?.name || "No Conference",
       conference_id: team.conference_id,
       conference_color: team.conferences?.color || "#6B7280",
@@ -164,7 +165,7 @@ export async function calculateUnifiedStandings(): Promise<{
   calculatedStandings.sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points
     if (b.wins !== a.wins) return b.wins - a.wins
-    return b.goal_differential - a.goal_differential
+    return b.goal_difference - a.goal_difference
   })
 
   // Group teams by conference
@@ -197,7 +198,7 @@ export async function calculateUnifiedStandings(): Promise<{
     standingsByConference[conferenceName].teams.sort((a: TeamStanding, b: TeamStanding) => {
       if (b.points !== a.points) return b.points - a.points
       if (b.wins !== a.wins) return b.wins - a.wins
-      return b.goal_differential - a.goal_differential
+      return b.goal_difference - a.goal_difference
     })
   })
 
@@ -318,7 +319,7 @@ export async function calculateUnifiedStandingsClient(supabase: any): Promise<{
       points,
       goals_for: goalsFor,
       goals_against: goalsAgainst,
-      goal_differential: goalDifferential,
+      goal_difference: goalDifferential,
       conference: team.conferences?.name || "No Conference",
       conference_id: team.conference_id,
       conference_color: team.conferences?.color || "#6B7280",
@@ -330,7 +331,7 @@ export async function calculateUnifiedStandingsClient(supabase: any): Promise<{
   calculatedStandings.sort((a, b) => {
     if (b.points !== a.points) return b.points - a.points
     if (b.wins !== a.wins) return b.wins - a.wins
-    return b.goal_differential - a.goal_differential
+    return b.goal_difference - a.goal_difference
   })
 
   // Group teams by conference
@@ -363,7 +364,7 @@ export async function calculateUnifiedStandingsClient(supabase: any): Promise<{
     standingsByConference[conferenceName].teams.sort((a: TeamStanding, b: TeamStanding) => {
       if (b.points !== a.points) return b.points - a.points
       if (b.wins !== a.wins) return b.wins - a.wins
-      return b.goal_differential - a.goal_differential
+      return b.goal_difference - a.goal_difference
     })
   })
 

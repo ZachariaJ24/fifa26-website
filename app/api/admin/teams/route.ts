@@ -7,7 +7,7 @@ export async function GET() {
 
     // Get all teams with their division information
     const { data: teams, error: teamsError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select(`
         id,
         name,

@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
           role,
           users!players_user_id_fkey(id, gamer_tag_id)
         `)
-        .eq("team_id", teamId)
+        .eq("club_id", teamId)
 
       if (playersError) {
         console.error("Error fetching players:", playersError)
@@ -36,7 +36,7 @@ export async function GET(request: NextRequest) {
         const { data: availability, error: availabilityError } = await supabase
           .from("game_availability")
           .select("*")
-          .eq("team_id", teamId)
+          .eq("club_id", teamId)
           .eq("match_id", matchId)
 
         if (availabilityError && availabilityError.code !== "42P01") {
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
       const { data: injuryReserves, error: irError } = await supabase
         .from("injury_reserves")
         .select("*")
-        .eq("team_id", teamId)
+        .eq("club_id", teamId)
         .eq("status", "active")
 
       if (irError && irError.code !== "42P01") {

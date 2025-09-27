@@ -40,10 +40,10 @@ export default function TeamsPage() {
 
         const awardsByTeam: Record<string, any[]> = {}
         awards?.forEach((award: any) => {
-          if (!awardsByTeam[award.team_id]) {
-            awardsByTeam[award.team_id] = []
+          if (!awardsByTeam[award.club_id]) {
+            awardsByTeam[award.club_id] = []
           }
-          awardsByTeam[award.team_id].push(award)
+          awardsByTeam[award.club_id].push(award)
         })
 
         // 3. Fetch player data for counts and salaries
@@ -70,6 +70,7 @@ export default function TeamsPage() {
 
         setTeams(combinedTeamData)
       } catch (error: any) {
+        console.error("Error loading teams:", error)
         toast({
           title: "Error loading teams",
           description: error.message || "Failed to load teams data.",
@@ -185,7 +186,7 @@ export default function TeamsPage() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {filteredTeams.map((team, index) => (
-              <Link key={team.id} href={`/teams/${team.id}`}>
+              <Link key={team.id} href={`/clubs/${team.id}`}>
                 <motion.div 
                   whileHover={{ scale: 1.05 }} 
                   initial={{ opacity: 0, y: 20 }}
