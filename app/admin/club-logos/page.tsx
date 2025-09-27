@@ -368,7 +368,7 @@ export default function AdminClubLogosPage() {
               <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
                 <ImageIcon className="h-8 w-8 text-white" />
               </div>
-              <p className="text-field-green-600 dark:text-field-green-400 font-medium">Loading Club Logo Management...</p>
+              <p className="text-white/80 font-medium">Loading Club Logo Management...</p>
             </div>
           </div>
         </div>
@@ -399,7 +399,7 @@ export default function AdminClubLogosPage() {
             <h1 className="text-4xl font-bold text-white mb-6 fifa-title">
               Club Logo Management
             </h1>
-            <p className="text-xl text-field-green-600 dark:text-field-green-400 mx-auto mb-8 max-w-3xl fifa-subtitle">
+            <p className="text-xl text-white/80 mx-auto mb-8 max-w-3xl fifa-subtitle">
               Comprehensive club logo management and storage system. Upload, update, and manage club logos with advanced storage integration and debugging tools.
             </p>
             
@@ -407,19 +407,19 @@ export default function AdminClubLogosPage() {
             <div className="flex flex-wrap justify-center gap-6 mb-8">
               <div className="flex items-center gap-2 bg-gradient-to-r from-assist-green-100/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 px-4 py-2 rounded-full border border-assist-green-200/30 dark:border-assist-green-700/30">
                 <ImageIcon className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Logo Upload</span>
+                <span className="text-sm font-medium text-white/70">Logo Upload</span>
               </div>
               <div className="flex items-center gap-2 bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-4 py-2 rounded-full border border-ice-blue-200/30 dark:border-rink-blue-700/30">
                 <Database className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
-                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Storage Management</span>
+                <span className="text-sm font-medium text-white/70">Storage Management</span>
               </div>
               <div className="flex items-center gap-2 bg-gradient-to-r from-goal-red-100/50 to-goal-red-100/50 dark:from-goal-red-900/20 dark:to-goal-red-900/20 px-4 py-2 rounded-full border border-goal-red-200/30 dark:border-goal-red-700/30">
                 <Settings className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Debug Tools</span>
+                <span className="text-sm font-medium text-white/70">Debug Tools</span>
               </div>
               <div className="flex items-center gap-2 bg-gradient-to-r from-hockey-silver-100/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 px-4 py-2 rounded-full border border-hockey-silver-200/30 dark:border-hockey-silver-700/30">
-                <Eye className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
-                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Preview System</span>
+                <Eye className="h-4 w-4 text-white/80" />
+                <span className="text-sm font-medium text-white/70">Preview System</span>
               </div>
             </div>
           </div>
@@ -435,8 +435,8 @@ export default function AdminClubLogosPage() {
               <Trophy className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Logo Management Dashboard</h2>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400">Manage team logos and storage integration</p>
+              <h2 className="text-2xl font-bold text-white">Logo Management Dashboard</h2>
+              <p className="text-white/80">Manage team logos and storage integration</p>
             </div>
           </div>
           <Button 
@@ -502,8 +502,8 @@ export default function AdminClubLogosPage() {
                     <Eye className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Current Club Logos</CardTitle>
-                    <CardDescription className="text-field-green-600 dark:text-field-green-400">Current logos assigned to clubs in the database</CardDescription>
+                    <CardTitle className="text-xl font-bold text-white">Current Club Logos</CardTitle>
+                    <CardDescription className="text-white/80">Current logos assigned to clubs in the database</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -512,11 +512,11 @@ export default function AdminClubLogosPage() {
                   <Table>
                     <TableHeader>
                       <TableRow className="bg-gradient-to-r from-ice-blue-50/50 to-rink-blue-50/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
-                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Club Name</TableHead>
-                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Current Logo</TableHead>
-                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Storage Logo</TableHead>
-                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Status</TableHead>
-                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Actions</TableHead>
+                        <TableHead className="text-base font-bold text-white">Club Name</TableHead>
+                        <TableHead className="text-base font-bold text-white">Current Logo</TableHead>
+                        <TableHead className="text-base font-bold text-white">Storage Logo</TableHead>
+                        <TableHead className="text-base font-bold text-white">Status</TableHead>
+                        <TableHead className="text-base font-bold text-white">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -530,7 +530,7 @@ export default function AdminClubLogosPage() {
                             key={club.id}
                             className="hover:bg-gradient-to-r hover:from-ice-blue-50/30 hover:to-rink-blue-50/30 dark:hover:from-ice-blue-900/10 dark:hover:to-rink-blue-900/10 transition-all duration-300 border-b border-ice-blue-200/30 dark:border-rink-blue-700/30"
                           >
-                            <TableCell className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{club.name}</TableCell>
+                            <TableCell className="font-bold text-white">{club.name}</TableCell>
                             <TableCell>
                               <div className="h-16 w-16 relative bg-gradient-to-r from-ice-blue-50/30 to-rink-blue-50/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border-2 border-ice-blue-200/30 dark:border-rink-blue-700/30">
                                 {club.logo_url ? (
@@ -594,7 +594,7 @@ export default function AdminClubLogosPage() {
                                   </Button>
                                 </div>
                               ) : (
-                                <span className="text-hockey-silver-600 dark:text-hockey-silver-400 flex items-center gap-2">
+                                <span className="text-white/80 flex items-center gap-2">
                                   <Database className="h-4 w-4" />
                                   No storage logo
                                 </span>
@@ -612,7 +612,7 @@ export default function AdminClubLogosPage() {
                                   Using storage logo
                                 </span>
                               ) : (
-                                <span className="flex items-center text-hockey-silver-600 dark:text-hockey-silver-400">
+                                <span className="flex items-center text-white/80">
                                   <AlertCircle className="h-4 w-4 mr-1" />
                                   Not using storage logo
                                 </span>
@@ -648,8 +648,8 @@ export default function AdminClubLogosPage() {
                   <Database className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Logo Storage Management</CardTitle>
-                  <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">Upload and manage team logos in storage</CardDescription>
+                  <CardTitle className="text-xl font-bold text-white">Logo Storage Management</CardTitle>
+                  <CardDescription className="text-white/80">Upload and manage team logos in storage</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -658,10 +658,10 @@ export default function AdminClubLogosPage() {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-gradient-to-r from-assist-green-50/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 border-b-2 border-assist-green-200/50 dark:border-assist-green-700/50">
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Team Name</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Storage Filename</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Preview</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Actions</TableHead>
+                      <TableHead className="text-base font-bold text-white">Team Name</TableHead>
+                      <TableHead className="text-base font-bold text-white">Storage Filename</TableHead>
+                      <TableHead className="text-base font-bold text-white">Preview</TableHead>
+                      <TableHead className="text-base font-bold text-white">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -674,7 +674,7 @@ export default function AdminClubLogosPage() {
                           key={teamName}
                           className="hover:bg-gradient-to-r hover:from-assist-green-50/30 hover:to-assist-green-100/30 dark:hover:from-assist-green-900/10 dark:hover:to-assist-green-900/10 transition-all duration-300 border-b border-assist-green-200/30 dark:border-assist-green-700/30"
                         >
-                          <TableCell className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{teamName}</TableCell>
+                          <TableCell className="font-bold text-white">{teamName}</TableCell>
                           <TableCell>
                             <code className="text-sm bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-2 py-1 rounded border border-ice-blue-200/30 dark:border-rink-blue-700/30 text-ice-blue-700 dark:text-ice-blue-300">
                               teams/{filename}
@@ -711,7 +711,7 @@ export default function AdminClubLogosPage() {
                                 </>
                               ) : (
                                 <div className="flex items-center justify-center h-full w-full bg-gradient-to-r from-hockey-silver-100/50 to-hockey-silver-200/50 dark:from-hockey-silver-800/50 dark:to-hockey-silver-700/50 rounded-lg">
-                                  <span className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400">No logo</span>
+                                  <span className="text-xs text-white/80">No logo</span>
                                 </div>
                               )}
                             </div>
@@ -780,8 +780,8 @@ export default function AdminClubLogosPage() {
                   <Settings className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Debug Information</CardTitle>
-                  <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">Detailed information about team logos and storage</CardDescription>
+                  <CardTitle className="text-xl font-bold text-white">Debug Information</CardTitle>
+                  <CardDescription className="text-white/80">Detailed information about team logos and storage</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -790,11 +790,11 @@ export default function AdminClubLogosPage() {
                 <Table>
                   <TableHeader>
                     <TableRow className="bg-gradient-to-r from-goal-red-50/50 to-goal-red-100/50 dark:from-goal-red-900/20 dark:to-goal-red-900/20 border-b-2 border-goal-red-200/50 dark:border-goal-red-700/50">
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Team Name</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Storage Path</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Public URL</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">File Exists</TableHead>
-                      <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Error</TableHead>
+                      <TableHead className="text-base font-bold text-white">Team Name</TableHead>
+                      <TableHead className="text-base font-bold text-white">Storage Path</TableHead>
+                      <TableHead className="text-base font-bold text-white">Public URL</TableHead>
+                      <TableHead className="text-base font-bold text-white">File Exists</TableHead>
+                      <TableHead className="text-base font-bold text-white">Error</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -803,7 +803,7 @@ export default function AdminClubLogosPage() {
                         key={teamName}
                         className="hover:bg-gradient-to-r hover:from-goal-red-50/30 hover:to-goal-red-100/30 dark:hover:from-goal-red-900/10 dark:hover:to-goal-red-900/10 transition-all duration-300 border-b border-goal-red-200/30 dark:border-goal-red-700/30"
                       >
-                        <TableCell className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{teamName}</TableCell>
+                        <TableCell className="font-bold text-white">{teamName}</TableCell>
                         <TableCell>
                           <code className="text-xs bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-2 py-1 rounded border border-ice-blue-200/30 dark:border-rink-blue-700/30 text-ice-blue-700 dark:text-ice-blue-300">
                             {info.storagePath}
@@ -828,7 +828,7 @@ export default function AdminClubLogosPage() {
                               No
                             </span>
                           ) : (
-                            <span className="text-hockey-silver-600 dark:text-hockey-silver-400">Unknown</span>
+                            <span className="text-white/80">Unknown</span>
                           )}
                         </TableCell>
                         <TableCell>
@@ -838,7 +838,7 @@ export default function AdminClubLogosPage() {
                               {info.error || info.fileListError}
                             </div>
                           ) : (
-                            <span className="text-hockey-silver-600 dark:text-hockey-silver-400">None</span>
+                            <span className="text-white/80">None</span>
                           )}
                         </TableCell>
                       </TableRow>
@@ -860,8 +860,8 @@ export default function AdminClubLogosPage() {
                     <Check className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Update Results</CardTitle>
-                    <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">Results from the last logo update operation</CardDescription>
+                    <CardTitle className="text-xl font-bold text-white">Update Results</CardTitle>
+                    <CardDescription className="text-white/80">Results from the last logo update operation</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -870,9 +870,9 @@ export default function AdminClubLogosPage() {
                   <Table>
                     <TableHeader>
                       <TableRow className="bg-gradient-to-r from-hockey-silver-50/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 border-b-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50">
-                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Club Name</TableHead>
-                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Status</TableHead>
-                        <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Details</TableHead>
+                        <TableHead className="text-base font-bold text-white">Club Name</TableHead>
+                        <TableHead className="text-base font-bold text-white">Status</TableHead>
+                        <TableHead className="text-base font-bold text-white">Details</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -881,7 +881,7 @@ export default function AdminClubLogosPage() {
                           key={index}
                           className="hover:bg-gradient-to-r hover:from-hockey-silver-50/30 hover:to-hockey-silver-100/30 dark:hover:from-hockey-silver-900/10 dark:hover:to-hockey-silver-900/10 transition-all duration-300 border-b border-hockey-silver-200/30 dark:border-hockey-silver-700/30"
                         >
-                          <TableCell className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200">{result.club}</TableCell>
+                          <TableCell className="font-bold text-white">{result.club}</TableCell>
                           <TableCell>
                             {result.success ? (
                               <span className="flex items-center text-assist-green-600 dark:text-assist-green-400">
@@ -897,7 +897,7 @@ export default function AdminClubLogosPage() {
                           </TableCell>
                           <TableCell>
                             {result.success ? (
-                              <span className="text-xs text-hockey-silver-600 dark:text-hockey-silver-400 truncate max-w-[200px] block">
+                              <span className="text-xs text-white/80 truncate max-w-[200px] block">
                                 {result.url}
                               </span>
                             ) : (
@@ -920,13 +920,13 @@ export default function AdminClubLogosPage() {
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:to-rink-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
             <DialogHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-              <DialogTitle className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-3">
+              <DialogTitle className="text-2xl font-bold text-white flex items-center gap-3">
                 <div className="w-8 h-8 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg flex items-center justify-center">
                   <Edit className="h-4 w-4 text-white" />
                 </div>
                 Edit Logo URL for {editingClub?.name}
               </DialogTitle>
-              <DialogDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">
+              <DialogDescription className="text-white/80 text-base">
                 Enter a new URL for the club logo. This will update the logo URL in the database.
               </DialogDescription>
             </DialogHeader>
@@ -937,7 +937,7 @@ export default function AdminClubLogosPage() {
                   name="logoUrl"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                      <FormLabel className="text-base font-semibold text-white flex items-center gap-2">
                         <ImageIcon className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
                         Logo URL
                       </FormLabel>
@@ -980,13 +980,13 @@ export default function AdminClubLogosPage() {
         <Dialog open={!!selectedImage} onOpenChange={(open) => !open && setSelectedImage(null)}>
           <DialogContent className="max-w-3xl bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:to-rink-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
             <DialogHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
-              <DialogTitle className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-3">
+              <DialogTitle className="text-2xl font-bold text-white flex items-center gap-3">
                 <div className="w-8 h-8 bg-gradient-to-r from-assist-green-500 to-assist-green-600 rounded-lg flex items-center justify-center">
                   <Eye className="h-4 w-4 text-white" />
                 </div>
                 Image Preview
               </DialogTitle>
-              <DialogDescription className="text-hockey-silver-600 dark:text-hockey-silver-400 text-base">
+              <DialogDescription className="text-white/80 text-base">
                 URL: <code className="text-xs bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-2 py-1 rounded border border-ice-blue-200/30 dark:border-rink-blue-700/30 text-ice-blue-700 dark:text-ice-blue-300">{selectedImage}</code>
               </DialogDescription>
             </DialogHeader>

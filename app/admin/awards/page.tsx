@@ -30,7 +30,7 @@ interface Season {
   number?: number
 }
 
-interface Team {
+interface Club {
   id: string
   name: string
 }
@@ -39,14 +39,14 @@ interface Player {
   id: string
   user_id: string
   gamer_tag_id: string
-  team_id: string | null
-  team_name: string | null
+  club_id: string | null
+  club_name: string | null
 }
 
 interface TeamAward {
   id: string
-  team_id: string
-  team_name: string
+  club_id: string
+  club_name: string
   award_type: string
   season_id: string
   season_name: string
@@ -57,8 +57,8 @@ interface PlayerAward {
   id: string
   player_id: string
   player_name: string
-  team_id: string | null
-  team_name: string | null
+  club_id: string | null
+  club_name: string | null
   award_type: string
   season_id: string
   season_name: string
