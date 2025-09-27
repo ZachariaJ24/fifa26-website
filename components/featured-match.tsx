@@ -76,11 +76,11 @@ export default function FeaturedMatch({ match }: FeaturedMatchProps) {
   })
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="fifa-card overflow-hidden">
       <CardContent className="p-0">
-        <div className="relative h-32 bg-gradient-to-r from-primary/20 to-primary/10">
+        <div className="relative h-32 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/10">
           <div className="absolute inset-0 flex items-center justify-center">
-            <h3 className="text-2xl font-bold text-center">Featured Match</h3>
+            <h3 className="text-2xl font-bold text-center fifa-gradient-text">Featured Match</h3>
           </div>
         </div>
 
@@ -169,7 +169,7 @@ export default function FeaturedMatch({ match }: FeaturedMatchProps) {
                 </div>
               </div>
 
-              <Button asChild className="mt-2 w-full md:w-auto">
+              <Button asChild className="fifa-button mt-2 w-full md:w-auto">
                 <Link href={`/matches/${match.id}`}>Match Details</Link>
               </Button>
             </div>

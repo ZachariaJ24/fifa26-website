@@ -620,16 +620,16 @@ export default function MGHLBotPanel() {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex items-center gap-3 mb-6">
-        <Bot className="h-8 w-8" />
-        <h1 className="text-3xl font-bold">MGHL Bot Management</h1>
+        <Bot className="h-8 w-8 text-field-green-600" />
+        <h1 className="text-3xl font-bold fifa-gradient-text">MGHL Bot Management</h1>
         {botStatus && botStatus.connected && (
-          <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">
+          <Badge variant="outline" className="bg-field-green-50 text-field-green-700 border-field-green-200">
             <CheckCircle className="mr-1 h-3 w-3" />
             Bot Online
           </Badge>
         )}
         {botStatus && botStatus.config?.configCount > 1 && (
-          <Badge variant="outline" className="bg-yellow-50 text-yellow-700 border-yellow-200">
+          <Badge variant="outline" className="bg-goal-orange-50 text-goal-orange-700 border-goal-orange-200">
             <AlertTriangle className="mr-1 h-3 w-3" />
             {botStatus.config.configCount} Configs
           </Badge>
@@ -638,10 +638,10 @@ export default function MGHLBotPanel() {
 
       {/* Connection Statistics */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
-        <Card>
+        <Card className="fifa-card">
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
-              <Users className="h-5 w-5 text-blue-600" />
+              <Users className="h-5 w-5 text-field-green-600" />
               <div>
                 <p className="text-sm text-muted-foreground">Total Users</p>
                 <p className="text-2xl font-bold">{connectionStats.total_users}</p>
@@ -649,10 +649,10 @@ export default function MGHLBotPanel() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="fifa-card">
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
-              <MessageSquare className="h-5 w-5 text-green-600" />
+              <MessageSquare className="h-5 w-5 text-pitch-blue-600" />
               <div>
                 <p className="text-sm text-muted-foreground">Discord Connected</p>
                 <p className="text-2xl font-bold">{connectionStats.connected_users}</p>
@@ -660,10 +660,10 @@ export default function MGHLBotPanel() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="fifa-card">
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
-              <UserX className="h-5 w-5 text-red-600" />
+              <UserX className="h-5 w-5 text-goal-orange-600" />
               <div>
                 <p className="text-sm text-muted-foreground">Not Connected</p>
                 <p className="text-2xl font-bold">{connectionStats.unconnected_users}</p>
@@ -671,10 +671,10 @@ export default function MGHLBotPanel() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="fifa-card">
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
-              <UserPlus className="h-5 w-5 text-purple-600" />
+              <UserPlus className="h-5 w-5 text-stadium-gold-600" />
               <div>
                 <p className="text-sm text-muted-foreground">Recent (7 days)</p>
                 <p className="text-2xl font-bold">{connectionStats.recent_connections}</p>
@@ -682,10 +682,10 @@ export default function MGHLBotPanel() {
             </div>
           </CardContent>
         </Card>
-        <Card>
+        <Card className="fifa-card">
           <CardContent className="p-4">
             <div className="flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-orange-600" />
+              <CheckCircle className="h-5 w-5 text-field-green-600" />
               <div>
                 <p className="text-sm text-muted-foreground">Connection Rate</p>
                 <p className="text-2xl font-bold">
