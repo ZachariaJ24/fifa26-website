@@ -321,7 +321,7 @@ export default function AdminFeaturedGamesPage() {
       <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="container mx-auto px-4 py-20">
           <div className="text-center mb-12">
-            <h1 className="hockey-title mb-6">Featured Games Management</h1>
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">Featured Games Management</h1>
           </div>
           
           <div className="hockey-card border-2 border-goal-red-200 dark:border-goal-red-700 overflow-hidden max-w-2xl mx-auto">
@@ -362,10 +362,10 @@ export default function AdminFeaturedGamesPage() {
         
         <div className="container mx-auto text-center relative z-10">
           <div>
-            <h1 className="hockey-title mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">
               Featured Fixtures Management
             </h1>
-            <p className="hockey-subtitle mx-auto mb-12">
+            <p className="text-lg text-slate-700 dark:text-slate-300 mx-auto mb-12 max-w-4xl">
               Manage featured fixtures and highlight important matches for the league. 
               Control which fixtures are prominently displayed on the home page to showcase key matchups.
             </p>

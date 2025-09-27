@@ -20,7 +20,7 @@ export default function AdminForumPage() {
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">
               Forum Management Center
             </h1>
-            <p className="text-lg text-field-green-700 dark:text-field-green-300 mx-auto mb-12 max-w-4xl">
+            <p className="text-lg text-slate-700 dark:text-slate-300 mx-auto mb-12 max-w-4xl">
               Comprehensive forum management and moderation tools for the league community. 
               Manage categories, posts, user interactions, and maintain a healthy discussion environment.
             </p>

@@ -65,7 +65,7 @@ export default function DailyRecapPage() {
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">
               Daily Recap Management
             </h1>
-            <p className="text-lg text-field-green-700 dark:text-field-green-300 mx-auto mb-12 max-w-4xl">
+            <p className="text-lg text-slate-700 dark:text-slate-300 mx-auto mb-12 max-w-4xl">
               Generate and manage comprehensive daily recaps for recent matches. 
               Create engaging content that highlights key moments, player performances, and league updates.
             </p>

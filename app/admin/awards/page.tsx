@@ -659,7 +659,7 @@ export default function AdminAwardsPage() {
             <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">
               Awards Management Center
             </h1>
-            <p className="text-lg text-field-green-700 dark:text-field-green-300 mx-auto mb-12 max-w-4xl">
+            <p className="text-lg text-slate-700 dark:text-slate-300 mx-auto mb-12 max-w-4xl">
               Comprehensive awards management system for the league. 
               Manage team awards, player achievements, and recognize outstanding performance across all seasons.
             </p>

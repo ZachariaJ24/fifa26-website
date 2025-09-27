@@ -8,13 +8,13 @@ export default function DatabaseStructurePage() {
       <div className="container mx-auto px-4 py-8">
         <div className="">
           <div className="mb-8 text-center">
-            <h1 className="hockey-title-enhanced mb-4 flex items-center justify-center gap-3">
-              <div className="hockey-feature-icon">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-4 flex items-center justify-center gap-3">
+              <div className="w-12 h-12 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-xl flex items-center justify-center">
                 <Database className="h-6 w-6 text-white" />
               </div>
               Database Structure Explorer
             </h1>
-            <p className="hockey-subtitle-enhanced">
+            <p className="text-lg text-field-green-700 dark:text-field-green-300 mx-auto max-w-4xl">
               Explore table structures and column names in the database with advanced visualization
             </p>
             <div className="hockey-section-divider mt-6"></div>

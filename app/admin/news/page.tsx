@@ -174,10 +174,10 @@ export default function AdminNewsPage() {
         
         <div className="container mx-auto text-center relative z-10">
           <div>
-            <h1 className="hockey-title mb-6">
+            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-field-green-600 to-pitch-blue-600 bg-clip-text text-transparent mb-6">
               News Management Center
             </h1>
-            <p className="hockey-subtitle mx-auto mb-12">
+            <p className="text-lg text-slate-700 dark:text-slate-300 mx-auto mb-12 max-w-4xl">
               Create, edit, and manage news articles for the league. 
               Keep the community informed with engaging content, announcements, and updates.
             </p>
