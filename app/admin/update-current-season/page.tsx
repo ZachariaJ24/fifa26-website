@@ -117,7 +117,7 @@ export default function UpdateCurrentSeasonPage() {
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="text-center">
               <Loader2 className="h-8 w-8 animate-spin text-blue-500 mx-auto mb-4" />
-              <p className="text-white/80">Loading seasons...</p>
+              <p className="text-field-green-600 dark:text-field-green-400">Loading seasons...</p>
             </div>
           </div>
         </div>
@@ -149,8 +149,8 @@ export default function UpdateCurrentSeasonPage() {
         <div className="max-w-2xl mx-auto">
           <Card>
             <CardHeader>
-              <CardTitle className="text-white">Season Management</CardTitle>
-              <CardDescription className="text-white/80">
+              <CardTitle className="text-field-green-800 dark:text-field-green-200">Season Management</CardTitle>
+              <CardDescription className="text-field-green-600 dark:text-field-green-400">
                 Select the season that should be active for all league operations
               </CardDescription>
             </CardHeader>
@@ -173,18 +173,18 @@ export default function UpdateCurrentSeasonPage() {
 
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium text-white/80 mb-2 block">
+                  <label className="text-sm font-medium text-field-green-600 dark:text-field-green-400 mb-2 block">
                     Current Season
                   </label>
                   <div className="p-3 bg-slate-100 dark:bg-slate-700 rounded-lg">
-                    <p className="text-white">
+                    <p className="text-field-green-800 dark:text-field-green-200">
                       {currentSeason ? seasons.find(s => s.id === currentSeason)?.name || "Unknown" : "No season set"}
                     </p>
                   </div>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-white/80 mb-2 block">
+                  <label className="text-sm font-medium text-field-green-600 dark:text-field-green-400 mb-2 block">
                     Select New Season
                   </label>
                   <Select value={selectedSeason || ""} onValueChange={setSelectedSeason}>

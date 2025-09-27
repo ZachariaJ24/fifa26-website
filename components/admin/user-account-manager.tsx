@@ -514,12 +514,12 @@ export function UserAccountManager() {
           {loading ? (
             <div className="text-center p-8">
               <RefreshCw className="h-6 w-6 animate-spin text-white mx-auto mb-2" />
-              <p className="text-white">Loading users...</p>
+              <p className="text-field-green-600">Loading users...</p>
             </div>
           ) : filteredUsers.length === 0 ? (
             <div className="text-center p-8">
-              <User className="h-12 w-12 text-white/40 mx-auto mb-4" />
-              <p className="text-white/60">No users found</p>
+              <User className="h-12 w-12 text-field-green-400 mx-auto mb-4" />
+              <p className="text-field-green-600">No users found</p>
             </div>
           ) : (
             <div className="space-y-4">

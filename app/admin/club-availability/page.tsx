@@ -61,22 +61,22 @@ const InjuryReservesManagement = () => {
       <div className="w-16 h-16 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-goal-red-500/25">
         <Activity className="h-8 w-8 text-white" />
       </div>
-      <h2 className="text-2xl font-bold text-white mb-4">Injury Reserves Management</h2>
-      <p className="text-white/80 mb-6 max-w-md mx-auto">
+      <h2 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-4">Injury Reserves Management</h2>
+      <p className="text-hockey-silver-600 dark:text-hockey-silver-400 mb-6 max-w-md mx-auto">
         This section is currently under development. Advanced injury tracking and medical management features will be available soon.
       </p>
       <div className="flex flex-wrap justify-center gap-4">
         <div className="flex items-center gap-2 bg-gradient-to-r from-goal-red-100/50 to-goal-red-100/50 dark:from-goal-red-900/20 dark:to-goal-red-900/20 px-4 py-2 rounded-full border border-goal-red-200/30 dark:border-goal-red-700/30">
           <Activity className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-          <span className="text-sm font-medium text-white/70">Medical Tracking</span>
+          <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Medical Tracking</span>
         </div>
         <div className="flex items-center gap-2 bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-4 py-2 rounded-full border border-ice-blue-200/30 dark:border-rink-blue-700/30">
           <Clock className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
-          <span className="text-sm font-medium text-white/70">Recovery Timeline</span>
+          <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Recovery Timeline</span>
         </div>
         <div className="flex items-center gap-2 bg-gradient-to-r from-assist-green-100/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 px-4 py-2 rounded-full border border-assist-green-200/30 dark:border-assist-green-700/30">
           <CheckCircle className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-          <span className="text-sm font-medium text-white/70">Return to Play</span>
+          <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Return to Play</span>
         </div>
       </div>
     </div>
@@ -223,7 +223,7 @@ export default function ClubAvailabilityPage() {
         )
       default:
         return (
-          <Badge className="bg-gradient-to-r from-hockey-silver-100 to-hockey-silver-200 dark:from-hockey-silver-800 dark:to-hockey-silver-700 text-white/70 border-hockey-silver-300 dark:border-hockey-silver-600">
+          <Badge className="bg-gradient-to-r from-hockey-silver-100 to-hockey-silver-200 dark:from-hockey-silver-800 dark:to-hockey-silver-700 text-hockey-silver-700 dark:text-hockey-silver-300 border-hockey-silver-300 dark:border-hockey-silver-600">
             Unknown
           </Badge>
         )
@@ -242,7 +242,7 @@ export default function ClubAvailabilityPage() {
               <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
                 <Users className="h-8 w-8 text-white" />
               </div>
-              <p className="text-white/80 font-medium">Loading Club Availability...</p>
+              <p className="text-field-green-600 dark:text-field-green-400 font-medium">Loading Club Availability...</p>
             </div>
           </div>
         </div>
@@ -276,7 +276,7 @@ export default function ClubAvailabilityPage() {
             <h1 className="text-4xl font-bold text-white mb-6 fifa-title">
               Club Availability
             </h1>
-            <p className="text-xl text-white/80 mx-auto mb-8 max-w-3xl fifa-subtitle">
+            <p className="text-xl text-field-green-600 dark:text-field-green-400 mx-auto mb-8 max-w-3xl fifa-subtitle">
               Comprehensive club roster management and player availability tracking. Monitor fixture participation, injury reserves, and club statistics.
             </p>
             
@@ -284,19 +284,19 @@ export default function ClubAvailabilityPage() {
             <div className="flex flex-wrap justify-center gap-6 mb-8">
               <div className="flex items-center gap-2 bg-gradient-to-r from-assist-green-100/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 px-4 py-2 rounded-full border border-assist-green-200/30 dark:border-assist-green-700/30">
                 <Users className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-                <span className="text-sm font-medium text-white/70">Player Roster</span>
+                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Player Roster</span>
               </div>
               <div className="flex items-center gap-2 bg-gradient-to-r from-ice-blue-100/50 to-rink-blue-100/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 px-4 py-2 rounded-full border border-ice-blue-200/30 dark:border-rink-blue-700/30">
                 <Calendar className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
-                <span className="text-sm font-medium text-white/70">Schedule Tracking</span>
+                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Schedule Tracking</span>
               </div>
               <div className="flex items-center gap-2 bg-gradient-to-r from-goal-red-100/50 to-goal-red-100/50 dark:from-goal-red-900/20 dark:to-goal-red-900/20 px-4 py-2 rounded-full border border-goal-red-200/30 dark:border-goal-red-700/30">
                 <Activity className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-                <span className="text-sm font-medium text-white/70">Injury Reserves</span>
+                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Injury Reserves</span>
               </div>
               <div className="flex items-center gap-2 bg-gradient-to-r from-hockey-silver-100/50 to-hockey-silver-100/50 dark:from-hockey-silver-900/20 dark:to-hockey-silver-900/20 px-4 py-2 rounded-full border border-hockey-silver-200/30 dark:border-hockey-silver-700/30">
-                <TrendingUp className="h-4 w-4 text-white/80" />
-                <span className="text-sm font-medium text-white/70">Statistics</span>
+                <TrendingUp className="h-4 w-4 text-hockey-silver-600 dark:text-hockey-silver-400" />
+                <span className="text-sm font-medium text-hockey-silver-700 dark:text-hockey-silver-300">Statistics</span>
               </div>
             </div>
           </div>
@@ -335,8 +335,8 @@ export default function ClubAvailabilityPage() {
                     <Settings className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-bold text-white">Controls & Filters</CardTitle>
-                    <CardDescription className="text-white/80">Configure season and club filters for availability tracking</CardDescription>
+                    <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Controls & Filters</CardTitle>
+                    <CardDescription className="text-field-green-600 dark:text-field-green-400">Configure season and club filters for availability tracking</CardDescription>
                   </div>
                 </div>
               </CardHeader>
@@ -345,7 +345,7 @@ export default function ClubAvailabilityPage() {
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
                       <Trophy className="h-5 w-5 text-assist-green-600 dark:text-assist-green-400" />
-                      <Label className="text-base font-semibold text-white">Season:</Label>
+                      <Label className="text-base font-semibold text-hockey-silver-800 dark:text-hockey-silver-200">Season:</Label>
                     </div>
                     <Select value={seasonId} onValueChange={setSeasonId}>
                       <SelectTrigger className="hockey-search w-[200px] border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300">
@@ -375,10 +375,10 @@ export default function ClubAvailabilityPage() {
                       <Calendar className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <CardTitle className="text-xl font-bold text-white flex items-center gap-2">
+                      <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
                         Week of {format(weekStart, "MMM d")} - {format(weekEnd, "MMM d, yyyy")}
                       </CardTitle>
-                      <CardDescription className="text-white/80">
+                      <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
                         {data?.matches.length || 0} games scheduled this week
                         {data?.currentSeasonName && ` • ${data.currentSeasonName}`}
                       </CardDescription>
@@ -443,8 +443,8 @@ export default function ClubAvailabilityPage() {
                       <Trophy className="h-5 w-5 text-white" />
                     </div>
                     <div>
-                      <CardTitle className="text-xl font-bold text-white">Games This Week</CardTitle>
-                      <CardDescription className="text-white/80">Scheduled matches and game details for the selected week</CardDescription>
+                      <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Games This Week</CardTitle>
+                      <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">Scheduled matches and game details for the selected week</CardDescription>
                     </div>
                   </div>
                 </CardHeader>
@@ -452,10 +452,10 @@ export default function ClubAvailabilityPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {data.matches.map((match) => (
                       <div key={match.id} className="p-4 bg-gradient-to-r from-ice-blue-50/30 to-rink-blue-50/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border-2 border-ice-blue-200/30 dark:border-rink-blue-700/30 hover:shadow-lg hover:scale-105 transition-all duration-300">
-                        <div className="font-bold text-white mb-2">
+                        <div className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-2">
                           {match.home_club?.name} vs {match.away_club?.name}
                         </div>
-                        <div className="text-sm text-white/80 mb-3 flex items-center gap-2">
+                        <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 mb-3 flex items-center gap-2">
                           <Clock className="h-4 w-4" />
                           {format(parseISO(match.match_date), "MMM d, h:mm a")}
                         </div>
@@ -488,7 +488,7 @@ export default function ClubAvailabilityPage() {
                           {club.players.length} players
                         </Badge>
                       </CardTitle>
-                      <CardDescription className="text-white/80">Player availability and games played for the selected week</CardDescription>
+                      <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">Player availability and games played for the selected week</CardDescription>
                     </div>
                   </div>
                 </CardHeader>
@@ -497,29 +497,29 @@ export default function ClubAvailabilityPage() {
                     <Table>
                       <TableHeader>
                         <TableRow className="bg-gradient-to-r from-ice-blue-50/50 to-rink-blue-50/50 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20 border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
-                          <TableHead className="text-base font-bold text-white">Player</TableHead>
-                          <TableHead className="text-center text-base font-bold text-white">
+                          <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Player</TableHead>
+                          <TableHead className="text-center text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
                             <div className="flex items-center justify-center gap-1">
                               <TrendingUp className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
                               GP
                             </div>
                           </TableHead>
-                          <TableHead className="text-center text-base font-bold text-white">Available</TableHead>
-                          <TableHead className="text-center text-base font-bold text-white">Unavailable</TableHead>
-                          <TableHead className="text-center text-base font-bold text-white">
+                          <TableHead className="text-center text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Available</TableHead>
+                          <TableHead className="text-center text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Unavailable</TableHead>
+                          <TableHead className="text-center text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">
                             <div className="flex items-center justify-center gap-1">
                               <Activity className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
                               IR
                             </div>
                           </TableHead>
-                          <TableHead className="text-center text-base font-bold text-white">No Response</TableHead>
-                          <TableHead className="text-base font-bold text-white">Game Details</TableHead>
+                          <TableHead className="text-center text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">No Response</TableHead>
+                          <TableHead className="text-base font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Game Details</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {club.players.length === 0 ? (
                           <TableRow>
-                            <TableCell colSpan={7} className="text-center py-8 text-white/80">
+                            <TableCell colSpan={7} className="text-center py-8 text-hockey-silver-600 dark:text-hockey-silver-400">
                               <div className="flex flex-col items-center gap-2">
                                 <Users className="h-8 w-8 text-hockey-silver-400 dark:text-hockey-silver-500" />
                                 <span className="font-medium">No players found for this club</span>
@@ -536,7 +536,7 @@ export default function ClubAvailabilityPage() {
                             >
                               <TableCell>
                                 <div>
-                                  <div className="font-bold text-white flex items-center gap-2">
+                                  <div className="font-bold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
                                     {player.name}
                                     {player.isOnIR && (
                                       <Badge className="bg-gradient-to-r from-goal-red-500 to-goal-red-600 text-white text-xs border-0 shadow-md">
@@ -546,7 +546,7 @@ export default function ClubAvailabilityPage() {
                                     )}
                                   </div>
                                   {player.gamerTag && (
-                                    <div className="text-sm text-white/80 flex items-center gap-1">
+                                    <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 flex items-center gap-1">
                                       <Database className="h-3 w-3" />
                                       @{player.gamerTag}
                                     </div>
@@ -585,14 +585,14 @@ export default function ClubAvailabilityPage() {
                               <TableCell>
                                 <div className="space-y-1">
                                   {player.availability.length === 0 ? (
-                                    <div className="text-sm text-white/80 flex items-center gap-1">
+                                    <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 flex items-center gap-1">
                                       <AlertCircle className="h-3 w-3" />
                                       No games this week
                                     </div>
                                   ) : (
                                     player.availability.map((avail) => (
                                       <div key={avail.matchId} className="flex items-center gap-2 text-sm">
-                                        <span className="text-white/80 font-medium">vs {avail.opponent}</span>
+                                        <span className="text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">vs {avail.opponent}</span>
                                         {getStatusBadge(avail.status)}
                                       </div>
                                     ))
@@ -615,8 +615,8 @@ export default function ClubAvailabilityPage() {
                   <div className="w-16 h-16 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-goal-red-500/25">
                     <AlertCircle className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4">No Data Available</h3>
-                  <p className="text-white/80 mb-6 max-w-md mx-auto">
+                  <h3 className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-4">No Data Available</h3>
+                  <p className="text-hockey-silver-600 dark:text-hockey-silver-400 mb-6 max-w-md mx-auto">
                     {data?.clubs.length === 0
                       ? "No clubs found. Make sure clubs are set up and marked as active."
                       : "No club availability data found for the selected week and season."}
@@ -644,8 +644,8 @@ export default function ClubAvailabilityPage() {
                     <Activity className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-bold text-white">Injury Reserves Management</CardTitle>
-                    <CardDescription className="text-white/80">Manage player injury reserves and medical status</CardDescription>
+                    <CardTitle className="text-xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Injury Reserves Management</CardTitle>
+                    <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">Manage player injury reserves and medical status</CardDescription>
                   </div>
                 </div>
               </CardHeader>

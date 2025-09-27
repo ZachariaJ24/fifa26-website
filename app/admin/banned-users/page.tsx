@@ -10,7 +10,8 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/components/ui/use-toast"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Loader2, UserX, Clock, AlertCircle, Ban, Users, RefreshCw, Shield, Gavel, UserCheck, UserMinus, Search, Filter, Download, Calendar, AlertTriangle } from "lucide-react"
+import { Loader2, UserX, Clock, AlertCircle, Ban, Users, RefreshCw, Shield, Gavel, UserCheck, UserMinus } from "lucide-react"
+// import { motion } from "framer-motion" - disabled due to Next.js 15.2.4 compatibility
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import {
   Dialog,
@@ -21,7 +22,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { useSupabase } from "@/lib/supabase/client"
+import { useSupabase } from "@/lib/supabase/hooks"
+import FilterBar from "@/components/admin/FilterBar"
+import HeaderBar from "@/components/admin/HeaderBar"
 
 interface BannedUser {
   id: string
@@ -32,7 +35,6 @@ interface BannedUser {
   ban_reason: string
   ban_expiration: string | null
   created_at: string
-  club_name?: string
 }
 
 interface User {
@@ -48,628 +50,1132 @@ export default function BannedUsersPage() {
   const { supabase, session } = useSupabase()
   const { toast } = useToast()
   const router = useRouter()
-  const [bannedUsers, setBannedUsers] = useState<BannedUser[]>([])
-  const [filteredBannedUsers, setFilteredBannedUsers] = useState<BannedUser[]>([])
-  const [allUsers, setAllUsers] = useState<User[]>([])
-  const [filteredAllUsers, setFilteredAllUsers] = useState<User[]>([])
+  const [isAdmin, setIsAdmin] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [searchTerm, setSearchTerm] = useState("")
+  const [bannedUsers, setBannedUsers] = useState<BannedUser[]>([])
+  const [loadingBannedUsers, setLoadingBannedUsers] = useState(false)
+  const [unbanning, setUnbanning] = useState<string | null>(null)
+  const [banning, setBanning] = useState(false)
+
+  // Bulk selection for banned users
+  const [selected, setSelected] = useState<string[]>([])
+
+  const [users, setUsers] = useState<User[]>([])
+  const [totalUsers, setTotalUsers] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [loadingUsers, setLoadingUsers] = useState(false)
+  const usersPerPage = 25
+
+  // Ban dialog state
+  const [banDialogOpen, setBanDialogOpen] = useState(false)
+  const [selectedUserForBan, setSelectedUserForBan] = useState<User | null>(null)
   const [banReason, setBanReason] = useState("")
-  const [banDuration, setBanDuration] = useState("permanent")
-  const [selectedUser, setSelectedUser] = useState<User | null>(null)
-  const [isBanDialogOpen, setIsBanDialogOpen] = useState(false)
-  const [isUnbanDialogOpen, setIsUnbanDialogOpen] = useState(false)
-  const [isUpdating, setIsUpdating] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [activeTab, setActiveTab] = useState("banned")
+  const [banDuration, setBanDuration] = useState("")
+  const [customDuration, setCustomDuration] = useState("")
 
-  // Check if user is admin
+  // Unban confirmation dialog state
+  const [unbanDialogOpen, setUnbanDialogOpen] = useState(false)
+  const [selectedUserForUnban, setSelectedUserForUnban] = useState<BannedUser | null>(null)
+
+  // Search states
+  const [searchTerm, setSearchTerm] = useState("")
+  const [userSearchTerm, setUserSearchTerm] = useState("")
+
+  const filteredBannedUsers = bannedUsers.filter((user) => {
+    if (!searchTerm.trim()) return true
+
+    const search = searchTerm.toLowerCase()
+    const gamerTagId = user.gamer_tag_id?.toLowerCase() || ""
+    const discordName = user.discord_name?.toLowerCase() || ""
+    const email = user.email?.toLowerCase() || ""
+    const gamerTag = user.gamer_tag?.toLowerCase() || ""
+
+    return (
+      gamerTagId.includes(search) || discordName.includes(search) || email.includes(search) || gamerTag.includes(search)
+    )
+  })
+
+  const filteredUsers = users.filter((user) => {
+    if (!userSearchTerm.trim()) return true
+
+    const search = userSearchTerm.toLowerCase()
+    const gamerTagId = user.gamer_tag_id?.toLowerCase() || ""
+    const discordName = user.discord_name?.toLowerCase() || ""
+
+    return gamerTagId.includes(search) || discordName.includes(search)
+  })
+
   useEffect(() => {
-    if (session?.user?.email) {
-      checkAdminStatus()
-    }
-  }, [session])
-
-  const checkAdminStatus = async () => {
-    try {
-      const { data: userData, error: userError } = await supabase
-        .from("users")
-        .select("role")
-        .eq("email", session?.user?.email)
-        .single()
-
-      if (userError || !userData || userData.role !== "Admin") {
-        router.push("/dashboard")
+    async function checkAuthorization() {
+      if (!session?.user) {
+        toast({
+          title: "Unauthorized",
+          description: "You must be logged in to access this page.",
+          variant: "destructive",
+        })
+        router.push("/login")
         return
       }
-    } catch (error) {
-      console.error("Error checking admin status:", error)
-      router.push("/dashboard")
-    }
-  }
 
-  // Fetch data
-  useEffect(() => {
-    if (session?.user?.email) {
-      fetchData()
-    }
-  }, [session])
+      try {
+        const { data: adminRoleData, error: adminRoleError } = await supabase
+          .from("user_roles")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .eq("role", "Admin")
 
-  const fetchData = async () => {
-    try {
-      setLoading(true)
-      
-      // Fetch banned users
-      const { data: bannedData, error: bannedError } = await supabase
-        .from("users")
-        .select(`
-          *,
-          clubs:club_id (
-            name
-          )
-        `)
-        .eq("is_banned", true)
-        .order("created_at", { ascending: false })
+        if (adminRoleError || !adminRoleData || adminRoleData.length === 0) {
+          toast({
+            title: "Access denied",
+            description: "You don't have permission to access this page.",
+            variant: "destructive",
+          })
+          router.push("/")
+          return
+        }
 
-      if (bannedError) throw bannedError
-
-      const bannedUsersWithClubNames = bannedData?.map(user => ({
-        ...user,
-        club_name: user.clubs?.name || null
-      })) || []
-
-      setBannedUsers(bannedUsersWithClubNames)
-      setFilteredBannedUsers(bannedUsersWithClubNames)
-
-      // Fetch all users for banning
-      const { data: allUsersData, error: allUsersError } = await supabase
-        .from("users")
-        .select(`
-          *,
-          clubs:club_id (
-            name
-          )
-        `)
-        .eq("is_banned", false)
-        .order("created_at", { ascending: false })
-
-      if (allUsersError) throw allUsersError
-
-      const allUsersWithClubNames = allUsersData?.map(user => ({
-        ...user,
-        club_name: user.clubs?.name || null
-      })) || []
-
-      setAllUsers(allUsersWithClubNames)
-      setFilteredAllUsers(allUsersWithClubNames)
-
-    } catch (error) {
-      console.error("Error fetching data:", error)
-      setError("Failed to fetch data")
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  // Filter functions
-  useEffect(() => {
-    let filtered = activeTab === "banned" ? bannedUsers : allUsers
-
-    if (searchTerm) {
-      filtered = filtered.filter(user =>
-        user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.gamer_tag?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.discord_name?.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    }
-
-    if (activeTab === "banned") {
-      setFilteredBannedUsers(filtered)
-    } else {
-      setFilteredAllUsers(filtered)
-    }
-  }, [bannedUsers, allUsers, searchTerm, activeTab])
-
-  const handleBanUser = async () => {
-    if (!selectedUser || !banReason.trim()) {
-      setError("Please provide a ban reason")
-      return
-    }
-
-    try {
-      setIsUpdating(true)
-      setError(null)
-
-      const banExpiration = banDuration === "permanent" 
-        ? null 
-        : new Date(Date.now() + parseInt(banDuration) * 24 * 60 * 60 * 1000).toISOString()
-
-      const { error } = await supabase
-        .from("users")
-        .update({
-          is_banned: true,
-          ban_reason: banReason,
-          ban_expiration: banExpiration
+        setIsAdmin(true)
+        fetchBannedUsers()
+      } catch (error: any) {
+        console.error("Error checking authorization:", error)
+        toast({
+          title: "Error",
+          description: error.message || "An error occurred",
+          variant: "destructive",
         })
-        .eq("id", selectedUser.id)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-      if (error) throw error
+    checkAuthorization()
+  }, [supabase, session, toast, router])
 
-      toast({
-        title: "User Banned",
-        description: `${selectedUser.email} has been banned successfully`,
+  // Realtime updates for banned_users changes
+  useEffect(() => {
+    const channel = supabase
+      .channel("banned_users_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "banned_users" },
+        () => {
+          fetchBannedUsers()
+        }
+      )
+      .subscribe()
+
+    return () => {
+      supabase.removeChannel(channel)
+    }
+  }, [supabase])
+
+  const fetchBannedUsers = async () => {
+    setLoadingBannedUsers(true)
+    try {
+      const response = await fetch("/api/admin/banned-users", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
       })
 
-      setIsBanDialogOpen(false)
-      setBanReason("")
-      setBanDuration("permanent")
-      setSelectedUser(null)
-      await fetchData()
-    } catch (error) {
-      console.error("Error banning user:", error)
-      setError("Failed to ban user")
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to fetch banned users")
+      }
+
+      console.log("Fetched banned users:", data) // Debug log
+      setBannedUsers(data.users || [])
+    } catch (error: any) {
+      console.error("Error fetching banned users:", error)
+      toast({
+        title: "Error",
+        description: error.message || "Failed to fetch banned users",
+        variant: "destructive",
+      })
     } finally {
-      setIsUpdating(false)
+      setLoadingBannedUsers(false)
     }
   }
 
-  const handleUnbanUser = async (userId: string) => {
+  const handleUnban = async (userId: string) => {
+    setUnbanning(userId)
+
     try {
-      setIsUpdating(true)
-      setError(null)
+      console.log("Attempting to unban user:", userId) // Debug log
 
-      const { error } = await supabase
-        .from("users")
-        .update({
-          is_banned: false,
-          ban_reason: null,
-          ban_expiration: null
-        })
-        .eq("id", userId)
+      const response = await fetch("/api/admin/unban-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // Ensure cookies are sent
+        body: JSON.stringify({ userId }),
+      })
 
-      if (error) throw error
+      console.log("Unban response status:", response.status) // Debug log
+
+      const data = await response.json()
+      console.log("Unban response data:", data) // Debug log
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to unban user")
+      }
 
       toast({
-        title: "User Unbanned",
+        title: "Success",
         description: "User has been unbanned successfully",
       })
 
-      setIsUnbanDialogOpen(false)
-      await fetchData()
-    } catch (error) {
-      console.error("Error unbanning user:", error)
-      setError("Failed to unban user")
+      fetchBannedUsers()
+      if (users.length > 0) {
+        fetchUsers(currentPage) // Refresh users list if it's loaded
+      }
+    } catch (error: any) {
+      console.error("Unban user error:", error)
+      toast({
+        title: "Error",
+        description: error.message || "Failed to unban user",
+        variant: "destructive",
+      })
     } finally {
-      setIsUpdating(false)
+      setUnbanning(null)
     }
   }
 
-  const exportBannedUsers = () => {
-    const csvContent = [
-      ["Email", "Gamer Tag", "Discord Name", "Ban Reason", "Ban Expiration", "Banned At", "Club"],
-      ...filteredBannedUsers.map(user => [
-        user.email,
-        user.gamer_tag || "",
-        user.discord_name || "",
-        user.ban_reason,
-        user.ban_expiration ? new Date(user.ban_expiration).toLocaleDateString() : "Permanent",
-        new Date(user.created_at).toLocaleDateString(),
-        user.club_name || ""
-      ])
-    ].map(row => row.join(",")).join("\n")
+  const openUnbanDialog = (user: BannedUser) => {
+    setSelectedUserForUnban(user)
+    setUnbanDialogOpen(true)
+  }
 
-    const blob = new Blob([csvContent], { type: "text/csv" })
-    const url = window.URL.createObjectURL(blob)
-    const a = document.createElement("a")
-    a.href = url
-    a.download = "banned-users.csv"
-    a.click()
-    window.URL.revokeObjectURL(url)
+  const confirmUnban = () => {
+    if (selectedUserForUnban) {
+      handleUnban(selectedUserForUnban.id)
+      setUnbanDialogOpen(false)
+      setSelectedUserForUnban(null)
+    }
+  }
+
+  // Bulk unban selected users
+  const bulkUnban = async () => {
+    if (selected.length === 0) return
+    try {
+      // Process sequentially to avoid rate limits
+      for (const id of selected) {
+        await handleUnban(id)
+      }
+      setSelected([])
+      fetchBannedUsers()
+    } catch (e) {
+      console.error('Bulk unban error', e)
+    }
+  }
+
+  const toggleSelectAll = () => {
+    const currentIds = filteredBannedUsers.map(u => u.id)
+    const allSelected = currentIds.every(id => selected.includes(id))
+    setSelected(allSelected ? selected.filter(id => !currentIds.includes(id)) : Array.from(new Set([...selected, ...currentIds])))
+  }
+
+  const toggleSelect = (id: string) => {
+    setSelected(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id])
+  }
+
+  const fetchUsers = async (page = 1) => {
+    setLoadingUsers(true)
+    try {
+      // When searching, fetch more users to have a better pool to filter from
+      const limit = userSearchTerm.trim() ? 100 : usersPerPage
+      const offset = userSearchTerm.trim() ? 0 : (page - 1) * usersPerPage
+
+      const response = await fetch(`/api/admin/users-list?page=${userSearchTerm.trim() ? 1 : page}&limit=${limit}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to fetch users")
+      }
+
+      setUsers(data.users || [])
+      setTotalUsers(data.total || 0)
+      if (!userSearchTerm.trim()) {
+        setCurrentPage(page)
+      }
+    } catch (error: any) {
+      console.error("Error fetching users:", error)
+      toast({
+        title: "Error",
+        description: error.message || "Failed to fetch users",
+        variant: "destructive",
+      })
+    } finally {
+      setLoadingUsers(false)
+    }
+  }
+
+  // Refetch users when search term changes
+  useEffect(() => {
+    if (users.length > 0) {
+      fetchUsers(1)
+    }
+  }, [userSearchTerm])
+
+  const totalPages = Math.ceil(totalUsers / usersPerPage)
+
+  const handlePageChange = (page: number) => {
+    if (page >= 1 && page <= totalPages && !userSearchTerm.trim()) {
+      fetchUsers(page)
+    }
+  }
+
+  const openBanDialog = (user: User) => {
+    setSelectedUserForBan(user)
+    setBanDialogOpen(true)
+    setBanReason("")
+    setBanDuration("")
+    setCustomDuration("")
+  }
+
+  const handleBanUser = async () => {
+    if (!selectedUserForBan || !banReason.trim()) {
+      toast({
+        title: "Error",
+        description: "Please provide a ban reason",
+        variant: "destructive",
+      })
+      return
+    }
+
+    const duration = banDuration === "custom" ? customDuration : banDuration
+
+    if (!duration) {
+      toast({
+        title: "Error",
+        description: "Please select or enter a ban duration",
+        variant: "destructive",
+      })
+      return
+    }
+
+    setBanning(true)
+
+    try {
+      const response = await fetch("/api/admin/ban-user", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: selectedUserForBan.id,
+          banReason: banReason.trim(),
+          banDuration: duration,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to ban user")
+      }
+
+      toast({
+        title: "Success",
+        description: "User has been banned successfully",
+      })
+
+      // Reset form and close dialog
+      setBanDialogOpen(false)
+      setSelectedUserForBan(null)
+      setBanReason("")
+      setBanDuration("")
+      setCustomDuration("")
+
+      fetchBannedUsers()
+      fetchUsers(currentPage) // Refresh users list
+    } catch (error: any) {
+      console.error("Ban user error:", error)
+      toast({
+        title: "Error",
+        description: error.message || "Failed to ban user",
+        variant: "destructive",
+      })
+    } finally {
+      setBanning(false)
+    }
+  }
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleString()
+  }
+
+  const isExpired = (expirationDate: string | null) => {
+    if (!expirationDate) return false
+    return new Date(expirationDate) < new Date()
+  }
+
+  // Export currently visible banned users to CSV
+  const exportToCsv = () => {
+    try {
+      const headers = [
+        'email',
+        'gamer_tag',
+        'gamer_tag_id',
+        'discord_name',
+        'ban_reason',
+        'ban_expiration',
+        'created_at',
+      ]
+
+      const rows = filteredBannedUsers.map(u => [
+        u.email || '',
+        u.gamer_tag || '',
+        u.gamer_tag_id || '',
+        u.discord_name || '',
+        u.ban_reason || '',
+        u.ban_expiration || '',
+        u.created_at || '',
+      ])
+
+      const csv = [headers.join(','), ...rows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(','))].join('\n')
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `banned-users-${new Date().toISOString().split('T')[0]}.csv`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Error exporting CSV', err)
+      toast({ title: 'Error', description: 'Failed to export CSV', variant: 'destructive' })
+    }
   }
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-field-green-900 via-pitch-blue-900 to-assist-green-900 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-center h-64">
-            <Loader2 className="h-8 w-8 animate-spin text-white" />
-          </div>
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-center items-center h-64">
+          <Loader2 className="h-6 w-6 animate-spin" />
         </div>
       </div>
     )
   }
 
+  if (!isAdmin) {
+    return null
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-900 via-pitch-blue-900 to-assist-green-900 p-6">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
+      {/* Enhanced Hero Header Section */}
+      <div className="relative overflow-hidden py-20 px-4">
+        <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
+        <div className="absolute top-10 left-10 w-20 h-20 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20 rounded-full"></div>
+        <div className="absolute top-20 right-20 w-16 h-16 bg-gradient-to-r from-goal-orange-500/20 to-goal-orange-500/20 rounded-full" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-10 left-1/4 w-12 h-12 bg-gradient-to-r from-field-green-500/20 to-field-green-500/20 rounded-full" style={{ animationDelay: '2s' }}></div>
+        
+        <div className="relative z-10 max-w-7xl mx-auto text-center">
+          <div className="flex justify-center mb-6">
+            <div className="p-6 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-full shadow-2xl shadow-goal-orange-500/30">
+              <UserX className="h-16 w-16 text-white" />
+            </div>
+          </div>
+          
+          <h1 className="hockey-title mb-4 text-white">
             Banned Users Management
           </h1>
-          <p className="text-lg text-white mb-8">
+          <p className="hockey-subtitle mb-8 text-white">
             Manage user access and maintain community standards. 
             View, unban, and track banned users across the platform.
           </p>
         </div>
+      </div>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="bg-gradient-to-br from-goal-red-800/50 to-goal-red-900/50 border-goal-red-600/30">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-white/80">Banned Users</p>
-                  <p className="text-3xl font-bold text-white">{bannedUsers.length}</p>
-                </div>
-                <Ban className="h-8 w-8 text-goal-red-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-field-green-800/50 to-field-green-900/50 border-field-green-600/30">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-white/80">Active Users</p>
-                  <p className="text-3xl font-bold text-white">{allUsers.length}</p>
-                </div>
-                <Users className="h-8 w-8 text-field-green-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-pitch-blue-800/50 to-pitch-blue-900/50 border-pitch-blue-600/30">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-white/80">Permanent Bans</p>
-                  <p className="text-3xl font-bold text-white">
-                    {bannedUsers.filter(u => !u.ban_expiration).length}
-                  </p>
-                </div>
-                <Gavel className="h-8 w-8 text-pitch-blue-400" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-assist-green-800/50 to-assist-green-900/50 border-assist-green-600/30">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-white/80">Temporary Bans</p>
-                  <p className="text-3xl font-bold text-white">
-                    {bannedUsers.filter(u => u.ban_expiration).length}
-                  </p>
-                </div>
-                <Clock className="h-8 w-8 text-assist-green-400" />
-              </div>
-            </CardContent>
-          </Card>
+      {/* Main Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 pb-12">
+        <div className="flex justify-between items-center mb-8">
+          <div className="flex items-center gap-4">
+            <div className="p-3 bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 rounded-xl shadow-lg">
+              <UserX className="h-6 w-6 text-white" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-white">Banned Users</h2>
+              <p className="text-white">Manage user access and maintain community standards</p>
+            </div>
+          </div>
+          <div className="flex gap-2">
+            <Button
+              variant="destructive"
+              onClick={bulkUnban}
+              disabled={selected.length === 0 || loadingBannedUsers}
+              title={selected.length === 0 ? 'Select users first' : 'Unban selected users'}
+              className="hockey-button bg-gradient-to-r from-goal-orange-500 to-goal-orange-600 hover:from-goal-orange-600 hover:to-goal-orange-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+            >
+              <UserMinus className="mr-2 h-4 w-4" />
+              Bulk Unban ({selected.length})
+            </Button>
+            <Button 
+              variant="outline" 
+              onClick={exportToCsv}
+              className="hockey-button bg-gradient-to-r from-field-green-500 to-pitch-blue-600 hover:from-field-green-600 hover:to-pitch-blue-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300"
+            >
+              Export CSV
+            </Button>
+            <Button 
+              onClick={fetchBannedUsers} 
+              disabled={loadingBannedUsers}
+              className="hockey-button bg-gradient-to-r from-assist-green-500 to-assist-green-600 hover:from-assist-green-600 hover:to-assist-green-700 text-white border-0 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <RefreshCw className={`mr-2 h-4 w-4 ${loadingBannedUsers ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
+          </div>
         </div>
 
-        {/* Main Content */}
-        <Card className="bg-gradient-to-br from-stadium-gold-800/20 to-stadium-gold-900/20 border-stadium-gold-600/30">
-          <CardHeader>
-            <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-              <div>
-                <CardTitle className="text-2xl text-white flex items-center gap-2">
-                  <Shield className="h-6 w-6" />
-                  User Management
-                </CardTitle>
-                <CardDescription className="text-white/80">
-                  Ban and unban users to maintain community standards
-                </CardDescription>
-              </div>
-              <div className="flex gap-2">
-                {activeTab === "banned" && (
-                  <Button
-                    onClick={exportBannedUsers}
-                    variant="outline"
-                    className="border-field-green-600/50 text-white hover:bg-field-green-600/20"
+        {/* Standardized filter bar for search */}
+        <FilterBar onClear={() => setSearchTerm("")}>
+          <div className="w-80">
+            <Input
+              placeholder="Search by gamer tag ID, discord name, email..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          <Button variant="outline" onClick={fetchBannedUsers} disabled={loadingBannedUsers}>
+            <RefreshCw className={`mr-2 h-4 w-4 ${loadingBannedUsers ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+        </FilterBar>
+
+      <Tabs defaultValue="list" className="w-full">
+          <TabsList className="grid w-full grid-cols-2 gap-2 p-2 bg-field-green-100 dark:bg-field-green-800 rounded-xl">
+            <TabsTrigger 
+              value="list" 
+              className="flex items-center gap-3 px-6 py-3 rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white hover:bg-field-green-200 dark:hover:bg-field-green-700 transition-all duration-200"
+            >
+              <UserX className="h-5 w-5" />
+              <span className="font-medium">Banned Users List</span>
+              <span className="bg-goal-red-500 text-white text-xs px-2 py-1 rounded-full ml-1">
+                {filteredBannedUsers.length}
+              </span>
+          </TabsTrigger>
+            <TabsTrigger 
+              value="ban" 
+              className="flex items-center gap-3 px-6 py-3 rounded-lg data-[state=active]:bg-gradient-to-r data-[state=active]:from-ice-blue-500 data-[state=active]:to-rink-blue-600 data-[state=active]:text-white hover:bg-field-green-200 dark:hover:bg-field-green-700 transition-all duration-200"
+            >
+              <Ban className="h-5 w-5" />
+              <span className="font-medium">Ban User</span>
+              <span className="bg-assist-green-500 text-white text-xs px-2 py-1 rounded-full ml-1">
+                {filteredUsers.length}
+              </span>
+          </TabsTrigger>
+        </TabsList>
+
+          <TabsContent value="list" className="mt-8">
+            <div
+              className=""
+            >
+              <div className="hockey-enhanced-card p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 bg-gradient-to-br from-goal-red-500 to-assist-green-500 rounded-full shadow-lg">
+                      <UserX className="h-6 w-6 text-white" />
+                    </div>
+                <div>
+                      <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                        Banned Users
+                        <span className="bg-goal-red-500 text-white text-sm px-3 py-1 rounded-full">
+                          {filteredBannedUsers.length}
+                          {bannedUsers.length !== filteredBannedUsers.length ? ` of ${bannedUsers.length}` : ""}
+                        </span>
+                      </h2>
+                      <p className="text-white">View and manage banned users</p>
+                </div>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    onClick={fetchBannedUsers} 
+                    disabled={loadingBannedUsers}
+                    className="hockey-button-enhanced"
                   >
-                    <Download className="h-4 w-4 mr-2" />
-                    Export CSV
-                  </Button>
-                )}
-                <Button
-                  onClick={fetchData}
-                  variant="outline"
-                  className="border-pitch-blue-600/50 text-white hover:bg-pitch-blue-600/20"
-                >
-                  <RefreshCw className="h-4 w-4 mr-2" />
+                  {loadingBannedUsers ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <RefreshCw className="h-4 w-4" />
+                  )}
                   Refresh
                 </Button>
               </div>
+                {/* Removed in-card search; standardized FilterBar is used above */}
+              {loadingBannedUsers ? (
+                  <div className="flex justify-center items-center py-12">
+                    <div className="text-center">
+                      <Loader2 className="h-8 w-8 animate-spin text-ice-blue-500 mx-auto mb-4" />
+                      <p className="text-white">Loading banned users...</p>
+                    </div>
+                </div>
+              ) : filteredBannedUsers.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="p-6 bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700 rounded-xl">
+                      <UserX className="h-16 w-16 mx-auto mb-4 text-ice-blue-500 opacity-60" />
+                  {searchTerm ? (
+                    <div>
+                          <h3 className="text-lg font-semibold text-white mb-2">
+                            No banned users found
+                          </h3>
+                          <p className="text-white mb-4">
+                            No banned users match "{searchTerm}"
+                          </p>
+                          <Button 
+                            variant="outline" 
+                            size="sm" 
+                            className="hockey-button-enhanced" 
+                            onClick={() => setSearchTerm("")}
+                          >
+                        Clear search
+                      </Button>
+                    </div>
+                  ) : (
+                        <div>
+                          <h3 className="text-lg font-semibold text-white mb-2">
+                            No banned users
+                          </h3>
+                          <p className="text-white">
+                            All users are currently active
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                </div>
+              ) : (
+                  <div className="overflow-hidden rounded-xl border border-field-green-200 dark:border-field-green-700">
+                <Table>
+                      <TableHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700">
+                        <TableRow className="border-field-green-200 dark:border-field-green-600">
+                          <TableHead className="text-white font-semibold">User Details</TableHead>
+                          <TableHead className="text-white font-semibold">Ban Reason</TableHead>
+                          <TableHead className="text-white font-semibold">Expiration</TableHead>
+                          <TableHead className="text-white font-semibold">Status</TableHead>
+                          <TableHead className="text-white font-semibold">Actions</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                        {filteredBannedUsers.map((user, index) => (
+                          <tr 
+                            key={user.id}
+                            className="border-field-green-200 dark:border-field-green-600 hover:bg-field-green-50 dark:hover:bg-field-green-800/50 transition-colors "
+                          >
+                            <TableCell className="py-4">
+                              <div className="space-y-2">
+                                {user.email && (
+                                  <p className="font-semibold text-white">{user.email}</p>
+                                )}
+                                {user.gamer_tag && (
+                                  <p className="text-sm text-white flex items-center gap-2">
+                                    <span className="bg-ice-blue-100 dark:bg-ice-blue-900 text-ice-blue-700 dark:text-ice-blue-300 px-2 py-1 rounded text-xs font-medium">GT</span>
+                                    {user.gamer_tag}
+                                  </p>
+                                )}
+                            {user.gamer_tag_id && (
+                                  <p className="text-sm text-white flex items-center gap-2">
+                                    <span className="bg-rink-blue-100 dark:bg-rink-blue-900 text-rink-blue-700 dark:text-rink-blue-300 px-2 py-1 rounded text-xs font-medium">ID</span>
+                                    {user.gamer_tag_id}
+                                  </p>
+                            )}
+                            {user.discord_name && (
+                                  <p className="text-sm text-white flex items-center gap-2">
+                                    <span className="bg-assist-green-100 dark:bg-assist-green-900 text-assist-green-700 dark:text-assist-green-300 px-2 py-1 rounded text-xs font-medium">Discord</span>
+                                    {user.discord_name}
+                                  </p>
+                            )}
+                            {!user.email && !user.gamer_tag && !user.gamer_tag_id && !user.discord_name && (
+                                  <p className="text-sm text-white italic">No display name</p>
+                            )}
+                          </div>
+                        </TableCell>
+                            <TableCell className="py-4">
+                              <p className="text-sm max-w-xs break-words text-white bg-slate-100 dark:bg-slate-800 p-2 rounded">
+                                {user.ban_reason}
+                              </p>
+                        </TableCell>
+                            <TableCell className="py-4">
+                          {user.ban_expiration ? (
+                            <div className="flex items-center gap-2">
+                                  <Clock className="h-4 w-4 text-ice-blue-500" />
+                                  <span className="text-sm text-white">{formatDate(user.ban_expiration)}</span>
+                            </div>
+                          ) : (
+                                <Badge className="bg-goal-red-500 text-white">Permanent</Badge>
+                          )}
+                        </TableCell>
+                            <TableCell className="py-4">
+                          {user.ban_expiration && isExpired(user.ban_expiration) ? (
+                                <Badge className="bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-700">
+                              <AlertCircle className="h-3 w-3 mr-1" />
+                              Expired
+                            </Badge>
+                          ) : (
+                                <Badge className="bg-goal-red-500 text-white">Active</Badge>
+                          )}
+                        </TableCell>
+                            <TableCell className="py-4">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => openUnbanDialog(user)}
+                            disabled={unbanning === user.id}
+                                className="hockey-button-enhanced hover:bg-assist-green-500 hover:text-white hover:border-assist-green-500"
+                          >
+                            {unbanning === user.id ? (
+                              <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Unbanning...
+                              </>
+                            ) : (
+                                  <>
+                                    <UserCheck className="mr-2 h-4 w-4" />
+                                    Unban
+                                  </>
+                            )}
+                          </Button>
+                        </TableCell>
+                          </tr>
+                    ))}
+                  </TableBody>
+                </Table>
+                  </div>
+              )}
+              </div>
             </div>
-          </CardHeader>
-          <CardContent>
-            <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-2 bg-white/10">
-                <TabsTrigger value="banned" className="text-white data-[state=active]:bg-goal-red-600/50">
-                  <Ban className="h-4 w-4 mr-2" />
-                  Banned Users ({bannedUsers.length})
-                </TabsTrigger>
-                <TabsTrigger value="active" className="text-white data-[state=active]:bg-field-green-600/50">
-                  <Users className="h-4 w-4 mr-2" />
-                  Active Users ({allUsers.length})
-                </TabsTrigger>
-              </TabsList>
+        </TabsContent>
 
-              <TabsContent value="banned" className="space-y-4">
-                {/* Search */}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/60" />
-                  <Input
-                    placeholder="Search banned users..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/60"
-                  />
+          <TabsContent value="ban" className="mt-8">
+            <div
+              className=""
+            >
+              <div className="hockey-enhanced-card p-6">
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="p-3 bg-gradient-to-br from-ice-blue-500 to-rink-blue-600 rounded-full shadow-lg">
+                    <Ban className="h-6 w-6 text-white" />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-bold text-white">
+                User Management
+                    </h2>
+                    <p className="text-white">Ban or unban users from the platform</p>
+                  </div>
+                </div>
+                <div className="space-y-6">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <h4 className="text-lg font-semibold text-white">
+                        All Users
+                  </h4>
+                      <span className="bg-assist-green-500 text-white text-sm px-3 py-1 rounded-full">
+                        {filteredUsers.length}
+                        {users.length !== filteredUsers.length ? ` of ${users.length}` : ""}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={() => fetchUsers(currentPage)} 
+                        disabled={loadingUsers}
+                        className="hockey-button-enhanced"
+                      >
+                      {loadingUsers ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCw className="h-4 w-4" />}
+                      Refresh
+                    </Button>
+                    {!userSearchTerm.trim() && (
+                        <div className="text-sm text-white bg-field-green-100 dark:bg-field-green-800 px-3 py-1 rounded">
+                        Page {currentPage} of {totalPages}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                {/* Banned Users Table */}
-                <div className="rounded-lg border border-white/20 overflow-hidden">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="bg-white/10">
-                        <TableHead className="text-white font-semibold">User</TableHead>
-                        <TableHead className="text-white font-semibold">Ban Reason</TableHead>
-                        <TableHead className="text-white font-semibold">Duration</TableHead>
-                        <TableHead className="text-white font-semibold">Banned At</TableHead>
-                        <TableHead className="text-white font-semibold">Club</TableHead>
-                        <TableHead className="text-right text-white font-semibold">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredBannedUsers.map((user) => (
-                        <TableRow key={user.id} className="border-white/10 hover:bg-white/5">
-                          <TableCell>
-                            <div className="flex flex-col">
-                              <div className="font-medium text-white">{user.email}</div>
-                              {user.gamer_tag && (
-                                <div className="text-sm text-white/70">{user.gamer_tag}</div>
-                              )}
-                              {user.discord_name && (
-                                <div className="text-sm text-white/70">@{user.discord_name}</div>
-                              )}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <span className="text-white">{user.ban_reason}</span>
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant="outline"
-                              className={
-                                user.ban_expiration
-                                  ? "border-assist-green-500 text-assist-green-400"
-                                  : "border-goal-red-500 text-goal-red-400"
-                              }
-                            >
-                              {user.ban_expiration ? "Temporary" : "Permanent"}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <span className="text-white">
-                              {new Date(user.created_at).toLocaleDateString()}
-                            </span>
-                          </TableCell>
-                          <TableCell>
-                            <span className="text-white">
-                              {user.club_name || "No Club"}
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => handleUnbanUser(user.id)}
-                              className="border-assist-green-500/50 text-assist-green-400 hover:bg-assist-green-500/20"
-                              disabled={isUpdating}
-                            >
-                              <UserCheck className="h-4 w-4" />
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                <div className="flex items-center gap-2">
+                  <div className="relative flex-1 max-w-sm">
+                    <Input
+                      placeholder="Search by gamer tag ID or discord name..."
+                      value={userSearchTerm}
+                      onChange={(e) => setUserSearchTerm(e.target.value)}
+                        className="hockey-search pr-8"
+                    />
+                    {userSearchTerm && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                          className="absolute right-1 top-1/2 -translate-y-1/2 h-6 w-6 p-0 hover:bg-goal-red-500 hover:text-white transition-colors"
+                        onClick={() => setUserSearchTerm("")}
+                      >
+                        ×
+                      </Button>
+                    )}
+                  </div>
                 </div>
 
-                {filteredBannedUsers.length === 0 && (
-                  <div className="text-center py-8">
-                    <Ban className="h-12 w-12 text-white/40 mx-auto mb-4" />
-                    <p className="text-white/60">No banned users found</p>
+                {users.length === 0 && !loadingUsers && (
+                    <div className="text-center py-8">
+                      <div className="p-6 bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700 rounded-xl">
+                        <Users className="h-12 w-12 mx-auto mb-4 text-ice-blue-500 opacity-60" />
+                        <h3 className="text-lg font-semibold text-white mb-2">
+                          No Users Loaded
+                        </h3>
+                        <p className="text-white mb-4">
+                          Click the button below to load users from the database
+                        </p>
+                        <Button onClick={() => fetchUsers(1)} className="hockey-button-enhanced">
+                      Load Users
+                    </Button>
+                      </div>
                   </div>
                 )}
-              </TabsContent>
 
-              <TabsContent value="active" className="space-y-4">
-                {/* Search */}
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/60" />
-                  <Input
-                    placeholder="Search active users..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 bg-white/10 border-white/20 text-white placeholder:text-white/60"
-                  />
-                </div>
-
-                {/* Active Users Table */}
-                <div className="rounded-lg border border-white/20 overflow-hidden">
-                  <Table>
-                    <TableHeader>
-                      <TableRow className="bg-white/10">
-                        <TableHead className="text-white font-semibold">User</TableHead>
-                        <TableHead className="text-white font-semibold">Role</TableHead>
-                        <TableHead className="text-white font-semibold">Status</TableHead>
-                        <TableHead className="text-white font-semibold">Club</TableHead>
-                        <TableHead className="text-white font-semibold">Joined</TableHead>
-                        <TableHead className="text-right text-white font-semibold">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {filteredAllUsers.map((user) => (
-                        <TableRow key={user.id} className="border-white/10 hover:bg-white/5">
-                          <TableCell>
-                            <div className="flex flex-col">
-                              <div className="font-medium text-white">{user.email}</div>
-                              {user.gamer_tag && (
-                                <div className="text-sm text-white/70">{user.gamer_tag}</div>
-                              )}
-                              {user.discord_name && (
-                                <div className="text-sm text-white/70">@{user.discord_name}</div>
-                              )}
-                            </div>
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant="outline"
-                              className={
-                                user.role === "Admin"
-                                  ? "border-goal-red-500 text-goal-red-400"
-                                  : user.role === "Owner"
-                                  ? "border-stadium-gold-500 text-stadium-gold-400"
-                                  : user.role === "GM"
-                                  ? "border-pitch-blue-500 text-pitch-blue-400"
-                                  : "border-field-green-500 text-field-green-400"
-                              }
-                            >
-                              {user.role}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <Badge
-                              variant={user.is_verified ? "default" : "destructive"}
-                              className={
-                                user.is_verified
-                                  ? "bg-assist-green-600 text-white"
-                                  : "bg-goal-red-600 text-white"
-                              }
-                            >
-                              {user.is_verified ? "Verified" : "Unverified"}
-                            </Badge>
-                          </TableCell>
-                          <TableCell>
-                            <span className="text-white">
-                              {user.club_name || "No Club"}
-                            </span>
-                          </TableCell>
-                          <TableCell>
-                            <span className="text-white">
-                              {new Date(user.created_at).toLocaleDateString()}
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() => {
-                                setSelectedUser(user)
-                                setIsBanDialogOpen(true)
-                              }}
-                              className="border-goal-red-500/50 text-goal-red-400 hover:bg-goal-red-500/20"
-                              disabled={isUpdating}
-                            >
-                              <Ban className="h-4 w-4" />
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-
-                {filteredAllUsers.length === 0 && (
-                  <div className="text-center py-8">
-                    <Users className="h-12 w-12 text-white/40 mx-auto mb-4" />
-                    <p className="text-white/60">No active users found</p>
+                {loadingUsers ? (
+                    <div className="flex justify-center items-center py-12">
+                      <div className="text-center">
+                        <Loader2 className="h-8 w-8 animate-spin text-ice-blue-500 mx-auto mb-4" />
+                        <p className="text-white">Loading users...</p>
+                      </div>
                   </div>
-                )}
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card>
+                ) : filteredUsers.length > 0 ? (
+                  <>
+                      <div className="overflow-hidden rounded-xl border border-field-green-200 dark:border-field-green-700">
+                    <Table>
+                          <TableHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700">
+                            <TableRow className="border-field-green-200 dark:border-field-green-600">
+                              <TableHead className="text-white font-semibold">Gamer Tag ID</TableHead>
+                              <TableHead className="text-white font-semibold">Discord Name</TableHead>
+                              <TableHead className="text-white font-semibold">Status</TableHead>
+                              <TableHead className="text-white font-semibold">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                            {filteredUsers.map((user, index) => (
+                              <tr 
+                                key={user.id}
+                                className="border-field-green-200 dark:border-field-green-600 hover:bg-field-green-50 dark:hover:bg-field-green-800/50 transition-colors "
+                              >
+                                <TableCell className="py-4">
+                                  <p className="font-semibold text-white">
+                                    {user.gamer_tag_id || (
+                                      <span className="text-white italic">Not set</span>
+                                    )}
+                                  </p>
+                            </TableCell>
+                                <TableCell className="py-4">
+                                  <p className="text-white">
+                                    {user.discord_name || (
+                                      <span className="text-white italic">Not set</span>
+                                    )}
+                                  </p>
+                            </TableCell>
+                                <TableCell className="py-4">
+                              {user.is_banned ? (
+                                    <Badge className="bg-goal-red-500 text-white">Banned</Badge>
+                              ) : (
+                                    <Badge className="bg-assist-green-500 text-white">Active</Badge>
+                              )}
+                            </TableCell>
+                                <TableCell className="py-4">
+                              {user.is_banned ? (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => {
+                                    if (
+                                      confirm(
+                                        `Are you sure you want to unban ${user.gamer_tag_id || user.discord_name || "this user"}?`,
+                                      )
+                                    ) {
+                                      handleUnban(user.id)
+                                    }
+                                  }}
+                                  disabled={unbanning === user.id}
+                                      className="hockey-button-enhanced hover:bg-assist-green-500 hover:text-white hover:border-assist-green-500"
+                                >
+                                  {unbanning === user.id ? (
+                                    <>
+                                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                      Unbanning...
+                                    </>
+                                  ) : (
+                                        <>
+                                          <UserCheck className="mr-2 h-4 w-4" />
+                                          Unban
+                                        </>
+                                  )}
+                                </Button>
+                              ) : (
+                                    <Button 
+                                      variant="destructive" 
+                                      size="sm" 
+                                      onClick={() => openBanDialog(user)}
+                                      className="hockey-button-enhanced hover:bg-goal-red-600"
+                                    >
+                                      <UserMinus className="mr-2 h-4 w-4" />
+                                  Ban
+                                </Button>
+                              )}
+                            </TableCell>
+                              </tr>
+                        ))}
+                      </TableBody>
+                    </Table>
 
-        {/* Ban User Dialog */}
-        <Dialog open={isBanDialogOpen} onOpenChange={setIsBanDialogOpen}>
-          <DialogContent className="bg-gradient-to-br from-stadium-gold-800/20 to-stadium-gold-900/20 border-stadium-gold-600/30">
-            <DialogHeader>
-              <DialogTitle className="text-2xl text-white flex items-center gap-2">
-                <Ban className="h-6 w-6 text-goal-red-400" />
-                Ban User
+                    {/* Pagination - only show when not searching */}
+                    {!userSearchTerm.trim() && (
+                          <div className="flex items-center justify-between mt-6 p-4 bg-field-green-50 dark:bg-field-green-800/50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handlePageChange(currentPage - 1)}
+                            disabled={currentPage === 1 || loadingUsers}
+                                className="hockey-button-enhanced"
+                          >
+                            Previous
+                          </Button>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => handlePageChange(currentPage + 1)}
+                            disabled={currentPage === totalPages || loadingUsers}
+                                className="hockey-button-enhanced"
+                          >
+                            Next
+                          </Button>
+                        </div>
+                            <div className="text-sm text-white">
+                          Showing {(currentPage - 1) * usersPerPage + 1} to{" "}
+                          {Math.min(currentPage * usersPerPage, totalUsers)} of {totalUsers} users
+                        </div>
+                      </div>
+                    )}
+                      </div>
+                  </>
+                ) : users.length > 0 ? (
+                    <div className="text-center py-12">
+                      <div className="p-6 bg-gradient-to-br from-ice-blue-50 to-rink-blue-50 dark:from-field-green-800 dark:to-field-green-700 rounded-xl">
+                        <Users className="h-16 w-16 mx-auto mb-4 text-ice-blue-500 opacity-60" />
+                        <h3 className="text-lg font-semibold text-white mb-2">
+                          No users found
+                        </h3>
+                        <p className="text-white mb-4">
+                          No users match "{userSearchTerm}"
+                        </p>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="hockey-button-enhanced" 
+                          onClick={() => setUserSearchTerm("")}
+                        >
+                        Clear search
+                      </Button>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+              </div>
+            </div>
+        </TabsContent>
+      </Tabs>
+
+        {/* Enhanced Unban Confirmation Dialog */}
+      <Dialog open={unbanDialogOpen} onOpenChange={setUnbanDialogOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader className="text-center">
+              <div className="flex justify-center mb-4">
+                <div className="p-3 bg-gradient-to-br from-assist-green-500 to-ice-blue-500 rounded-full shadow-lg">
+                  <UserCheck className="h-8 w-8 text-white" />
+                </div>
+              </div>
+              <DialogTitle className="text-2xl font-bold text-white">
+                Unban User
               </DialogTitle>
-              <DialogDescription className="text-white/80">
-                Ban {selectedUser?.email} from the platform
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="banReason" className="text-white font-semibold">
-                  Ban Reason
-                </Label>
-                <Textarea
-                  id="banReason"
-                  placeholder="Enter the reason for banning this user..."
-                  value={banReason}
-                  onChange={(e) => setBanReason(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/60"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="banDuration" className="text-white font-semibold">
-                  Ban Duration
-                </Label>
-                <Select value={banDuration} onValueChange={setBanDuration}>
-                  <SelectTrigger className="bg-white/10 border-white/20 text-white">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="permanent">Permanent</SelectItem>
-                    <SelectItem value="1">1 Day</SelectItem>
-                    <SelectItem value="7">7 Days</SelectItem>
-                    <SelectItem value="30">30 Days</SelectItem>
-                    <SelectItem value="90">90 Days</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              {error && (
-                <Alert className="bg-goal-red-900/20 border-goal-red-600/30">
-                  <AlertCircle className="h-5 w-5 text-goal-red-400" />
-                  <AlertDescription className="text-goal-red-200">{error}</AlertDescription>
-                </Alert>
+              <DialogDescription className="text-white">
+              Are you sure you want to unban this user? This will immediately restore their access to the platform.
+            </DialogDescription>
+          </DialogHeader>
+          {selectedUserForUnban && (
+              <div className="space-y-4 p-4 bg-field-green-50 dark:bg-field-green-800/50 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <span className="font-semibold text-white min-w-[80px]">User:</span>
+                  <span className="text-white">
+                {selectedUserForUnban.gamer_tag_id ||
+                  selectedUserForUnban.discord_name ||
+                  selectedUserForUnban.email ||
+                  "Unknown"}
+                  </span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="font-semibold text-white min-w-[80px]">Reason:</span>
+                  <span className="text-white bg-hockey-silver-100 dark:bg-hockey-silver-700 p-2 rounded text-sm">
+                    {selectedUserForUnban.ban_reason}
+                  </span>
+                </div>
+              {selectedUserForUnban.ban_expiration && (
+                  <div className="flex items-center gap-3">
+                    <span className="font-semibold text-white min-w-[80px]">Expires:</span>
+                    <span className="text-white">
+                      {formatDate(selectedUserForUnban.ban_expiration)}
+                    </span>
+                  </div>
               )}
             </div>
-            <DialogFooter>
-              <Button
-                onClick={() => setIsBanDialogOpen(false)}
-                variant="outline"
-                className="border-white/20 text-white hover:bg-white/10"
+          )}
+            <DialogFooter className="gap-3">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => setUnbanDialogOpen(false)}
+                className="hockey-button-enhanced"
               >
-                Cancel
-              </Button>
-              <Button
-                onClick={handleBanUser}
-                disabled={isUpdating || !banReason.trim()}
-                className="bg-goal-red-600 hover:bg-goal-red-700 text-white"
+              Cancel
+            </Button>
+              <Button 
+                type="button" 
+                onClick={confirmUnban} 
+                disabled={unbanning !== null}
+                className="hockey-button-enhanced bg-assist-green-500 hover:bg-assist-green-600 text-white"
               >
-                {isUpdating ? (
+              {unbanning !== null ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Unbanning...
+                </>
+              ) : (
                   <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Banning...
+                    <UserCheck className="mr-2 h-4 w-4" />
+                    Unban User
                   </>
-                ) : (
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+        {/* Enhanced Ban User Dialog */}
+      <Dialog open={banDialogOpen} onOpenChange={setBanDialogOpen}>
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogHeader className="text-center">
+              <div className="flex justify-center mb-4">
+                <div className="p-3 bg-gradient-to-br from-goal-red-500 to-assist-green-500 rounded-full shadow-lg">
+                  <UserMinus className="h-8 w-8 text-white" />
+                </div>
+              </div>
+              <DialogTitle className="text-2xl font-bold text-white">
+                Ban User
+              </DialogTitle>
+              <DialogDescription className="text-white">
+              {selectedUserForBan && (
+                  <>Ban user: <span className="font-semibold text-white">{selectedUserForBan.gamer_tag_id || selectedUserForBan.discord_name || "Unknown"}</span></>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <Label htmlFor="banReason" className="text-white font-semibold flex items-center gap-2">
+                  <AlertCircle className="h-4 w-4 text-goal-red-500" />
+                  Ban Reason
+                </Label>
+              <Textarea
+                id="banReason"
+                placeholder="Enter the reason for banning this user..."
+                value={banReason}
+                onChange={(e) => setBanReason(e.target.value)}
+                required
+                  className="hockey-search min-h-[100px]"
+              />
+            </div>
+
+              <div className="space-y-3">
+                <Label htmlFor="banDuration" className="text-white font-semibold flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-ice-blue-500" />
+                  Ban Duration
+                </Label>
+              <Select value={banDuration} onValueChange={setBanDuration} required>
+                  <SelectTrigger className="hockey-search">
+                  <SelectValue placeholder="Select ban duration" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="1 day">1 Day</SelectItem>
+                  <SelectItem value="3 days">3 Days</SelectItem>
+                  <SelectItem value="1 week">1 Week</SelectItem>
+                  <SelectItem value="2 weeks">2 Weeks</SelectItem>
+                  <SelectItem value="1 month">1 Month</SelectItem>
+                  <SelectItem value="3 months">3 Months</SelectItem>
+                  <SelectItem value="6 months">6 Months</SelectItem>
+                  <SelectItem value="1 year">1 Year</SelectItem>
+                  <SelectItem value="permanent">Permanent</SelectItem>
+                  <SelectItem value="custom">Custom Duration</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {banDuration === "custom" && (
+                <div className="space-y-3">
+                  <Label htmlFor="customDuration" className="text-white font-semibold flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-rink-blue-500" />
+                    Custom Duration
+                  </Label>
+                <Input
+                  id="customDuration"
+                  placeholder="e.g., 45 days, 2 months, 1.5 years"
+                  value={customDuration}
+                  onChange={(e) => setCustomDuration(e.target.value)}
+                  required
+                    className="hockey-search"
+                />
+                  <p className="text-xs text-white bg-field-green-100 dark:bg-field-green-800 p-2 rounded">
+                    Examples: "45 days", "2 months", "1.5 years"
+                  </p>
+              </div>
+            )}
+          </div>
+
+            <DialogFooter className="gap-3">
+              <Button 
+                type="button" 
+                variant="outline" 
+                onClick={() => setBanDialogOpen(false)}
+                className="hockey-button-enhanced"
+              >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              onClick={handleBanUser}
+              disabled={banning || !banReason.trim() || !banDuration}
+                className="hockey-button-enhanced bg-goal-red-500 hover:bg-goal-red-600 text-white"
+            >
+              {banning ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Banning...
+                </>
+              ) : (
                   <>
-                    <Ban className="h-4 w-4 mr-2" />
+                    <UserMinus className="mr-2 h-4 w-4" />
                     Ban User
                   </>
-                )}
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       </div>
     </div>
   )

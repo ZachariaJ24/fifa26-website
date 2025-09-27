@@ -297,25 +297,24 @@ export default function UserDiagnostics() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-900 via-pitch-blue-900 to-assist-green-900 p-6">
-      <div className="max-w-7xl mx-auto">
-        <Card className="bg-gradient-to-br from-stadium-gold-800/20 to-stadium-gold-900/20 border-stadium-gold-600/30">
-          <CardHeader>
-            <CardTitle className="text-3xl text-white flex items-center gap-3">
-              <div className="p-2 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg">
-                <Shield className="h-6 w-6 text-white" />
-              </div>
-              User Diagnostics
-            </CardTitle>
-            <CardDescription className="text-white/80">
-              Look up and fix issues with user accounts
-            </CardDescription>
-          </CardHeader>
+    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <Card className="w-full hockey-enhanced-card">
+        <CardHeader>
+          <CardTitle className="text-3xl text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-3">
+            <div className="p-2 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg">
+              <Shield className="h-6 w-6 text-white" />
+            </div>
+            User Diagnostics
+          </CardTitle>
+          <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+            Look up and fix issues with user accounts
+          </CardDescription>
+        </CardHeader>
         <CardContent>
         <div className="space-y-4">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
-              <Label htmlFor="email" className="text-white font-semibold flex items-center gap-2">
+              <Label htmlFor="email" className="text-hockey-silver-900 dark:text-hockey-silver-100 font-semibold flex items-center gap-2">
                 <Users className="h-4 w-4 text-assist-green-500" />
                 Email Address
               </Label>
@@ -334,7 +333,7 @@ export default function UserDiagnostics() {
               </div>
             </div>
             <div className="md:w-1/3">
-              <Label htmlFor="admin-key" className="text-white font-semibold flex items-center gap-2">
+              <Label htmlFor="admin-key" className="text-hockey-silver-900 dark:text-hockey-silver-100 font-semibold flex items-center gap-2">
                 <Key className="h-4 w-4 text-ice-blue-500" />
                 Admin Key
               </Label>
@@ -760,7 +759,6 @@ export default function UserDiagnostics() {
         </div>
       </CardContent>
     </Card>
-      </div>
     </div>
   )
 }

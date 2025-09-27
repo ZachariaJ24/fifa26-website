@@ -1,373 +1,249 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import React, { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { useToast } from "@/components/ui/use-toast"
-import { Loader2, Trash2, AlertTriangle, Key, Shield, UserX, CheckCircle, XCircle, Database, Users, AlertCircle } from "lucide-react"
+import { Loader2, AlertCircle, CheckCircle, Trash2, Shield, UserX, Database, Key, AlertTriangle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { useSupabase } from "@/lib/supabase/client"
+// import { motion } from "framer-motion" - disabled due to Next.js 15.2.4 compatibility
+import HeaderBar from "@/components/admin/HeaderBar"
 
 export default function CompleteUserDeletionPage() {
-  const { supabase, session } = useSupabase()
-  const { toast } = useToast()
-  const router = useRouter()
   const [email, setEmail] = useState("")
   const [adminKey, setAdminKey] = useState("")
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [userData, setUserData] = useState<any>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const [result, setResult] = useState<any>(null)
   const [error, setError] = useState<string | null>(null)
-  const [step, setStep] = useState<"input" | "confirm" | "deleting" | "success">("input")
+  const { toast } = useToast()
 
-  // Check if user is admin
-  useEffect(() => {
-    if (session?.user?.email) {
-      checkAdminStatus()
-    }
-  }, [session])
-
-  const checkAdminStatus = async () => {
-    try {
-      const { data: userData, error: userError } = await supabase
-        .from("users")
-        .select("role")
-        .eq("email", session?.user?.email)
-        .single()
-
-      if (userError || !userData || userData.role !== "Admin") {
-        router.push("/dashboard")
-        return
-      }
-    } catch (error) {
-      console.error("Error checking admin status:", error)
-      router.push("/dashboard")
-    }
-  }
-
-  const handleLookupUser = async () => {
-    if (!email.trim()) {
-      setError("Please enter an email address")
+  const handleDelete = async () => {
+    if (!email) {
+      setError("Email is required")
       return
     }
 
+    if (!adminKey) {
+      setError("Admin key is required")
+      return
+    }
+
+    setIsLoading(true)
+    setError(null)
+    setResult(null)
+
     try {
-      setIsLoading(true)
-      setError(null)
+      const response = await fetch("/api/admin/delete-user-complete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, adminKey }),
+      })
 
-      const { data, error } = await supabase
-        .from("users")
-        .select(`
-          *,
-          clubs:club_id (
-            name
-          )
-        `)
-        .eq("email", email.trim().toLowerCase())
-        .single()
+      const data = await response.json()
 
-      if (error) {
-        if (error.code === "PGRST116") {
-          setError("User not found")
-        } else {
-          throw error
-        }
-        return
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to delete user")
       }
 
-      setUserData(data)
-      setStep("confirm")
-    } catch (error) {
-      console.error("Error looking up user:", error)
-      setError("Failed to look up user")
+      setResult(data)
+      toast({
+        title: "User deleted",
+        description: data.message,
+      })
+    } catch (error: any) {
+      console.error("Error deleting user:", error)
+      setError(error.message || "An error occurred")
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete user",
+        variant: "destructive",
+      })
     } finally {
       setIsLoading(false)
     }
   }
 
-  const handleDeleteUser = async () => {
-    if (!adminKey.trim()) {
-      setError("Please enter the admin verification key")
-      return
-    }
-
-    if (!userData) {
-      setError("No user data available")
-      return
-    }
-
-    try {
-      setIsDeleting(true)
-      setError(null)
-      setStep("deleting")
-
-      // Verify admin key (you can implement your own verification logic)
-      if (adminKey !== "DELETE_USER_CONFIRM") {
-        setError("Invalid admin verification key")
-        setStep("confirm")
-        return
-      }
-
-      // Delete user from auth
-      const { error: authError } = await supabase.auth.admin.deleteUser(userData.id)
-      if (authError) {
-        console.error("Auth deletion error:", authError)
-        // Continue with database deletion even if auth deletion fails
-      }
-
-      // Delete user from database
-      const { error: dbError } = await supabase
-        .from("users")
-        .delete()
-        .eq("id", userData.id)
-
-      if (dbError) {
-        throw dbError
-      }
-
-      setStep("success")
-      toast({
-        title: "User Deleted Successfully",
-        description: `User ${userData.email} has been completely removed from the system`,
-      })
-    } catch (error) {
-      console.error("Error deleting user:", error)
-      setError("Failed to delete user")
-      setStep("confirm")
-    } finally {
-      setIsDeleting(false)
-    }
-  }
-
-  const resetForm = () => {
-    setEmail("")
-    setAdminKey("")
-    setUserData(null)
-    setError(null)
-    setStep("input")
-  }
-
-  if (step === "deleting") {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-field-green-900 via-pitch-blue-900 to-assist-green-900 p-6">
-        <div className="max-w-2xl mx-auto">
-          <Card className="bg-gradient-to-br from-stadium-gold-800/20 to-stadium-gold-900/20 border-stadium-gold-600/30">
-            <CardContent className="p-8 text-center">
-              <Loader2 className="h-12 w-12 animate-spin text-white mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white mb-2">Deleting User</h2>
-              <p className="text-white/80">Please wait while we remove the user from all systems...</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    )
-  }
-
-  if (step === "success") {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-field-green-900 via-pitch-blue-900 to-assist-green-900 p-6">
-        <div className="max-w-2xl mx-auto">
-          <Card className="bg-gradient-to-br from-stadium-gold-800/20 to-stadium-gold-900/20 border-stadium-gold-600/30">
-            <CardContent className="p-8 text-center">
-              <CheckCircle className="h-12 w-12 text-assist-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-white mb-2">User Deleted Successfully</h2>
-              <p className="text-white/80 mb-6">The user has been completely removed from the system</p>
-              <Button
-                onClick={resetForm}
-                className="bg-field-green-600 hover:bg-field-green-700 text-white"
-              >
-                Delete Another User
-              </Button>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    )
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-900 via-pitch-blue-900 to-assist-green-900 p-6">
-      <div className="max-w-4xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Complete User Deletion
-          </h1>
-          <p className="text-lg text-white max-w-2xl mx-auto">
-            Permanently remove users from all systems. This action cannot be undone.
-          </p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
+      <div className="container mx-auto px-4 py-8">
+        <HeaderBar
+          title="Complete User Deletion"
+          subtitle="Permanently remove users from both Auth and Database systems"
+        />
 
-        {/* Warning Alert */}
-        <Alert className="mb-8 bg-goal-red-900/20 border-goal-red-600/30">
-          <AlertTriangle className="h-5 w-5 text-goal-red-400" />
-          <AlertTitle className="text-goal-red-200 font-bold">Warning</AlertTitle>
-          <AlertDescription className="text-goal-red-200">
-            This action will permanently delete the user from both the authentication system and the database.
-            All associated data will be lost and cannot be recovered.
-          </AlertDescription>
-        </Alert>
+        <div className="max-w-2xl mx-auto">
 
-        {step === "input" && (
-          <Card className="bg-gradient-to-br from-stadium-gold-800/20 to-stadium-gold-900/20 border-stadium-gold-600/30">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white flex items-center gap-2">
-                <UserX className="h-6 w-6" />
-                User Lookup
-              </CardTitle>
-              <CardDescription className="text-white">
-                Enter the email address of the user you want to delete
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="text-lg font-semibold text-white flex items-center gap-2">
-                  <Database className="h-5 w-5" />
-                  User Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="user@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/60"
-                />
-                <p className="text-sm text-white/70 p-2 bg-gradient-to-r from-ice-blue-100/30 to-rink-blue-100/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border border-ice-blue-200/30 dark:border-rink-blue-700/30">
-                  Enter the exact email address of the user you want to delete
-                </p>
-              </div>
-
-              {error && (
-                <Alert className="bg-goal-red-900/20 border-goal-red-600/30">
-                  <AlertCircle className="h-5 w-5 text-goal-red-400" />
-                  <AlertDescription className="text-goal-red-200">{error}</AlertDescription>
-                </Alert>
-              )}
-
-              <Button
-                onClick={handleLookupUser}
-                disabled={isLoading || !email.trim()}
-                className="w-full bg-goal-red-600 hover:bg-goal-red-700 text-white"
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Looking up user...
-                  </>
-                ) : (
-                  <>
-                    <Search className="h-4 w-4 mr-2" />
-                    Look Up User
-                  </>
-                )}
-              </Button>
-            </CardContent>
-          </Card>
-        )}
-
-        {step === "confirm" && userData && (
-          <Card className="bg-gradient-to-br from-stadium-gold-800/20 to-stadium-gold-900/20 border-stadium-gold-600/30">
-            <CardHeader>
-              <CardTitle className="text-2xl text-white flex items-center gap-2">
-                <AlertTriangle className="h-6 w-6 text-goal-red-400" />
-                Confirm Deletion
-              </CardTitle>
-              <CardDescription className="text-white">
-                Review user details before permanent deletion
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              {/* User Details */}
-              <div className="bg-white/10 rounded-lg p-4 space-y-3">
-                <h3 className="text-lg font-bold text-white mb-3">User Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/90">
-                  <div>
-                    <span className="font-semibold">Email:</span> {userData.email}
+          {/* Warning Banner */}
+          <div className="mb-8">
+            <Card className="fifa-card-hover-enhanced border-2 border-goal-red-200/60 dark:border-goal-red-700/60 bg-gradient-to-r from-goal-red-50/30 to-goal-red-100/30 dark:from-goal-red-900/10 dark:to-goal-red-800/10 shadow-lg">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
+                    <AlertTriangle className="h-6 w-6 text-white" />
                   </div>
-                  <div>
-                    <span className="font-semibold">Gamer Tag:</span> {userData.gamer_tag || "N/A"}
-                  </div>
-                  <div>
-                    <span className="font-semibold">Discord Name:</span> {userData.discord_name || "N/A"}
-                  </div>
-                  <div>
-                    <span className="font-semibold">Role:</span> {userData.role}
-                  </div>
-                  <div>
-                    <span className="font-semibold">Club:</span> {userData.clubs?.name || "No Club"}
-                  </div>
-                  <div>
-                    <span className="font-semibold">Joined:</span> {new Date(userData.created_at).toLocaleDateString()}
-                  </div>
-                  <div>
-                    <span className="font-semibold">Verified:</span> {userData.is_verified ? "Yes" : "No"}
-                  </div>
-                  <div>
-                    <span className="font-semibold">Banned:</span> {userData.is_banned ? "Yes" : "No"}
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-goal-red-800 dark:text-goal-red-200 mb-2 fifa-title">
+                      ⚠️ Irreversible Action Warning
+                    </h3>
+                    <p className="text-goal-red-700 dark:text-goal-red-300 fifa-subtitle">
+                      This action will completely and permanently remove a user from both the authentication system and database. 
+                      All user data, roles, team associations, and history will be permanently deleted. 
+                      <strong className="font-bold">This action cannot be undone.</strong>
+                    </p>
                   </div>
                 </div>
-              </div>
+              </CardContent>
+            </Card>
+          </div>
 
-              {/* Admin Verification */}
-              <div className="space-y-2">
-                <Label htmlFor="adminKey" className="text-lg font-semibold text-white flex items-center gap-2">
-                  <Key className="h-5 w-5 text-white/80" />
-                  Admin Verification Key
-                </Label>
-                <Input
-                  id="adminKey"
-                  type="password"
-                  placeholder="Enter admin verification key"
-                  value={adminKey}
-                  onChange={(e) => setAdminKey(e.target.value)}
-                  className="bg-white/10 border-white/20 text-white placeholder:text-white/60"
-                />
-                <p className="text-sm text-white/70 p-2 bg-gradient-to-r from-ice-blue-100/30 to-rink-blue-100/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border border-ice-blue-200/30 dark:border-rink-blue-700/30">
-                  Enter the admin verification key to confirm deletion
-                </p>
-              </div>
+          {/* Main Deletion Form */}
+          <div>
+            <Card className="fifa-card-hover-enhanced border-2 border-field-green-200/60 dark:border-field-green-700/60 shadow-2xl shadow-field-green-500/20">
+              <CardHeader className="relative bg-gradient-to-r from-field-green-500 to-pitch-blue-600 text-white">
+                <div className="absolute inset-0 bg-gradient-to-r from-field-green-500/20 to-pitch-blue-500/20"></div>
+                <div className="flex items-center gap-4 relative z-10">
+                  <div className="w-14 h-14 bg-white/20 rounded-2xl flex items-center justify-center shadow-lg backdrop-blur-sm">
+                    <UserX className="h-7 w-7 text-white" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-2xl text-white fifa-title">User Deletion Form</CardTitle>
+                    <CardDescription className="text-lg text-white fifa-subtitle">
+                      Enter user email and admin verification key to proceed
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              
+              <CardContent className="relative z-10 space-y-6">
+                {/* Error Alert */}
+                {error && (
+                  <div
+                  >
+                    <Alert variant="destructive" className="border-2 border-goal-red-300 dark:border-goal-red-600 bg-gradient-to-r from-goal-red-50 to-goal-red-100 dark:from-goal-red-900/20 dark:to-goal-red-800/20">
+                      <AlertCircle className="h-5 w-5" />
+                      <AlertTitle className="text-goal-red-800 dark:text-goal-red-200 font-bold">Error</AlertTitle>
+                      <AlertDescription className="text-goal-red-700 dark:text-goal-red-300">{error}</AlertDescription>
+                    </Alert>
+                  </div>
+                )}
 
-              {error && (
-                <Alert className="bg-goal-red-900/20 border-goal-red-600/30">
-                  <AlertCircle className="h-5 w-5 text-goal-red-400" />
-                  <AlertDescription className="text-goal-red-200">{error}</AlertDescription>
-                </Alert>
-              )}
+                {/* Success Alert */}
+                {result && (
+                  <div
+                  >
+                    <Alert className="border-2 border-assist-green-300 dark:border-assist-green-600 bg-gradient-to-r from-assist-green-50 to-assist-green-100 dark:from-assist-green-900/20 dark:to-assist-green-800/20">
+                      <CheckCircle className="h-5 w-5 text-assist-green-600 dark:text-assist-green-400" />
+                      <AlertTitle className="text-assist-green-800 dark:text-assist-green-200 font-bold">Success</AlertTitle>
+                      <AlertDescription className="text-assist-green-700 dark:text-assist-green-300">
+                        {result.message}
+                        <div className="mt-3 p-3 bg-gradient-to-r from-assist-green-100/50 to-assist-green-200/50 dark:from-assist-green-900/10 dark:to-assist-green-800/10 rounded-lg border border-assist-green-200/50 dark:border-assist-green-700/50">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+                            <div className="flex items-center gap-2">
+                              <Database className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
+                              <span>Database: <strong>{result.dbUserFound ? "Found & Deleted" : "Not Found"}</strong></span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <Shield className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
+                              <span>Auth System: <strong>{result.authUserFound ? "Found & Deleted" : "Not Found"}</strong></span>
+                            </div>
+                          </div>
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+                  </div>
+                )}
 
-              <div className="flex gap-4">
+                {/* Email Input */}
+                <div className="space-y-3">
+                  <label htmlFor="email" className="text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                    <UserX className="h-5 w-5 text-ice-blue-600 dark:text-ice-blue-400" />
+                    Email Address
+                  </label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="user@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="hockey-search h-14 text-lg border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300"
+                  />
+                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 p-2 bg-gradient-to-r from-ice-blue-100/30 to-rink-blue-100/30 dark:from-ice-blue-900/10 dark:to-rink-blue-900/10 rounded-lg border border-ice-blue-200/30 dark:border-rink-blue-700/30">
+                    Enter the email address of the user you want to completely delete from the system.
+                  </p>
+                </div>
+
+                {/* Admin Key Input */}
+                <div className="space-y-3">
+                  <label htmlFor="adminKey" className="text-lg font-semibold text-hockey-silver-800 dark:text-hockey-silver-200 flex items-center gap-2">
+                    <Key className="h-5 w-5 text-hockey-silver-600 dark:text-hockey-silver-400" />
+                    Admin Verification Key
+                  </label>
+                  <Input
+                    id="adminKey"
+                    type="password"
+                    placeholder="Enter admin key"
+                    value={adminKey}
+                    onChange={(e) => setAdminKey(e.target.value)}
+                    className="hockey-search h-14 text-lg border-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50 focus:border-hockey-silver-500 dark:focus:border-hockey-silver-500 focus:ring-4 focus:ring-hockey-silver-500/20 dark:focus:ring-hockey-silver-500/20 transition-all duration-300"
+                  />
+                  <p className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 p-2 bg-gradient-to-r from-hockey-silver-100/30 to-hockey-silver-200/30 dark:from-hockey-silver-900/10 dark:to-hockey-silver-800/10 rounded-lg border border-hockey-silver-200/30 dark:border-hockey-silver-700/30">
+                    Enter your admin verification key to confirm this destructive action.
+                  </p>
+                </div>
+              </CardContent>
+
+              <CardFooter className="relative z-10 pt-6 border-t-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
                 <Button
-                  onClick={resetForm}
-                  variant="outline"
-                  className="flex-1 border-white/20 text-white hover:bg-white/10"
+                  onClick={handleDelete}
+                  disabled={isLoading || !email || !adminKey}
+                  className="w-full h-14 text-lg hockey-button bg-gradient-to-r from-goal-red-500 to-goal-red-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-goal-red-300 dark:border-goal-red-600"
+                  variant="destructive"
                 >
-                  <XCircle className="h-4 w-4 mr-2" />
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleDeleteUser}
-                  disabled={isDeleting || !adminKey.trim()}
-                  className="flex-1 bg-goal-red-600 hover:bg-goal-red-700 text-white"
-                >
-                  {isDeleting ? (
+                  {isLoading ? (
                     <>
-                      <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                      Deleting...
+                      <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+                      Deleting User...
                     </>
                   ) : (
                     <>
-                      <Trash2 className="h-4 w-4 mr-2" />
-                      Delete User Permanently
+                      <Trash2 className="mr-3 h-5 w-5" />
+                      Delete User Completely
                     </>
                   )}
                 </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+              </CardFooter>
+            </Card>
+          </div>
+
+          {/* Additional Information */}
+          <div className="mt-8 animate-fade-in-up">
+            <Card className="hockey-card hockey-card-hover border-2 border-hockey-silver-200/50 dark:border-hockey-silver-700/50 bg-gradient-to-r from-hockey-silver-50/30 to-hockey-silver-100/30 dark:from-hockey-silver-900/10 dark:to-hockey-silver-800/10">
+              <CardContent className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-gradient-to-r from-hockey-silver-500 to-hockey-silver-600 rounded-xl flex items-center justify-center shadow-lg flex-shrink-0">
+                    <Shield className="h-6 w-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-3">
+                      What Happens During Deletion?
+                    </h3>
+                    <div className="space-y-2 text-sm text-hockey-silver-700 dark:text-hockey-silver-300">
+                      <p>• User account is permanently removed from the authentication system</p>
+                      <p>• All user data is deleted from the database</p>
+                      <p>• User roles and permissions are completely removed</p>
+                      <p>• Team associations and player records are deleted</p>
+                      <p>• Forum posts, comments, and activity history are removed</p>
+                      <p>• All related records across all tables are permanently deleted</p>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
       </div>
     </div>
   )

@@ -208,7 +208,7 @@ export function OrphanedAuthUsersManager() {
         >
           <Alert className="hockey-enhanced-card border-goal-red-200 dark:border-goal-red-800">
             <AlertTriangle className="h-4 w-4" />
-            <AlertDescription className="text-white/80">
+            <AlertDescription className="text-hockey-silver-700 dark:text-hockey-silver-300">
               <strong className="text-white">Found {stats.orphaned_count} orphaned users</strong> out of {stats.total_auth_users} total auth
               users. These users exist in Supabase Auth but not in the public.users table, which can cause "already
               registered" errors.
@@ -259,12 +259,12 @@ export function OrphanedAuthUsersManager() {
                     <TableCell>
                       <div>
                         <div className="font-semibold text-white">{user.email}</div>
-                        <div className="text-xs text-white/60 font-mono">{user.id}</div>
+                        <div className="text-xs text-hockey-silver-500 dark:text-hockey-silver-400 font-mono">{user.id}</div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <div className="text-sm text-white/80">{new Date(user.created_at).toLocaleDateString()}</div>
-                      <div className="text-xs text-white/60">
+                      <div className="text-sm text-hockey-silver-700 dark:text-hockey-silver-300">{new Date(user.created_at).toLocaleDateString()}</div>
+                      <div className="text-xs text-hockey-silver-500 dark:text-hockey-silver-400">
                         {new Date(user.created_at).toLocaleTimeString()}
                       </div>
                     </TableCell>
@@ -283,9 +283,9 @@ export function OrphanedAuthUsersManager() {
                     </TableCell>
                     <TableCell>
                       {user.last_sign_in_at ? (
-                        <div className="text-sm text-white/80">{new Date(user.last_sign_in_at).toLocaleDateString()}</div>
+                        <div className="text-sm text-hockey-silver-700 dark:text-hockey-silver-300">{new Date(user.last_sign_in_at).toLocaleDateString()}</div>
                       ) : (
-                        <span className="text-white/60">Never</span>
+                        <span className="text-hockey-silver-500 dark:text-hockey-silver-400">Never</span>
                       )}
                     </TableCell>
                     <TableCell>
