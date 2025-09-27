@@ -760,6 +760,7 @@ export default function UserDiagnostics() {
         </div>
       </CardContent>
     </Card>
+      </div>
     </div>
   )
 }
