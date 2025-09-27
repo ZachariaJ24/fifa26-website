@@ -295,12 +295,12 @@ export default function AdminFeaturedGamesPage() {
         <div className="container mx-auto px-4 py-20">
           <div className="text-center">
             <div className="w-16 h-16 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-800 dark:to-pitch-blue-800 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-              <Gamepad2 className="h-8 w-8 text-field-green-600 dark:text-field-green-400" />
+              <Gamepad2 className="h-8 w-8 text-slate-600 dark:text-slate-400" />
             </div>
-            <h3 className="text-xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-2">
               Loading Featured Fixtures
             </h3>
-            <p className="text-field-green-600 dark:text-field-green-400">
+            <p className="text-slate-600 dark:text-slate-400">
               Initializing featured fixtures management interface...
             </p>
             <div className="mt-6">
@@ -332,7 +332,7 @@ export default function AdminFeaturedGamesPage() {
               <h3 className="text-xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                 Database Error
               </h3>
-              <p className="text-field-green-600 dark:text-field-green-400 mb-6">
+              <p className="text-slate-600 dark:text-slate-400 mb-6">
                 {migrationError || "Failed to create or access the 'featured' column in the matches table."}
               </p>
               <Button 
@@ -377,10 +377,10 @@ export default function AdminFeaturedGamesPage() {
                   <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
                     <Gamepad2 className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-field-green-700 dark:text-field-green-300 mb-2">
+                  <div className="text-3xl font-bold text-slate-700 dark:text-slate-300 mb-2">
                     {matches.length}
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Total Fixtures
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -395,7 +395,7 @@ export default function AdminFeaturedGamesPage() {
                   <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
                     {matches.filter(m => m.featured).length}
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Featured Fixtures
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -410,7 +410,7 @@ export default function AdminFeaturedGamesPage() {
                   <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
                     Live
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Management
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -425,7 +425,7 @@ export default function AdminFeaturedGamesPage() {
                   <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                     Homepage
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Visibility
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -440,10 +440,10 @@ export default function AdminFeaturedGamesPage() {
       <div className="container mx-auto px-4 py-16">
         {/* Enhanced Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-4">
             Featured Fixtures Control Center
           </h2>
-          <p className="text-xl text-field-green-600 dark:text-field-green-400 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
             Manage which fixtures are featured on the home page. Featured fixtures will be displayed prominently 
             and shown in order of their scheduled date to highlight key matchups.
           </p>
@@ -471,12 +471,12 @@ export default function AdminFeaturedGamesPage() {
         <div className="hockey-card border-2 border-field-green-200 dark:border-field-green-700 overflow-hidden">
           <div className="p-8 text-center">
             <div className="w-16 h-16 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-800 dark:to-pitch-blue-800 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Gamepad2 className="h-8 w-8 text-field-green-600 dark:text-field-green-400" />
+              <Gamepad2 className="h-8 w-8 text-slate-600 dark:text-slate-400" />
             </div>
-            <h3 className="text-xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-2">
               No Matches Found
             </h3>
-            <p className="text-field-green-600 dark:text-field-green-400">
+            <p className="text-slate-600 dark:text-slate-400">
               There are currently no matches available to feature.
             </p>
           </div>
@@ -494,13 +494,13 @@ export default function AdminFeaturedGamesPage() {
           <Table>
             <TableHeader>
               <TableRow className="bg-field-green-50 dark:bg-field-green-800">
-                <TableHead className="text-field-green-700 dark:text-field-green-300 font-semibold">Date</TableHead>
-                <TableHead className="text-field-green-700 dark:text-field-green-300 font-semibold">Home Team</TableHead>
-                <TableHead className="text-field-green-700 dark:text-field-green-300 font-semibold">Away Team</TableHead>
-                <TableHead className="text-field-green-700 dark:text-field-green-300 font-semibold">Score</TableHead>
-                <TableHead className="text-field-green-700 dark:text-field-green-300 font-semibold">Status</TableHead>
-                <TableHead className="text-field-green-700 dark:text-field-green-300 font-semibold">Featured</TableHead>
-                <TableHead className="text-right text-field-green-700 dark:text-field-green-300 font-semibold">Actions</TableHead>
+                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Date</TableHead>
+                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Home Team</TableHead>
+                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Away Team</TableHead>
+                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Score</TableHead>
+                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Status</TableHead>
+                <TableHead className="text-slate-700 dark:text-slate-300 font-semibold">Featured</TableHead>
+                <TableHead className="text-right text-slate-700 dark:text-slate-300 font-semibold">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -509,21 +509,21 @@ export default function AdminFeaturedGamesPage() {
                   key={match.id} 
                   className={`${match.featured ? "bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20" : ""} ${index % 2 === 0 ? "bg-white dark:bg-field-green-900" : "bg-field-green-50 dark:bg-field-green-800"} hover:bg-field-green-100 dark:hover:bg-field-green-700 transition-colors duration-200`}
                 >
-                  <TableCell className="text-field-green-800 dark:text-field-green-200">
+                  <TableCell className="text-slate-800 dark:text-slate-200">
                     <div className="flex flex-col">
                       <span className="font-medium">{format(new Date(match[dateColumnName]), "MMM d, yyyy")}</span>
-                      <span className="text-sm text-field-green-600 dark:text-field-green-400">
+                      <span className="text-sm text-slate-600 dark:text-slate-400">
                         {format(new Date(match[dateColumnName]), "h:mm a")}
                       </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-field-green-800 dark:text-field-green-200 font-medium">
+                  <TableCell className="text-slate-800 dark:text-slate-200 font-medium">
                     {match.home_team?.name || "Unknown Team"}
                   </TableCell>
-                  <TableCell className="text-field-green-800 dark:text-field-green-200 font-medium">
+                  <TableCell className="text-slate-800 dark:text-slate-200 font-medium">
                     {match.away_team?.name || "Unknown Team"}
                   </TableCell>
-                  <TableCell className="text-field-green-800 dark:text-field-green-200">
+                  <TableCell className="text-slate-800 dark:text-slate-200">
                     {match.home_score !== null && match.away_score !== null
                       ? `${match.home_score} - ${match.away_score}`
                       : "TBD"}
@@ -534,7 +534,7 @@ export default function AdminFeaturedGamesPage() {
                         ? 'bg-assist-green-100 text-assist-green-800 dark:bg-assist-green-900 dark:text-assist-green-200'
                         : match.status === 'live'
                         ? 'bg-goal-red-100 text-goal-red-800 dark:bg-goal-red-900 dark:text-goal-red-200'
-                        : 'bg-field-green-100 text-field-green-800 dark:bg-field-green-700 dark:text-field-green-200'
+                        : 'bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-200'
                     }`}>
                       {match.status}
                     </div>
@@ -560,7 +560,7 @@ export default function AdminFeaturedGamesPage() {
                       disabled={updatingId === match.id}
                       className={`${
                         match.featured 
-                          ? "border-2 border-field-green-300 dark:border-field-green-600 hover:border-field-green-400 dark:hover:border-field-green-500 text-field-green-700 dark:text-field-green-300" 
+                          ? "border-2 border-field-green-300 dark:border-field-green-600 hover:border-field-green-400 dark:hover:border-field-green-500 text-slate-700 dark:text-slate-300" 
                           : "btn-championship"
                       } hover:scale-105 transition-all duration-200`}
                     >

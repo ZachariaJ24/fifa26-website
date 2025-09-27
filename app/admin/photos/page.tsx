@@ -62,10 +62,10 @@ export default function AdminPhotosPage() {
                     <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
                       <Upload className="h-8 w-8 text-white" />
                     </div>
-                    <div className="text-3xl font-bold text-field-green-700 dark:text-field-green-300 mb-2">
+                    <div className="text-3xl font-bold text-slate-700 dark:text-slate-300 mb-2">
                       Upload
                     </div>
-                    <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                    <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                       Photos
                     </div>
                     <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -80,7 +80,7 @@ export default function AdminPhotosPage() {
                     <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
                       Photo
                     </div>
-                    <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                    <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                       Gallery
                     </div>
                     <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -95,7 +95,7 @@ export default function AdminPhotosPage() {
                     <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
                       Homepage
                     </div>
-                    <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                    <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                       Carousel
                     </div>
                     <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -110,7 +110,7 @@ export default function AdminPhotosPage() {
                     <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                       Logo
                     </div>
-                    <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                    <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                       Management
                     </div>
                     <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -125,10 +125,10 @@ export default function AdminPhotosPage() {
         <div className="container mx-auto px-4 py-16">
           {/* Enhanced Header */}
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
+            <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-4">
               Media Management Hub
             </h2>
-            <p className="text-xl text-field-green-600 dark:text-field-green-400 max-w-3xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
               Manage all visual content for the league including photo uploads, gallery organization, 
               homepage carousel management, and team logo administration.
             </p>
@@ -174,10 +174,10 @@ export default function AdminPhotosPage() {
                   <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <Upload className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
+                  <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">
                     Photo Upload Center
                   </h3>
-                  <p className="text-field-green-600 dark:text-field-green-400">
+                  <p className="text-slate-600 dark:text-slate-400">
                     Upload and manage photos for the league gallery and website content.
                   </p>
                 </div>
@@ -189,10 +189,10 @@ export default function AdminPhotosPage() {
                   <div className="w-16 h-16 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <Images className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
+                  <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">
                     Photo Gallery Management
                   </h3>
-                  <p className="text-field-green-600 dark:text-field-green-400">
+                  <p className="text-slate-600 dark:text-slate-400">
                     Organize, categorize, and manage the league's photo collection.
                   </p>
                 </div>
@@ -204,10 +204,10 @@ export default function AdminPhotosPage() {
                   <div className="w-16 h-16 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <Layout className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
+                  <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">
                     Homepage Carousel Manager
                   </h3>
-                  <p className="text-field-green-600 dark:text-field-green-400">
+                  <p className="text-slate-600 dark:text-slate-400">
                     Manage the featured images displayed on the homepage carousel.
                   </p>
                 </div>
@@ -219,10 +219,10 @@ export default function AdminPhotosPage() {
                   <div className="w-16 h-16 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                     <Shield className="h-8 w-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
+                  <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">
                     Team Logo Management
                   </h3>
-                  <p className="text-field-green-600 dark:text-field-green-400">
+                  <p className="text-slate-600 dark:text-slate-400">
                     Upload and manage team logos and branding assets.
                   </p>
                 </div>

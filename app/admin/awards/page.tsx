@@ -671,10 +671,10 @@ export default function AdminAwardsPage() {
                   <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
                     <Trophy className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-field-green-700 dark:text-field-green-300 mb-2">
+                  <div className="text-3xl font-bold text-slate-700 dark:text-slate-300 mb-2">
                     {teamAwards.length}
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Team Awards
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -689,7 +689,7 @@ export default function AdminAwardsPage() {
                   <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
                     {playerAwards.length}
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Player Awards
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -704,7 +704,7 @@ export default function AdminAwardsPage() {
                   <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
                     {seasons.length}
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Active Seasons
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -719,7 +719,7 @@ export default function AdminAwardsPage() {
                   <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                     {teams.length}
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Teams
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -734,10 +734,10 @@ export default function AdminAwardsPage() {
       <div className="container mx-auto px-4 py-16">
         {/* Enhanced Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-4">
             Awards Management System
           </h2>
-          <p className="text-xl text-field-green-600 dark:text-field-green-400 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
             Manage team awards, player achievements, and recognize outstanding performance. 
             Create, edit, and track awards across all seasons and categories.
           </p>
@@ -790,8 +790,8 @@ export default function AdminAwardsPage() {
                           <Trophy className="h-5 w-5 text-white" />
                         </div>
                         <div>
-                          <DialogTitle className="text-field-green-800 dark:text-field-green-200">Add Team Award</DialogTitle>
-                          <DialogDescription className="text-field-green-600 dark:text-field-green-400">
+                          <DialogTitle className="text-slate-800 dark:text-slate-200">Add Team Award</DialogTitle>
+                          <DialogDescription className="text-slate-600 dark:text-slate-400">
                             Create a new team award for a specific season
                           </DialogDescription>
                         </div>
@@ -800,8 +800,8 @@ export default function AdminAwardsPage() {
 
                     <div className="grid gap-6 py-4">
                       <div className="grid gap-3">
-                        <Label htmlFor="team" className="text-sm font-medium text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
-                          <Users className="h-4 w-4 text-field-green-600" />
+                        <Label htmlFor="team" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                          <Users className="h-4 w-4 text-slate-600" />
                           Team
                         </Label>
                         <Select
@@ -822,7 +822,7 @@ export default function AdminAwardsPage() {
                       </div>
 
                       <div className="grid gap-3">
-                        <Label htmlFor="award-type" className="text-sm font-medium text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                        <Label htmlFor="award-type" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
                           <Award className="h-4 w-4 text-pitch-blue-600" />
                           Award Type
                         </Label>
@@ -845,7 +845,7 @@ export default function AdminAwardsPage() {
 
                       <div className="grid grid-cols-2 gap-4">
                         <div className="grid gap-3">
-                          <Label htmlFor="season" className="text-sm font-medium text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                          <Label htmlFor="season" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
                             <Calendar className="h-4 w-4 text-assist-green-600" />
                             Season
                           </Label>
@@ -867,7 +867,7 @@ export default function AdminAwardsPage() {
                         </div>
 
                         <div className="grid gap-3">
-                          <Label htmlFor="year" className="text-sm font-medium text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
+                          <Label htmlFor="year" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
                             <Clock className="h-4 w-4 text-goal-red-600" />
                             Year
                           </Label>
@@ -888,8 +888,8 @@ export default function AdminAwardsPage() {
                       </div>
 
                       <div className="grid gap-3">
-                        <Label htmlFor="description" className="text-sm font-medium text-field-green-700 dark:text-field-green-300 flex items-center gap-2">
-                          <FileText className="h-4 w-4 text-field-green-600" />
+                        <Label htmlFor="description" className="text-sm font-medium text-slate-700 dark:text-slate-300 flex items-center gap-2">
+                          <FileText className="h-4 w-4 text-slate-600" />
                           Description (Optional)
                         </Label>
                         <Input

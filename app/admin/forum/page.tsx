@@ -32,10 +32,10 @@ export default function AdminForumPage() {
                   <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
                     <MessageSquare className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-field-green-700 dark:text-field-green-300 mb-2">
+                  <div className="text-3xl font-bold text-slate-700 dark:text-slate-300 mb-2">
                     Forum
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Management
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -50,7 +50,7 @@ export default function AdminForumPage() {
                   <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
                     User
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Moderation
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -65,7 +65,7 @@ export default function AdminForumPage() {
                   <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
                     Content
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Moderation
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -80,7 +80,7 @@ export default function AdminForumPage() {
                   <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                     System
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Configuration
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -95,10 +95,10 @@ export default function AdminForumPage() {
       <div className="container mx-auto px-4 py-16">
         {/* Enhanced Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-4">
             Community Management Hub
           </h2>
-          <p className="text-xl text-field-green-600 dark:text-field-green-400 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
             Manage forum categories, posts, and moderation to maintain a healthy and engaging 
             community discussion environment for all league members.
           </p>
@@ -110,10 +110,10 @@ export default function AdminForumPage() {
             <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
               <MessageSquare className="h-8 w-8 text-white" />
             </div>
-            <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
+            <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">
               Forum Management Interface
             </h3>
-            <p className="text-field-green-600 dark:text-field-green-400">
+            <p className="text-slate-600 dark:text-slate-400">
               Access comprehensive forum management tools and moderation controls.
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function AdminForumPage() {
                   <h3 className="text-xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                     Error Loading Forum Management
                   </h3>
-                  <p className="text-field-green-600 dark:text-field-green-400">
+                  <p className="text-slate-600 dark:text-slate-400">
                     There was an error loading the forum management interface. Please try again later.
                   </p>
                 </div>
@@ -141,12 +141,12 @@ export default function AdminForumPage() {
                   <div className="p-8">
                     <div className="text-center">
                       <div className="w-16 h-16 bg-gradient-to-r from-field-green-200 to-pitch-blue-200 dark:from-field-green-800 dark:to-pitch-blue-800 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                        <MessageSquare className="h-8 w-8 text-field-green-600 dark:text-field-green-400" />
+                        <MessageSquare className="h-8 w-8 text-slate-600 dark:text-slate-400" />
                       </div>
-                      <h3 className="text-xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
+                      <h3 className="text-xl font-bold text-slate-800 dark:text-slate-200 mb-2">
                         Loading Forum Management
                       </h3>
-                      <p className="text-field-green-600 dark:text-field-green-400">
+                      <p className="text-slate-600 dark:text-slate-400">
                         Initializing forum management interface...
                       </p>
                       <div className="mt-6">

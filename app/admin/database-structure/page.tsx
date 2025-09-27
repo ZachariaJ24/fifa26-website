@@ -14,7 +14,7 @@ export default function DatabaseStructurePage() {
               </div>
               Database Structure Explorer
             </h1>
-            <p className="text-lg text-field-green-700 dark:text-field-green-300 mx-auto max-w-4xl">
+            <p className="text-lg text-slate-700 dark:text-slate-300 mx-auto max-w-4xl">
               Explore table structures and column names in the database with advanced visualization
             </p>
             <div className="hockey-section-divider mt-6"></div>

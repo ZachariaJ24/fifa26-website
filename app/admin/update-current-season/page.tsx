@@ -119,7 +119,7 @@ export default function UpdateCurrentSeasonPage() {
       <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="container mx-auto px-4 py-8">
           <div className="flex justify-center items-center h-64">
-            <Loader2 className="h-8 w-8 animate-spin text-field-green-500" />
+            <Loader2 className="h-8 w-8 animate-spin text-slate-500" />
           </div>
         </div>
       </div>
@@ -167,7 +167,7 @@ export default function UpdateCurrentSeasonPage() {
 
           <div className="space-y-3">
             <label className="text-sm font-medium text-field-green-900 dark:text-field-green-100 flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-field-green-500" />
+              <Calendar className="h-4 w-4 text-slate-500" />
               Current Season
             </label>
             <div className="p-3 border border-field-green-200 dark:border-pitch-blue-700 rounded-lg bg-gradient-to-br from-field-green-50 to-pitch-blue-50 dark:from-field-green-800 dark:to-field-green-700 text-field-green-900 dark:text-field-green-100">

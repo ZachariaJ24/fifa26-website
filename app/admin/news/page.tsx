@@ -189,10 +189,10 @@ export default function AdminNewsPage() {
                   <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
                     <Newspaper className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-field-green-700 dark:text-field-green-300 mb-2">
+                  <div className="text-3xl font-bold text-slate-700 dark:text-slate-300 mb-2">
                     {articles.length}
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Total Articles
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -207,7 +207,7 @@ export default function AdminNewsPage() {
                   <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
                     {articles.filter(a => a.published).length}
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Published
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -222,7 +222,7 @@ export default function AdminNewsPage() {
                   <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
                     {articles.filter(a => !a.published).length}
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Drafts
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -237,7 +237,7 @@ export default function AdminNewsPage() {
                   <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                     {articles.filter(a => a.featured).length}
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Featured
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -252,8 +252,8 @@ export default function AdminNewsPage() {
       <div className="container mx-auto px-4 pb-20">
         {/* Enhanced Navigation */}
         <div className="flex items-center gap-2 mb-8">
-          <ArrowLeft className="h-5 w-5 text-field-green-600 dark:text-field-green-400" />
-          <Link href="/admin" className="text-field-green-600 dark:text-field-green-400 hover:text-field-green-600 dark:hover:text-field-green-400 transition-colors duration-300">
+          <ArrowLeft className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+          <Link href="/admin" className="text-slate-600 dark:text-slate-400 hover:text-slate-600 dark:hover:text-slate-400 transition-colors duration-300">
             Back to Admin Dashboard
           </Link>
         </div>
@@ -261,10 +261,10 @@ export default function AdminNewsPage() {
         {/* Enhanced Header */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-12">
           <div className="flex-1">
-            <h2 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-3">
+            <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-3">
               News Management
             </h2>
-            <p className="text-xl text-field-green-600 dark:text-field-green-400">
+            <p className="text-xl text-slate-600 dark:text-slate-400">
               Manage all news articles, announcements, and content
             </p>
           </div>
@@ -280,10 +280,10 @@ export default function AdminNewsPage() {
         {/* Enhanced Tabs */}
         <Tabs defaultValue="all" className="w-full" onValueChange={setFilter}>
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
+            <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-4">
               Article Management
             </h3>
-            <p className="text-lg text-field-green-600 dark:text-field-green-400 max-w-2xl mx-auto">
+            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               Filter and manage your news articles by status and category.
             </p>
           </div>
@@ -327,10 +327,10 @@ export default function AdminNewsPage() {
                     <Newspaper className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl text-field-green-800 dark:text-field-green-200">
+                    <CardTitle className="text-2xl text-slate-800 dark:text-slate-200">
                       News Articles
                     </CardTitle>
-                    <CardDescription className="text-field-green-600 dark:text-field-green-400">
+                    <CardDescription className="text-slate-600 dark:text-slate-400">
                       {filter === "all" && "All news articles"}
                       {filter === "published" && "Published news articles"}
                       {filter === "draft" && "Draft news articles"}
@@ -356,11 +356,11 @@ export default function AdminNewsPage() {
                     <Table>
                       <TableHeader className="bg-gradient-to-r from-field-green-100 to-pitch-blue-100 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
                         <TableRow className="border-field-green-200 dark:border-field-green-700">
-                          <TableHead className="text-field-green-700 dark:text-field-green-300 font-bold">Title</TableHead>
-                          <TableHead className="text-field-green-700 dark:text-field-green-300 font-bold">Status</TableHead>
-                          <TableHead className="text-field-green-700 dark:text-field-green-300 font-bold">Created</TableHead>
-                          <TableHead className="text-field-green-700 dark:text-field-green-300 font-bold">Last Updated</TableHead>
-                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">Actions</TableHead>
+                          <TableHead className="text-slate-700 dark:text-slate-300 font-bold">Title</TableHead>
+                          <TableHead className="text-slate-700 dark:text-slate-300 font-bold">Status</TableHead>
+                          <TableHead className="text-slate-700 dark:text-slate-300 font-bold">Created</TableHead>
+                          <TableHead className="text-slate-700 dark:text-slate-300 font-bold">Last Updated</TableHead>
+                          <TableHead className="text-center text-slate-700 dark:text-slate-300 font-bold">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -369,7 +369,7 @@ export default function AdminNewsPage() {
                             key={article.id} 
                             className="hover:bg-gradient-to-r hover:from-field-green-50/50 hover:to-pitch-blue-50/50 dark:hover:from-field-green-900/20 dark:hover:to-pitch-blue-900/20 transition-all duration-300 border-field-green-200 dark:border-field-green-700"
                           >
-                            <TableCell className="font-medium text-field-green-800 dark:text-field-green-200">{article.title}</TableCell>
+                            <TableCell className="font-medium text-slate-800 dark:text-slate-200">{article.title}</TableCell>
                             <TableCell>
                               <div className="flex flex-wrap gap-2">
                                 {article.published ? (
@@ -378,7 +378,7 @@ export default function AdminNewsPage() {
                                     Published
                                   </Badge>
                                 ) : (
-                                  <Badge variant="outline" className="border-field-green-300 dark:border-field-green-600 text-field-green-700 dark:text-field-green-300">
+                                  <Badge variant="outline" className="border-field-green-300 dark:border-field-green-600 text-slate-700 dark:text-slate-300">
                                     <FileText className="h-3 w-3 mr-1" />
                                     Draft
                                   </Badge>
@@ -391,17 +391,17 @@ export default function AdminNewsPage() {
                                 )}
                               </div>
                             </TableCell>
-                            <TableCell className="text-field-green-600 dark:text-field-green-400">
+                            <TableCell className="text-slate-600 dark:text-slate-400">
                               {formatDistanceToNow(new Date(article.created_at), { addSuffix: true })}
                             </TableCell>
-                            <TableCell className="text-field-green-600 dark:text-field-green-400">
+                            <TableCell className="text-slate-600 dark:text-slate-400">
                               {formatDistanceToNow(new Date(article.updated_at), { addSuffix: true })}
                             </TableCell>
                             <TableCell>
                               <div className="flex justify-center gap-2 flex-wrap">
                                 <Button variant="outline" size="sm" className="h-8 w-8 p-0 hover:bg-field-green-100 dark:hover:bg-field-green-900/30 hover:scale-110 transition-all duration-200" asChild>
                                   <Link href={`/news/${article.id}`}>
-                                    <Eye className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
+                                    <Eye className="h-4 w-4 text-slate-600 dark:text-slate-400" />
                                     <span className="sr-only">View</span>
                                   </Link>
                                 </Button>
@@ -467,13 +467,13 @@ export default function AdminNewsPage() {
                   <div className="text-center py-12">
                     <div className="flex flex-col items-center gap-4">
                       <div className="w-16 h-16 bg-gradient-to-r from-field-green-200 to-field-green-200 dark:from-field-green-700 dark:to-field-green-800 rounded-full flex items-center justify-center">
-                        <Newspaper className="h-8 w-8 text-field-green-500 dark:text-field-green-400" />
+                        <Newspaper className="h-8 w-8 text-slate-500 dark:text-slate-400" />
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-field-green-700 dark:text-field-green-300 mb-2">
+                        <h3 className="text-lg font-semibold text-slate-700 dark:text-slate-300 mb-2">
                           No Articles Found
                         </h3>
-                        <p className="text-field-green-500 dark:text-field-green-500">
+                        <p className="text-slate-500 dark:text-slate-500">
                           No articles found matching your filter. Click "Create New Article" to add one.
                         </p>
                       </div>

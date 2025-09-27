@@ -28,20 +28,20 @@ export default function AdminTokensPage() {
           {/* Feature Highlights */}
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-pitch-blue-100/50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20 px-4 py-2 rounded-full border border-field-green-200/50 dark:border-pitch-blue-700/50">
-              <Users className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
-              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Player Tokens</span>
+              <Users className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+              <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Player Tokens</span>
             </div>
             <div className="flex items-center gap-2 bg-gradient-to-r from-assist-green-100/50 to-assist-green-100/50 dark:from-assist-green-900/20 dark:to-assist-green-900/20 px-4 py-2 rounded-full border border-assist-green-200/50 dark:border-assist-green-700/50">
               <Gift className="h-4 w-4 text-assist-green-600 dark:text-assist-green-400" />
-              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Redeemable Items</span>
+              <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Redeemable Items</span>
             </div>
             <div className="flex items-center gap-2 bg-gradient-to-r from-goal-red-100/50 to-goal-red-100/50 dark:from-goal-red-900/20 dark:to-goal-red-900/20 px-4 py-2 rounded-full border border-goal-red-200/50 dark:border-goal-red-700/50">
               <CheckCircle className="h-4 w-4 text-goal-red-600 dark:text-goal-red-400" />
-              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">Redemptions</span>
+              <span className="text-sm font-medium text-slate-800 dark:text-slate-200">Redemptions</span>
             </div>
             <div className="flex items-center gap-2 bg-gradient-to-r from-field-green-100/50 to-field-green-100/50 dark:from-field-green-900/20 dark:to-field-green-900/20 px-4 py-2 rounded-full border border-field-green-200/50 dark:border-field-green-700/50">
-              <Settings className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
-              <span className="text-sm font-medium text-field-green-800 dark:text-field-green-200">System Settings</span>
+              <Settings className="h-4 w-4 text-slate-600 dark:text-slate-400" />
+              <span className="text-sm font-medium text-slate-800 dark:text-slate-200">System Settings</span>
             </div>
           </div>
         </div>

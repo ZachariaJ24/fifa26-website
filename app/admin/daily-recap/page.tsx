@@ -77,10 +77,10 @@ export default function DailyRecapPage() {
                   <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
                     <Newspaper className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-field-green-700 dark:text-field-green-300 mb-2">
+                  <div className="text-3xl font-bold text-slate-700 dark:text-slate-300 mb-2">
                     Daily
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Recaps
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -95,7 +95,7 @@ export default function DailyRecapPage() {
                   <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
                     Match
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Coverage
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -110,7 +110,7 @@ export default function DailyRecapPage() {
                   <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
                     Player
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Highlights
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -125,7 +125,7 @@ export default function DailyRecapPage() {
                   <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                     League
                   </div>
-                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     Updates
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -140,10 +140,10 @@ export default function DailyRecapPage() {
       <div className="container mx-auto px-4 py-16">
         {/* Enhanced Header */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-slate-200 mb-4">
             Recap Management Center
           </h2>
-          <p className="text-xl text-field-green-600 dark:text-field-green-400 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
             Create engaging daily recaps that capture the excitement of recent matches, 
             highlight standout performances, and keep the league community informed.
           </p>
@@ -157,10 +157,10 @@ export default function DailyRecapPage() {
               <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Database className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">
                 Recap Data Management
               </h3>
-              <p className="text-field-green-600 dark:text-field-green-400">
+              <p className="text-slate-600 dark:text-slate-400">
                 Manage and organize daily recap data and migration tools.
               </p>
             </div>
@@ -173,10 +173,10 @@ export default function DailyRecapPage() {
               <div className="w-16 h-16 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Newspaper className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-2">
+              <h3 className="text-2xl font-bold text-slate-800 dark:text-slate-200 mb-2">
                 Daily Recap Generator
               </h3>
-              <p className="text-field-green-600 dark:text-field-green-400">
+              <p className="text-slate-600 dark:text-slate-400">
                 Generate comprehensive daily recaps for recent matches and league activities.
               </p>
             </div>
