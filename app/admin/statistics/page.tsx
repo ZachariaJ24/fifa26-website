@@ -1091,7 +1091,7 @@ export default function AdminStatisticsPage() {
         <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl "></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl "></div>
         <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl " style={{ animationDelay: '2s' }}></div>
         
         <div className="container mx-auto text-center relative z-10">
@@ -1108,31 +1108,31 @@ export default function AdminStatisticsPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto mb-16">
               <div className="group">
                 <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-ice-blue-500/25 transition-all duration-300">
+                  <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
                     <BarChart3 className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-ice-blue-700 dark:text-ice-blue-300 mb-2">
+                  <div className="text-3xl font-bold text-field-green-700 dark:text-field-green-300 mb-2">
                     {playerStats.length}
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Player Stats
                   </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
+                  <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
                 </div>
               </div>
               
               <div className="group">
                 <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-rink-blue-500 to-ice-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-rink-blue-500/25 transition-all duration-300">
+                  <div className="w-16 h-16 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-pitch-blue-500/25 transition-all duration-300">
                     <Shield className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-rink-blue-700 dark:text-rink-blue-300 mb-2">
+                  <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
                     {goalieStats.length}
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Goalie Stats
                   </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-rink-blue-500 to-ice-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
+                  <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
                 </div>
               </div>
               
@@ -1144,7 +1144,7 @@ export default function AdminStatisticsPage() {
                   <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
                     Live
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Analytics
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -1159,7 +1159,7 @@ export default function AdminStatisticsPage() {
                   <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                     Data
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Management
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -1175,10 +1175,10 @@ export default function AdminStatisticsPage() {
         {/* Enhanced Header Controls */}
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-12">
           <div className="flex-1">
-            <h2 className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-3">
+            <h2 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-3">
               League Statistics Center
             </h2>
-            <p className="text-xl text-hockey-silver-600 dark:text-hockey-silver-400">
+            <p className="text-xl text-field-green-600 dark:text-field-green-400">
               Manage and analyze player and goalie performance data
             </p>
           </div>
@@ -1189,7 +1189,7 @@ export default function AdminStatisticsPage() {
               onValueChange={(value) => setSelectedSeason(value === "all" ? undefined : Number.parseInt(value))}
               disabled={loadingSeasons}
             >
-              <SelectTrigger className="w-[200px] hockey-input border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300">
+              <SelectTrigger className="w-[200px] hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300">
                 <SelectValue placeholder={loadingSeasons ? "Loading..." : "Select Season"} />
               </SelectTrigger>
               <SelectContent>
@@ -1210,10 +1210,10 @@ export default function AdminStatisticsPage() {
         {/* Enhanced Search and Filter Controls */}
         <div className="mb-12">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-4">
+            <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
               Statistics Control Center
             </h3>
-            <p className="text-lg text-hockey-silver-600 dark:text-hockey-silver-400 max-w-2xl mx-auto">
+            <p className="text-lg text-field-green-600 dark:text-field-green-400 max-w-2xl mx-auto">
               Search, filter, and manage player and goalie statistics with advanced controls and real-time data synchronization.
             </p>
           </div>
@@ -1222,17 +1222,17 @@ export default function AdminStatisticsPage() {
             {/* Enhanced Search and Filters */}
             <div className="flex flex-col sm:flex-row gap-4 flex-1">
               <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-hockey-silver-400 z-10" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-field-green-400 z-10" />
                 <Input
                   placeholder="Search players or teams..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="hockey-search pl-10 pr-4 py-3 text-lg border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300"
+                  className="hockey-search pl-10 pr-4 py-3 text-lg border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300"
                 />
               </div>
 
               <Select defaultValue={positionFilter} onValueChange={setPositionFilter}>
-                <SelectTrigger className="w-[200px] hockey-input border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300">
+                <SelectTrigger className="w-[200px] hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300">
                   <Filter className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Filter by position" />
                 </SelectTrigger>
@@ -1250,7 +1250,7 @@ export default function AdminStatisticsPage() {
               </Select>
 
               <Select defaultValue={statFilter} onValueChange={setStatFilter}>
-                <SelectTrigger className="w-[200px] hockey-input border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300">
+                <SelectTrigger className="w-[200px] hockey-input border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300">
                   <TrendingUp className="h-4 w-4 mr-2" />
                   <SelectValue placeholder="Sort by stat" />
                 </SelectTrigger>
@@ -1280,7 +1280,7 @@ export default function AdminStatisticsPage() {
               <Button 
                 variant="outline" 
                 onClick={() => fetchStats()}
-                className="border-2 border-hockey-silver-300 dark:border-hockey-silver-600 hover:border-ice-blue-500 dark:hover:border-rink-blue-500 hover:scale-105 transition-all duration-200"
+                className="border-2 border-field-green-300 dark:border-field-green-600 hover:border-field-green-500 dark:hover:border-pitch-blue-500 hover:scale-105 transition-all duration-200"
               >
                 <RefreshCw className="mr-2 h-4 w-4" /> Refresh
               </Button>
@@ -1291,10 +1291,10 @@ export default function AdminStatisticsPage() {
         {/* Enhanced Statistics Tabs */}
         <Tabs defaultValue="players" className="w-full">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-4">
+            <h3 className="text-2xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
               Performance Analytics
             </h3>
-            <p className="text-lg text-hockey-silver-600 dark:text-hockey-silver-400 max-w-2xl mx-auto">
+            <p className="text-lg text-field-green-600 dark:text-field-green-400 max-w-2xl mx-auto">
               View detailed player and goalie statistics with comprehensive performance metrics and analytics.
             </p>
           </div>
@@ -1317,17 +1317,17 @@ export default function AdminStatisticsPage() {
           </TabsList>
 
           <TabsContent value="players">
-            <Card className="hockey-card border-2 border-ice-blue-200 dark:border-ice-blue-700 overflow-hidden">
-              <CardHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-ice-blue-900/30 dark:to-rink-blue-900/30 border-b border-ice-blue-200 dark:border-ice-blue-700">
+            <Card className="hockey-card border-2 border-field-green-200 dark:border-field-green-700 overflow-hidden">
+              <CardHeader className="bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 border-b border-field-green-200 dark:border-field-green-700">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-lg flex items-center justify-center">
                     <Users className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl text-hockey-silver-800 dark:text-hockey-silver-200">
+                    <CardTitle className="text-2xl text-field-green-800 dark:text-field-green-200">
                       Player Statistics
                     </CardTitle>
-                    <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                    <CardDescription className="text-field-green-600 dark:text-field-green-400">
                       {getSeasonName(selectedSeason)} - Sorted by {statFilter === "points" ? "total points" : statFilter}
                     </CardDescription>
                   </div>
@@ -1337,10 +1337,10 @@ export default function AdminStatisticsPage() {
                 {loading ? (
                   <div className="p-8">
                     <div className="animate-pulse">
-                      <div className="h-4 bg-hockey-silver-200 dark:bg-hockey-silver-700 rounded w-1/4 mb-4"></div>
+                      <div className="h-4 bg-field-green-200 dark:bg-field-green-700 rounded w-1/4 mb-4"></div>
                       <div className="space-y-3">
                         {[...Array(5)].map((_, i) => (
-                          <div key={i} className="h-4 bg-hockey-silver-200 dark:bg-hockey-silver-700 rounded"></div>
+                          <div key={i} className="h-4 bg-field-green-200 dark:bg-field-green-700 rounded"></div>
                         ))}
                       </div>
                     </div>
@@ -1348,38 +1348,38 @@ export default function AdminStatisticsPage() {
                 ) : (
                   <div className="overflow-x-auto">
                     <Table>
-                      <TableHeader className="bg-gradient-to-r from-ice-blue-100 to-rink-blue-100 dark:from-ice-blue-900/20 dark:to-rink-blue-900/20">
-                        <TableRow className="border-ice-blue-200 dark:border-ice-blue-700">
-                          <TableHead className="w-12 text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">Rank</TableHead>
-                          <TableHead className="text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">Player</TableHead>
-                          <TableHead className="text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">Team</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">Pos</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">GP</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">G</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">A</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">PTS</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">+/-</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">Actions</TableHead>
+                      <TableHeader className="bg-gradient-to-r from-field-green-100 to-pitch-blue-100 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
+                        <TableRow className="border-field-green-200 dark:border-field-green-700">
+                          <TableHead className="w-12 text-field-green-700 dark:text-field-green-300 font-bold">Rank</TableHead>
+                          <TableHead className="text-field-green-700 dark:text-field-green-300 font-bold">Player</TableHead>
+                          <TableHead className="text-field-green-700 dark:text-field-green-300 font-bold">Team</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">Pos</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">GP</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">G</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">A</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">PTS</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">+/-</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {filteredPlayerStats.map((player, index) => (
                           <TableRow 
                             key={player.id} 
-                            className="hover:bg-gradient-to-r hover:from-ice-blue-50/50 hover:to-rink-blue-50/50 dark:hover:from-ice-blue-900/20 dark:hover:to-rink-blue-900/20 transition-all duration-300 border-hockey-silver-200 dark:border-hockey-silver-700"
+                            className="hover:bg-gradient-to-r hover:from-field-green-50/50 hover:to-pitch-blue-50/50 dark:hover:from-field-green-900/20 dark:hover:to-pitch-blue-900/20 transition-all duration-300 border-field-green-200 dark:border-field-green-700"
                           >
-                            <TableCell className="font-bold text-ice-blue-600 dark:text-ice-blue-400">{index + 1}</TableCell>
-                            <TableCell className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">{player.player_name}</TableCell>
-                            <TableCell className="text-hockey-silver-600 dark:text-hockey-silver-400">{player.team_name || "Free Agent"}</TableCell>
+                            <TableCell className="font-bold text-field-green-600 dark:text-field-green-400">{index + 1}</TableCell>
+                            <TableCell className="font-medium text-field-green-800 dark:text-field-green-200">{player.player_name}</TableCell>
+                            <TableCell className="text-field-green-600 dark:text-field-green-400">{player.team_name || "Free Agent"}</TableCell>
                             <TableCell className="text-center">
-                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-ice-blue-100 text-ice-blue-800 dark:bg-ice-blue-900/30 dark:text-ice-blue-300">
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-field-green-100 text-field-green-800 dark:bg-field-green-900/30 dark:text-field-green-300">
                                 {player.position}
                               </span>
                             </TableCell>
-                            <TableCell className="text-center font-medium text-hockey-silver-700 dark:text-hockey-silver-300">{player.games_played}</TableCell>
+                            <TableCell className="text-center font-medium text-field-green-700 dark:text-field-green-300">{player.games_played}</TableCell>
                             <TableCell className="text-center font-bold text-goal-red-600 dark:text-goal-red-400">{player.goals}</TableCell>
                             <TableCell className="text-center font-bold text-assist-green-600 dark:text-assist-green-400">{player.assists}</TableCell>
-                            <TableCell className="text-center font-bold text-2xl text-ice-blue-600 dark:text-ice-blue-400">{player.points}</TableCell>
+                            <TableCell className="text-center font-bold text-2xl text-field-green-600 dark:text-field-green-400">{player.points}</TableCell>
                             <TableCell className="text-center">
                               <span
                                 className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-bold ${
@@ -1387,7 +1387,7 @@ export default function AdminStatisticsPage() {
                                     ? "bg-assist-green-100 text-assist-green-800 dark:bg-assist-green-900/30 dark:text-assist-green-300" 
                                     : player.plus_minus < 0 
                                     ? "bg-goal-red-100 text-goal-red-800 dark:bg-goal-red-900/30 dark:text-goal-red-300"
-                                    : "bg-hockey-silver-100 text-hockey-silver-800 dark:bg-hockey-silver-700 dark:text-hockey-silver-300"
+                                    : "bg-field-green-100 text-field-green-800 dark:bg-field-green-700 dark:text-field-green-300"
                                 }`}
                               >
                                 {player.plus_minus > 0 ? `+${player.plus_minus}` : player.plus_minus}
@@ -1400,9 +1400,9 @@ export default function AdminStatisticsPage() {
                                   size="icon"
                                   onClick={() => handleEditPlayer(player)}
                                   title="Edit stats"
-                                  className="hover:bg-ice-blue-100 dark:hover:bg-ice-blue-900/30 hover:scale-110 transition-all duration-200"
+                                  className="hover:bg-field-green-100 dark:hover:bg-field-green-900/30 hover:scale-110 transition-all duration-200"
                                 >
-                                  <Edit className="h-4 w-4 text-ice-blue-600 dark:text-ice-blue-400" />
+                                  <Edit className="h-4 w-4 text-field-green-600 dark:text-field-green-400" />
                                 </Button>
                               </div>
                             </TableCell>
@@ -1412,14 +1412,14 @@ export default function AdminStatisticsPage() {
                           <TableRow>
                             <TableCell colSpan={10} className="text-center py-12">
                               <div className="flex flex-col items-center gap-4">
-                                <div className="w-16 h-16 bg-gradient-to-r from-hockey-silver-200 to-ice-blue-200 dark:from-hockey-silver-700 dark:to-ice-blue-800 rounded-full flex items-center justify-center">
-                                  <Users className="h-8 w-8 text-hockey-silver-500 dark:text-hockey-silver-400" />
+                                <div className="w-16 h-16 bg-gradient-to-r from-field-green-200 to-field-green-200 dark:from-field-green-700 dark:to-field-green-800 rounded-full flex items-center justify-center">
+                                  <Users className="h-8 w-8 text-field-green-500 dark:text-field-green-400" />
                                 </div>
                                 <div>
-                                  <h3 className="text-lg font-semibold text-hockey-silver-700 dark:text-hockey-silver-300 mb-2">
+                                  <h3 className="text-lg font-semibold text-field-green-700 dark:text-field-green-300 mb-2">
                                     No Player Stats Found
                                   </h3>
-                                  <p className="text-hockey-silver-500 dark:text-hockey-silver-500">
+                                  <p className="text-field-green-500 dark:text-field-green-500">
                                     No player statistics found matching your search criteria.
                                   </p>
                                 </div>
@@ -1443,10 +1443,10 @@ export default function AdminStatisticsPage() {
                     <Shield className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <CardTitle className="text-2xl text-hockey-silver-800 dark:text-hockey-silver-200">
+                    <CardTitle className="text-2xl text-field-green-800 dark:text-field-green-200">
                       Goalie Statistics
                     </CardTitle>
-                    <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+                    <CardDescription className="text-field-green-600 dark:text-field-green-400">
                       {getSeasonName(selectedSeason)} - Sorted by save percentage
                     </CardDescription>
                   </div>
@@ -1456,10 +1456,10 @@ export default function AdminStatisticsPage() {
                 {loading ? (
                   <div className="p-8">
                     <div className="animate-pulse">
-                      <div className="h-4 bg-hockey-silver-200 dark:bg-hockey-silver-700 rounded w-1/4 mb-4"></div>
+                      <div className="h-4 bg-field-green-200 dark:bg-field-green-700 rounded w-1/4 mb-4"></div>
                       <div className="space-y-3">
                         {[...Array(5)].map((_, i) => (
-                          <div key={i} className="h-4 bg-hockey-silver-200 dark:bg-hockey-silver-700 rounded"></div>
+                          <div key={i} className="h-4 bg-field-green-200 dark:bg-field-green-700 rounded"></div>
                         ))}
                       </div>
                     </div>
@@ -1469,29 +1469,29 @@ export default function AdminStatisticsPage() {
                     <Table>
                       <TableHeader className="bg-gradient-to-r from-assist-green-100 to-goal-red-100 dark:from-assist-green-900/20 dark:to-goal-red-900/20">
                         <TableRow className="border-assist-green-200 dark:border-assist-green-700">
-                          <TableHead className="w-12 text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">Rank</TableHead>
-                          <TableHead className="text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">Goalie</TableHead>
-                          <TableHead className="text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">Team</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">GP</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">W</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">L</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">OTL</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">SV%</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">GAA</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">SO</TableHead>
-                          <TableHead className="text-center text-hockey-silver-700 dark:text-hockey-silver-300 font-bold">Actions</TableHead>
+                          <TableHead className="w-12 text-field-green-700 dark:text-field-green-300 font-bold">Rank</TableHead>
+                          <TableHead className="text-field-green-700 dark:text-field-green-300 font-bold">Goalie</TableHead>
+                          <TableHead className="text-field-green-700 dark:text-field-green-300 font-bold">Team</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">GP</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">W</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">L</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">OTL</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">SV%</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">GAA</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">SO</TableHead>
+                          <TableHead className="text-center text-field-green-700 dark:text-field-green-300 font-bold">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {filteredGoalieStats.map((goalie, index) => (
                           <TableRow 
                             key={goalie.id} 
-                            className="hover:bg-gradient-to-r hover:from-assist-green-50/50 hover:to-goal-red-50/50 dark:hover:from-assist-green-900/20 dark:hover:to-goal-red-900/20 transition-all duration-300 border-hockey-silver-200 dark:border-hockey-silver-700"
+                            className="hover:bg-gradient-to-r hover:from-assist-green-50/50 hover:to-goal-red-50/50 dark:hover:from-assist-green-900/20 dark:hover:to-goal-red-900/20 transition-all duration-300 border-field-green-200 dark:border-field-green-700"
                           >
                             <TableCell className="font-bold text-assist-green-600 dark:text-assist-green-400">{index + 1}</TableCell>
-                            <TableCell className="font-medium text-hockey-silver-800 dark:text-hockey-silver-200">{goalie.player_name}</TableCell>
-                            <TableCell className="text-hockey-silver-600 dark:text-hockey-silver-400">{goalie.team_name || "Free Agent"}</TableCell>
-                            <TableCell className="text-center font-medium text-hockey-silver-700 dark:text-hockey-silver-300">{goalie.games_played}</TableCell>
+                            <TableCell className="font-medium text-field-green-800 dark:text-field-green-200">{goalie.player_name}</TableCell>
+                            <TableCell className="text-field-green-600 dark:text-field-green-400">{goalie.team_name || "Free Agent"}</TableCell>
+                            <TableCell className="text-center font-medium text-field-green-700 dark:text-field-green-300">{goalie.games_played}</TableCell>
                             <TableCell className="text-center">
                               <span className="inline-flex items-center px-2 py-1 rounded-full text-sm font-bold bg-assist-green-100 text-assist-green-800 dark:bg-assist-green-900/30 dark:text-assist-green-300">
                                 {goalie.wins}
@@ -1503,16 +1503,16 @@ export default function AdminStatisticsPage() {
                               </span>
                             </TableCell>
                             <TableCell className="text-center">
-                              <span className="inline-flex items-center px-2 py-1 rounded-full text-sm font-bold bg-hockey-silver-100 text-hockey-silver-800 dark:bg-hockey-silver-700 dark:text-hockey-silver-300">
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-sm font-bold bg-field-green-100 text-field-green-800 dark:bg-field-green-700 dark:text-field-green-300">
                                 {goalie.otl}
                               </span>
                             </TableCell>
                             <TableCell className="text-center font-bold text-2xl text-assist-green-600 dark:text-assist-green-400">
                               {(goalie.save_pct * 100).toFixed(1)}%
                             </TableCell>
-                            <TableCell className="text-center font-medium text-hockey-silver-700 dark:text-hockey-silver-300">{goalie.gaa.toFixed(2)}</TableCell>
+                            <TableCell className="text-center font-medium text-field-green-700 dark:text-field-green-300">{goalie.gaa.toFixed(2)}</TableCell>
                             <TableCell className="text-center">
-                              <span className="inline-flex items-center px-2 py-1 rounded-full text-sm font-bold bg-ice-blue-100 text-ice-blue-800 dark:bg-ice-blue-900/30 dark:text-ice-blue-300">
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-sm font-bold bg-field-green-100 text-field-green-800 dark:bg-field-green-900/30 dark:text-field-green-300">
                                 {goalie.shutouts}
                               </span>
                             </TableCell>
@@ -1535,14 +1535,14 @@ export default function AdminStatisticsPage() {
                           <TableRow>
                             <TableCell colSpan={11} className="text-center py-12">
                               <div className="flex flex-col items-center gap-4">
-                                <div className="w-16 h-16 bg-gradient-to-r from-hockey-silver-200 to-assist-green-200 dark:from-hockey-silver-700 dark:to-assist-green-800 rounded-full flex items-center justify-center">
-                                  <Shield className="h-8 w-8 text-hockey-silver-500 dark:text-hockey-silver-400" />
+                                <div className="w-16 h-16 bg-gradient-to-r from-field-green-200 to-assist-green-200 dark:from-field-green-700 dark:to-assist-green-800 rounded-full flex items-center justify-center">
+                                  <Shield className="h-8 w-8 text-field-green-500 dark:text-field-green-400" />
                                 </div>
                                 <div>
-                                  <h3 className="text-lg font-semibold text-hockey-silver-700 dark:text-hockey-silver-300 mb-2">
+                                  <h3 className="text-lg font-semibold text-field-green-700 dark:text-field-green-300 mb-2">
                                     No Goalie Stats Found
                                   </h3>
-                                  <p className="text-hockey-silver-500 dark:text-hockey-silver-500">
+                                  <p className="text-field-green-500 dark:text-field-green-500">
                                     No goalie statistics found matching your search criteria.
                                   </p>
                                 </div>

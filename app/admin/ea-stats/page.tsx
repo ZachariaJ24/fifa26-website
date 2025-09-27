@@ -121,12 +121,12 @@ export default function EAStatsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
         <div className="container mx-auto px-4 py-20">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-ice-blue-600 mx-auto mb-6"></div>
-            <h1 className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-4">Loading EA Stats</h1>
-            <p className="text-hockey-silver-600 dark:text-hockey-silver-400">Analyzing EA Sports NHL performance data...</p>
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-field-green-600 mx-auto mb-6"></div>
+            <h1 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">Loading EA Stats</h1>
+            <p className="text-field-green-600 dark:text-field-green-400">Analyzing EA Sports NHL performance data...</p>
           </div>
         </div>
       </div>
@@ -138,15 +138,15 @@ export default function EAStatsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-ice-blue-50 via-white to-rink-blue-50 dark:from-hockey-silver-900 dark:via-hockey-silver-800 dark:to-rink-blue-900/30">
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
       {/* Enhanced Hero Header Section */}
       <div className="relative overflow-hidden py-20 px-4">
         {/* Background Pattern */}
         <div className="absolute inset-0 bg-hockey-pattern opacity-5"></div>
         
         {/* Floating Elements */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-ice-blue-200/30 to-rink-blue-200/30 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-field-green-200/30 to-pitch-blue-200/30 rounded-full blur-3xl "></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-br from-assist-green-200/30 to-goal-red-200/30 rounded-full blur-3xl " style={{ animationDelay: '2s' }}></div>
         
         <div className="container mx-auto text-center relative z-10">
           <div>
@@ -162,31 +162,31 @@ export default function EAStatsPage() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-5xl mx-auto mb-16">
               <div className="group">
                 <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-ice-blue-500/25 transition-all duration-300">
+                  <div className="w-16 h-16 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-field-green-500/25 transition-all duration-300">
                     <BarChart3 className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-ice-blue-700 dark:text-ice-blue-300 mb-2">
+                  <div className="text-3xl font-bold text-field-green-700 dark:text-field-green-300 mb-2">
                     Analytics
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Performance
                   </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
+                  <div className="w-16 h-1 bg-gradient-to-r from-field-green-500 to-pitch-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
                 </div>
               </div>
               
               <div className="group">
                 <div className="hockey-stat-item hover:scale-110 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-gradient-to-r from-rink-blue-500 to-ice-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-rink-blue-500/25 transition-all duration-300">
+                  <div className="w-16 h-16 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:shadow-xl group-hover:shadow-pitch-blue-500/25 transition-all duration-300">
                     <TrendingUp className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-rink-blue-700 dark:text-rink-blue-300 mb-2">
+                  <div className="text-3xl font-bold text-pitch-blue-700 dark:text-pitch-blue-300 mb-2">
                     Trends
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Analysis
                   </div>
-                  <div className="w-16 h-1 bg-gradient-to-r from-rink-blue-500 to-ice-blue-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
+                  <div className="w-16 h-1 bg-gradient-to-r from-pitch-blue-500 to-field-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
                 </div>
               </div>
               
@@ -198,7 +198,7 @@ export default function EAStatsPage() {
                   <div className="text-3xl font-bold text-assist-green-700 dark:text-assist-green-300 mb-2">
                     {teams.length}
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Active Teams
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-assist-green-500 to-goal-red-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -213,7 +213,7 @@ export default function EAStatsPage() {
                   <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
                     EA
                   </div>
-                  <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
+                  <div className="text-sm text-field-green-600 dark:text-field-green-400 font-medium">
                     Integration
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
@@ -229,10 +229,10 @@ export default function EAStatsPage() {
         {/* Enhanced Search Section */}
         <div className="mb-12">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200 mb-4">
+            <h2 className="text-3xl font-bold text-field-green-800 dark:text-field-green-200 mb-4">
               Team Statistics Center
             </h2>
-            <p className="text-xl text-hockey-silver-600 dark:text-hockey-silver-400 max-w-2xl mx-auto">
+            <p className="text-xl text-field-green-600 dark:text-field-green-400 max-w-2xl mx-auto">
               Search for EA Sports teams or browse registered teams to view their detailed performance statistics and analytics.
             </p>
           </div>
@@ -240,13 +240,13 @@ export default function EAStatsPage() {
           {/* Enhanced Search Bar */}
           <div className="max-w-2xl mx-auto relative">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-hockey-silver-400 z-10" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-field-green-400 z-10" />
               <Input
                 placeholder="Search EA team by name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                className="hockey-search pl-12 pr-6 py-4 text-lg border-2 focus:border-ice-blue-500 dark:focus:border-rink-blue-500 focus:ring-4 focus:ring-ice-blue-500/20 dark:focus:ring-rink-blue-500/20 transition-all duration-300"
+                className="hockey-search pl-12 pr-6 py-4 text-lg border-2 focus:border-field-green-500 dark:focus:border-pitch-blue-500 focus:ring-4 focus:ring-field-green-500/20 dark:focus:ring-pitch-blue-500/20 transition-all duration-300"
               />
               <Button 
                 onClick={handleSearch} 
@@ -264,11 +264,11 @@ export default function EAStatsPage() {
           {teams.map((team, index) => (
             <Card 
               key={team.id} 
-              className="hockey-card hockey-card-hover h-full overflow-hidden border-2 hover:border-ice-blue-300 dark:hover:border-rink-blue-600 transition-all duration-500 hover:scale-105"
+              className="hockey-card hockey-card-hover h-full overflow-hidden border-2 hover:border-field-green-300 dark:hover:border-pitch-blue-600 transition-all duration-500 hover:scale-105"
             >
               <CardContent className="p-0">
                 {/* Enhanced Team Header */}
-                <div className="relative h-32 bg-gradient-to-br from-ice-blue-100 via-white to-rink-blue-100 dark:from-ice-blue-900/30 dark:via-hockey-silver-800 dark:to-rink-blue-900/30 flex items-center justify-center p-6 overflow-hidden">
+                <div className="relative h-32 bg-gradient-to-br from-field-green-100 via-white to-pitch-blue-100 dark:from-field-green-900/30 dark:via-field-green-800 dark:to-pitch-blue-900/30 flex items-center justify-center p-6 overflow-hidden">
                   {/* Background Pattern */}
                   <div className="absolute inset-0 bg-hockey-pattern opacity-10"></div>
                   
@@ -280,7 +280,7 @@ export default function EAStatsPage() {
                   </div>
                   
                   {/* Team Name Overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-hockey-silver-900/80 to-transparent p-4">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-field-green-900/80 to-transparent p-4">
                     <h3 className="text-lg font-bold text-white text-center drop-shadow-lg">
                       {team.name}
                     </h3>
@@ -288,12 +288,12 @@ export default function EAStatsPage() {
                 </div>
 
                 {/* Enhanced Team Info */}
-                <div className="p-6 bg-gradient-to-br from-white to-ice-blue-50/30 dark:from-hockey-silver-800 dark:to-ice-blue-900/20">
+                <div className="p-6 bg-gradient-to-br from-white to-field-green-50/30 dark:from-field-green-800 dark:to-field-green-900/20">
                   {/* EA Club ID Badge */}
                   <div className="flex justify-center mb-6">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-ice-blue-100 to-rink-blue-100 dark:from-ice-blue-900/30 dark:to-rink-blue-900/30 rounded-lg border border-ice-blue-300 dark:border-ice-blue-600">
-                      <Database className="h-4 w-4 text-ice-blue-600" />
-                      <span className="text-sm font-mono text-ice-blue-800 dark:text-ice-blue-200">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-field-green-100 to-pitch-blue-100 dark:from-field-green-900/30 dark:to-pitch-blue-900/30 rounded-lg border border-field-green-300 dark:border-field-green-600">
+                      <Database className="h-4 w-4 text-field-green-600" />
+                      <span className="text-sm font-mono text-field-green-800 dark:text-field-green-200">
                         {team.ea_club_id}
                       </span>
                     </div>
@@ -317,13 +317,13 @@ export default function EAStatsPage() {
           {teams.length === 0 && (
             <div className="col-span-full text-center py-20">
               <div className="max-w-md mx-auto">
-                <div className="w-20 h-20 bg-gradient-to-r from-hockey-silver-200 to-ice-blue-200 dark:from-hockey-silver-700 dark:to-ice-blue-800 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <BarChart3 className="h-10 w-10 text-hockey-silver-500 dark:text-hockey-silver-400" />
+                <div className="w-20 h-20 bg-gradient-to-r from-field-green-200 to-field-green-200 dark:from-field-green-700 dark:to-field-green-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <BarChart3 className="h-10 w-10 text-field-green-500 dark:text-field-green-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-hockey-silver-700 dark:text-hockey-silver-300 mb-3">
+                <h3 className="text-2xl font-bold text-field-green-700 dark:text-field-green-300 mb-3">
                   No EA Teams Found
                 </h3>
-                <p className="text-hockey-silver-500 dark:text-hockey-silver-500 text-lg mb-6">
+                <p className="text-field-green-500 dark:text-field-green-500 text-lg mb-6">
                   No teams with EA Club IDs found. Add EA Club IDs to teams in the Team Management page to view their statistics.
                 </p>
                 <Button 
