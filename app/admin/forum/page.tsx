@@ -1,12 +1,16 @@
+"use client"
+
 import { Suspense } from "react"
 import { SimpleForumManagement } from "@/components/admin/simple-forum-management"
 import { ErrorBoundary } from "@/components/error-boundary"
 import { MessageSquare, Users, Shield, Settings } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { AdminProtected } from "@/components/admin/admin-protected"
 
 export default function AdminForumPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
+    <AdminProtected>
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30">
       {/* Header */}
       <div className="bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600 shadow-lg border-b">
         <div className="container mx-auto px-4 py-12">
@@ -113,5 +117,6 @@ export default function AdminForumPage() {
         </Card>
       </div>
     </div>
+    </AdminProtected>
   )
 }
