@@ -175,7 +175,7 @@ export function OrphanedAuthUsersManager() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
-                <Label htmlFor="admin-key" className="text-hockey-silver-900 dark:text-hockey-silver-100 font-semibold flex items-center gap-2">
+                <Label htmlFor="admin-key" className="text-white font-semibold flex items-center gap-2">
                   <Key className="h-4 w-4 text-ice-blue-500" />
                   Admin Key
                 </Label>
@@ -209,7 +209,7 @@ export function OrphanedAuthUsersManager() {
           <Alert className="hockey-enhanced-card border-goal-red-200 dark:border-goal-red-800">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription className="text-hockey-silver-700 dark:text-hockey-silver-300">
-              <strong className="text-hockey-silver-900 dark:text-hockey-silver-100">Found {stats.orphaned_count} orphaned users</strong> out of {stats.total_auth_users} total auth
+              <strong className="text-white">Found {stats.orphaned_count} orphaned users</strong> out of {stats.total_auth_users} total auth
               users. These users exist in Supabase Auth but not in the public.users table, which can cause "already
               registered" errors.
             </AlertDescription>
@@ -225,13 +225,13 @@ export function OrphanedAuthUsersManager() {
         >
           <Card className="hockey-enhanced-card">
             <CardHeader>
-              <CardTitle className="text-2xl text-hockey-silver-900 dark:text-hockey-silver-100 flex items-center gap-3">
+              <CardTitle className="text-2xl text-white flex items-center gap-3">
                 <div className="p-2 bg-gradient-to-r from-goal-red-500 to-goal-red-600 rounded-lg">
                   <Users className="h-5 w-5 text-white" />
                 </div>
                 Orphaned Users ({orphanedUsers.length})
               </CardTitle>
-              <CardDescription className="text-hockey-silver-600 dark:text-hockey-silver-400">
+              <CardDescription className="text-white">
                 Users that exist in Supabase Auth but not in the public.users table
               </CardDescription>
             </CardHeader>
@@ -239,12 +239,12 @@ export function OrphanedAuthUsersManager() {
               <Table className="overflow-hidden rounded-xl border border-hockey-silver-200 dark:border-hockey-silver-700">
                 <TableHeader className="bg-gradient-to-r from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-800 dark:to-hockey-silver-700">
                   <TableRow className="border-hockey-silver-200 dark:border-hockey-silver-600">
-                    <TableHead className="text-hockey-silver-900 dark:text-hockey-silver-100 font-semibold">Email</TableHead>
-                    <TableHead className="text-hockey-silver-900 dark:text-hockey-silver-100 font-semibold">Created</TableHead>
-                    <TableHead className="text-hockey-silver-900 dark:text-hockey-silver-100 font-semibold">Email Confirmed</TableHead>
-                    <TableHead className="text-hockey-silver-900 dark:text-hockey-silver-100 font-semibold">Last Sign In</TableHead>
-                    <TableHead className="text-hockey-silver-900 dark:text-hockey-silver-100 font-semibold">Metadata</TableHead>
-                    <TableHead className="text-hockey-silver-900 dark:text-hockey-silver-100 font-semibold">Actions</TableHead>
+                    <TableHead className="text-white font-semibold">Email</TableHead>
+                    <TableHead className="text-white font-semibold">Created</TableHead>
+                    <TableHead className="text-white font-semibold">Email Confirmed</TableHead>
+                    <TableHead className="text-white font-semibold">Last Sign In</TableHead>
+                    <TableHead className="text-white font-semibold">Metadata</TableHead>
+                    <TableHead className="text-white font-semibold">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
               <TableBody>
@@ -258,7 +258,7 @@ export function OrphanedAuthUsersManager() {
                   >
                     <TableCell>
                       <div>
-                        <div className="font-semibold text-hockey-silver-900 dark:text-hockey-silver-100">{user.email}</div>
+                        <div className="font-semibold text-white">{user.email}</div>
                         <div className="text-xs text-hockey-silver-500 dark:text-hockey-silver-400 font-mono">{user.id}</div>
                       </div>
                     </TableCell>
@@ -343,8 +343,8 @@ export function OrphanedAuthUsersManager() {
           <Card className="hockey-enhanced-card">
             <CardContent className="text-center py-8">
               <CheckCircle className="h-12 w-12 mx-auto mb-4 text-assist-green-500" />
-              <h3 className="text-lg font-semibold mb-2 text-hockey-silver-900 dark:text-hockey-silver-100">No Orphaned Users Found</h3>
-              <p className="text-hockey-silver-600 dark:text-hockey-silver-400">
+              <h3 className="text-lg font-semibold mb-2 text-white">No Orphaned Users Found</h3>
+              <p className="text-white">
                 All {stats.total_auth_users} auth users have corresponding records in the public.users table.
               </p>
             </CardContent>

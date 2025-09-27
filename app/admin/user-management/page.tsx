@@ -315,10 +315,10 @@ export default function UserManagementPage() {
                   <Users className="h-5 w-5 text-white" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-field-green-800 dark:text-field-green-200">
+                  <p className="text-2xl font-bold text-white">
                     {stats.total}
                   </p>
-                  <p className="text-sm text-field-green-600 dark:text-field-green-400">
+                  <p className="text-sm text-white">
                     Total Users
                   </p>
                 </div>
@@ -438,7 +438,7 @@ export default function UserManagementPage() {
                       <CardTitle className="text-xl text-white fifa-title">
                         User Management
                       </CardTitle>
-                      <CardDescription className="text-field-green-600 dark:text-field-green-400">
+                      <CardDescription className="text-white">
                         Manage all users in the system
                       </CardDescription>
                     </div>
@@ -459,11 +459,11 @@ export default function UserManagementPage() {
                   {/* Search and Filters */}
                   <div className="flex flex-col sm:flex-row gap-4 mb-6">
                     <div className="flex-1">
-                      <Label htmlFor="search" className="text-sm font-medium text-field-green-600 dark:text-field-green-400">
+                      <Label htmlFor="search" className="text-sm font-medium text-white">
                         Search Users
                       </Label>
                       <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-field-green-500" />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
                         <Input
                           id="search"
                           placeholder="Search by email, gamer tag, or Discord username..."
@@ -474,7 +474,7 @@ export default function UserManagementPage() {
                       </div>
                     </div>
                     <div className="sm:w-48">
-                      <Label htmlFor="role-filter" className="text-sm font-medium text-field-green-600 dark:text-field-green-400">
+                      <Label htmlFor="role-filter" className="text-sm font-medium text-white">
                         Filter by Role
                       </Label>
                       <select
@@ -491,7 +491,7 @@ export default function UserManagementPage() {
                       </select>
                     </div>
                     <div className="sm:w-48">
-                      <Label htmlFor="status-filter" className="text-sm font-medium text-field-green-600 dark:text-field-green-400">
+                      <Label htmlFor="status-filter" className="text-sm font-medium text-white">
                         Filter by Status
                       </Label>
                       <select
@@ -515,7 +515,7 @@ export default function UserManagementPage() {
                     <table className="w-full">
                       <thead>
                         <tr className="border-b-2 border-field-green-200 dark:border-field-green-700 bg-gradient-to-r from-field-green-50 to-pitch-blue-50 dark:from-field-green-900/20 dark:to-pitch-blue-900/20">
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-white">
                             <input
                               type="checkbox"
                               className="rounded border-2 border-field-green-300 focus:border-field-green-500"
@@ -528,22 +528,22 @@ export default function UserManagementPage() {
                               }}
                             />
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-white">
                             User
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-white">
                             Roles
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-white">
                             Status
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-white">
                             Club
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-white">
                             Season Reg
                           </th>
-                          <th className="text-left p-3 font-semibold text-field-green-800 dark:text-field-green-200">
+                          <th className="text-left p-3 font-semibold text-white">
                             Actions
                           </th>
                         </tr>
@@ -560,7 +560,7 @@ export default function UserManagementPage() {
                           </tr>
                         ) : filteredUsers.length === 0 ? (
                           <tr>
-                            <td colSpan={7} className="text-center p-8 text-field-green-600 dark:text-field-green-400">
+                            <td colSpan={7} className="text-center p-8 text-white">
                               No users found matching your criteria.
                             </td>
                           </tr>
@@ -589,10 +589,10 @@ export default function UserManagementPage() {
                                     </span>
                                   </div>
                                   <div>
-                                    <p className="font-medium text-field-green-800 dark:text-field-green-200">
+                                    <p className="font-medium text-white">
                                       {user.gamer_tag || user.email}
                                     </p>
-                                    <p className="text-sm text-field-green-600 dark:text-field-green-400">
+                                    <p className="text-sm text-white">
                                       {user.email}
                                     </p>
                                     {user.discord_username && (
@@ -648,7 +648,7 @@ export default function UserManagementPage() {
                                     {user.club.name}
                                   </Badge>
                                 ) : (
-                                  <span className="text-sm text-field-green-500">No Club</span>
+                                  <span className="text-sm text-white">No Club</span>
                                 )}
                               </td>
                               <td className="p-3">
@@ -658,7 +658,7 @@ export default function UserManagementPage() {
                                     {user.season_registrations.length} Season(s)
                                   </Badge>
                                 ) : (
-                                  <span className="text-sm text-field-green-500">Not Registered</span>
+                                  <span className="text-sm text-white">Not Registered</span>
                                 )}
                               </td>
                               <td className="p-3">
@@ -726,7 +726,7 @@ export default function UserManagementPage() {
                   <CardDescription>Manage banned users and their restrictions</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-field-green-600 dark:text-field-green-400">Banned users management will be implemented here.</p>
+                  <p className="text-white">Banned users management will be implemented here.</p>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -738,7 +738,7 @@ export default function UserManagementPage() {
                   <CardDescription>Detect and manage orphaned authentication users</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-field-green-600 dark:text-field-green-400">Orphaned users management will be implemented here.</p>
+                  <p className="text-white">Orphaned users management will be implemented here.</p>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -750,7 +750,7 @@ export default function UserManagementPage() {
                   <CardDescription>Analyze and manage season registration data</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-field-green-600 dark:text-field-green-400">Season registration diagnostics will be implemented here.</p>
+                  <p className="text-white">Season registration diagnostics will be implemented here.</p>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -801,7 +801,7 @@ export default function UserManagementPage() {
                         Export Selected ({selectedUsers.length})
                       </Button>
                     </div>
-                    <p className="text-sm text-field-green-600 dark:text-field-green-400">
+                    <p className="text-sm text-white">
                       Select users from the table above to perform bulk actions.
                     </p>
                   </div>

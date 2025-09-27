@@ -459,7 +459,7 @@ export function UserAccountManager() {
             <div className="flex-1">
               <Label htmlFor="search">Search Users</Label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-field-green-500" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white" />
                 <Input
                   id="search"
                   placeholder="Search by email, gamer tag, or Discord username..."
@@ -513,7 +513,7 @@ export function UserAccountManager() {
         <CardContent>
           {loading ? (
             <div className="text-center p-8">
-              <RefreshCw className="h-6 w-6 animate-spin text-field-green-500 mx-auto mb-2" />
+              <RefreshCw className="h-6 w-6 animate-spin text-white mx-auto mb-2" />
               <p className="text-field-green-600">Loading users...</p>
             </div>
           ) : filteredUsers.length === 0 ? (
@@ -535,12 +535,12 @@ export function UserAccountManager() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-semibold text-field-green-800 dark:text-field-green-200">
+                          <h3 className="font-semibold text-white">
                             {user.gamer_tag || user.email}
                           </h3>
                           {getStatusBadge(user)}
                         </div>
-                        <p className="text-sm text-field-green-600 dark:text-field-green-400">
+                        <p className="text-sm text-white">
                           {user.email}
                         </p>
                         <div className="flex items-center gap-4 mt-1">
@@ -551,7 +551,7 @@ export function UserAccountManager() {
                             </p>
                           )}
                           {user.primary_position && (
-                            <p className="text-xs text-field-green-600 dark:text-field-green-400 flex items-center gap-1">
+                            <p className="text-xs text-white flex items-center gap-1">
                               <Target className="h-3 w-3" />
                               {user.primary_position}
                             </p>
