@@ -1,0 +1,208 @@
+"use client"
+
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { useToast } from "@/components/ui/use-toast"
+import { useSupabase } from "@/lib/supabase/client"
+import { TransferSettings } from "@/components/admin/transfer-settings"
+import { SigningSettings } from "@/components/admin/signing-settings"
+import { AdminDiagnostics } from "@/components/admin/admin-diagnostics"
+import { RemoveUserTransfers } from "@/components/admin/remove-user-transfers"
+import { IpTracking } from "@/components/admin/ip-tracking"
+import { SeasonsManager } from "@/components/admin/seasons-manager"
+import { SyncStandingsButton } from "@/components/admin/sync-standings-button"
+import { Settings, Shield, Users, Database, Trophy, Activity } from "lucide-react"
+// import { motion } from "framer-motion"
+
+export function AdminSettingsPageClient() {
+  const router = useRouter()
+  const { toast } = useToast()
+  const { supabase, session } = useSupabase()
+  const [isAdmin, setIsAdmin] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function checkAuthorization() {
+      if (!session?.user) {
+        toast({
+          title: "Unauthorized",
+          description: "You must be logged in to access this page.",
+          variant: "destructive",
+        })
+        router.push("/login")
+        return
+      }
+
+      try {
+        const { data: roleData, error: roleError } = await supabase
+          .from("user_roles")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .eq("role", "Admin")
+
+        if (roleError || !roleData || roleData.length === 0) {
+          toast({
+            title: "Access denied",
+            description: "You don't have permission to access the admin settings.",
+            variant: "destructive",
+          })
+          router.push("/")
+          return
+        }
+
+        setIsAdmin(true)
+      } catch (error: any) {
+        console.error("Error checking authorization:", error)
+        toast({
+          title: "Error",
+          description: error.message || "An error occurred",
+          variant: "destructive",
+        })
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    checkAuthorization()
+  }, [supabase, session, toast, router])
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex justify-center items-center h-64">
+            <div className=" rounded-full h-12 w-12 border-b-2 border-field-green-500"></div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (!isAdmin) {
+    return null
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-field-green-50 via-white to-pitch-blue-50 dark:from-field-green-900 dark:via-slate-800 dark:to-pitch-blue-900/30 fifa-scrollbar">
+      {/* Enhanced Hero Section */}
+      <div className="relative overflow-hidden py-20 px-4 bg-gradient-to-r from-stadium-gold-500 to-stadium-gold-600">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-fifa-pattern opacity-10"></div>
+        
+        {/* Floating Elements */}
+        <div className="absolute top-20 left-10 w-32 h-32 bg-white/20 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 right-10 w-40 h-40 bg-white/20 rounded-full blur-3xl" style={{ animationDelay: '2s' }}></div>
+        
+        <div className="container mx-auto text-center relative z-10">
+          <div>
+            <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center mx-auto mb-6 border border-white/30">
+              <Shield className="h-8 w-8 text-white" />
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              System Settings
+            </h1>
+            <p className="text-white/90 text-lg md:text-xl max-w-3xl mx-auto mb-8">
+              Configure and manage all system settings, transfer parameters, and administrative controls
+            </p>
+            
+            {/* Admin Status Badge */}
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-6 py-3 rounded-full shadow-lg border border-white/30">
+              <Shield className="h-5 w-5" />
+              <span className="font-semibold">Administrator Access Granted</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 pb-20">
+        <div className="animate-fade-in-up">
+
+          <Tabs defaultValue="transfers" className="space-y-8">
+            <div className="flex justify-center">
+              <TabsList className="grid grid-cols-7 w-full max-w-6xl gap-3 p-2 bg-gradient-to-r from-field-green-100/80 to-pitch-blue-100/80 dark:from-field-green-900/40 dark:to-pitch-blue-900/40 rounded-2xl border-2 border-field-green-200/60 dark:border-pitch-blue-700/60 shadow-xl backdrop-blur-sm">
+                <TabsTrigger 
+                  value="transfers" 
+                  className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
+                >
+                  <Shield className="h-5 w-5" />
+                  Transfers
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="signings" 
+                  className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
+                >
+                  <Trophy className="h-5 w-5" />
+                  Signings
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="ip-tracking" 
+                  className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
+                >
+                  <Activity className="h-5 w-5" />
+                  IP Tracking
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="user-transfers" 
+                  className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
+                >
+                  <Users className="h-5 w-5" />
+                  User Transfers
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="seasons" 
+                  className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
+                >
+                  <Trophy className="h-5 w-5" />
+                  Seasons
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="standings" 
+                  className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
+                >
+                  <Trophy className="h-5 w-5" />
+                  Standings
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="diagnostics" 
+                  className="px-6 py-4 rounded-xl data-[state=active]:bg-gradient-to-r data-[state=active]:from-field-green-500 data-[state=active]:to-pitch-blue-600 data-[state=active]:text-white data-[state=active]:shadow-xl transition-all duration-300 hover:scale-105 flex items-center gap-3 font-semibold text-lg"
+                >
+                  <Database className="h-5 w-5" />
+                  Diagnostics
+                </TabsTrigger>
+              </TabsList>
+            </div>
+
+        <TabsContent value="transfers">
+          <TransferSettings />
+        </TabsContent>
+
+        <TabsContent value="signings">
+          <SigningSettings />
+        </TabsContent>
+
+        <TabsContent value="ip-tracking">
+          <IpTracking />
+        </TabsContent>
+
+        <TabsContent value="user-transfers">
+          <RemoveUserTransfers />
+        </TabsContent>
+
+        <TabsContent value="seasons">
+          <SeasonsManager />
+        </TabsContent>
+
+        <TabsContent value="standings">
+          <SyncStandingsButton />
+        </TabsContent>
+
+        <TabsContent value="diagnostics">
+          <AdminDiagnostics />
+        </TabsContent>
+      </Tabs>
+        </div>
+      </div>
+    </div>
+  )
+}
