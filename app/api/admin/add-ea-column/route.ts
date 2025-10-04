@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Execute raw SQL to add the column
-    const { data, error } = await supabase.from("teams").select("id").limit(1)
+    const { data, error } = await supabase.from("clubs").select("id").limit(1)
 
     if (error) {
       return NextResponse.json({ error: `Cannot access teams table: ${error.message}` }, { status: 500 })
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
 
       if (verifyError || !verifyData) {
         // If verification fails, try one more approach
-        await supabase.from("teams").update({ ea_club_id: null }).eq("id", data[0].id)
+        await supabase.from("clubs").update({ ea_club_id: null }).eq("id", data[0].id)
       }
 
       return NextResponse.json({ success: true })

@@ -95,10 +95,10 @@ export default function EAPlayerPage() {
           },
         )
 
-        // Get team info if available
+        // Get club info if available
         if (aggregatedStats.team_id) {
           const { data: teamData } = await supabase
-            .from("teams")
+            .from("clubs")
             .select("name, logo_url")
             .eq("id", aggregatedStats.team_id)
             .single()

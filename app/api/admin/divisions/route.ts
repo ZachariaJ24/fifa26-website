@@ -25,7 +25,7 @@ export async function GET() {
 
     // Get team counts for each division
     const { data: teamCounts, error: teamCountsError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("division")
       .eq("is_active", true)
 

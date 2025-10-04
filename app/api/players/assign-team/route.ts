@@ -144,7 +144,7 @@ export async function POST(request: Request) {
     // If there's retained salary, update the original team's retained salary total
     if (retainedSalary > 0 && player.team_id && teamId !== null) {
       const { data: originalTeam, error: teamError } = await supabase
-        .from("teams")
+        .from("clubs")
         .select("total_retained_salary")
         .eq("id", player.team_id)
         .single()
@@ -153,7 +153,7 @@ export async function POST(request: Request) {
         const newRetainedTotal = (originalTeam.total_retained_salary || 0) + retainedSalary
 
         const { error: retainedUpdateError } = await supabase
-          .from("teams")
+          .from("clubs")
           .update({ total_retained_salary: newRetainedTotal })
           .eq("id", player.team_id)
 

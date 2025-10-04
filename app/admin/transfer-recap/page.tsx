@@ -39,15 +39,14 @@ import {
 interface Transfer {
   id: string
   player_id: string
-  from_club_id: string
+  from_club_id: string | null
   to_club_id: string
-  transfer_fee: number
-  transfer_date: string
-  status: string
+  transfer_amount: number
+  transfer_type: string
+  created_at: string
   player_name: string
   from_club_name: string
   to_club_name: string
-  season_id: string
 }
 
 interface Season {
@@ -121,32 +120,30 @@ export default function TransferRecapPageMantine() {
     try {
       // Fetch transfers for the selected season
       const { data: transfersData, error: transfersError } = await supabase
-        .from("transfers")
+        .from("player_transfers")
         .select(`
           *,
-          players!inner(
-            users!inner(gamer_tag_id)
+          player:players!player_id(
+            user:users!user_id(gamer_tag_id)
           ),
-          from_club:clubs!transfers_from_club_id_fkey(name),
-          to_club:clubs!transfers_to_club_id_fkey(name)
+          from_club:clubs!from_club_id(name),
+          to_club:clubs!to_club_id(name)
         `)
-        .eq("season_id", selectedSeason)
-        .order("transfer_date", { ascending: false })
+        .order("created_at", { ascending: false })
 
       if (transfersError) throw transfersError
 
-      const formattedTransfers = transfersData?.map(transfer => ({
+      const formattedTransfers = transfersData?.map((transfer: any) => ({
         id: transfer.id,
         player_id: transfer.player_id,
         from_club_id: transfer.from_club_id,
         to_club_id: transfer.to_club_id,
-        transfer_fee: transfer.transfer_fee || 0,
-        transfer_date: transfer.transfer_date,
-        status: transfer.status,
-        player_name: transfer.players?.users?.gamer_tag_id || 'Unknown Player',
-        from_club_name: transfer.from_club?.name || 'Unknown Club',
-        to_club_name: transfer.to_club?.name || 'Unknown Club',
-        season_id: transfer.season_id
+        transfer_amount: transfer.transfer_amount || 0,
+        transfer_type: transfer.transfer_type || 'transfer',
+        created_at: transfer.created_at,
+        player_name: transfer.player?.user?.gamer_tag_id || 'Unknown Player',
+        from_club_name: transfer.from_club?.name || 'Free Agent',
+        to_club_name: transfer.to_club?.name || 'Unknown Club'
       })) || []
 
       setTransfers(formattedTransfers)
@@ -165,7 +162,7 @@ export default function TransferRecapPageMantine() {
 
   const calculateStats = (transfersData: Transfer[]) => {
     const totalTransfers = transfersData.length
-    const totalFees = transfersData.reduce((sum, t) => sum + t.transfer_fee, 0)
+    const totalFees = transfersData.reduce((sum, t) => sum + t.transfer_amount, 0)
     const avgTransferFee = totalTransfers > 0 ? totalFees / totalTransfers : 0
 
     // Find most active club (most transfers in or out)
@@ -186,15 +183,15 @@ export default function TransferRecapPageMantine() {
     })
   }
 
-  const getStatusBadge = (status: string) => {
-    const statusConfig: Record<string, { color: string; label: string }> = {
-      'completed': { color: 'green', label: 'Completed' },
-      'pending': { color: 'yellow', label: 'Pending' },
-      'cancelled': { color: 'red', label: 'Cancelled' },
-      'approved': { color: 'blue', label: 'Approved' }
+  const getTypeBadge = (type: string) => {
+    const typeConfig: Record<string, { color: string; label: string }> = {
+      'transfer': { color: 'blue', label: 'Transfer' },
+      'free_agent': { color: 'green', label: 'Free Agent' },
+      'trade': { color: 'purple', label: 'Trade' },
+      'waiver': { color: 'orange', label: 'Waiver' }
     }
 
-    const config = statusConfig[status] || { color: 'blue', label: status }
+    const config = typeConfig[type] || { color: 'blue', label: type }
     return <Badge color={config.color} variant="light" size="sm">{config.label}</Badge>
   }
 
@@ -217,9 +214,9 @@ export default function TransferRecapPageMantine() {
         t.player_name,
         t.from_club_name,
         t.to_club_name,
-        t.transfer_fee,
-        new Date(t.transfer_date).toLocaleDateString(),
-        t.status
+        t.transfer_amount,
+        new Date(t.created_at).toLocaleDateString(),
+        t.transfer_type
       ].join(','))
     ].join('\n')
 
@@ -397,20 +394,20 @@ export default function TransferRecapPageMantine() {
                       </Group>
                     </Table.Td>
                     <Table.Td>
-                      <Text fw={500} c={transfer.transfer_fee > 0 ? "green" : "gray"}>
-                        {transfer.transfer_fee > 0 ? `$${transfer.transfer_fee.toLocaleString()}` : 'Free'}
+                      <Text fw={500} c={transfer.transfer_amount > 0 ? "green" : "gray"}>
+                        {transfer.transfer_amount > 0 ? `$${transfer.transfer_amount.toLocaleString()}` : 'Free'}
                       </Text>
                     </Table.Td>
                     <Table.Td>
                       <Group gap="xs">
                         <Calendar size={14} />
                         <Text size="sm">
-                          {new Date(transfer.transfer_date).toLocaleDateString()}
+                          {new Date(transfer.created_at).toLocaleDateString()}
                         </Text>
                       </Group>
                     </Table.Td>
                     <Table.Td>
-                      {getStatusBadge(transfer.status)}
+                      {getTypeBadge(transfer.transfer_type)}
                     </Table.Td>
                   </Table.Tr>
                 ))}

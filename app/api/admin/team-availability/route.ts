@@ -213,7 +213,7 @@ export async function GET(request: NextRequest) {
     })
 
     const { data: teamsForMatches, error: teamsForMatchesError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("id, name, logo_url")
       .in("id", Array.from(teamIds))
 
@@ -237,7 +237,7 @@ export async function GET(request: NextRequest) {
 
     // Get all teams
     const { data: allTeams, error: teamsError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select(`
         id,
         name,

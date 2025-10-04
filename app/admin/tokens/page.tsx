@@ -57,6 +57,7 @@ interface User {
   id: string
   gamer_tag_id: string
   token_balance: number
+  tokens?: { balance: number }[]
 }
 
 export default function TokensManagementPageMantine() {
@@ -111,15 +112,29 @@ export default function TokensManagementPageMantine() {
 
       setTransactions(formattedTransactions)
 
-      // Fetch users with token balances
+      // Fetch users with token balances from tokens table
       const { data: usersData, error: usersError } = await supabase
         .from("users")
-        .select("id, gamer_tag_id, token_balance")
-        .order("token_balance", { ascending: false })
+        .select(`
+          id,
+          gamer_tag_id,
+          tokens(balance)
+        `)
         .limit(20)
 
       if (usersError) throw usersError
-      setUsers(usersData || [])
+      
+      // Map and calculate token balance from tokens table
+      const mappedUsers = (usersData || []).map((user: any) => ({
+        id: user.id,
+        gamer_tag_id: user.gamer_tag_id,
+        token_balance: user.tokens?.[0]?.balance || 0,
+        tokens: user.tokens
+      }))
+      
+      // Sort by balance
+      mappedUsers.sort((a: any, b: any) => b.token_balance - a.token_balance)
+      setUsers(mappedUsers)
 
     } catch (error: any) {
       console.error("Error fetching data:", error)
@@ -174,11 +189,14 @@ export default function TokensManagementPageMantine() {
         return
       }
 
-      // Update user's token balance
+      // Update user's token balance in tokens table
       const { error: updateError } = await supabase
-        .from("users")
-        .update({ token_balance: newBalance })
-        .eq("id", selectedUser.id)
+        .from("tokens")
+        .upsert({
+          user_id: selectedUser.id,
+          balance: newBalance,
+          updated_at: new Date().toISOString()
+        })
 
       if (updateError) throw updateError
 

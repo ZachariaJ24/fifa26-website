@@ -67,7 +67,7 @@ export default function EAStatsPage() {
 
   const loadTeams = async () => {
     try {
-      const { data, error } = await supabase.from("teams").select("*").order("name").not("ea_club_id", "is", null)
+      const { data, error } = await supabase.from("clubs").select("*").order("name").not("ea_club_id", "is", null)
 
       if (error) {
         throw error

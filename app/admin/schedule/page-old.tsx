@@ -358,7 +358,7 @@ export default function AdminSchedulePage() {
   // Fetch teams
   const fetchTeams = async () => {
     try {
-      const { data, error } = await supabase.from("teams").select("id, name").order("name")
+      const { data, error } = await supabase.from("clubs").select("id, name").order("name")
 
       if (error) throw error
       setTeams(data || [])

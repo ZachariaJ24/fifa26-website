@@ -54,78 +54,7 @@ const theme = {
     xl: '90em',
   },
   // Component-specific overrides for dark theme
-  components: {
-    Select: {
-      defaultProps: {
-        styles: {
-          dropdown: {
-            backgroundColor: 'var(--mantine-color-dark-7)',
-            border: '1px solid var(--mantine-color-dark-5)',
-          },
-          option: {
-            backgroundColor: 'var(--mantine-color-dark-7)',
-            color: 'var(--mantine-color-cyan-4)',
-            '&:hover': {
-              backgroundColor: 'var(--mantine-color-dark-6)',
-            },
-            '&[data-selected]': {
-              backgroundColor: 'var(--mantine-color-dark-5)',
-            },
-          },
-        },
-      },
-    },
-    Menu: {
-      defaultProps: {
-        styles: {
-          dropdown: {
-            backgroundColor: 'var(--mantine-color-dark-7)',
-            border: '1px solid var(--mantine-color-dark-5)',
-          },
-          item: {
-            backgroundColor: 'var(--mantine-color-dark-7)',
-            color: 'var(--mantine-color-cyan-4)',
-            '&:hover': {
-              backgroundColor: 'var(--mantine-color-dark-6)',
-            },
-          },
-        },
-      },
-    },
-    Modal: {
-      defaultProps: {
-        styles: {
-          content: {
-            backgroundColor: 'var(--mantine-color-dark-7)',
-          },
-          header: {
-            backgroundColor: 'var(--mantine-color-dark-7)',
-          },
-        },
-      },
-    },
-    Paper: {
-      defaultProps: {
-        bg: 'dark.7',
-      },
-    },
-    Card: {
-      defaultProps: {
-        bg: 'dark.8',
-      },
-    },
-    Table: {
-      defaultProps: {
-        styles: {
-          tr: {
-            '&:hover': {
-              backgroundColor: 'var(--mantine-color-dark-6)',
-            },
-          },
-        },
-      },
-    },
-  },
+  components: {},
   // Use CSS variables for dynamic theming
   other: {
     // This allows us to use CSS variables in Mantine components

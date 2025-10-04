@@ -64,7 +64,7 @@ export async function POST(request: Request) {
 
     // Create new team
     const { data: team, error: teamError } = await supabase
-      .from("teams")
+      .from("clubs")
       .insert({
         name,
         division: division || null,

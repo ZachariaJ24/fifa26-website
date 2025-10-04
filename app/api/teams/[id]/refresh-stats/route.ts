@@ -11,11 +11,11 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
   try {
     const teamId = params.id
 
-    // Check if team exists
-    const { data: team, error: teamError } = await supabase.from("teams").select("id").eq("id", teamId).single()
+    // Check if club exists
+    const { data: club, error: clubError } = await supabase.from("clubs").select("id").eq("id", teamId).single()
 
-    if (teamError) {
-      return NextResponse.json({ error: "Team not found" }, { status: 404 })
+    if (clubError) {
+      return NextResponse.json({ error: "Club not found" }, { status: 404 })
     }
 
     // Get current season ID
@@ -31,9 +31,9 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: "Team not found in standings" }, { status: 404 })
     }
 
-    // Update team statistics
+    // Update club statistics
     const { error: updateError } = await supabase
-      .from("teams")
+      .from("clubs")
       .update({
         wins: teamStats.wins,
         losses: teamStats.losses,

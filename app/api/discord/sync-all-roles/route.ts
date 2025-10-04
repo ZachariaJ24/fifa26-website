@@ -225,7 +225,7 @@ export async function POST(request: Request) {
 
     // Get all team roles for reference
     const { data: allTeamRoles } = await supabaseAdmin
-      .from("teams")
+      .from("clubs")
       .select("id, name, discord_role_id")
       .not("discord_role_id", "is", null)
 

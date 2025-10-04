@@ -40,14 +40,14 @@ export async function POST(request: Request) {
 
     // Get old team role ID if provided
     if (oldTeamId) {
-      const { data: oldTeam } = await supabase.from("teams").select("discord_role_id").eq("id", oldTeamId).single()
+      const { data: oldTeam } = await supabase.from("clubs").select("discord_role_id").eq("id", oldTeamId).single()
 
       oldRoleId = oldTeam?.discord_role_id
     }
 
     // Get new team role ID if provided
     if (newTeamId) {
-      const { data: newTeam } = await supabase.from("teams").select("discord_role_id").eq("id", newTeamId).single()
+      const { data: newTeam } = await supabase.from("clubs").select("discord_role_id").eq("id", newTeamId).single()
 
       newRoleId = newTeam?.discord_role_id
     }

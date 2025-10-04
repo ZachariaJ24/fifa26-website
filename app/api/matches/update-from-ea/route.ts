@@ -151,7 +151,7 @@ export async function POST(request: Request) {
 
     // Get team EA club IDs
     const { data: teams, error: teamsError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("id, ea_club_id")
       .in("id", [match.home_team_id, match.away_team_id])
 
@@ -842,13 +842,13 @@ async function updateTeamStandings(
   try {
     // Get current team records
     const { data: homeTeam } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("wins, losses, otl, goals_for, goals_against")
       .eq("id", homeTeamId)
       .single()
 
     const { data: awayTeam } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("wins, losses, otl, goals_for, goals_against")
       .eq("id", awayTeamId)
       .single()
@@ -883,7 +883,7 @@ async function updateTeamStandings(
 
     // Update home team
     await supabase
-      .from("teams")
+      .from("clubs")
       .update({
         wins: homeWins,
         losses: homeLosses,
@@ -896,7 +896,7 @@ async function updateTeamStandings(
 
     // Update away team
     await supabase
-      .from("teams")
+      .from("clubs")
       .update({
         wins: awayWins,
         losses: awayLosses,

@@ -101,7 +101,7 @@ export function AdminSettingsPageClientMantine() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-4">
+    <div className="max-w-7xl mx-auto py-4" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-yellow-6) 0%, var(--mantine-color-orange-6) 100%)' }}>
         <Center>

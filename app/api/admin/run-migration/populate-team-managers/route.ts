@@ -97,7 +97,7 @@ export async function POST(request: Request) {
     // Now, let's also add a specific entry for the LOHBoston Bruins owner if needed
     // First, get the LOHBoston Bruins team ID
     const { data: bostonTeam, error: bostonTeamError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("id")
       .ilike("name", "%boston%bruins%")
       .single()

@@ -54,7 +54,7 @@ export async function POST() {
 
     // Check if the column already exists
     try {
-      const { data, error } = await adminClient.from("teams").select("ea_club_id").limit(1)
+      const { data, error } = await adminClient.from("clubs").select("ea_club_id").limit(1)
 
       if (!error) {
         // Column already exists

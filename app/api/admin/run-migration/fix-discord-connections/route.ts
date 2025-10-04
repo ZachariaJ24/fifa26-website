@@ -89,7 +89,7 @@ export async function POST(request: Request) {
       .not("discord_id", "is", null)
 
     const { data: teamsWithRolesCount } = await supabaseAdmin
-      .from("teams")
+      .from("clubs")
       .select("id", { count: "exact" })
       .not("discord_role_id", "is", null)
 

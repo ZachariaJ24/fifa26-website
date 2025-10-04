@@ -36,9 +36,9 @@ export async function PUT(
       return NextResponse.json({ error: "Team name is required" }, { status: 400 })
     }
 
-    // Update team
-    const { data: team, error: teamError } = await supabase
-      .from("teams")
+    // Update club
+    const { data: club, error: clubError } = await supabase
+      .from("clubs")
       .update({
         name,
         division: division || null,
@@ -50,12 +50,12 @@ export async function PUT(
       .select()
       .single()
 
-    if (teamError) {
-      console.error("Error updating team:", teamError)
-      return NextResponse.json({ error: "Failed to update team" }, { status: 500 })
+    if (clubError) {
+      console.error("Error updating club:", clubError)
+      return NextResponse.json({ error: "Failed to update club" }, { status: 500 })
     }
 
-    return NextResponse.json(team)
+    return NextResponse.json(club)
   } catch (error: any) {
     console.error("Error in /api/admin/teams/[id] PUT:", error)
     return NextResponse.json({ error: "Internal server error" }, { status: 500 })
@@ -106,9 +106,9 @@ export async function DELETE(
       return NextResponse.json({ error: "Cannot delete team with players" }, { status: 400 })
     }
 
-    // Delete team
+    // Delete club
     const { error: deleteError } = await supabase
-      .from("teams")
+      .from("clubs")
       .delete()
       .eq("id", params.id)
 

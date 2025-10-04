@@ -28,13 +28,13 @@ export async function GET() {
   const supabase = createRouteHandlerClient({ cookies })
 
   try {
-    // 1. Fetch all players with their team and user info
+    // 1. Fetch all players with their club and user info
     const { data: players, error: playersError } = await supabase
       .from('players')
       .select(`
         id,
         users ( gamer_tag_id ),
-        teams ( id, name )
+        clubs:club_id ( id, name )
       `)
 
     if (playersError) throw new Error(`Error fetching players: ${playersError.message}`)
@@ -56,8 +56,8 @@ export async function GET() {
       aggregatedStats[playerId] = {
         player_id: playerId,
         player_name: player.users.gamer_tag_id,
-        team_id: player.teams?.id || null,
-        team_name: player.teams?.name || 'Free Agent',
+        team_id: player.clubs?.id || null,
+        team_name: player.clubs?.name || 'Free Agent',
         games_played: 0,
         goals: 0,
         assists: 0,

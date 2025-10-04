@@ -573,7 +573,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get all teams
-    const { data: teams, error: teamsError } = await supabase.from("teams").select("id, name, ea_club_id")
+    const { data: teams, error: teamsError } = await supabase.from("clubs").select("id, name, ea_club_id")
 
     if (teamsError) {
       throw new Error(`Error fetching teams: ${teamsError.message}`)

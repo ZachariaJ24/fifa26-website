@@ -6,7 +6,7 @@ export async function GET() {
     const supabase = createAdminClient()
     
     const { data: teams, error } = await supabase
-      .from("teams")
+      .from("clubs")
       .select(`
         id,
         name,

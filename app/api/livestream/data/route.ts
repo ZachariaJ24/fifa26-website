@@ -7,7 +7,7 @@ export async function GET() {
   try {
     // Get all teams with their logos
     const { data: teams, error: teamsError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("id, name, logo_url")
       .eq("is_active", true)
       .order("name")

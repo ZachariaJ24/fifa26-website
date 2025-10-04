@@ -55,9 +55,9 @@ export async function POST(request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: "Invalid statistics provided" }, { status: 400 })
     }
 
-    // Update the team statistics using the same supabase client
+    // Update the club statistics using the same supabase client
     const { data, error } = await supabase
-      .from("teams")
+      .from("clubs")
       .update({
         wins: stats.wins,
         losses: stats.losses,

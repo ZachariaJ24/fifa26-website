@@ -106,7 +106,7 @@ export async function DELETE(request: Request) {
 
       // 5. Remove from teams (set user_id to null or delete team assignments)
       const { error: teamError } = await supabase
-        .from("teams")
+        .from("clubs")
         .update({ 
           gm_user_id: null,
           agm_user_id: null 

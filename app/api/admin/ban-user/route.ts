@@ -68,29 +68,19 @@ export async function POST(request: Request) {
       }
     }
 
-    // Ensure only one ban record per user: delete existing then insert new
-    const { error: deleteError } = await supabase
-      .from("banned_users")
-      .delete()
-      .eq("user_id", userId)
-
-    if (deleteError) {
-      console.error("Error clearing existing ban:", deleteError)
-      return NextResponse.json({ error: deleteError.message }, { status: 500 })
-    }
-
-    const { error: insertError } = await supabase
-      .from("banned_users")
-      .insert({
-        user_id: userId,
-        banned_by: bannedBy || null,
-        reason: banReason,
-        expires_at: banExpiration,
+    // Update users table to ban user (new schema)
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({
+        is_banned: true,
+        ban_reason: banReason,
+        ban_expiration: banExpiration,
       })
+      .eq("id", userId)
 
-    if (insertError) {
-      console.error("Error inserting ban:", insertError)
-      return NextResponse.json({ error: insertError.message }, { status: 500 })
+    if (updateError) {
+      console.error("Error banning user:", updateError)
+      return NextResponse.json({ error: updateError.message }, { status: 500 })
     }
 
     return NextResponse.json({

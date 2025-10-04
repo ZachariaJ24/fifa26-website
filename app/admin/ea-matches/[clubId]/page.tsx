@@ -68,15 +68,15 @@ export default function EATeamMatchesPage({ params }: { params: { clubId: string
 
         setIsAdmin(true)
 
-        // Get team name from database
-        const { data: teamData, error: teamError } = await supabase
-          .from("teams")
+        // Get club name from database
+        const { data: clubData, error: clubError } = await supabase
+          .from("clubs")
           .select("name")
           .eq("ea_club_id", clubId)
           .single()
 
-        if (!teamError && teamData) {
-          setTeamName(teamData.name)
+        if (!clubError && clubData) {
+          setTeamName(clubData.name)
         }
 
         // Load EA team matches

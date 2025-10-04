@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
       try {
         // Try direct SQL as a fallback
         const { error: directError } = await supabase
-          .from("teams")
+          .from("clubs")
           .select("id")
           .limit(1)
           .then(async () => {

@@ -7,7 +7,7 @@ export async function GET() {
     
     // Get teams directly - no auth check for now
     const { data: teams, error } = await supabase
-      .from("teams")
+      .from("clubs")
       .select(`
         id,
         name,
@@ -44,7 +44,7 @@ export async function PUT(request: Request) {
 
     // Update team division directly
     const { data: team, error } = await supabase
-      .from("teams")
+      .from("clubs")
       .update({ division })
       .eq("id", teamId)
       .select()

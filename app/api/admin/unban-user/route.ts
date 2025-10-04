@@ -24,15 +24,19 @@ export async function POST(request: NextRequest) {
 
     console.log("Unbanning user:", userId)
 
-    // Delete from public.banned_users to unban
-    const { error: deleteError } = await supabaseAdmin
-      .from("banned_users")
-      .delete()
-      .eq("user_id", userId)
+    // Update users table to unban (new schema)
+    const { error: updateError } = await supabaseAdmin
+      .from("users")
+      .update({
+        is_banned: false,
+        ban_reason: null,
+        ban_expiration: null
+      })
+      .eq("id", userId)
 
-    if (deleteError) {
-      console.error("Error deleting banned_users row:", deleteError)
-      return NextResponse.json({ error: deleteError.message }, { status: 500 })
+    if (updateError) {
+      console.error("Error unbanning user:", updateError)
+      return NextResponse.json({ error: updateError.message }, { status: 500 })
     }
 
     return NextResponse.json({

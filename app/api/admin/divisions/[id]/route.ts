@@ -90,19 +90,19 @@ export async function DELETE(
       return NextResponse.json({ error: "Forbidden: Not an admin" }, { status: 403 })
     }
 
-    // Check if division has teams
-    const { data: teams, error: teamsError } = await supabase
-      .from("teams")
+    // Check if division has clubs
+    const { data: clubs, error: clubsError } = await supabase
+      .from("clubs")
       .select("id")
       .eq("division", (await supabase.from("divisions").select("name").eq("id", params.id).single()).data?.name)
       .limit(1)
 
-    if (teamsError) {
-      console.error("Error checking teams:", teamsError)
-      return NextResponse.json({ error: "Failed to check teams" }, { status: 500 })
+    if (clubsError) {
+      console.error("Error checking clubs:", clubsError)
+      return NextResponse.json({ error: "Failed to check clubs" }, { status: 500 })
     }
 
-    if (teams && teams.length > 0) {
+    if (clubs && clubs.length > 0) {
       return NextResponse.json({ error: "Cannot delete division with teams" }, { status: 400 })
     }
 

@@ -171,13 +171,13 @@ export default function BannedUsersPageMantine() {
     checkAuthorization()
   }, [supabase, session, toast, router])
 
-  // Realtime updates for banned_users changes
+  // Realtime updates for users table changes (ban status)
   useEffect(() => {
     const channel = supabase
-      .channel("banned_users_changes")
+      .channel("users_ban_changes")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "banned_users" },
+        { event: "UPDATE", schema: "public", table: "users", filter: "is_banned=eq.true" },
         () => {
           fetchBannedUsers()
         }

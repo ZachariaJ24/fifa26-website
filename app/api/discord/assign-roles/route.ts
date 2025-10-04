@@ -150,7 +150,7 @@ export async function POST(request: Request) {
     // If we have a newTeamId but no team object, fetch it
     if (currentTeamId && !currentTeam) {
       const { data: teamData } = await supabaseAdmin
-        .from("teams")
+        .from("clubs")
         .select("id, name, discord_role_id")
         .eq("id", currentTeamId)
         .single()
@@ -168,7 +168,7 @@ export async function POST(request: Request) {
 
     // Get all team roles to manage
     const { data: allTeamRoles } = await supabaseAdmin
-      .from("teams")
+      .from("clubs")
       .select("id, name, discord_role_id")
       .not("discord_role_id", "is", null)
 

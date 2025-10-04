@@ -8,7 +8,7 @@ export async function GET() {
     const supabase = createClient(cookieStore)
 
     const { data: teams, error } = await supabase
-      .from("teams")
+      .from("clubs")
       .select(`
         id,
         name,
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
     }
 
     const { data: team, error } = await supabase
-      .from("teams")
+      .from("clubs")
       .insert({
         name,
         logo_url,

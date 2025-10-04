@@ -90,7 +90,7 @@ export async function GET(request: NextRequest) {
     })
 
     const { data: teams, error: teamsError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("id, name")
       .in("id", Array.from(teamIds))
 

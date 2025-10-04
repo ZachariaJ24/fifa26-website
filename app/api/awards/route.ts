@@ -10,13 +10,13 @@ export async function GET() {
   const supabase = createRouteHandlerClient({ cookies })
 
   try {
-    // Fetch team awards
+    // Fetch team awards (club_awards table)
     const { data: teamAwardsData, error: teamAwardsError } = await supabase
-      .from("team_awards")
+      .from("club_awards")
       .select(`
         id,
-        team_id,
-        teams:team_id (name, logo_url),
+        club_id,
+        clubs:club_id (name, logo_url),
         award_type,
         season_number,
         year,
@@ -29,16 +29,16 @@ export async function GET() {
 
     const formattedTeamAwards = teamAwardsData.map((award) => ({
       id: award.id,
-      team_id: award.team_id,
-      team_name: award.teams?.name || "Unknown Team",
-      team_logo: award.teams?.logo_url || null,
+      team_id: award.club_id,
+      team_name: award.clubs?.name || "Unknown Team",
+      team_logo: award.clubs?.logo_url || null,
       award_type: award.award_type,
       season_number: award.season_number,
       year: award.year,
       description: award.description,
     }))
 
-    // Fetch player awards with team info
+    // Fetch player awards with club info
     const { data: playerAwardsData, error: playerAwardsError } = await supabase
       .from("player_awards")
       .select(`
@@ -46,8 +46,8 @@ export async function GET() {
         player_id,
         players:player_id (
           users:user_id (gamer_tag_id),
-          team_id,
-          teams:team_id (name, logo_url)
+          club_id,
+          clubs:club_id (name, logo_url)
         ),
         award_type,
         season_number,
@@ -59,13 +59,13 @@ export async function GET() {
 
     if (playerAwardsError) throw playerAwardsError
 
-    const formattedPlayerAwards = playerAwardsData.map((award) => ({
+    const formattedPlayerAwards = playerAwardsData.map((award: any) => ({
       id: award.id,
       player_id: award.player_id,
       gamer_tag_id: award.players?.users?.gamer_tag_id || "Unknown Player",
-      team_id: award.players?.team_id || null,
-      team_name: award.players?.teams?.name || null,
-      team_logo: award.players?.teams?.logo_url || null,
+      team_id: award.players?.club_id || null,
+      team_name: award.players?.clubs?.name || null,
+      team_logo: award.players?.clubs?.logo_url || null,
       award_type: award.award_type,
       season_number: award.season_number,
       year: award.year,

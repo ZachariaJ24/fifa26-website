@@ -294,7 +294,7 @@ export default function AdminTeamsPage() {
   const checkEaColumnExists = async () => {
     try {
       // Try to query a team with ea_club_id to see if the column exists
-      const { data, error } = await supabase.from("teams").select("ea_club_id").limit(1).maybeSingle()
+      const { data, error } = await supabase.from("clubs").select("ea_club_id").limit(1).maybeSingle()
 
       if (error) {
         // If there's an error about the column not existing, set hasEaColumn to false
@@ -318,7 +318,7 @@ export default function AdminTeamsPage() {
   const checkActiveColumnExists = async () => {
     try {
       // Try to query a team with is_active to see if the column exists
-      const { data, error } = await supabase.from("teams").select("is_active").limit(1).maybeSingle()
+      const { data, error } = await supabase.from("clubs").select("is_active").limit(1).maybeSingle()
 
       if (error) {
         // If there's an error about the column not existing, set hasActiveColumn to false
@@ -342,7 +342,7 @@ export default function AdminTeamsPage() {
   const checkManualOverrideColumnExists = async () => {
     try {
       // Try to query a team with manual_override to see if the column exists
-      const { data, error } = await supabase.from("teams").select("manual_override").limit(1).maybeSingle()
+      const { data, error } = await supabase.from("clubs").select("manual_override").limit(1).maybeSingle()
 
       if (error) {
         // If there's an error about the column not existing, set hasManualOverrideColumn to false
@@ -366,7 +366,7 @@ export default function AdminTeamsPage() {
   const checkGamesPlayedColumn = async () => {
     try {
       // Try to query a team with games_played to see if the column exists
-      const { data, error } = await supabase.from("teams").select("games_played").limit(1).maybeSingle()
+      const { data, error } = await supabase.from("clubs").select("games_played").limit(1).maybeSingle()
 
       if (error) {
         // If there's an error about the column not existing, set hasGamesPlayedColumn to false
@@ -390,7 +390,7 @@ export default function AdminTeamsPage() {
   const checkPointsColumn = async () => {
     try {
       // Try to query a team with points to see if the column exists
-      const { data, error } = await supabase.from("teams").select("points").limit(1).maybeSingle()
+      const { data, error } = await supabase.from("clubs").select("points").limit(1).maybeSingle()
 
       if (error) {
         // If there's an error about the column not existing, set hasPointsColumn to false
@@ -435,7 +435,7 @@ export default function AdminTeamsPage() {
       
       // Update the team's conference in the database
       const { error } = await supabase
-        .from("teams")
+        .from("clubs")
         .update({ 
           conference_id: actualConferenceId,
           updated_at: new Date().toISOString()
@@ -696,7 +696,7 @@ export default function AdminTeamsPage() {
     try {
       // Update the team's conference in the database
       const { error } = await supabase
-        .from('teams')
+        .from('clubs')
         .update({ 
           conference_id: conferenceId,
           updated_at: new Date().toISOString()
@@ -744,7 +744,7 @@ export default function AdminTeamsPage() {
         console.error("Invalid season ID:", season, "defaulting to 1");
         const fallbackSeason = 1;
         const { data: fallbackData, error: fallbackError } = await supabase
-          .from("teams")
+          .from("clubs")
           .select("*")
           .eq("season_id", fallbackSeason)
           .order("name");
@@ -758,7 +758,7 @@ export default function AdminTeamsPage() {
 
       // Try to load teams with conference data using a join
       const { data, error } = await supabase
-        .from('teams')
+        .from('clubs')
         .select(`
           *,
           conference:conference_id (id, name, description, color)
@@ -770,7 +770,7 @@ export default function AdminTeamsPage() {
         console.warn("Error loading teams with conferences, trying without join:", error.message);
         // Fallback to loading teams without conference data if join fails
         const { data: teamsData, error: teamsError } = await supabase
-          .from("teams")
+          .from("clubs")
           .select("*")
           .eq("season_id", numericSeason)
           .order("name");
@@ -900,7 +900,7 @@ export default function AdminTeamsPage() {
         teamData.goals_against = 0
 
         // Add new team using standard Supabase insert
-        const { error } = await supabase.from("teams").insert(teamData)
+        const { error } = await supabase.from("clubs").insert(teamData)
 
         if (error) throw error
 
@@ -910,7 +910,7 @@ export default function AdminTeamsPage() {
         })
       } else if (editingTeam) {
         // Update existing team using standard Supabase update
-        const { error } = await supabase.from("teams").update(teamData).eq("id", editingTeam.id)
+        const { error } = await supabase.from("clubs").update(teamData).eq("id", editingTeam.id)
 
         if (error) throw error
 
@@ -945,7 +945,7 @@ export default function AdminTeamsPage() {
       setIsSaving(true)
 
       // Delete team
-      const { error } = await supabase.from("teams").delete().eq("id", teamId)
+      const { error } = await supabase.from("clubs").delete().eq("id", teamId)
 
       if (error) throw error
 
@@ -972,7 +972,7 @@ export default function AdminTeamsPage() {
     try {
       const newActiveState = !team.is_active
 
-      const { error } = await supabase.from("teams").update({ is_active: newActiveState }).eq("id", team.id)
+      const { error } = await supabase.from("clubs").update({ is_active: newActiveState }).eq("id", team.id)
 
       if (error) throw error
 

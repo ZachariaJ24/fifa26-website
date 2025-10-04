@@ -29,7 +29,7 @@ export async function GET() {
 
     // Test basic connection
     const { data, error } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("count")
       .limit(1)
 

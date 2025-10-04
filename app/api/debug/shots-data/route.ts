@@ -71,7 +71,7 @@ export async function GET(request: Request) {
     })
 
     // Get teams for reference
-    const { data: teams } = await supabase.from("teams").select("id, name").eq("is_active", true)
+    const { data: teams } = await supabase.from("clubs").select("id, name").eq("is_active", true)
 
     const teamsMap = new Map(teams?.map((t) => [t.id, t.name]) || [])
 

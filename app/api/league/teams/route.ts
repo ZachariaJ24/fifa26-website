@@ -6,7 +6,7 @@ export async function GET() {
     const supabase = createAdminClient()
     
     const { data: teams, error } = await supabase
-      .from("teams")
+      .from("clubs")
       .select(`
         id,
         name,
@@ -47,7 +47,7 @@ export async function PUT(request: Request) {
     const { teamId, conferenceId } = body
 
     const { data: team, error } = await supabase
-      .from("teams")
+      .from("clubs")
       .update({ conference_id: conferenceId })
       .eq("id", teamId)
       .select()

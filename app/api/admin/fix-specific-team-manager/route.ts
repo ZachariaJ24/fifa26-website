@@ -24,7 +24,7 @@ export async function POST(request: Request) {
     }
 
     // Check if the team exists
-    const { data: teamData, error: teamError } = await supabase.from("teams").select("id").eq("id", teamId).single()
+    const { data: teamData, error: teamError } = await supabase.from("clubs").select("id").eq("id", teamId).single()
 
     if (teamError || !teamData) {
       return NextResponse.json({ error: "Team not found", details: teamError }, { status: 404 })

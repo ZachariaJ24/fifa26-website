@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
     // Get the team's EA club ID
     const { data: team, error: teamError } = await supabase
-      .from("teams")
+      .from("clubs")
       .select("id, name, ea_club_id")
       .eq("id", teamId)
       .single()

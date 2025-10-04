@@ -40,7 +40,7 @@ export async function POST() {
     // Update team statistics in the database
     for (const team of standings) {
       const { error: updateError } = await supabase
-        .from("teams")
+        .from("clubs")
         .update({
           wins: team.wins,
           losses: team.losses,

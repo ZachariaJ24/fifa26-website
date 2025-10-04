@@ -52,7 +52,7 @@ export async function POST(request: NextRequest) {
     if (!isAdmin) {
       // Check if user is associated with either team
       const { data: teams, error: teamsError } = await supabase
-        .from("teams")
+        .from("clubs")
         .select("id")
         .in("id", [match.home_team_id, match.away_team_id])
         .eq("manager_id", user.id)
