@@ -366,19 +366,19 @@ export default function ScheduleManagementPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <div className="max-w-7xl mx-auto py-8">
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Schedule Management...</Text>
+            <Text c="blue">Loading Schedule Management...</Text>
           </Stack>
         </Center>
-      </Container>
+      </div>
     )
   }
 
   return (
-    <Container size="xl" py="md">
+    <div className="max-w-7xl mx-auto py-4">
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-green-6) 0%, var(--mantine-color-blue-6) 100%)' }}>
         <Group justify="space-between">
@@ -398,7 +398,7 @@ export default function ScheduleManagementPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="green">{matches.length}</Text>
-              <Text size="sm" c="dimmed">Total Matches</Text>
+              <Text size="sm" c="blue">Total Matches</Text>
             </Stack>
           </Card>
         </Group>
@@ -436,15 +436,15 @@ export default function ScheduleManagementPageMantine() {
         {!selectedSeason ? (
           <Center p="xl">
             <Stack align="center">
-              <Calendar size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-              <Text c="dimmed">Please select a season to view matches</Text>
+              <Calendar size={48} stroke={1} color="var(--mantine-color-blue-5)" />
+              <Text c="blue">Please select a season to view matches</Text>
             </Stack>
           </Center>
         ) : matches.length === 0 ? (
           <Center p="xl">
             <Stack align="center">
-              <Calendar size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-              <Text c="dimmed">No matches found for this season</Text>
+              <Calendar size={48} stroke={1} color="var(--mantine-color-blue-5)" />
+              <Text c="blue">No matches found for this season</Text>
               <Button leftSection={<Plus size={16} />} onClick={openCreateModal}>
                 Create First Match
               </Button>
@@ -468,7 +468,7 @@ export default function ScheduleManagementPageMantine() {
                     <Table.Td>
                       <Group>
                         <Text fw={500}>{match.home_club.name}</Text>
-                        <Text c="dimmed">vs</Text>
+                        <Text c="blue">vs</Text>
                         <Text fw={500}>{match.away_club.name}</Text>
                       </Group>
                     </Table.Td>
@@ -493,7 +493,7 @@ export default function ScheduleManagementPageMantine() {
                           {match.home_score} - {match.away_score}
                         </Badge>
                       ) : (
-                        <Text size="sm" c="dimmed">-</Text>
+                        <Text size="sm" c="blue">-</Text>
                       )}
                     </Table.Td>
                     <Table.Td>
@@ -695,6 +695,6 @@ export default function ScheduleManagementPageMantine() {
           </Stack>
         )}
       </Modal>
-    </Container>
+    </div>
   )
 }
