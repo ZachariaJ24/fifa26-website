@@ -109,15 +109,15 @@ export function AdminSettingsPageClientMantine() {
             <ThemeIcon size={80} radius="xl" variant="light" color="white">
               <Settings size={40} />
             </ThemeIcon>
-            <Title order={1} c="white" ta="center">
+            <Title order={1} c="cyan" ta="center">
               System Settings
             </Title>
-            <Text size="lg" c="white" ta="center" maw={600}>
+            <Text size="lg" c="yellow" ta="center" maw={600}>
               Configure and manage all system settings, transfer parameters, and administrative controls
             </Text>
-            <Group gap="xs" p="md" style={{ background: 'rgba(255,255,255,0.2)', borderRadius: 'var(--mantine-radius-xl)', backdropFilter: 'blur(10px)' }}>
-              <Shield size={20} color="white" />
-              <Text c="white" fw={600}>Administrator Access Granted</Text>
+            <Group gap="xs" p="md" style={{ background: 'rgba(6,182,212,0.2)', borderRadius: 'var(--mantine-radius-xl)', backdropFilter: 'blur(10px)' }}>
+              <Shield size={20} color="cyan" />
+              <Text c="cyan" fw={600}>Administrator Access Granted</Text>
             </Group>
           </Stack>
         </Center>

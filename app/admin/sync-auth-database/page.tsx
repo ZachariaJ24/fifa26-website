@@ -327,7 +327,7 @@ export default function SyncAuthDatabasePageMantine() {
       </Paper>
 
       {/* Actions */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between">
           <Title order={3}>Synchronization Control</Title>
           <Group>
@@ -347,7 +347,7 @@ export default function SyncAuthDatabasePageMantine() {
 
       {/* Sync Progress */}
       {syncing && (
-        <Paper withBorder p="md" mb="lg">
+        <Paper withBorder p="md" mb="lg" bg="dark.7">
           <Stack gap="md">
             <Group justify="space-between">
               <Text fw={500}>Synchronizing...</Text>

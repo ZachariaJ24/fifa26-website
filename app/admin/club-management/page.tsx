@@ -331,7 +331,7 @@ export default function ClubManagementPageMantine() {
       </Paper>
 
       {/* Actions and Search */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between" mb="md">
           <Title order={3}>Club Management</Title>
           <Group>
@@ -357,7 +357,7 @@ export default function ClubManagementPageMantine() {
       <Grid>
         {filteredClubs.map((club) => (
           <Grid.Col key={club.id} span={{ base: 12, sm: 6, lg: 4 }}>
-            <Card withBorder shadow="sm" p="lg" h="100%">
+            <Card withBorder shadow="sm" p="lg" h="100%" bg="dark.8">
               <Group justify="space-between" mb="md">
                 <Group>
                   {club.logo_url ? (

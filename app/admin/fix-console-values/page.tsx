@@ -277,7 +277,7 @@ export default function FixConsoleValuesPageMantine() {
       </Paper>
 
       {/* Actions */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between">
           <Title order={3}>Console Value Scanner</Title>
           <Group>
@@ -299,7 +299,7 @@ export default function FixConsoleValuesPageMantine() {
 
       {/* Fix Progress */}
       {isFixing && (
-        <Paper withBorder p="md" mb="lg">
+        <Paper withBorder p="md" mb="lg" bg="dark.7">
           <Stack gap="md">
             <Group justify="space-between">
               <Text fw={500}>Fixing Console Values...</Text>
@@ -328,7 +328,7 @@ export default function FixConsoleValuesPageMantine() {
       )}
 
       {/* Valid Console Values Info */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group mb="md">
           <ThemeIcon color="blue" variant="light">
             <Monitor size={20} />

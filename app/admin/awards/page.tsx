@@ -444,7 +444,7 @@ export default function AwardsManagementPageMantine() {
       </Paper>
 
       {/* Season Selection */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between" mb="md">
           <Title order={3}>Season Awards</Title>
           <Button leftSection={<RefreshCw size={16} />} onClick={fetchAwards}>

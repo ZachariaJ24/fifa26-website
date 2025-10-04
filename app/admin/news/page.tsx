@@ -327,7 +327,7 @@ export default function NewsManagementPageMantine() {
       </Paper>
 
       {/* Filters and Actions */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between" mb="md">
           <Title order={3}>News Articles</Title>
           <Group>

@@ -281,7 +281,7 @@ export default function AdminClubLogosPageMantine() {
       </Paper>
 
       {/* Actions */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between">
           <Title order={3}>Club Logos</Title>
           <Button leftSection={<RefreshCw size={16} />} onClick={fetchClubs}>
@@ -294,7 +294,7 @@ export default function AdminClubLogosPageMantine() {
       <Grid>
         {clubs.map((club) => (
           <Grid.Col key={club.id} span={{ base: 12, sm: 6, md: 4, lg: 3 }}>
-            <Card withBorder shadow="sm" p="lg" h="100%">
+            <Card withBorder shadow="sm" p="lg" h="100%" bg="dark.8">
               <Stack align="center" gap="md">
                 {/* Logo Display */}
                 <div style={{ 

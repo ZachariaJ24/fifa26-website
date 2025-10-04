@@ -437,7 +437,7 @@ export default function EAMatchesPageMantine() {
       </Paper>
 
       {/* Season Selection and Actions */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between" mb="md">
           <Title order={3}>EA Match Management</Title>
           <Group>

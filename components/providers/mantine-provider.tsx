@@ -17,6 +17,7 @@ const theme = {
     blue: ['#f0f9ff', '#e0f2fe', '#bae6fd', '#7dd3fc', '#38bdf8', '#0ea5e9', '#0284c7', '#0369a1', '#075985', '#0c4a6e'],
     orange: ['#fff7ed', '#ffedd5', '#fed7aa', '#fdba74', '#fb923c', '#f97316', '#ea580c', '#c2410c', '#9a3412', '#7c2d12'],
     yellow: ['#fffbeb', '#fef3c7', '#fde68a', '#fcd34d', '#fbbf24', '#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f'],
+    cyan: ['#ecfeff', '#cffafe', '#a5f3fc', '#67e8f9', '#22d3ee', '#06b6d4', '#0891b2', '#0e7490', '#155e75', '#164e63'],
   },
   fontFamily: 'Inter, system-ui, sans-serif',
   fontFamilyMonospace: 'Monaco, Courier, monospace',
@@ -52,11 +53,84 @@ const theme = {
     lg: '74em',
     xl: '90em',
   },
+  // Component-specific overrides for dark theme
+  components: {
+    Select: {
+      defaultProps: {
+        styles: {
+          dropdown: {
+            backgroundColor: 'var(--mantine-color-dark-7)',
+            border: '1px solid var(--mantine-color-dark-5)',
+          },
+          option: {
+            backgroundColor: 'var(--mantine-color-dark-7)',
+            color: 'var(--mantine-color-cyan-4)',
+            '&:hover': {
+              backgroundColor: 'var(--mantine-color-dark-6)',
+            },
+            '&[data-selected]': {
+              backgroundColor: 'var(--mantine-color-dark-5)',
+            },
+          },
+        },
+      },
+    },
+    Menu: {
+      defaultProps: {
+        styles: {
+          dropdown: {
+            backgroundColor: 'var(--mantine-color-dark-7)',
+            border: '1px solid var(--mantine-color-dark-5)',
+          },
+          item: {
+            backgroundColor: 'var(--mantine-color-dark-7)',
+            color: 'var(--mantine-color-cyan-4)',
+            '&:hover': {
+              backgroundColor: 'var(--mantine-color-dark-6)',
+            },
+          },
+        },
+      },
+    },
+    Modal: {
+      defaultProps: {
+        styles: {
+          content: {
+            backgroundColor: 'var(--mantine-color-dark-7)',
+          },
+          header: {
+            backgroundColor: 'var(--mantine-color-dark-7)',
+          },
+        },
+      },
+    },
+    Paper: {
+      defaultProps: {
+        bg: 'dark.7',
+      },
+    },
+    Card: {
+      defaultProps: {
+        bg: 'dark.8',
+      },
+    },
+    Table: {
+      defaultProps: {
+        styles: {
+          tr: {
+            '&:hover': {
+              backgroundColor: 'var(--mantine-color-dark-6)',
+            },
+          },
+        },
+      },
+    },
+  },
   // Use CSS variables for dynamic theming
   other: {
     // This allows us to use CSS variables in Mantine components
     'css-vars': {
-      '--mantine-color-scheme': 'light dark',
+      '--mantine-color-scheme': 'dark',
     },
   },
 }
@@ -67,7 +141,7 @@ interface MantineProviderWrapperProps {
 
 export function MantineProviderWrapper({ children }: MantineProviderWrapperProps) {
   return (
-    <MantineProvider theme={theme}>
+    <MantineProvider theme={theme} defaultColorScheme="dark" forceColorScheme="dark">
       <DatesProvider settings={{ firstDayOfWeek: 0 }}>
         <ModalsProvider>
           <Notifications position="top-right" />

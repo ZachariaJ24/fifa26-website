@@ -289,7 +289,7 @@ export default function TokensManagementPageMantine() {
       </Paper>
 
       {/* Actions */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between">
           <Title order={3}>Token Overview</Title>
           <Button leftSection={<RefreshCw size={16} />} onClick={fetchData}>

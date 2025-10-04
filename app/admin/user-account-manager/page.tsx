@@ -321,7 +321,7 @@ export default function UserAccountManagerPageMantine() {
       </Paper>
 
       {/* Search and Actions */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between" mb="md">
           <Title order={3}>User Accounts</Title>
           <Button leftSection={<RefreshCw size={16} />} onClick={fetchUsers}>

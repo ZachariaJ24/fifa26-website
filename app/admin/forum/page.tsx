@@ -521,7 +521,7 @@ export default function ForumManagementPageMantine() {
       </Grid>
 
       {/* Actions and Filters */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between" mb="md">
           <Title order={3}>Forum Posts</Title>
           <Group>

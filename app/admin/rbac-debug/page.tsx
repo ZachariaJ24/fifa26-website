@@ -256,7 +256,7 @@ export default function RBACDebugPageMantine() {
       </Paper>
 
       {/* Actions */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between">
           <Title order={3}>RBAC Analysis</Title>
           <Group>

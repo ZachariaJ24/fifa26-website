@@ -298,7 +298,7 @@ export default function FixUserConstraintsPageMantine() {
       </Paper>
 
       {/* Actions */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between">
           <Title order={3}>Constraint Violation Scanner</Title>
           <Group>
@@ -320,7 +320,7 @@ export default function FixUserConstraintsPageMantine() {
 
       {/* Fix Progress */}
       {isFixing && (
-        <Paper withBorder p="md" mb="lg">
+        <Paper withBorder p="md" mb="lg" bg="dark.7">
           <Stack gap="md">
             <Group justify="space-between">
               <Text fw={500}>Fixing Constraint Violations...</Text>

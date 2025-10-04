@@ -363,7 +363,7 @@ export default function PlayerMappingsPageMantine() {
       </Paper>
 
       {/* Actions and Search */}
-      <Paper withBorder p="md" mb="lg">
+      <Paper withBorder p="md" mb="lg" bg="dark.7">
         <Group justify="space-between" mb="md">
           <Title order={3}>Player Mappings</Title>
           <Group>
