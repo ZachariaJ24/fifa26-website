@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import { useSupabase } from "@/lib/supabase/client"
 import { useToast } from "@/components/ui/use-toast"
 import {
-  Container,
   Title,
   Text,
   Button,
@@ -205,19 +204,19 @@ export default function ClubAvailabilityPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="md">
+      <div className="max-w-7xl mx-auto py-4">
         <Center p="xl">
           <Stack align="center">
             <Loader size="lg" />
             <Text c="dimmed">Loading Club Availability...</Text>
           </Stack>
         </Center>
-      </Container>
+      </div>
     )
   }
 
   return (
-    <Container size="xl" py="md">
+    <div className="max-w-7xl mx-auto py-4">
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-blue-6) 0%, var(--mantine-color-green-6) 100%)' }}>
         <Group justify="space-between">
@@ -452,6 +451,6 @@ export default function ClubAvailabilityPageMantine() {
           </Tabs.Panel>
         </Tabs>
       )}
-    </Container>
+    </div>
   )
 }
