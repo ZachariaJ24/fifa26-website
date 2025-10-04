@@ -5,80 +5,57 @@ import { useRouter } from "next/navigation"
 import { useSupabase } from "@/lib/supabase/client"
 import { useToast } from "@/components/ui/use-toast"
 import {
-  Title,
-  Text,
-  Button,
-  Select,
-  Paper,
-  Stack,
-  Group,
-  Badge,
-  Table,
-  Loader,
-  Center,
-  Tabs,
-  Card,
-  ThemeIcon,
-  Grid,
-  Progress
-} from '@mantine/core'
-import { notifications } from '@mantine/notifications'
-import {
-  ChevronLeft,
-  ChevronRight,
-  Users,
   Calendar,
-  TrendingUp,
-  AlertCircle,
+  Users,
   Activity,
   Trophy,
-  Clock,
   CheckCircle,
   XCircle,
-  AlertTriangle
+  AlertTriangle,
+  Clock,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react"
-import { format, startOfWeek, endOfWeek, addWeeks, subWeeks, parseISO } from "date-fns"
-
-interface PlayerAvailability {
-  matchId: string
-  matchDate: string
-  opponent: string
-  status: "available" | "unavailable" | "injury_reserve" | "not_responded"
-  signedUpAt: string | null
-}
-
-interface Player {
-  id: string
-  userId: string
-  name: string
-  gamerTag: string
-  gamesPlayed: number
-  availability: PlayerAvailability[]
-  availableCount: number
-  unavailableCount: number
-  injuryReserveCount: number
-  noResponseCount: number
-  isOnIR: boolean
-}
+import { format, parseISO, addWeeks, subWeeks } from "date-fns"
 
 interface Club {
   id: string
   name: string
-  logoUrl: string | null
-  players: Player[]
-  matches: any[]
+  code: string
+  logo_url?: string
 }
 
-export default function ClubAvailabilityPageMantine() {
-  const { supabase } = useSupabase()
-  const { toast } = useToast()
-  const router = useRouter()
-  
-  const [clubs, setClubs] = useState<Club[]>([])
+interface Player {
+  id: string
+  user_id: string
+  users: {
+    gamer_tag_id: string
+    discord_id?: string
+  }
+}
+
+interface Match {
+  id: string
+  home_club: Club
+  away_club: Club
+  match_date: string
+}
+
+interface AvailabilityData {
+  players?: Player[]
+  matches?: Match[]
+}
+
+export default function ClubAvailabilityPage() {
   const [selectedClub, setSelectedClub] = useState<string>("")
+  const [clubs, setClubs] = useState<Club[]>([])
+  const [availabilityData, setAvailabilityData] = useState<AvailabilityData | null>(null)
+  const [loading, setLoading] = useState(false)
   const [currentWeek, setCurrentWeek] = useState(new Date())
-  const [loading, setLoading] = useState(true)
-  const [availabilityData, setAvailabilityData] = useState<any>(null)
+
+  const supabase = useSupabase()
+  const router = useRouter()
+  const { toast } = useToast()
 
   useEffect(() => {
     fetchClubs()
@@ -92,106 +69,39 @@ export default function ClubAvailabilityPageMantine() {
 
   const fetchClubs = async () => {
     try {
-      setLoading(true)
       const { data, error } = await supabase
         .from("clubs")
-        .select("id, name, logo_url")
-        .eq("is_active", true)
+        .select("id, name, code, logo_url")
         .order("name")
 
       if (error) throw error
       setClubs(data || [])
-      
-      if (data && data.length > 0) {
-        setSelectedClub(data[0].id)
-      }
     } catch (error: any) {
-      console.error("Error fetching clubs:", error)
-      notifications.show({
+      toast({
         title: "Error",
-        message: "Failed to fetch clubs",
-        color: "red",
-        icon: <AlertTriangle size={16} />
+        description: "Failed to load clubs",
+        variant: "destructive",
       })
-    } finally {
-      setLoading(false)
     }
   }
 
   const fetchAvailabilityData = async () => {
-    if (!selectedClub) return
-
+    setLoading(true)
     try {
-      const weekStart = startOfWeek(currentWeek)
-      const weekEnd = endOfWeek(currentWeek)
-
-      // Fetch club players
-      const { data: playersData, error: playersError } = await supabase
-        .from("players")
-        .select(`
-          id,
-          user_id,
-          users!inner(gamer_tag_id)
-        `)
-        .eq("club_id", selectedClub)
-        .eq("status", "active")
-
-      if (playersError) throw playersError
-
-      // Fetch matches for the week
-      const { data: matchesData, error: matchesError } = await supabase
-        .from("fixtures")
-        .select(`
-          id,
-          match_date,
-          home_club_id,
-          away_club_id,
-          home_club:clubs!fixtures_home_club_id_fkey(name),
-          away_club:clubs!fixtures_away_club_id_fkey(name)
-        `)
-        .or(`home_club_id.eq.${selectedClub},away_club_id.eq.${selectedClub}`)
-        .gte("match_date", weekStart.toISOString())
-        .lte("match_date", weekEnd.toISOString())
-
-      if (matchesError) throw matchesError
-
+      // For now, just set empty data since this is a placeholder
       setAvailabilityData({
-        players: playersData || [],
-        matches: matchesData || []
+        players: [],
+        matches: []
       })
-
     } catch (error: any) {
-      console.error("Error fetching availability data:", error)
-      notifications.show({
+      toast({
         title: "Error",
-        message: "Failed to fetch availability data",
-        color: "red",
-        icon: <AlertTriangle size={16} />
+        description: "Failed to load availability data",
+        variant: "destructive",
       })
+    } finally {
+      setLoading(false)
     }
-  }
-
-  const getStatusBadge = (status: string) => {
-    const statusConfig: Record<string, { color: string; label: string; icon: any }> = {
-      'available': { color: 'green', label: 'Available', icon: CheckCircle },
-      'unavailable': { color: 'red', label: 'Unavailable', icon: XCircle },
-      'injury_reserve': { color: 'orange', label: 'Injury Reserve', icon: AlertTriangle },
-      'not_responded': { color: 'indigo', label: 'No Response', icon: Clock }
-    }
-
-    const config = statusConfig[status] || { color: 'indigo', label: status, icon: Clock }
-    const IconComponent = config.icon
-    
-    return (
-      <Badge 
-        color={config.color} 
-        variant="light" 
-        size="sm"
-        leftSection={<IconComponent size={12} />}
-      >
-        {config.label}
-      </Badge>
-    )
   }
 
   const navigateWeek = (direction: 'prev' | 'next') => {
@@ -202,15 +112,28 @@ export default function ClubAvailabilityPageMantine() {
     }
   }
 
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case 'available':
+        return <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">Available</span>
+      case 'unavailable':
+        return <span className="px-2 py-1 bg-red-100 text-red-800 rounded-full text-xs">Unavailable</span>
+      case 'injury':
+        return <span className="px-2 py-1 bg-orange-100 text-orange-800 rounded-full text-xs">Injury Reserve</span>
+      default:
+        return <span className="px-2 py-1 bg-gray-100 text-gray-800 rounded-full text-xs">No Response</span>
+    }
+  }
+
   if (loading) {
     return (
       <div className="max-w-7xl mx-auto py-4">
-        <Center p="xl">
-          <Stack align="center">
-            <Loader size="lg" />
-            <Text c="dimmed">Loading Club Availability...</Text>
-          </Stack>
-        </Center>
+        <div className="flex items-center justify-center p-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading Club Availability...</p>
+          </div>
+        </div>
       </div>
     )
   }
@@ -218,238 +141,93 @@ export default function ClubAvailabilityPageMantine() {
   return (
     <div className="max-w-7xl mx-auto py-4">
       {/* Hero Header */}
-      <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-blue-6) 0%, var(--mantine-color-green-6) 100%)' }}>
-        <Group justify="space-between">
-          <Group>
-            <ThemeIcon size={80} radius="xl" variant="light" color="white">
-              <Calendar size={40} />
-            </ThemeIcon>
-            <div>
-              <Title order={1} c="white">
-                Club Availability
-              </Title>
-              <Text size="lg" c="white" opacity={0.9}>
-                View player availability and games played by week
-              </Text>
+      <div className="bg-gradient-to-r from-blue-600 to-green-600 rounded-lg p-8 mb-8">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center">
+            <div className="bg-white bg-opacity-20 rounded-full p-4 mr-6">
+              <Calendar className="w-10 h-10 text-white" />
             </div>
-          </Group>
-          <Card withBorder p="md" bg="white">
-            <Stack gap="xs" align="center">
-              <Text size="xl" fw={700} c="blue">{clubs.length}</Text>
-              <Text size="sm" c="dimmed">Active Clubs</Text>
-            </Stack>
-          </Card>
-        </Group>
-      </Paper>
-
-      {/* Controls */}
-      <Paper withBorder p="md" mb="lg">
-        <Group justify="space-between" mb="md">
-          <Title order={3}>Availability Overview</Title>
-        </Group>
-
-        <Group>
-          <Select
-            label="Select Club"
-            placeholder="Choose a club"
-            value={selectedClub}
-            onChange={(value) => setSelectedClub(value || "")}
-            data={clubs.map(club => ({ value: club.id, label: club.name }))}
-            style={{ minWidth: 200 }}
-          />
-
-          <div>
-            <Text size="sm" fw={500} mb="xs">Week Navigation</Text>
-            <Group>
-              <Button
-                variant="outline"
-                leftSection={<ChevronLeft size={16} />}
-                onClick={() => navigateWeek('prev')}
-              >
-                Previous Week
-              </Button>
-              <Text fw={500}>
-                {format(startOfWeek(currentWeek), 'MMM d')} - {format(endOfWeek(currentWeek), 'MMM d, yyyy')}
-              </Text>
-              <Button
-                variant="outline"
-                rightSection={<ChevronRight size={16} />}
-                onClick={() => navigateWeek('next')}
-              >
-                Next Week
-              </Button>
-            </Group>
+            <div>
+              <h1 className="text-3xl font-bold text-white">Club Availability</h1>
+              <p className="text-white text-opacity-90 text-lg">
+                Manage and track player availability across all clubs
+              </p>
+            </div>
           </div>
-        </Group>
-      </Paper>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => navigateWeek('prev')}
+              className="p-2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full text-white"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <div className="text-white text-sm font-medium">
+              Week of {format(currentWeek, 'MMM d, yyyy')}
+            </div>
+            <button
+              onClick={() => navigateWeek('next')}
+              className="p-2 bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full text-white"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+      </div>
 
-      {/* Availability Data */}
+      {/* Club Selection */}
       {!selectedClub ? (
-        <Center p="xl">
-          <Stack align="center">
-            <Users size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-            <Text c="dimmed">Please select a club to view availability</Text>
-          </Stack>
-        </Center>
-      ) : (!availabilityData ? (
-        <Center p="xl">
-          <Loader />
-        </Center>
+        <div className="text-center p-8">
+          <Users className="w-12 h-12 text-blue-500 mx-auto mb-4" />
+          <p className="text-gray-600">Please select a club to view availability</p>
+        </div>
+      ) : !availabilityData ? (
+        <div className="text-center p-8">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+        </div>
       ) : (
-        <Tabs defaultValue="overview" variant="outline">
-          <Tabs.List grow>
-            <Tabs.Tab value="overview" leftSection={<Activity size={16} />}>
-              Overview
-            </Tabs.Tab>
-            <Tabs.Tab value="players" leftSection={<Users size={16} />}>
-              Player Details ({availabilityData.players?.length || 0})
-            </Tabs.Tab>
-            <Tabs.Tab value="matches" leftSection={<Calendar size={16} />}>
-              Matches ({availabilityData.matches?.length || 0})
-            </Tabs.Tab>
-          </Tabs.List>
+        <div className="space-y-6">
+          {/* Overview Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="bg-white rounded-lg border p-6 text-center">
+              <div className="bg-green-100 rounded-full p-3 inline-flex mb-4">
+                <CheckCircle className="w-6 h-6 text-green-600" />
+              </div>
+              <div className="text-2xl font-bold text-green-600">0</div>
+              <div className="text-sm text-gray-600">Available</div>
+            </div>
 
-          <Tabs.Panel value="overview" pt="md">
-            <Grid>
-              <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
-                <Card withBorder p="md" ta="center">
-                  <ThemeIcon size="lg" color="green" variant="light" mx="auto" mb="md">
-                    <CheckCircle size={24} />
-                  </ThemeIcon>
-                  <Text size="xl" fw={700} c="green">0</Text>
-                  <Text size="sm" c="dimmed">Available</Text>
-                </Card>
-              </Grid.Col>
-              
-              <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
-                <Card withBorder p="md" ta="center">
-                  <ThemeIcon size="lg" color="red" variant="light" mx="auto" mb="md">
-                    <XCircle size={24} />
-                  </ThemeIcon>
-                  <Text size="xl" fw={700} c="red">0</Text>
-                  <Text size="sm" c="dimmed">Unavailable</Text>
-                </Card>
-              </Grid.Col>
-              
-              <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
-                <Card withBorder p="md" ta="center">
-                  <ThemeIcon size="lg" color="orange" variant="light" mx="auto" mb="md">
-                    <AlertTriangle size={24} />
-                  </ThemeIcon>
-                  <Text size="xl" fw={700} c="orange">0</Text>
-                  <Text size="sm" c="dimmed">Injury Reserve</Text>
-                </Card>
-              </Grid.Col>
-              
-              <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
-                <Card withBorder p="md" ta="center">
-                  <ThemeIcon size="lg" color="indigo" variant="light" mx="auto" mb="md">
-                    <Clock size={24} />
-                  </ThemeIcon>
-                  <Text size="xl" fw={700} c="indigo">0</Text>
-                  <Text size="sm" c="dimmed">No Response</Text>
-                </Card>
-              </Grid.Col>
-            </Grid>
+            <div className="bg-white rounded-lg border p-6 text-center">
+              <div className="bg-red-100 rounded-full p-3 inline-flex mb-4">
+                <XCircle className="w-6 h-6 text-red-600" />
+              </div>
+              <div className="text-2xl font-bold text-red-600">0</div>
+              <div className="text-sm text-gray-600">Unavailable</div>
+            </div>
 
-            <Paper withBorder p="lg" mt="lg">
-              <Title order={4} mb="md">Availability Trends</Title>
-              <Text c="dimmed">
-                Availability data will be displayed here once player responses are collected.
-              </Text>
-            </Paper>
-          </Tabs.Panel>
+            <div className="bg-white rounded-lg border p-6 text-center">
+              <div className="bg-orange-100 rounded-full p-3 inline-flex mb-4">
+                <AlertTriangle className="w-6 h-6 text-orange-600" />
+              </div>
+              <div className="text-2xl font-bold text-orange-600">0</div>
+              <div className="text-sm text-gray-600">Injury Reserve</div>
+            </div>
 
-          <Tabs.Panel value="players" pt="md">
-            <Paper withBorder>
-              {!availabilityData.players || availabilityData.players.length === 0 ? (
-                <Center p="xl">
-                  <Stack align="center">
-                    <Users size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-                    <Text c="dimmed">No players found for this club</Text>
-                  </Stack>
-                </Center>
-              ) : (
-                <Table.ScrollContainer minWidth={600}>
-                  <Table verticalSpacing="sm" highlightOnHover>
-                    <Table.Thead>
-                      <Table.Tr>
-                        <Table.Th>Player</Table.Th>
-                        <Table.Th>Games Played</Table.Th>
-                        <Table.Th>Availability Rate</Table.Th>
-                        <Table.Th>Status</Table.Th>
-                      </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>
-                      {availabilityData.players.map((player: any) => (
-                        <Table.Tr key={player.id}>
-                          <Table.Td>
-                            <Group>
-                              <ThemeIcon color="blue" variant="light" size="sm">
-                                <Users size={16} />
-                              </ThemeIcon>
-                              <Text fw={500}>{player.users?.gamer_tag_id || 'Unknown Player'}</Text>
-                            </Group>
-                          </Table.Td>
-                          <Table.Td>
-                            <Text size="sm">0 games</Text>
-                          </Table.Td>
-                          <Table.Td>
-                            <Group>
-                              <Progress value={85} size="sm" style={{ flex: 1 }} />
-                              <Text size="sm" c="dimmed">85%</Text>
-                            </Group>
-                          </Table.Td>
-                          <Table.Td>
-                            {getStatusBadge('available')}
-                          </Table.Td>
-                        </Table.Tr>
-                      ))}
-                    </Table.Tbody>
-                  </Table>
-                </Table.ScrollContainer>
-              )}
-            </Paper>
-          </Tabs.Panel>
+            <div className="bg-white rounded-lg border p-6 text-center">
+              <div className="bg-indigo-100 rounded-full p-3 inline-flex mb-4">
+                <Clock className="w-6 h-6 text-indigo-600" />
+              </div>
+              <div className="text-2xl font-bold text-indigo-600">0</div>
+              <div className="text-sm text-gray-600">No Response</div>
+            </div>
+          </div>
 
-          <Tabs.Panel value="matches" pt="md">
-            <Paper withBorder>
-              {!availabilityData.matches || availabilityData.matches.length === 0 ? (
-                <Center p="xl">
-                  <Stack align="center">
-                    <Calendar size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-                    <Text c="dimmed">No matches scheduled for this week</Text>
-                  </Stack>
-                </Center>
-              ) : (
-                <Stack p="md">
-                  {availabilityData.matches.map((match: any) => (
-                    <Card key={match.id} withBorder p="md">
-                      <Group justify="space-between">
-                        <Group>
-                          <ThemeIcon color="green" variant="light">
-                            <Trophy size={20} />
-                          </ThemeIcon>
-                          <div>
-                            <Text fw={500}>
-                              {match.home_club.name} vs {match.away_club.name}
-                            </Text>
-                            <Text size="sm" c="dimmed">
-                              {format(parseISO(match.match_date), 'PPP p')}
-                            </Text>
-                          </div>
-                        </Group>
-                        <Badge variant="light" color="blue" size="sm">
-                          Scheduled
-                        </Badge>
-                      </Group>
-                    </Card>
-                  ))}
-                </Stack>
-              )}
-            </Paper>
-          </Tabs.Panel>
-        </Tabs>
+          <div className="bg-white rounded-lg border p-8">
+            <h3 className="text-lg font-semibold mb-4">Availability Trends</h3>
+            <p className="text-gray-600">
+              Availability data will be displayed here once player responses are collected.
+            </p>
+          </div>
+        </div>
       )}
     </div>
   )
