@@ -165,21 +165,21 @@ export default function UpdateCurrentSeasonPageMantine() {
 
   if (loading) {
     return (
-      <Container size="md" py="xl">
+      <div className="max-w-4xl mx-auto py-8">
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Season Data...</Text>
+            <Text c="blue">Loading Season Data...</Text>
           </Stack>
         </Center>
-      </Container>
+      </div>
     )
   }
 
   const currentSeason = getCurrentSeason()
 
   return (
-    <Container size="md" py="xl">
+    <div className="max-w-4xl mx-auto py-8">
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-orange-6) 0%, var(--mantine-color-yellow-6) 100%)' }}>
         <Stack align="center" gap="md">
@@ -209,8 +209,8 @@ export default function UpdateCurrentSeasonPageMantine() {
             <Group justify="space-between">
               <div>
                 <Text fw={600} size="lg">{currentSeason.name}</Text>
-                <Text c="dimmed">Season {currentSeason.season_number}</Text>
-                <Text size="sm" c="dimmed" mt="xs">
+                <Text c="blue">Season {currentSeason.season_number}</Text>
+                <Text size="sm" c="blue" mt="xs">
                   {new Date(currentSeason.start_date).toLocaleDateString()} - {new Date(currentSeason.end_date).toLocaleDateString()}
                 </Text>
               </div>
@@ -277,7 +277,7 @@ export default function UpdateCurrentSeasonPageMantine() {
         {/* All Seasons Overview */}
         <Paper withBorder p="lg">
           <Group mb="md">
-            <ThemeIcon color="gray" variant="light">
+            <ThemeIcon color="indigo" variant="light">
               <Calendar size={20} />
             </ThemeIcon>
             <Title order={3}>All Seasons</Title>
@@ -296,7 +296,7 @@ export default function UpdateCurrentSeasonPageMantine() {
                         </ThemeIcon>
                       )}
                     </Group>
-                    <Text size="sm" c="dimmed">
+                    <Text size="sm" c="blue">
                       Season {season.season_number} • {new Date(season.start_date).toLocaleDateString()} - {new Date(season.end_date).toLocaleDateString()}
                     </Text>
                   </div>
@@ -311,6 +311,6 @@ export default function UpdateCurrentSeasonPageMantine() {
           </Stack>
         </Paper>
       </Stack>
-    </Container>
+    </div>
   )
 }
