@@ -292,19 +292,19 @@ export default function ClubManagementPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <div className="max-w-7xl mx-auto py-8">
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Club Management...</Text>
+            <Text c="blue">Loading Club Management...</Text>
           </Stack>
         </Center>
-      </Container>
+      </div>
     )
   }
 
   return (
-    <Container size="xl" py="md">
+    <div className="max-w-7xl mx-auto py-4">
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-blue-6) 0%, var(--mantine-color-green-6) 100%)' }}>
         <Group justify="space-between">
@@ -324,7 +324,7 @@ export default function ClubManagementPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{clubs.length}</Text>
-              <Text size="sm" c="dimmed">Total Clubs</Text>
+              <Text size="sm" c="blue">Total Clubs</Text>
             </Stack>
           </Card>
         </Group>
@@ -405,21 +405,21 @@ export default function ClubManagementPageMantine() {
 
               <Stack gap="xs">
                 <Group justify="space-between">
-                  <Text size="sm" c="dimmed">Record</Text>
+                  <Text size="sm" c="blue">Record</Text>
                   <Text size="sm" fw={500}>
                     {club.wins}W - {club.losses}L - {club.draws}D
                   </Text>
                 </Group>
 
                 <Group justify="space-between">
-                  <Text size="sm" c="dimmed">Points</Text>
+                  <Text size="sm" c="blue">Points</Text>
                   <Badge color="blue" variant="light" size="sm">
                     {club.points}
                   </Badge>
                 </Group>
 
                 <Group justify="space-between">
-                  <Text size="sm" c="dimmed">Goal Difference</Text>
+                  <Text size="sm" c="blue">Goal Difference</Text>
                   <Text size="sm" fw={500} c={club.goal_difference >= 0 ? "green" : "red"}>
                     {club.goal_difference >= 0 ? '+' : ''}{club.goal_difference}
                   </Text>
@@ -427,7 +427,7 @@ export default function ClubManagementPageMantine() {
 
                 {club.ea_club_id && (
                   <Group justify="space-between">
-                    <Text size="sm" c="dimmed">EA Club ID</Text>
+                    <Text size="sm" c="blue">EA Club ID</Text>
                     <Text size="sm" fw={500}>{club.ea_club_id}</Text>
                   </Group>
                 )}
@@ -436,12 +436,11 @@ export default function ClubManagementPageMantine() {
           </Grid.Col>
         ))}
       </Grid>
-
       {filteredClubs.length === 0 && (
         <Center p="xl">
           <Stack align="center">
             <Building2 size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-            <Text c="dimmed">
+            <Text c="blue">
               {searchTerm ? `No clubs match "${searchTerm}"` : "No clubs found"}
             </Text>
             {!searchTerm && (
@@ -573,6 +572,6 @@ export default function ClubManagementPageMantine() {
           </Stack>
         )}
       </Modal>
-    </Container>
+    </div>
   )
 }
