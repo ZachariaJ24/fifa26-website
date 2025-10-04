@@ -267,7 +267,7 @@ export default function SetupBotConfigPageMantine() {
 
   if (loading) {
     return (
-      <Container size="md" py="xl">
+      <Container size="md" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Bot size={48} stroke={1} color="var(--mantine-color-blue-5)" />
@@ -279,7 +279,7 @@ export default function SetupBotConfigPageMantine() {
   }
 
   return (
-    <Container size="md" py="md">
+    <Container size="md" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-blue-6) 0%, var(--mantine-color-indigo-6) 100%)' }}>
         <Stack align="center" gap="md">

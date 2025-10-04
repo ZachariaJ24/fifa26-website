@@ -155,7 +155,7 @@ export default function EAStatsPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
@@ -171,7 +171,7 @@ export default function EAStatsPageMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <Container size="xl" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-blue-6) 0%, var(--mantine-color-green-6) 100%)' }}>
         <Group justify="space-between">
@@ -188,7 +188,7 @@ export default function EAStatsPageMantine() {
               </Text>
             </div>
           </Group>
-          <Card withBorder p="md" bg="white">
+          <Card withBorder p="md" bg="dark.6">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{teams.length}</Text>
               <Text size="sm" c="cyan">Active Teams</Text>
@@ -229,7 +229,7 @@ export default function EAStatsPageMantine() {
       </Paper>
 
       {/* Teams Grid */}
-      <Paper withBorder p="lg">
+      <Paper withBorder p="lg" bg="dark.7">
         <Group mb="md">
           <ThemeIcon color="green" variant="light">
             <Trophy size={20} />

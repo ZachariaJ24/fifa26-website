@@ -282,7 +282,7 @@ export default function UserAccountManagerPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
@@ -294,7 +294,7 @@ export default function UserAccountManagerPageMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <Container size="xl" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-blue-6) 0%, var(--mantine-color-green-6) 100%)' }}>
         <Group justify="space-between">
@@ -311,7 +311,7 @@ export default function UserAccountManagerPageMantine() {
               </Text>
             </div>
           </Group>
-          <Card withBorder p="md" bg="white">
+          <Card withBorder p="md" bg="dark.6">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{users.length}</Text>
               <Text size="sm" c="cyan">Total Users</Text>
@@ -339,7 +339,7 @@ export default function UserAccountManagerPageMantine() {
       </Paper>
 
       {/* Users Table */}
-      <Paper withBorder>
+      <Paper withBorder bg="dark.7">
         {filteredUsers.length === 0 ? (
           <Center p="xl">
             <Stack align="center">

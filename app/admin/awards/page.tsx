@@ -405,7 +405,7 @@ export default function AwardsManagementPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
@@ -417,7 +417,7 @@ export default function AwardsManagementPageMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <Container size="xl" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-yellow-6) 0%, var(--mantine-color-orange-6) 100%)' }}>
         <Group justify="space-between">
@@ -434,7 +434,7 @@ export default function AwardsManagementPageMantine() {
               </Text>
             </div>
           </Group>
-          <Card withBorder p="md" bg="white">
+          <Card withBorder p="md" bg="dark.6">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="orange">{teamAwards.length + playerAwards.length}</Text>
               <Text size="sm" c="cyan">Total Awards</Text>
@@ -477,7 +477,7 @@ export default function AwardsManagementPageMantine() {
         </Tabs.List>
 
         <Tabs.Panel value="team-awards" pt="md">
-          <Paper withBorder>
+          <Paper withBorder bg="dark.7">
             <Group justify="space-between" p="md">
               <Title order={4}>Team Awards</Title>
               <Button leftSection={<Plus size={16} />} onClick={openTeamAwardModal}>
@@ -546,7 +546,7 @@ export default function AwardsManagementPageMantine() {
         </Tabs.Panel>
 
         <Tabs.Panel value="player-awards" pt="md">
-          <Paper withBorder>
+          <Paper withBorder bg="dark.7">
             <Group justify="space-between" p="md">
               <Title order={4}>Player Awards</Title>
               <Button leftSection={<Plus size={16} />} onClick={openPlayerAwardModal}>

@@ -90,7 +90,7 @@ export default function CompleteUserDeletionPageMantine() {
   }
 
   return (
-    <Container size="md" py="xl">
+    <Container size="md" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-red-6) 0%, var(--mantine-color-orange-6) 100%)' }}>
         <Group>

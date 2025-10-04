@@ -138,7 +138,7 @@ export default function ResetUserPasswordPageMantine() {
   }
 
   return (
-    <Container size="md" py="md">
+    <Container size="md" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-orange-6) 0%, var(--mantine-color-red-6) 100%)' }}>
         <Stack align="center" gap="md">
@@ -175,7 +175,7 @@ export default function ResetUserPasswordPageMantine() {
         </Tabs.List>
 
         <Tabs.Panel value="search" pt="md">
-          <Paper withBorder p="lg">
+          <Paper withBorder p="lg" bg="dark.7">
             <Group mb="md">
               <ThemeIcon color="blue" variant="light">
                 <Search size={20} />
@@ -287,7 +287,7 @@ export default function ResetUserPasswordPageMantine() {
         </Tabs.Panel>
 
         <Tabs.Panel value="help" pt="md">
-          <Paper withBorder p="lg">
+          <Paper withBorder p="lg" bg="dark.7">
             <Group mb="md">
               <ThemeIcon color="orange" variant="light">
                 <AlertTriangle size={20} />

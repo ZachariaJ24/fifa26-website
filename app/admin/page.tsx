@@ -435,7 +435,7 @@ export default function AdminDashboardPage() {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto py-8">
+      <div className="max-w-7xl mx-auto py-8" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
@@ -451,7 +451,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-8">
+    <div className="max-w-7xl mx-auto py-8" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header Section */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-green-6) 0%, var(--mantine-color-blue-6) 100%)' }}>
         <Center>

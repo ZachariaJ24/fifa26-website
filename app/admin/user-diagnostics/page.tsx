@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 
 export default function UserDiagnosticsPageMantine() {
   return (
-    <Container size="xl" py="xl">
+    <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-green-6) 0%, var(--mantine-color-blue-6) 100%)' }}>
         <Stack align="center" gap="md">

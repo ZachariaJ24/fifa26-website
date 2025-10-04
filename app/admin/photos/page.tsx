@@ -399,7 +399,7 @@ export default function PhotoGalleryPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Stack align="center" h={400} justify="center">
           <Camera size={48} stroke={1} color="var(--mantine-color-blue-5)" />
           <Text c="cyan">Loading Photo Gallery...</Text>
@@ -409,7 +409,7 @@ export default function PhotoGalleryPageMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <Container size="xl" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-pink-6) 0%, var(--mantine-color-purple-6) 100%)' }}>
         <Group justify="space-between">
@@ -426,7 +426,7 @@ export default function PhotoGalleryPageMantine() {
               </Text>
             </div>
           </Group>
-          <Card withBorder p="md" bg="white">
+          <Card withBorder p="md" bg="dark.6">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="pink">{photos.length}</Text>
               <Text size="sm" c="cyan">Total Photos</Text>
@@ -504,7 +504,7 @@ export default function PhotoGalleryPageMantine() {
       </Group>
 
       {/* Photo Grid */}
-      <Paper withBorder p="lg">
+      <Paper withBorder p="lg" bg="dark.7">
         <Group justify="space-between" mb="md">
           <Title order={4}>
             {selectedCategory === "all" ? "All Photos" : selectedCategory}

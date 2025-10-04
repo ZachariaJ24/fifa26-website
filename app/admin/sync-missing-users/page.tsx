@@ -191,7 +191,7 @@ export default function SyncMissingUsersPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
@@ -203,7 +203,7 @@ export default function SyncMissingUsersPageMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <Container size="xl" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-blue-6) 0%, var(--mantine-color-green-6) 100%)' }}>
         <Group justify="space-between">
@@ -220,7 +220,7 @@ export default function SyncMissingUsersPageMantine() {
               </Text>
             </div>
           </Group>
-          <Card withBorder p="md" bg="white">
+          <Card withBorder p="md" bg="dark.6">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{stats.missingUsers}</Text>
               <Text size="sm" c="cyan">Missing Users</Text>
@@ -317,7 +317,7 @@ export default function SyncMissingUsersPageMantine() {
       )}
 
       {/* Missing Users Table */}
-      <Paper withBorder>
+      <Paper withBorder bg="dark.7">
         <Group justify="space-between" p="md">
           <Title order={4}>Missing Users</Title>
           {missingUsers.length > 0 && (

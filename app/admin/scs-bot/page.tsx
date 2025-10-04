@@ -284,7 +284,7 @@ export default function SCSBotPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Bot size={48} stroke={1} color="var(--mantine-color-blue-5)" />
@@ -296,7 +296,7 @@ export default function SCSBotPageMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <Container size="xl" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-indigo-6) 0%, var(--mantine-color-purple-6) 100%)' }}>
         <Group justify="space-between">
@@ -313,7 +313,7 @@ export default function SCSBotPageMantine() {
               </Text>
             </div>
           </Group>
-          <Card withBorder p="md" bg="white">
+          <Card withBorder p="md" bg="dark.6">
             <Stack gap="xs" align="center">
               <Badge 
                 color={botStatus === 'online' ? 'green' : botStatus === 'offline' ? 'red' : 'orange'}
@@ -434,7 +434,7 @@ export default function SCSBotPageMantine() {
         </Tabs.List>
 
         <Tabs.Panel value="config" pt="md">
-          <Paper withBorder p="lg">
+          <Paper withBorder p="lg" bg="dark.7">
             <Group mb="md">
               <ThemeIcon color="blue" variant="light">
                 <Settings size={20} />
@@ -484,7 +484,7 @@ export default function SCSBotPageMantine() {
         </Tabs.Panel>
 
         <Tabs.Panel value="discord" pt="md">
-          <Paper withBorder p="lg">
+          <Paper withBorder p="lg" bg="dark.7">
             <Group mb="md">
               <ThemeIcon color="indigo" variant="light">
                 <MessageCircle size={20} />
@@ -527,7 +527,7 @@ export default function SCSBotPageMantine() {
         </Tabs.Panel>
 
         <Tabs.Panel value="twitch" pt="md">
-          <Paper withBorder p="lg">
+          <Paper withBorder p="lg" bg="dark.7">
             <Group mb="md">
               <ThemeIcon color="purple" variant="light">
                 <Video size={20} />

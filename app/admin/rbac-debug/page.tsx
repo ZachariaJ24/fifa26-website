@@ -217,7 +217,7 @@ export default function RBACDebugPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
@@ -229,7 +229,7 @@ export default function RBACDebugPageMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <Container size="xl" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-red-6) 0%, var(--mantine-color-orange-6) 100%)' }}>
         <Group justify="space-between">
@@ -246,7 +246,7 @@ export default function RBACDebugPageMantine() {
               </Text>
             </div>
           </Group>
-          <Card withBorder p="md" bg="white">
+          <Card withBorder p="md" bg="dark.6">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="red">{debugInfo.total_users}</Text>
               <Text size="sm" c="cyan">Total Users</Text>
@@ -329,7 +329,7 @@ export default function RBACDebugPageMantine() {
         </Tabs.List>
 
         <Tabs.Panel value="users" pt="md">
-          <Paper withBorder>
+          <Paper withBorder bg="dark.7">
             <Group justify="space-between" p="md">
               <Title order={4}>User Role Assignments</Title>
             </Group>
@@ -427,7 +427,7 @@ export default function RBACDebugPageMantine() {
         </Tabs.Panel>
 
         <Tabs.Panel value="roles" pt="md">
-          <Paper withBorder>
+          <Paper withBorder bg="dark.7">
             <Group justify="space-between" p="md">
               <Title order={4}>Role Permissions Matrix</Title>
             </Group>
@@ -484,7 +484,7 @@ export default function RBACDebugPageMantine() {
         </Tabs.Panel>
 
         <Tabs.Panel value="diagnostics" pt="md">
-          <Paper withBorder p="lg">
+          <Paper withBorder p="lg" bg="dark.7">
             <Group mb="md">
               <ThemeIcon color="orange" variant="light">
                 <Settings size={20} />

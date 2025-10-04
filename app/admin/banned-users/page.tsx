@@ -444,7 +444,7 @@ export default function BannedUsersPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
@@ -460,7 +460,7 @@ export default function BannedUsersPageMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <Container size="xl" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header Section */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-red-6) 0%, var(--mantine-color-orange-6) 100%)' }}>
         <Center>
@@ -490,7 +490,7 @@ export default function BannedUsersPageMantine() {
         </Tabs.List>
 
         <Tabs.Panel value="banned" pt="md">
-          <Paper withBorder>
+          <Paper withBorder bg="dark.7">
             {/* Header */}
             <Group justify="space-between" p="md">
               <div>
@@ -623,7 +623,7 @@ export default function BannedUsersPageMantine() {
         </Tabs.Panel>
 
         <Tabs.Panel value="ban" pt="md">
-          <Paper withBorder>
+          <Paper withBorder bg="dark.7">
             <Group justify="space-between" p="md">
               <div>
                 <Title order={3}>User Management</Title>

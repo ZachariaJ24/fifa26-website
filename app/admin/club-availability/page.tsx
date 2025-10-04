@@ -127,7 +127,7 @@ export default function ClubAvailabilityPage() {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto py-4">
+      <div className="max-w-7xl mx-auto py-4" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <div className="flex items-center justify-center p-8">
           <div className="text-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
@@ -139,7 +139,7 @@ export default function ClubAvailabilityPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-4">
+    <div className="max-w-7xl mx-auto py-4" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <div className="bg-gradient-to-r from-blue-600 to-green-600 rounded-lg p-8 mb-8">
         <div className="flex justify-between items-center">

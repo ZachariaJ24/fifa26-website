@@ -336,7 +336,7 @@ export default function FeaturedGamesPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
@@ -348,7 +348,7 @@ export default function FeaturedGamesPageMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <Container size="xl" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-yellow-6) 0%, var(--mantine-color-orange-6) 100%)' }}>
         <Group justify="space-between">
@@ -365,7 +365,7 @@ export default function FeaturedGamesPageMantine() {
               </Text>
             </div>
           </Group>
-          <Card withBorder p="md" bg="white">
+          <Card withBorder p="md" bg="dark.6">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="orange">{featuredGames.length}</Text>
               <Text size="sm" c="cyan">Featured Games</Text>
@@ -429,7 +429,7 @@ export default function FeaturedGamesPageMantine() {
       </Group>
 
       {/* Featured Games Table */}
-      <Paper withBorder>
+      <Paper withBorder bg="dark.7">
         {featuredGames.length === 0 ? (
           <Center p="xl">
             <Stack align="center">

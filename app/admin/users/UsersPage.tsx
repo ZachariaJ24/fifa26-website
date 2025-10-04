@@ -252,7 +252,7 @@ export default function UsersPageMantine() {
 
   if (loading && users.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto py-8">
+      <div className="max-w-7xl mx-auto py-8" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
@@ -264,9 +264,9 @@ export default function UsersPageMantine() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto py-4">
+    <div className="max-w-7xl mx-auto py-4" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Header */}
-      <Paper p="lg" mb="lg" withBorder>
+      <Paper p="lg" mb="lg" withBorder bg="dark.7">
         <Group justify="space-between" mb="md">
           <div>
             <Title order={2}>User Management</Title>
@@ -286,7 +286,7 @@ export default function UsersPageMantine() {
         </Group>
 
         {/* Filters */}
-        <Card withBorder p="md">
+        <Card withBorder p="md" bg="dark.8">
           <Group mb="md">
             <Text fw={500}>Filters</Text>
             <Button variant="subtle" size="xs" leftSection={<IconX size={14} />} onClick={clearFilters}>
@@ -341,7 +341,7 @@ export default function UsersPageMantine() {
       </Paper>
 
       {/* Users Table */}
-      <Paper withBorder>
+      <Paper withBorder bg="dark.7">
         <Group justify="space-between" p="md">
           <Text fw={500}>
             Users ({totalUsers} total)

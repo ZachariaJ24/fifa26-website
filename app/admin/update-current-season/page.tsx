@@ -198,7 +198,7 @@ export default function UpdateCurrentSeasonPageMantine() {
       <Stack gap="xl">
         {/* Current Season Display */}
         {currentSeason && (
-          <Card withBorder p="lg">
+          <Card withBorder p="lg" bg="dark.8">
             <Group mb="md">
               <ThemeIcon color="green" variant="light">
                 <CheckCircle size={20} />
@@ -222,7 +222,7 @@ export default function UpdateCurrentSeasonPageMantine() {
         )}
 
         {/* Season Selection */}
-        <Paper withBorder p="lg">
+        <Paper withBorder p="lg" bg="dark.7">
           <Group mb="md">
             <ThemeIcon color="blue" variant="light">
               <Clock size={20} />
@@ -275,7 +275,7 @@ export default function UpdateCurrentSeasonPageMantine() {
         </Paper>
 
         {/* All Seasons Overview */}
-        <Paper withBorder p="lg">
+        <Paper withBorder p="lg" bg="dark.7">
           <Group mb="md">
             <ThemeIcon color="indigo" variant="light">
               <Calendar size={20} />

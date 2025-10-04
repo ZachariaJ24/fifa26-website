@@ -398,7 +398,7 @@ export default function EAMatchesPageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <Container size="xl" py="xl" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
@@ -410,7 +410,7 @@ export default function EAMatchesPageMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <Container size="xl" py="md" style={{ minHeight: '100vh', backgroundColor: 'var(--mantine-color-dark-9)' }}>
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-green-6) 0%, var(--mantine-color-blue-6) 100%)' }}>
         <Group justify="space-between">
@@ -427,7 +427,7 @@ export default function EAMatchesPageMantine() {
               </Text>
             </div>
           </Group>
-          <Card withBorder p="md" bg="white">
+          <Card withBorder p="md" bg="dark.6">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="green">{matches.length}</Text>
               <Text size="sm" c="cyan">EA Matches</Text>
@@ -478,7 +478,7 @@ export default function EAMatchesPageMantine() {
       </Paper>
 
       {/* Matches Table */}
-      <Paper withBorder>
+      <Paper withBorder bg="dark.7">
         {!selectedSeason ? (
           <Center p="xl">
             <Stack align="center">
