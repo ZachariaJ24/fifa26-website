@@ -288,19 +288,19 @@ export default function SyncAuthDatabasePageMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <div className="max-w-7xl mx-auto py-8">
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Analyzing Auth-Database Sync...</Text>
+            <Text c="blue">Analyzing Auth-Database Sync...</Text>
           </Stack>
         </Center>
-      </Container>
+      </div>
     )
   }
 
   return (
-    <Container size="xl" py="md">
+    <div className="max-w-7xl mx-auto py-4">
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-blue-6) 0%, var(--mantine-color-purple-6) 100%)' }}>
         <Group justify="space-between">
@@ -320,7 +320,7 @@ export default function SyncAuthDatabasePageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{stats.authUsers}</Text>
-              <Text size="sm" c="dimmed">Auth Users</Text>
+              <Text size="sm" c="blue">Auth Users</Text>
             </Stack>
           </Card>
         </Group>
@@ -351,7 +351,7 @@ export default function SyncAuthDatabasePageMantine() {
           <Stack gap="md">
             <Group justify="space-between">
               <Text fw={500}>Synchronizing...</Text>
-              <Text size="sm" c="dimmed">{Math.round(syncProgress)}% complete</Text>
+              <Text size="sm" c="blue">{Math.round(syncProgress)}% complete</Text>
             </Group>
             <Progress value={syncProgress} size="lg" />
           </Stack>
@@ -373,7 +373,7 @@ export default function SyncAuthDatabasePageMantine() {
             <Database size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="green">{stats.dbUsers}</Text>
-          <Text size="sm" c="dimmed">DB Profiles</Text>
+          <Text size="sm" c="blue">DB Profiles</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -381,7 +381,7 @@ export default function SyncAuthDatabasePageMantine() {
             <AlertTriangle size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="orange">{stats.missingProfiles}</Text>
-          <Text size="sm" c="dimmed">Missing Profiles</Text>
+          <Text size="sm" c="blue">Missing Profiles</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -389,7 +389,7 @@ export default function SyncAuthDatabasePageMantine() {
             <Users size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="red">{stats.orphanedProfiles}</Text>
-          <Text size="sm" c="dimmed">Orphaned Profiles</Text>
+          <Text size="sm" c="blue">Orphaned Profiles</Text>
         </Card>
       </Group>
 
@@ -422,7 +422,7 @@ export default function SyncAuthDatabasePageMantine() {
             <Title order={4} mb="md">Current Sync Status</Title>
             
             {syncResults.length === 0 ? (
-              <Text c="dimmed">Run analysis to check sync status</Text>
+              <Text c="blue">Run analysis to check sync status</Text>
             ) : (
               <Stack gap="md">
                 {syncResults.map((result, index) => (
@@ -445,7 +445,7 @@ export default function SyncAuthDatabasePageMantine() {
             <Title order={4} mb="md">Sync Operation Results</Title>
             
             {syncResults.length === 0 ? (
-              <Text c="dimmed">No sync operations performed yet</Text>
+              <Text c="blue">No sync operations performed yet</Text>
             ) : (
               <List spacing="sm">
                 {syncResults.map((result, index) => (
@@ -506,6 +506,6 @@ export default function SyncAuthDatabasePageMantine() {
           </Paper>
         </Tabs.Panel>
       </Tabs>
-    </Container>
+    </div>
   )
 }
