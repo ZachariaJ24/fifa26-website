@@ -6,7 +6,6 @@ import { useSupabase } from "@/lib/supabase/client"
 import { useToast } from "@/components/ui/use-toast"
 import Link from "next/link"
 import {
-  Container,
   Title,
   Text,
   Grid,
@@ -145,6 +144,7 @@ export default function AdminDashboardPage() {
       description: "Manage game schedule and results",
       icon: <Calendar size={24} />,
       href: "/admin/schedule",
+      category: "game",
       color: "yellow"
     },
     {
@@ -435,14 +435,14 @@ export default function AdminDashboardPage() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <div className="max-w-7xl mx-auto py-8">
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
             <Text c="dimmed">Loading Admin Dashboard...</Text>
           </Stack>
         </Center>
-      </Container>
+      </div>
     )
   }
 
@@ -451,7 +451,7 @@ export default function AdminDashboardPage() {
   }
 
   return (
-    <Container size="xl" py="xl">
+    <div className="max-w-7xl mx-auto py-8">
       {/* Hero Header Section */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-green-6) 0%, var(--mantine-color-blue-6) 100%)' }}>
         <Center>
@@ -560,6 +560,6 @@ export default function AdminDashboardPage() {
         </Group>
         <AdminDiagnostics />
       </Paper>
-    </Container>
+    </div>
   )
 }
