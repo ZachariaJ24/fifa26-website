@@ -212,7 +212,7 @@ export default function UsersPageMantine() {
 
     return roles.map((roleObj, index) => {
       const role = roleObj.role.toLowerCase()
-      let color = 'gray'
+      let color = 'cyan'
       
       if (role === 'admin') color = 'red'
       else if (role === 'gm' || role === 'agm') color = 'blue'
@@ -256,7 +256,7 @@ export default function UsersPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="blue">Loading users...</Text>
+            <Text c="cyan">Loading users...</Text>
           </Stack>
         </Center>
       </div>
@@ -270,7 +270,7 @@ export default function UsersPageMantine() {
         <Group justify="space-between" mb="md">
           <div>
             <Title order={2}>User Management</Title>
-            <Text c="blue">Manage user accounts, roles, and team assignments</Text>
+            <Text c="cyan">Manage user accounts, roles, and team assignments</Text>
           </div>
           <Group>
             <Button variant="outline" leftSection={<IconDownload size={16} />} onClick={handleExportCSV}>
@@ -346,7 +346,7 @@ export default function UsersPageMantine() {
           <Text fw={500}>
             Users ({totalUsers} total)
           </Text>
-          <Text size="sm" c="blue">
+          <Text size="sm" c="cyan">
             Page {currentPage} of {totalPages}
           </Text>
         </Group>
@@ -361,7 +361,7 @@ export default function UsersPageMantine() {
           <Center p="xl">
             <Stack align="center">
               <IconUsers size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-              <Text c="blue">No users found</Text>
+              <Text c="cyan">No users found</Text>
               <Button variant="outline" onClick={clearFilters}>
                 Clear filters
               </Button>
@@ -393,11 +393,11 @@ export default function UsersPageMantine() {
                           <Text fw={500} size="sm">
                             {user.gamer_tag_id || 'No username'}
                           </Text>
-                          <Text size="xs" c="blue">
+                          <Text size="xs" c="cyan">
                             {user.email}
                           </Text>
                           {user.discord_name && (
-                            <Text size="xs" c="blue">
+                            <Text size="xs" c="cyan">
                               Discord: {user.discord_name}
                             </Text>
                           )}
@@ -415,7 +415,7 @@ export default function UsersPageMantine() {
                           {user.clubs[0].name}
                         </Badge>
                       ) : (
-                        <Text size="sm" c="blue">No club</Text>
+                        <Text size="sm" c="cyan">No club</Text>
                       )}
                     </Table.Td>
                     <Table.Td>
@@ -426,7 +426,7 @@ export default function UsersPageMantine() {
                           </Badge>
                         )}
                         {user.secondary_position && (
-                          <Badge variant="outline" size="xs" c="blue">
+                          <Badge variant="outline" size="xs" c="cyan">
                             {user.secondary_position}
                           </Badge>
                         )}
@@ -436,7 +436,7 @@ export default function UsersPageMantine() {
                       {getStatusBadge(user)}
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="blue">
+                      <Text size="sm" c="cyan">
                         {user.last_login_at 
                           ? new Date(user.last_login_at).toLocaleDateString() 
                           : 'Never'}

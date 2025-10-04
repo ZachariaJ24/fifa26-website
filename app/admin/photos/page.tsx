@@ -402,7 +402,7 @@ export default function PhotoGalleryPageMantine() {
       <Container size="xl" py="xl">
         <Stack align="center" h={400} justify="center">
           <Camera size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-          <Text c="dimmed">Loading Photo Gallery...</Text>
+          <Text c="cyan">Loading Photo Gallery...</Text>
         </Stack>
       </Container>
     )
@@ -418,10 +418,10 @@ export default function PhotoGalleryPageMantine() {
               <Camera size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Photo Gallery
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage photos and media for the FIFA league
               </Text>
             </div>
@@ -429,7 +429,7 @@ export default function PhotoGalleryPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="pink">{photos.length}</Text>
-              <Text size="sm" c="dimmed">Total Photos</Text>
+              <Text size="sm" c="cyan">Total Photos</Text>
             </Stack>
           </Card>
         </Group>
@@ -473,7 +473,7 @@ export default function PhotoGalleryPageMantine() {
             <ImageIcon size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="pink">{photos.length}</Text>
-          <Text size="sm" c="dimmed">Total Photos</Text>
+          <Text size="sm" c="cyan">Total Photos</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -481,7 +481,7 @@ export default function PhotoGalleryPageMantine() {
             <Star size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="yellow">{featuredPhotos.length}</Text>
-          <Text size="sm" c="dimmed">Featured Photos</Text>
+          <Text size="sm" c="cyan">Featured Photos</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -489,7 +489,7 @@ export default function PhotoGalleryPageMantine() {
             <Tag size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="blue">{categories.length}</Text>
-          <Text size="sm" c="dimmed">Categories</Text>
+          <Text size="sm" c="cyan">Categories</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -499,7 +499,7 @@ export default function PhotoGalleryPageMantine() {
           <Text size="xl" fw={700} c="green">
             {photos.filter(p => p.is_public).length}
           </Text>
-          <Text size="sm" c="dimmed">Public Photos</Text>
+          <Text size="sm" c="cyan">Public Photos</Text>
         </Card>
       </Group>
 
@@ -509,7 +509,7 @@ export default function PhotoGalleryPageMantine() {
           <Title order={4}>
             {selectedCategory === "all" ? "All Photos" : selectedCategory}
           </Title>
-          <Text size="sm" c="dimmed">
+          <Text size="sm" c="cyan">
             {filteredPhotos.length} photos
           </Text>
         </Group>
@@ -517,7 +517,7 @@ export default function PhotoGalleryPageMantine() {
         {filteredPhotos.length === 0 ? (
           <Stack align="center" py="xl">
             <Camera size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-            <Text c="dimmed">
+            <Text c="cyan">
               {selectedCategory === "all" ? "No photos found" : `No photos in ${selectedCategory}`}
             </Text>
             <Button leftSection={<Upload size={16} />} onClick={openUploadModal}>
@@ -608,12 +608,12 @@ export default function PhotoGalleryPageMantine() {
 
                   <Stack gap="xs" p="md">
                     <Text fw={500} lineClamp={1}>{photo.title}</Text>
-                    <Text size="sm" c="dimmed" lineClamp={2}>
+                    <Text size="sm" c="cyan" lineClamp={2}>
                       {photo.description || "No description"}
                     </Text>
                     <Group justify="space-between">
                       <Badge variant="light" size="sm">{photo.category}</Badge>
-                      <Text size="xs" c="dimmed">
+                      <Text size="xs" c="cyan">
                         {new Date(photo.upload_date).toLocaleDateString()}
                       </Text>
                     </Group>

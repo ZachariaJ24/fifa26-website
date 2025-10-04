@@ -328,7 +328,7 @@ export default function PlayerMappingsPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Player Mappings...</Text>
+            <Text c="cyan">Loading Player Mappings...</Text>
           </Stack>
         </Center>
       </Container>
@@ -345,10 +345,10 @@ export default function PlayerMappingsPageMantine() {
               <Link size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Player Mappings
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Map league players to EA Sports FIFA player data
               </Text>
             </div>
@@ -356,7 +356,7 @@ export default function PlayerMappingsPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="green">{mappings.length}</Text>
-              <Text size="sm" c="dimmed">Mapped Players</Text>
+              <Text size="sm" c="cyan">Mapped Players</Text>
             </Stack>
           </Card>
         </Group>
@@ -401,7 +401,7 @@ export default function PlayerMappingsPageMantine() {
             <Link size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="green">{mappings.length}</Text>
-          <Text size="sm" c="dimmed">Mapped Players</Text>
+          <Text size="sm" c="cyan">Mapped Players</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -409,7 +409,7 @@ export default function PlayerMappingsPageMantine() {
             <Unlink size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="orange">{getAvailablePlayers().length}</Text>
-          <Text size="sm" c="dimmed">Unmapped Players</Text>
+          <Text size="sm" c="cyan">Unmapped Players</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -419,7 +419,7 @@ export default function PlayerMappingsPageMantine() {
           <Text size="xl" fw={700} c="blue">
             {mappings.filter(m => m.overall_rating).length}
           </Text>
-          <Text size="sm" c="dimmed">With Ratings</Text>
+          <Text size="sm" c="cyan">With Ratings</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -429,7 +429,7 @@ export default function PlayerMappingsPageMantine() {
           <Text size="xl" fw={700} c="purple">
             {mappings.filter(m => m.position).length}
           </Text>
-          <Text size="sm" c="dimmed">With Positions</Text>
+          <Text size="sm" c="cyan">With Positions</Text>
         </Card>
       </Group>
 
@@ -439,7 +439,7 @@ export default function PlayerMappingsPageMantine() {
           <Center p="xl">
             <Stack align="center">
               <Link size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-              <Text c="dimmed">
+              <Text c="cyan">
                 {searchTerm ? `No mappings match "${searchTerm}"` : "No player mappings found"}
               </Text>
               {!searchTerm && (
@@ -481,7 +481,7 @@ export default function PlayerMappingsPageMantine() {
                         </ThemeIcon>
                         <div>
                           <Text fw={500} size="sm">{mapping.ea_player_name}</Text>
-                          <Text size="xs" c="dimmed">ID: {mapping.ea_player_id}</Text>
+                          <Text size="xs" c="cyan">ID: {mapping.ea_player_id}</Text>
                         </div>
                       </Group>
                     </Table.Td>
@@ -489,7 +489,7 @@ export default function PlayerMappingsPageMantine() {
                       {mapping.position ? (
                         <Badge variant="light" size="sm">{mapping.position}</Badge>
                       ) : (
-                        <Text size="sm" c="dimmed">-</Text>
+                        <Text size="sm" c="cyan">-</Text>
                       )}
                     </Table.Td>
                     <Table.Td>
@@ -498,14 +498,14 @@ export default function PlayerMappingsPageMantine() {
                           {mapping.overall_rating} OVR
                         </Badge>
                       ) : (
-                        <Text size="sm" c="dimmed">-</Text>
+                        <Text size="sm" c="cyan">-</Text>
                       )}
                     </Table.Td>
                     <Table.Td>
                       <Text size="sm">{mapping.club_name}</Text>
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {new Date(mapping.created_at).toLocaleDateString()}
                       </Text>
                     </Table.Td>

@@ -288,7 +288,7 @@ export default function SCSBotPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Bot size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-            <Text c="dimmed">Loading SCS Bot Configuration...</Text>
+            <Text c="cyan">Loading SCS Bot Configuration...</Text>
           </Stack>
         </Center>
       </Container>
@@ -305,10 +305,10 @@ export default function SCSBotPageMantine() {
               <Bot size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 SCS Bot
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow">
                 Manage Discord bot integration, roles, and Twitch streaming
               </Text>
             </div>
@@ -322,7 +322,7 @@ export default function SCSBotPageMantine() {
               >
                 {botStatus.toUpperCase()}
               </Badge>
-              <Text size="sm" c="dimmed">Bot Status</Text>
+              <Text size="sm" c="cyan">Bot Status</Text>
             </Stack>
           </Card>
         </Group>
@@ -390,7 +390,7 @@ export default function SCSBotPageMantine() {
               <Users size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="blue">{botStats.total_members}</Text>
-            <Text size="sm" c="dimmed">Total Members</Text>
+            <Text size="sm" c="cyan">Total Members</Text>
           </Card>
           
           <Card withBorder p="md" ta="center">
@@ -398,7 +398,7 @@ export default function SCSBotPageMantine() {
               <Activity size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="green">{botStats.active_members}</Text>
-            <Text size="sm" c="dimmed">Active Members</Text>
+            <Text size="sm" c="cyan">Active Members</Text>
           </Card>
           
           <Card withBorder p="md" ta="center">
@@ -406,7 +406,7 @@ export default function SCSBotPageMantine() {
               <Shield size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="orange">{botStats.roles_managed}</Text>
-            <Text size="sm" c="dimmed">Roles Managed</Text>
+            <Text size="sm" c="cyan">Roles Managed</Text>
           </Card>
           
           <Card withBorder p="md" ta="center">
@@ -414,7 +414,7 @@ export default function SCSBotPageMantine() {
               <Zap size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="purple">{botStats.commands_processed}</Text>
-            <Text size="sm" c="dimmed">Commands Processed</Text>
+            <Text size="sm" c="cyan">Commands Processed</Text>
           </Card>
         </Group>
       )}
@@ -583,11 +583,11 @@ export default function SCSBotPageMantine() {
 
           <Group>
             <div>
-              <Text size="sm" c="dimmed">Version</Text>
+              <Text size="sm" c="cyan">Version</Text>
               <Code>{botConfig.version}</Code>
             </div>
             <div>
-              <Text size="sm" c="dimmed">Last Heartbeat</Text>
+              <Text size="sm" c="cyan">Last Heartbeat</Text>
               <Text size="sm">
                 {botConfig.last_heartbeat 
                   ? new Date(botConfig.last_heartbeat).toLocaleString()
@@ -597,7 +597,7 @@ export default function SCSBotPageMantine() {
             </div>
             {botStats && (
               <div>
-                <Text size="sm" c="dimmed">Uptime</Text>
+                <Text size="sm" c="cyan">Uptime</Text>
                 <Text size="sm">{botStats.uptime}</Text>
               </div>
             )}

@@ -439,7 +439,7 @@ export default function AdminDashboardPage() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Admin Dashboard...</Text>
+            <Text c="cyan">Loading Admin Dashboard...</Text>
           </Stack>
         </Center>
       </div>
@@ -459,13 +459,13 @@ export default function AdminDashboardPage() {
             <ThemeIcon size={80} radius="xl" variant="light" color="white">
               <Shield size={40} />
             </ThemeIcon>
-            <Title order={1} c="white" ta="center">
+            <Title order={1} c="cyan" ta="center">
               Admin Dashboard
             </Title>
-            <Text size="lg" c="white" ta="center" maw={600}>
+            <Text size="lg" c="yellow" ta="center" maw={600}>
               Complete control center for managing FIFA 26 League operations, users, teams, and system configurations
             </Text>
-            <Badge size="lg" variant="light" color="white" leftSection={<Shield size={16} />}>
+            <Badge size="lg" variant="filled" color="cyan" leftSection={<Shield size={16} />}>
               Administrator Access Granted
             </Badge>
           </Stack>
@@ -486,7 +486,7 @@ export default function AdminDashboardPage() {
                   <Title order={2} c={`${category.color}.7`}>
                     {category.name}
                   </Title>
-                  <Text c="dimmed">
+                  <Text c="cyan">
                     {links.length} tool{links.length !== 1 ? 's' : ''} available
                   </Text>
                 </div>
@@ -521,7 +521,7 @@ export default function AdminDashboardPage() {
                         </ThemeIcon>
                       </Group>
                       
-                      <Text size="sm" c="dimmed" mb="md" lineClamp={3}>
+                      <Text size="sm" c="blue.3" mb="md" lineClamp={3}>
                         {link.description}
                       </Text>
                       
@@ -553,7 +553,7 @@ export default function AdminDashboardPage() {
           </ThemeIcon>
           <div>
             <Title order={2}>System Diagnostics</Title>
-            <Text c="dimmed">
+            <Text c="cyan">
               Real-time system health monitoring and diagnostic tools for administrators
             </Text>
           </div>

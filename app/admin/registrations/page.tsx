@@ -355,7 +355,7 @@ export default function RegistrationsPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Season Registrations...</Text>
+            <Text c="cyan">Loading Season Registrations...</Text>
           </Stack>
         </Center>
       </Container>
@@ -383,10 +383,10 @@ export default function RegistrationsPageMantine() {
               <Trophy size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Season Registrations
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 {activeSeason ? `${activeSeason.name} - Season ${activeSeason.season_number || activeSeason.number}` : 'Manage player registrations'}
               </Text>
             </div>
@@ -394,7 +394,7 @@ export default function RegistrationsPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{filteredRegistrations.length}</Text>
-              <Text size="sm" c="dimmed">Total Registrations</Text>
+              <Text size="sm" c="cyan">Total Registrations</Text>
             </Stack>
           </Card>
         </Group>
@@ -443,7 +443,7 @@ export default function RegistrationsPageMantine() {
           <Center p="xl">
             <Stack align="center">
               <Users size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-              <Text c="dimmed">
+              <Text c="cyan">
                 {searchTerm || statusFilter ? "No registrations match your filters" : "No registrations found"}
               </Text>
             </Stack>
@@ -478,7 +478,7 @@ export default function RegistrationsPageMantine() {
                           {registration.primary_position}
                         </Badge>
                         {registration.secondary_position && (
-                          <Badge variant="outline" color="gray" size="sm">
+                          <Badge variant="outline" color="cyan" size="sm">
                             {registration.secondary_position}
                           </Badge>
                         )}
@@ -494,7 +494,7 @@ export default function RegistrationsPageMantine() {
                       {getStatusBadge(registration.status)}
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {new Date(registration.created_at).toLocaleDateString()}
                       </Text>
                     </Table.Td>

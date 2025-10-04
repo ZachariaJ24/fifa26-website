@@ -245,7 +245,7 @@ export default function EmailVerificationPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Email Verification Data...</Text>
+            <Text c="cyan">Loading Email Verification Data...</Text>
           </Stack>
         </Center>
       </Container>
@@ -262,10 +262,10 @@ export default function EmailVerificationPageMantine() {
               <MailCheck size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Email Verification
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage email verification for user accounts
               </Text>
             </div>
@@ -273,7 +273,7 @@ export default function EmailVerificationPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{verifiedCount}</Text>
-              <Text size="sm" c="dimmed">Verified Users</Text>
+              <Text size="sm" c="cyan">Verified Users</Text>
             </Stack>
           </Card>
         </Group>
@@ -307,7 +307,7 @@ export default function EmailVerificationPageMantine() {
             <CheckCircle size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="green">{verifiedCount}</Text>
-          <Text size="sm" c="dimmed">Verified Users</Text>
+          <Text size="sm" c="cyan">Verified Users</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -315,7 +315,7 @@ export default function EmailVerificationPageMantine() {
             <AlertTriangle size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="red">{unverifiedCount}</Text>
-          <Text size="sm" c="dimmed">Unverified Users</Text>
+          <Text size="sm" c="cyan">Unverified Users</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -323,7 +323,7 @@ export default function EmailVerificationPageMantine() {
             <Users size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="blue">{users.length}</Text>
-          <Text size="sm" c="dimmed">Total Users</Text>
+          <Text size="sm" c="cyan">Total Users</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -333,7 +333,7 @@ export default function EmailVerificationPageMantine() {
           <Text size="xl" fw={700} c="orange">
             {Math.round((verifiedCount / users.length) * 100) || 0}%
           </Text>
-          <Text size="sm" c="dimmed">Verification Rate</Text>
+          <Text size="sm" c="cyan">Verification Rate</Text>
         </Card>
       </Group>
 
@@ -368,7 +368,7 @@ export default function EmailVerificationPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Mail size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-                  <Text c="dimmed">
+                  <Text c="cyan">
                     {searchTerm ? `No users match "${searchTerm}"` : "No users found"}
                   </Text>
                 </Stack>
@@ -404,7 +404,7 @@ export default function EmailVerificationPageMantine() {
                           {getVerificationBadge(user.verification_status)}
                         </Table.Td>
                         <Table.Td>
-                          <Text size="sm" c="dimmed">
+                          <Text size="sm" c="cyan">
                             {user.email_confirmed_at 
                               ? new Date(user.email_confirmed_at).toLocaleDateString()
                               : 'Not verified'
@@ -412,7 +412,7 @@ export default function EmailVerificationPageMantine() {
                           </Text>
                         </Table.Td>
                         <Table.Td>
-                          <Text size="sm" c="dimmed">
+                          <Text size="sm" c="cyan">
                             {user.last_sign_in_at 
                               ? new Date(user.last_sign_in_at).toLocaleDateString()
                               : 'Never'

@@ -296,7 +296,7 @@ export default function StatisticsManagementPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Statistics...</Text>
+            <Text c="cyan">Loading Statistics...</Text>
           </Stack>
         </Center>
       </Container>
@@ -313,10 +313,10 @@ export default function StatisticsManagementPageMantine() {
               <BarChart3 size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Statistics Management
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 View and analyze player and club performance statistics
               </Text>
             </div>
@@ -324,7 +324,7 @@ export default function StatisticsManagementPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="green">{overallStats.totalMatches}</Text>
-              <Text size="sm" c="dimmed">Total Matches</Text>
+              <Text size="sm" c="cyan">Total Matches</Text>
             </Stack>
           </Card>
         </Group>
@@ -360,7 +360,7 @@ export default function StatisticsManagementPageMantine() {
               <Activity size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="blue">{overallStats.totalMatches}</Text>
-            <Text size="sm" c="dimmed">Total Matches</Text>
+            <Text size="sm" c="cyan">Total Matches</Text>
           </Card>
         </Grid.Col>
         
@@ -370,7 +370,7 @@ export default function StatisticsManagementPageMantine() {
               <Target size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="green">{overallStats.totalGoals}</Text>
-            <Text size="sm" c="dimmed">Total Goals</Text>
+            <Text size="sm" c="cyan">Total Goals</Text>
           </Card>
         </Grid.Col>
         
@@ -380,7 +380,7 @@ export default function StatisticsManagementPageMantine() {
               <Users size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="orange">{overallStats.totalPlayers}</Text>
-            <Text size="sm" c="dimmed">Active Players</Text>
+            <Text size="sm" c="cyan">Active Players</Text>
           </Card>
         </Grid.Col>
         
@@ -390,7 +390,7 @@ export default function StatisticsManagementPageMantine() {
               <TrendingUp size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="purple">{overallStats.avgGoalsPerMatch.toFixed(1)}</Text>
-            <Text size="sm" c="dimmed">Avg Goals/Match</Text>
+            <Text size="sm" c="cyan">Avg Goals/Match</Text>
           </Card>
         </Grid.Col>
       </Grid>
@@ -423,7 +423,7 @@ export default function StatisticsManagementPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Users size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-                  <Text c="dimmed">No player statistics for this season</Text>
+                  <Text c="cyan">No player statistics for this season</Text>
                 </Stack>
               </Center>
             ) : (
@@ -512,7 +512,7 @@ export default function StatisticsManagementPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Trophy size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-                  <Text c="dimmed">No club statistics for this season</Text>
+                  <Text c="cyan">No club statistics for this season</Text>
                 </Stack>
               </Center>
             ) : (

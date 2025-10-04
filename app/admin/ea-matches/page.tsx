@@ -402,7 +402,7 @@ export default function EAMatchesPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading EA Matches...</Text>
+            <Text c="cyan">Loading EA Matches...</Text>
           </Stack>
         </Center>
       </Container>
@@ -419,10 +419,10 @@ export default function EAMatchesPageMantine() {
               <GameController size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 EA Sports Matches
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage EA Sports FIFA match data and synchronization
               </Text>
             </div>
@@ -430,7 +430,7 @@ export default function EAMatchesPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="green">{matches.length}</Text>
-              <Text size="sm" c="dimmed">EA Matches</Text>
+              <Text size="sm" c="cyan">EA Matches</Text>
             </Stack>
           </Card>
         </Group>
@@ -483,14 +483,14 @@ export default function EAMatchesPageMantine() {
           <Center p="xl">
             <Stack align="center">
               <Calendar size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-              <Text c="dimmed">Please select a season to view EA matches</Text>
+              <Text c="cyan">Please select a season to view EA matches</Text>
             </Stack>
           </Center>
         ) : filteredMatches.length === 0 ? (
           <Center p="xl">
             <Stack align="center">
               <GameController size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-              <Text c="dimmed">
+              <Text c="cyan">
                 {searchTerm ? `No matches match "${searchTerm}"` : "No EA matches found for this season"}
               </Text>
               {!searchTerm && (
@@ -519,7 +519,7 @@ export default function EAMatchesPageMantine() {
                     <Table.Td>
                       <Group>
                         <Text fw={500}>{match.home_club.name}</Text>
-                        <Text c="dimmed">vs</Text>
+                        <Text c="cyan">vs</Text>
                         <Text fw={500}>{match.away_club.name}</Text>
                       </Group>
                     </Table.Td>
@@ -541,7 +541,7 @@ export default function EAMatchesPageMantine() {
                           {match.ea_match_id}
                         </Badge>
                       ) : (
-                        <Text size="sm" c="dimmed">Not set</Text>
+                        <Text size="sm" c="cyan">Not set</Text>
                       )}
                     </Table.Td>
                     <Table.Td>
@@ -550,7 +550,7 @@ export default function EAMatchesPageMantine() {
                           {match.home_score} - {match.away_score}
                         </Badge>
                       ) : (
-                        <Text size="sm" c="dimmed">-</Text>
+                        <Text size="sm" c="cyan">-</Text>
                       )}
                     </Table.Td>
                     <Table.Td>
@@ -740,7 +740,7 @@ export default function EAMatchesPageMantine() {
             </Text>
           </Alert>
 
-          <Text size="sm" c="dimmed">
+          <Text size="sm" c="cyan">
             Features that will be synchronized:
           </Text>
           <ul style={{ marginLeft: 20, marginTop: 8 }}>

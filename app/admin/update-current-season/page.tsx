@@ -186,10 +186,10 @@ export default function UpdateCurrentSeasonPageMantine() {
           <ThemeIcon size={80} radius="xl" variant="light" color="white">
             <Clock size={40} />
           </ThemeIcon>
-          <Title order={1} c="white" ta="center">
+          <Title order={1} c="cyan" ta="center">
             Update Current Season
           </Title>
-          <Text size="lg" c="white" ta="center" maw={600}>
+          <Text size="lg" c="yellow" ta="center" maw={600}>
             Change the active season for registrations and league operations
           </Text>
         </Stack>

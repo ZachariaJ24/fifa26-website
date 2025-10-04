@@ -221,7 +221,7 @@ export default function RBACDebugPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading RBAC Debug Info...</Text>
+            <Text c="cyan">Loading RBAC Debug Info...</Text>
           </Stack>
         </Center>
       </Container>
@@ -238,10 +238,10 @@ export default function RBACDebugPageMantine() {
               <Shield size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 RBAC Debug
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Role-Based Access Control debugging and analysis
               </Text>
             </div>
@@ -249,7 +249,7 @@ export default function RBACDebugPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="red">{debugInfo.total_users}</Text>
-              <Text size="sm" c="dimmed">Total Users</Text>
+              <Text size="sm" c="cyan">Total Users</Text>
             </Stack>
           </Card>
         </Group>
@@ -286,7 +286,7 @@ export default function RBACDebugPageMantine() {
             <Users size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="blue">{debugInfo.total_users}</Text>
-          <Text size="sm" c="dimmed">Total Users</Text>
+          <Text size="sm" c="cyan">Total Users</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -294,7 +294,7 @@ export default function RBACDebugPageMantine() {
             <UserCheck size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="green">{debugInfo.users_with_roles}</Text>
-          <Text size="sm" c="dimmed">Users with Roles</Text>
+          <Text size="sm" c="cyan">Users with Roles</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -302,7 +302,7 @@ export default function RBACDebugPageMantine() {
             <Key size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="orange">{debugInfo.total_roles}</Text>
-          <Text size="sm" c="dimmed">Active Roles</Text>
+          <Text size="sm" c="cyan">Active Roles</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -310,7 +310,7 @@ export default function RBACDebugPageMantine() {
             <AlertTriangle size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="red">{debugInfo.orphaned_roles}</Text>
-          <Text size="sm" c="dimmed">Issues Found</Text>
+          <Text size="sm" c="cyan">Issues Found</Text>
         </Card>
       </Group>
 
@@ -348,7 +348,7 @@ export default function RBACDebugPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Users size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-                  <Text c="dimmed">
+                  <Text c="cyan">
                     {searchTerm ? `No users match "${searchTerm}"` : "No users found"}
                   </Text>
                 </Stack>
@@ -393,7 +393,7 @@ export default function RBACDebugPageMantine() {
                                 </Badge>
                               ))
                             ) : (
-                              <Badge color="gray" variant="light" size="sm">No Roles</Badge>
+                              <Badge color="cyan" variant="light" size="sm">No Roles</Badge>
                             )}
                           </Group>
                         </Table.Td>
@@ -410,7 +410,7 @@ export default function RBACDebugPageMantine() {
                           </Group>
                         </Table.Td>
                         <Table.Td>
-                          <Text size="sm" c="dimmed">
+                          <Text size="sm" c="cyan">
                             {user.last_sign_in_at 
                               ? new Date(user.last_sign_in_at).toLocaleDateString()
                               : 'Never'
@@ -436,7 +436,7 @@ export default function RBACDebugPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Key size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-                  <Text c="dimmed">No roles found</Text>
+                  <Text c="cyan">No roles found</Text>
                 </Stack>
               </Center>
             ) : (

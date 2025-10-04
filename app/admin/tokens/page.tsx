@@ -254,7 +254,7 @@ export default function TokensManagementPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Token Management...</Text>
+            <Text c="cyan">Loading Token Management...</Text>
           </Stack>
         </Center>
       </Container>
@@ -271,10 +271,10 @@ export default function TokensManagementPageMantine() {
               <Coins size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Token Management
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage user tokens and transaction history
               </Text>
             </div>
@@ -282,7 +282,7 @@ export default function TokensManagementPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="orange">{getTotalTokens().toLocaleString()}</Text>
-              <Text size="sm" c="dimmed">Total Tokens</Text>
+              <Text size="sm" c="cyan">Total Tokens</Text>
             </Stack>
           </Card>
         </Group>
@@ -305,7 +305,7 @@ export default function TokensManagementPageMantine() {
             <Users size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="blue">{users.length}</Text>
-          <Text size="sm" c="dimmed">Active Users</Text>
+          <Text size="sm" c="cyan">Active Users</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -313,7 +313,7 @@ export default function TokensManagementPageMantine() {
             <TrendingUp size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="green">{transactions.length}</Text>
-          <Text size="sm" c="dimmed">Recent Transactions</Text>
+          <Text size="sm" c="cyan">Recent Transactions</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -323,7 +323,7 @@ export default function TokensManagementPageMantine() {
           <Text size="xl" fw={700} c="orange">
             {users.length > 0 ? Math.round(getTotalTokens() / users.length) : 0}
           </Text>
-          <Text size="sm" c="dimmed">Avg Balance</Text>
+          <Text size="sm" c="cyan">Avg Balance</Text>
         </Card>
       </Group>
 
@@ -409,7 +409,7 @@ export default function TokensManagementPageMantine() {
           <Center p="xl">
             <Stack align="center">
               <Coins size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-              <Text c="dimmed">No token transactions found</Text>
+              <Text c="cyan">No token transactions found</Text>
             </Stack>
           </Center>
         ) : (
@@ -450,7 +450,7 @@ export default function TokensManagementPageMantine() {
                       <Text fw={500}>{transaction.current_balance.toLocaleString()}</Text>
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {new Date(transaction.created_at).toLocaleDateString()}
                       </Text>
                     </Table.Td>

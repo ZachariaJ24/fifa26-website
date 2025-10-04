@@ -246,7 +246,7 @@ export default function TransferRecapPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Transfer Recap...</Text>
+            <Text c="cyan">Loading Transfer Recap...</Text>
           </Stack>
         </Center>
       </Container>
@@ -263,10 +263,10 @@ export default function TransferRecapPageMantine() {
               <ArrowRightLeft size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Transfer Recap
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 View and analyze player transfers by season
               </Text>
             </div>
@@ -274,7 +274,7 @@ export default function TransferRecapPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="green">{stats.totalTransfers}</Text>
-              <Text size="sm" c="dimmed">Total Transfers</Text>
+              <Text size="sm" c="cyan">Total Transfers</Text>
             </Stack>
           </Card>
         </Group>
@@ -315,7 +315,7 @@ export default function TransferRecapPageMantine() {
               <ArrowRightLeft size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="blue">{stats.totalTransfers}</Text>
-            <Text size="sm" c="dimmed">Total Transfers</Text>
+            <Text size="sm" c="cyan">Total Transfers</Text>
           </Card>
         </Grid.Col>
         
@@ -325,7 +325,7 @@ export default function TransferRecapPageMantine() {
               <DollarSign size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="green">${stats.totalFees.toLocaleString()}</Text>
-            <Text size="sm" c="dimmed">Total Fees</Text>
+            <Text size="sm" c="cyan">Total Fees</Text>
           </Card>
         </Grid.Col>
         
@@ -335,7 +335,7 @@ export default function TransferRecapPageMantine() {
               <TrendingUp size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="orange">${Math.round(stats.avgTransferFee).toLocaleString()}</Text>
-            <Text size="sm" c="dimmed">Avg Transfer Fee</Text>
+            <Text size="sm" c="cyan">Avg Transfer Fee</Text>
           </Card>
         </Grid.Col>
         
@@ -345,7 +345,7 @@ export default function TransferRecapPageMantine() {
               <Building2 size={24} />
             </ThemeIcon>
             <Text size="lg" fw={700} c="purple" lineClamp={1}>{stats.mostActiveClub}</Text>
-            <Text size="sm" c="dimmed">Most Active Club</Text>
+            <Text size="sm" c="cyan">Most Active Club</Text>
           </Card>
         </Grid.Col>
       </Grid>
@@ -356,14 +356,14 @@ export default function TransferRecapPageMantine() {
           <Center p="xl">
             <Stack align="center">
               <Calendar size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-              <Text c="dimmed">Please select a season to view transfers</Text>
+              <Text c="cyan">Please select a season to view transfers</Text>
             </Stack>
           </Center>
         ) : transfers.length === 0 ? (
           <Center p="xl">
             <Stack align="center">
               <ArrowRightLeft size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-              <Text c="dimmed">No transfers found for this season</Text>
+              <Text c="cyan">No transfers found for this season</Text>
             </Stack>
           </Center>
         ) : (

@@ -286,7 +286,7 @@ export default function UserAccountManagerPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading User Accounts...</Text>
+            <Text c="cyan">Loading User Accounts...</Text>
           </Stack>
         </Center>
       </Container>
@@ -303,10 +303,10 @@ export default function UserAccountManagerPageMantine() {
               <Settings size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 User Account Manager
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Advanced user account management and administration
               </Text>
             </div>
@@ -314,7 +314,7 @@ export default function UserAccountManagerPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{users.length}</Text>
-              <Text size="sm" c="dimmed">Total Users</Text>
+              <Text size="sm" c="cyan">Total Users</Text>
             </Stack>
           </Card>
         </Group>
@@ -344,7 +344,7 @@ export default function UserAccountManagerPageMantine() {
           <Center p="xl">
             <Stack align="center">
               <Users size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-              <Text c="dimmed">
+              <Text c="cyan">
                 {searchTerm ? `No users match "${searchTerm}"` : "No users found"}
               </Text>
             </Stack>
@@ -368,7 +368,7 @@ export default function UserAccountManagerPageMantine() {
                     <Table.Td>
                       <div>
                         <Text fw={500}>{user.gamer_tag_id}</Text>
-                        <Text size="sm" c="dimmed">{user.email}</Text>
+                        <Text size="sm" c="cyan">{user.email}</Text>
                       </div>
                     </Table.Td>
                     <Table.Td>
@@ -385,7 +385,7 @@ export default function UserAccountManagerPageMantine() {
                       </Text>
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {user.last_sign_in_at 
                           ? new Date(user.last_sign_in_at).toLocaleDateString()
                           : 'Never'

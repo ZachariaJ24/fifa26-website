@@ -271,7 +271,7 @@ export default function SetupBotConfigPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Bot size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-            <Text c="dimmed">Loading Bot Configuration...</Text>
+            <Text c="cyan">Loading Bot Configuration...</Text>
           </Stack>
         </Center>
       </Container>
@@ -286,10 +286,10 @@ export default function SetupBotConfigPageMantine() {
           <ThemeIcon size={80} radius="xl" variant="light" color="white">
             <Settings size={40} />
           </ThemeIcon>
-          <Title order={1} c="white" ta="center">
+          <Title order={1} c="cyan" ta="center">
             Setup Bot Config
           </Title>
-          <Text size="lg" c="white" ta="center" maw={600}>
+          <Text size="lg" c="yellow" ta="center" maw={600}>
             Initialize and configure Discord bot settings for your FIFA league
           </Text>
           <Group>

@@ -330,7 +330,7 @@ export default function DailyRecapPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Daily Recaps...</Text>
+            <Text c="cyan">Loading Daily Recaps...</Text>
           </Stack>
         </Center>
       </Container>
@@ -347,10 +347,10 @@ export default function DailyRecapPageMantine() {
               <FileText size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Daily Recap Management
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Create and manage daily league summaries and highlights
               </Text>
             </div>
@@ -358,7 +358,7 @@ export default function DailyRecapPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{recaps.length}</Text>
-              <Text size="sm" c="dimmed">Total Recaps</Text>
+              <Text size="sm" c="cyan">Total Recaps</Text>
             </Stack>
           </Card>
         </Group>
@@ -389,7 +389,7 @@ export default function DailyRecapPageMantine() {
             <Text size="xl" fw={700} c="indigo">
               {recaps.filter(r => r.status === 'draft').length}
             </Text>
-            <Text size="sm" c="dimmed">Drafts</Text>
+            <Text size="sm" c="cyan">Drafts</Text>
           </Card>
         </Grid.Col>
         
@@ -401,7 +401,7 @@ export default function DailyRecapPageMantine() {
             <Text size="xl" fw={700} c="green">
               {recaps.filter(r => r.status === 'published').length}
             </Text>
-            <Text size="sm" c="dimmed">Published</Text>
+            <Text size="sm" c="cyan">Published</Text>
           </Card>
         </Grid.Col>
         
@@ -413,7 +413,7 @@ export default function DailyRecapPageMantine() {
             <Text size="xl" fw={700} c="orange">
               {recaps.filter(r => r.status === 'archived').length}
             </Text>
-            <Text size="sm" c="dimmed">Archived</Text>
+            <Text size="sm" c="cyan">Archived</Text>
           </Card>
         </Grid.Col>
         
@@ -429,7 +429,7 @@ export default function DailyRecapPageMantine() {
                 return recapDate.toDateString() === today.toDateString()
               }).length}
             </Text>
-            <Text size="sm" c="dimmed">Today's Recaps</Text>
+            <Text size="sm" c="cyan">Today's Recaps</Text>
           </Card>
         </Grid.Col>
       </Grid>
@@ -440,7 +440,7 @@ export default function DailyRecapPageMantine() {
           <Center p="xl">
             <Stack align="center">
               <FileText size={48} stroke={1} color="var(--mantine-color-indigo-5)" />
-              <Text c="dimmed">No daily recaps found</Text>
+              <Text c="cyan">No daily recaps found</Text>
               <Button leftSection={<Plus size={16} />} onClick={openCreateModal}>
                 Create First Recap
               </Button>
@@ -480,7 +480,7 @@ export default function DailyRecapPageMantine() {
                       {getStatusBadge(recap.status)}
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {new Date(recap.created_at).toLocaleDateString()}
                       </Text>
                     </Table.Td>
@@ -672,10 +672,10 @@ export default function DailyRecapPageMantine() {
             </Group>
             
             <Group>
-              <Text size="sm" c="dimmed">
+              <Text size="sm" c="cyan">
                 Date: {new Date(selectedRecap.date).toLocaleDateString()}
               </Text>
-              <Text size="sm" c="dimmed">
+              <Text size="sm" c="cyan">
                 Author: {selectedRecap.author}
               </Text>
             </Group>

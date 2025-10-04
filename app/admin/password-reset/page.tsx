@@ -156,10 +156,10 @@ export default function PasswordResetPageMantine() {
           <ThemeIcon size={80} radius="xl" variant="light" color="white">
             <Key size={40} />
           </ThemeIcon>
-          <Title order={1} c="white" ta="center">
+          <Title order={1} c="cyan" ta="center">
             Password Reset
           </Title>
-          <Text size="lg" c="white" ta="center" maw={600}>
+          <Text size="lg" c="yellow" ta="center" maw={600}>
             Reset user passwords via email or direct admin override
           </Text>
         </Stack>
@@ -197,7 +197,7 @@ export default function PasswordResetPageMantine() {
               <Title order={4}>Send Password Reset Email</Title>
             </Group>
 
-            <Text size="sm" c="dimmed" mb="md">
+            <Text size="sm" c="cyan" mb="md">
               Send a password reset email to the user. They will receive a secure link to reset their password.
             </Text>
 

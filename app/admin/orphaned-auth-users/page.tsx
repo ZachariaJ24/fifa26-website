@@ -227,7 +227,7 @@ export default function OrphanedAuthUsersPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Orphaned Auth Users...</Text>
+            <Text c="cyan">Loading Orphaned Auth Users...</Text>
           </Stack>
         </Center>
       </Container>
@@ -244,10 +244,10 @@ export default function OrphanedAuthUsersPageMantine() {
               <UserX size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Orphaned Auth Users
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage authentication users without corresponding database profiles
               </Text>
             </div>
@@ -255,7 +255,7 @@ export default function OrphanedAuthUsersPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="red">{orphanedUsers.length}</Text>
-              <Text size="sm" c="dimmed">Orphaned Users</Text>
+              <Text size="sm" c="cyan">Orphaned Users</Text>
             </Stack>
           </Card>
         </Group>
@@ -298,7 +298,7 @@ export default function OrphanedAuthUsersPageMantine() {
             <Unlink size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="red">{orphanedUsers.length}</Text>
-          <Text size="sm" c="dimmed">Orphaned Users</Text>
+          <Text size="sm" c="cyan">Orphaned Users</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -308,17 +308,17 @@ export default function OrphanedAuthUsersPageMantine() {
           <Text size="xl" fw={700} c="orange">
             {orphanedUsers.filter(u => !u.email_confirmed_at).length}
           </Text>
-          <Text size="sm" c="dimmed">Unverified</Text>
+          <Text size="sm" c="cyan">Unverified</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
-          <ThemeIcon size="lg" color="gray" variant="light" mx="auto" mb="md">
+          <ThemeIcon size="lg" color="cyan" variant="light" mx="auto" mb="md">
             <Users size={24} />
           </ThemeIcon>
-          <Text size="xl" fw={700} c="gray">
+          <Text size="xl" fw={700} c="cyan">
             {orphanedUsers.filter(u => !u.last_sign_in_at).length}
           </Text>
-          <Text size="sm" c="dimmed">Never Signed In</Text>
+          <Text size="sm" c="cyan">Never Signed In</Text>
         </Card>
       </Group>
 
@@ -329,7 +329,7 @@ export default function OrphanedAuthUsersPageMantine() {
             <Stack align="center">
               <CheckCircle size={48} stroke={1} color="var(--mantine-color-green-5)" />
               <Text c="green" fw={500}>No orphaned auth users found!</Text>
-              <Text c="dimmed" size="sm">All authentication users have corresponding database profiles.</Text>
+              <Text c="cyan" size="sm">All authentication users have corresponding database profiles.</Text>
             </Stack>
           </Center>
         ) : (
@@ -366,12 +366,12 @@ export default function OrphanedAuthUsersPageMantine() {
                       </Group>
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {new Date(user.created_at).toLocaleDateString()}
                       </Text>
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {user.last_sign_in_at 
                           ? new Date(user.last_sign_in_at).toLocaleDateString()
                           : 'Never'
@@ -440,7 +440,7 @@ export default function OrphanedAuthUsersPageMantine() {
             </Text>
           </Alert>
 
-          <Text size="sm" c="dimmed">
+          <Text size="sm" c="cyan">
             Users to be deleted:
           </Text>
           <div style={{ maxHeight: 200, overflowY: 'auto' }}>
@@ -448,7 +448,7 @@ export default function OrphanedAuthUsersPageMantine() {
               <Text key={user.id} size="sm">• {user.email}</Text>
             ))}
             {orphanedUsers.length > 10 && (
-              <Text size="sm" c="dimmed">... and {orphanedUsers.length - 10} more</Text>
+              <Text size="sm" c="cyan">... and {orphanedUsers.length - 10} more</Text>
             )}
           </div>
 

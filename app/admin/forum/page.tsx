@@ -439,7 +439,7 @@ export default function ForumManagementPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Forum Management...</Text>
+            <Text c="cyan">Loading Forum Management...</Text>
           </Stack>
         </Center>
       </Container>
@@ -456,10 +456,10 @@ export default function ForumManagementPageMantine() {
               <MessageSquare size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Forum Management
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage forum posts, categories, and community discussions
               </Text>
             </div>
@@ -467,7 +467,7 @@ export default function ForumManagementPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{posts.length}</Text>
-              <Text size="sm" c="dimmed">Total Posts</Text>
+              <Text size="sm" c="cyan">Total Posts</Text>
             </Stack>
           </Card>
         </Group>
@@ -481,7 +481,7 @@ export default function ForumManagementPageMantine() {
               <MessageSquare size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="blue">{posts.length}</Text>
-            <Text size="sm" c="dimmed">Total Posts</Text>
+            <Text size="sm" c="cyan">Total Posts</Text>
           </Card>
         </Grid.Col>
         
@@ -491,7 +491,7 @@ export default function ForumManagementPageMantine() {
               <Archive size={24} />
             </ThemeIcon>
             <Text size="xl" fw={700} c="green">{categories.length}</Text>
-            <Text size="sm" c="dimmed">Categories</Text>
+            <Text size="sm" c="cyan">Categories</Text>
           </Card>
         </Grid.Col>
         
@@ -503,7 +503,7 @@ export default function ForumManagementPageMantine() {
             <Text size="xl" fw={700} c="orange">
               {posts.filter(p => p.is_pinned).length}
             </Text>
-            <Text size="sm" c="dimmed">Pinned Posts</Text>
+            <Text size="sm" c="cyan">Pinned Posts</Text>
           </Card>
         </Grid.Col>
         
@@ -515,7 +515,7 @@ export default function ForumManagementPageMantine() {
             <Text size="xl" fw={700} c="red">
               {posts.filter(p => p.is_locked).length}
             </Text>
-            <Text size="sm" c="dimmed">Locked Posts</Text>
+            <Text size="sm" c="cyan">Locked Posts</Text>
           </Card>
         </Grid.Col>
       </Grid>
@@ -562,7 +562,7 @@ export default function ForumManagementPageMantine() {
           <Center p="xl">
             <Stack align="center">
               <MessageSquare size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-              <Text c="dimmed">
+              <Text c="cyan">
                 {searchTerm || selectedCategory ? "No posts match your filters" : "No forum posts found"}
               </Text>
               {!searchTerm && !selectedCategory && (
@@ -619,11 +619,11 @@ export default function ForumManagementPageMantine() {
                       <Group gap="xs">
                         {post.is_pinned && <Badge color="orange" variant="light" size="xs">Pinned</Badge>}
                         {post.is_locked && <Badge color="red" variant="light" size="xs">Locked</Badge>}
-                        {post.is_archived && <Badge color="gray" variant="light" size="xs">Archived</Badge>}
+                        {post.is_archived && <Badge color="cyan" variant="light" size="xs">Archived</Badge>}
                       </Group>
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {new Date(post.created_at).toLocaleDateString()}
                       </Text>
                     </Table.Td>

@@ -195,7 +195,7 @@ export default function SyncMissingUsersPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Checking Missing Users...</Text>
+            <Text c="cyan">Checking Missing Users...</Text>
           </Stack>
         </Center>
       </Container>
@@ -212,10 +212,10 @@ export default function SyncMissingUsersPageMantine() {
               <Sync size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Sync Missing Users
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Synchronize authentication users with database profiles
               </Text>
             </div>
@@ -223,7 +223,7 @@ export default function SyncMissingUsersPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{stats.missingUsers}</Text>
-              <Text size="sm" c="dimmed">Missing Users</Text>
+              <Text size="sm" c="cyan">Missing Users</Text>
             </Stack>
           </Card>
         </Group>
@@ -255,7 +255,7 @@ export default function SyncMissingUsersPageMantine() {
           <Stack gap="md">
             <Group justify="space-between">
               <Text fw={500}>Synchronizing Users...</Text>
-              <Text size="sm" c="dimmed">{Math.round(syncProgress)}% complete</Text>
+              <Text size="sm" c="cyan">{Math.round(syncProgress)}% complete</Text>
             </Group>
             <Progress value={syncProgress} size="lg" />
           </Stack>
@@ -278,7 +278,7 @@ export default function SyncMissingUsersPageMantine() {
             <Users size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="blue">{stats.totalAuthUsers}</Text>
-          <Text size="sm" c="dimmed">Auth Users</Text>
+          <Text size="sm" c="cyan">Auth Users</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -286,7 +286,7 @@ export default function SyncMissingUsersPageMantine() {
             <Database size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="green">{stats.totalDbUsers}</Text>
-          <Text size="sm" c="dimmed">DB Profiles</Text>
+          <Text size="sm" c="cyan">DB Profiles</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -294,7 +294,7 @@ export default function SyncMissingUsersPageMantine() {
             <AlertTriangle size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="orange">{stats.missingUsers}</Text>
-          <Text size="sm" c="dimmed">Missing</Text>
+          <Text size="sm" c="cyan">Missing</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -302,7 +302,7 @@ export default function SyncMissingUsersPageMantine() {
             <Activity size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="purple">{stats.syncedUsers}</Text>
-          <Text size="sm" c="dimmed">Last Synced</Text>
+          <Text size="sm" c="cyan">Last Synced</Text>
         </Card>
       </Group>
 
@@ -332,7 +332,7 @@ export default function SyncMissingUsersPageMantine() {
             <Stack align="center">
               <CheckCircle size={48} stroke={1} color="var(--mantine-color-green-5)" />
               <Text c="green" fw={500}>All users are synchronized!</Text>
-              <Text c="dimmed" size="sm">
+              <Text c="cyan" size="sm">
                 Every authentication user has a corresponding database profile.
               </Text>
             </Stack>
@@ -370,12 +370,12 @@ export default function SyncMissingUsersPageMantine() {
                       </Group>
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {new Date(user.created_at).toLocaleDateString()}
                       </Text>
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {user.last_sign_in_at 
                           ? new Date(user.last_sign_in_at).toLocaleDateString()
                           : 'Never'

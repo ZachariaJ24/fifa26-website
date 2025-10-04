@@ -387,10 +387,10 @@ export default function ScheduleManagementPageMantine() {
               <Calendar size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Schedule Management
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage game schedules, fixtures, and match results
               </Text>
             </div>

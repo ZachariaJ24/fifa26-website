@@ -313,10 +313,10 @@ export default function ClubManagementPageMantine() {
               <Building2 size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Club Management
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage clubs, rosters, and team information
               </Text>
             </div>

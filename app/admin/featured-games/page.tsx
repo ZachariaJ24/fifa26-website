@@ -340,7 +340,7 @@ export default function FeaturedGamesPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Featured Games...</Text>
+            <Text c="cyan">Loading Featured Games...</Text>
           </Stack>
         </Center>
       </Container>
@@ -357,10 +357,10 @@ export default function FeaturedGamesPageMantine() {
               <Star size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Featured Games
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage featured games displayed on the homepage
               </Text>
             </div>
@@ -368,7 +368,7 @@ export default function FeaturedGamesPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="orange">{featuredGames.length}</Text>
-              <Text size="sm" c="dimmed">Featured Games</Text>
+              <Text size="sm" c="cyan">Featured Games</Text>
             </Stack>
           </Card>
         </Group>
@@ -396,7 +396,7 @@ export default function FeaturedGamesPageMantine() {
             <Star size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="orange">{featuredGames.filter(g => g.is_featured).length}</Text>
-          <Text size="sm" c="dimmed">Active Featured</Text>
+          <Text size="sm" c="cyan">Active Featured</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -404,7 +404,7 @@ export default function FeaturedGamesPageMantine() {
             <GameController size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="blue">{featuredGames.length}</Text>
-          <Text size="sm" c="dimmed">Total Games</Text>
+          <Text size="sm" c="cyan">Total Games</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -414,7 +414,7 @@ export default function FeaturedGamesPageMantine() {
           <Text size="xl" fw={700} c="green">
             {featuredGames.filter(g => new Date(g.game_date) > new Date()).length}
           </Text>
-          <Text size="sm" c="dimmed">Upcoming</Text>
+          <Text size="sm" c="cyan">Upcoming</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -424,7 +424,7 @@ export default function FeaturedGamesPageMantine() {
           <Text size="xl" fw={700} c="purple">
             {Math.min(featuredGames.filter(g => g.is_featured).length, 3)}
           </Text>
-          <Text size="sm" c="dimmed">On Homepage</Text>
+          <Text size="sm" c="cyan">On Homepage</Text>
         </Card>
       </Group>
 
@@ -434,7 +434,7 @@ export default function FeaturedGamesPageMantine() {
           <Center p="xl">
             <Stack align="center">
               <Star size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-              <Text c="dimmed">No featured games found</Text>
+              <Text c="cyan">No featured games found</Text>
               <Button leftSection={<Plus size={16} />} onClick={openCreateModal}>
                 Add First Featured Game
               </Button>
@@ -474,14 +474,14 @@ export default function FeaturedGamesPageMantine() {
                         )}
                         <div>
                           <Text fw={500} lineClamp={1}>{game.title}</Text>
-                          <Text size="sm" c="dimmed" lineClamp={1}>{game.description}</Text>
+                          <Text size="sm" c="cyan" lineClamp={1}>{game.description}</Text>
                         </div>
                       </Group>
                     </Table.Td>
                     <Table.Td>
                       <Group gap="xs">
                         <Text size="sm" fw={500}>{game.home_team}</Text>
-                        <Text size="sm" c="dimmed">vs</Text>
+                        <Text size="sm" c="cyan">vs</Text>
                         <Text size="sm" fw={500}>{game.away_team}</Text>
                       </Group>
                     </Table.Td>
@@ -498,7 +498,7 @@ export default function FeaturedGamesPageMantine() {
                         {game.is_featured ? (
                           <Badge color="green" variant="light" size="sm">Featured</Badge>
                         ) : (
-                          <Badge color="gray" variant="light" size="sm">Hidden</Badge>
+                          <Badge color="cyan" variant="light" size="sm">Hidden</Badge>
                         )}
                         {new Date(game.game_date) > new Date() && (
                           <Badge color="blue" variant="light" size="sm">Upcoming</Badge>

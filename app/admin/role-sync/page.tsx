@@ -257,7 +257,7 @@ export default function RoleSyncPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Scanning for Role Sync Issues...</Text>
+            <Text c="cyan">Scanning for Role Sync Issues...</Text>
           </Stack>
         </Center>
       </Container>
@@ -274,10 +274,10 @@ export default function RoleSyncPageMantine() {
               <Sync size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Role Sync Fix
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Fix role synchronization between user_roles and players tables
               </Text>
             </div>
@@ -285,7 +285,7 @@ export default function RoleSyncPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="violet">{syncIssues.length}</Text>
-              <Text size="sm" c="dimmed">Sync Issues</Text>
+              <Text size="sm" c="cyan">Sync Issues</Text>
             </Stack>
           </Card>
         </Group>
@@ -318,7 +318,7 @@ export default function RoleSyncPageMantine() {
           <Stack gap="md">
             <Group justify="space-between">
               <Text fw={500}>Synchronizing Roles...</Text>
-              <Text size="sm" c="dimmed">{Math.round(syncProgress)}% complete</Text>
+              <Text size="sm" c="cyan">{Math.round(syncProgress)}% complete</Text>
             </Group>
             <Progress value={syncProgress} size="lg" color="violet" />
           </Stack>
@@ -351,7 +351,7 @@ export default function RoleSyncPageMantine() {
           <Text size="xl" fw={700} c="red">
             {syncIssues.filter(i => i.issue_type === 'missing_user_roles').length}
           </Text>
-          <Text size="sm" c="dimmed">Missing User Roles</Text>
+          <Text size="sm" c="cyan">Missing User Roles</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -361,7 +361,7 @@ export default function RoleSyncPageMantine() {
           <Text size="xl" fw={700} c="orange">
             {syncIssues.filter(i => i.issue_type === 'missing_player_roles').length}
           </Text>
-          <Text size="sm" c="dimmed">Missing Player Roles</Text>
+          <Text size="sm" c="cyan">Missing Player Roles</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -369,7 +369,7 @@ export default function RoleSyncPageMantine() {
             <Shield size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="violet">{syncIssues.length}</Text>
-          <Text size="sm" c="dimmed">Total Issues</Text>
+          <Text size="sm" c="cyan">Total Issues</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -379,7 +379,7 @@ export default function RoleSyncPageMantine() {
           <Text size="xl" fw={700} c="green">
             {syncResults.filter(r => r.success).length}
           </Text>
-          <Text size="sm" c="dimmed">Fixed Issues</Text>
+          <Text size="sm" c="cyan">Fixed Issues</Text>
         </Card>
       </Group>
 
@@ -405,7 +405,7 @@ export default function RoleSyncPageMantine() {
                 <Stack align="center">
                   <CheckCircle size={48} stroke={1} color="var(--mantine-color-green-5)" />
                   <Text c="green" fw={500}>No role sync issues found!</Text>
-                  <Text c="dimmed" size="sm">All roles are properly synchronized.</Text>
+                  <Text c="cyan" size="sm">All roles are properly synchronized.</Text>
                 </Stack>
               </Center>
             ) : (
@@ -426,7 +426,7 @@ export default function RoleSyncPageMantine() {
                         <Table.Td>
                           <div>
                             <Text fw={500}>{issue.gamer_tag_id}</Text>
-                            <Text size="sm" c="dimmed">{issue.email}</Text>
+                            <Text size="sm" c="cyan">{issue.email}</Text>
                           </div>
                         </Table.Td>
                         <Table.Td>
@@ -441,7 +441,7 @@ export default function RoleSyncPageMantine() {
                                 </Badge>
                               ))
                             ) : (
-                              <Badge color="gray" variant="light" size="xs">No Roles</Badge>
+                              <Badge color="cyan" variant="light" size="xs">No Roles</Badge>
                             )}
                           </Group>
                         </Table.Td>
@@ -454,7 +454,7 @@ export default function RoleSyncPageMantine() {
                                 </Badge>
                               ))
                             ) : (
-                              <Badge color="gray" variant="light" size="xs">No Roles</Badge>
+                              <Badge color="cyan" variant="light" size="xs">No Roles</Badge>
                             )}
                           </Group>
                         </Table.Td>
@@ -501,7 +501,7 @@ export default function RoleSyncPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Database size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-                  <Text c="dimmed">No fix operations performed yet</Text>
+                  <Text c="cyan">No fix operations performed yet</Text>
                 </Stack>
               </Center>
             ) : (

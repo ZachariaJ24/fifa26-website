@@ -309,10 +309,10 @@ export default function SyncAuthDatabasePageMantine() {
               <ArrowRightLeft size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Auth to Database Sync
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Synchronize Supabase Auth users with database profiles
               </Text>
             </div>
@@ -365,7 +365,7 @@ export default function SyncAuthDatabasePageMantine() {
             <Shield size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="blue">{stats.authUsers}</Text>
-          <Text size="sm" c="dimmed">Auth Users</Text>
+          <Text size="sm" c="cyan">Auth Users</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -462,7 +462,7 @@ export default function SyncAuthDatabasePageMantine() {
                     }
                   >
                     <Text size="sm">{result.message}</Text>
-                    {result.details && <Text size="xs" c="dimmed">{result.details}</Text>}
+                    {result.details && <Text size="xs" c="blue">{result.details}</Text>}
                   </List.Item>
                 ))}
               </List>

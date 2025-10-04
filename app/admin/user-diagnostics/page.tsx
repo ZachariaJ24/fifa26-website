@@ -24,10 +24,10 @@ export default function UserDiagnosticsPageMantine() {
           <ThemeIcon size={80} radius="xl" variant="light" color="white">
             <Users size={40} />
           </ThemeIcon>
-          <Title order={1} c="white" ta="center">
+          <Title order={1} c="cyan" ta="center">
             User Diagnostics
           </Title>
-          <Text size="lg" c="white" ta="center" maw={600}>
+          <Text size="lg" c="yellow" ta="center" maw={600}>
             Use this tool to diagnose and fix issues with user accounts. You can look up users by email, check their
             verification status, and perform actions like sending verification emails or creating missing user records.
           </Text>

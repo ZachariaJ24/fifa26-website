@@ -176,7 +176,7 @@ export default function DatabaseStructurePageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Database Structure...</Text>
+            <Text c="cyan">Loading Database Structure...</Text>
           </Stack>
         </Center>
       </Container>
@@ -193,18 +193,18 @@ export default function DatabaseStructurePageMantine() {
               <Database size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Database Structure
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 View and analyze database schema, tables, and indexes
               </Text>
             </div>
           </Group>
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
-              <Text size="xl" fw={700} c="gray">{tables.length}</Text>
-              <Text size="sm" c="dimmed">Tables</Text>
+              <Text size="xl" fw={700} c="cyan">{tables.length}</Text>
+              <Text size="sm" c="cyan">Tables</Text>
             </Stack>
           </Card>
         </Group>
@@ -241,7 +241,7 @@ export default function DatabaseStructurePageMantine() {
             <TableIcon size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="blue">{tables.length}</Text>
-          <Text size="sm" c="dimmed">Tables</Text>
+          <Text size="sm" c="cyan">Tables</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -251,7 +251,7 @@ export default function DatabaseStructurePageMantine() {
           <Text size="xl" fw={700} c="green">
             {tables.reduce((sum, table) => sum + (table.columns?.length || 0), 0)}
           </Text>
-          <Text size="sm" c="dimmed">Columns</Text>
+          <Text size="sm" c="cyan">Columns</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -259,7 +259,7 @@ export default function DatabaseStructurePageMantine() {
             <Link size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="orange">{indexes.length}</Text>
-          <Text size="sm" c="dimmed">Indexes</Text>
+          <Text size="sm" c="cyan">Indexes</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -269,7 +269,7 @@ export default function DatabaseStructurePageMantine() {
           <Text size="xl" fw={700} c="purple">
             {tables.reduce((sum, table) => sum + (table.row_count || 0), 0).toLocaleString()}
           </Text>
-          <Text size="sm" c="dimmed">Total Rows</Text>
+          <Text size="sm" c="cyan">Total Rows</Text>
         </Card>
       </Group>
 
@@ -297,7 +297,7 @@ export default function DatabaseStructurePageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <TableIcon size={48} stroke={1} color="var(--mantine-color-indigo-5)" />
-                  <Text c="dimmed">No tables found or unable to fetch table information</Text>
+                  <Text c="cyan">No tables found or unable to fetch table information</Text>
                 </Stack>
               </Center>
             ) : (
@@ -391,7 +391,7 @@ export default function DatabaseStructurePageMantine() {
                             </Text>
                           </Table.Td>
                           <Table.Td>
-                            <Text size="xs" c="dimmed">
+                            <Text size="xs" c="cyan">
                               {column.column_default || '-'}
                             </Text>
                           </Table.Td>
@@ -411,7 +411,7 @@ export default function DatabaseStructurePageMantine() {
                   </Table>
                 </ScrollArea>
               ) : (
-                <Text c="dimmed">Column information not available</Text>
+                <Text c="cyan">Column information not available</Text>
               )}
             </Paper>
           )}
@@ -427,7 +427,7 @@ export default function DatabaseStructurePageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Key size={48} stroke={1} color="var(--mantine-color-indigo-5)" />
-                  <Text c="dimmed">No indexes found or unable to fetch index information</Text>
+                  <Text c="cyan">No indexes found or unable to fetch index information</Text>
                 </Stack>
               </Center>
             ) : (
@@ -499,7 +499,7 @@ export default function DatabaseStructurePageMantine() {
               <Stack align="center">
                 <Info size={48} stroke={1} color="var(--mantine-color-blue-5)" />
                 <Text c="blue" fw={500}>Relationship analysis available</Text>
-                <Text c="dimmed" size="sm" ta="center">
+                <Text c="cyan" size="sm" ta="center">
                   Foreign key relationships are defined in the database schema. 
                   Check individual table details for FK information.
                 </Text>

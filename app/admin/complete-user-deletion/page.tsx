@@ -98,10 +98,10 @@ export default function CompleteUserDeletionPageMantine() {
             <UserX size={40} />
           </ThemeIcon>
           <div>
-            <Title order={1} c="white">
+            <Title order={1} c="cyan">
               Complete User Deletion
             </Title>
-            <Text size="lg" c="white" opacity={0.9}>
+            <Text size="lg" c="yellow">
               Permanently remove users from both Auth and Database systems
             </Text>
           </div>
@@ -136,7 +136,7 @@ export default function CompleteUserDeletionPageMantine() {
             </ThemeIcon>
             <div>
               <Title order={2}>User Deletion Form</Title>
-              <Text c="dimmed">Enter user email and admin verification key to proceed</Text>
+              <Text c="cyan">Enter user email and admin verification key to proceed</Text>
             </div>
           </Group>
 

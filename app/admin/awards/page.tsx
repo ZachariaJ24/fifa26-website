@@ -409,7 +409,7 @@ export default function AwardsManagementPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Awards Management...</Text>
+            <Text c="cyan">Loading Awards Management...</Text>
           </Stack>
         </Center>
       </Container>
@@ -426,10 +426,10 @@ export default function AwardsManagementPageMantine() {
               <Trophy size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Awards Management
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage season awards and achievements for teams and players
               </Text>
             </div>
@@ -437,7 +437,7 @@ export default function AwardsManagementPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="orange">{teamAwards.length + playerAwards.length}</Text>
-              <Text size="sm" c="dimmed">Total Awards</Text>
+              <Text size="sm" c="cyan">Total Awards</Text>
             </Stack>
           </Card>
         </Group>
@@ -489,7 +489,7 @@ export default function AwardsManagementPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Trophy size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-                  <Text c="dimmed">No team awards for this season</Text>
+                  <Text c="cyan">No team awards for this season</Text>
                   <Button leftSection={<Plus size={16} />} onClick={openTeamAwardModal}>
                     Add First Team Award
                   </Button>
@@ -523,7 +523,7 @@ export default function AwardsManagementPageMantine() {
                           </Badge>
                         </Table.Td>
                         <Table.Td>
-                          <Text size="sm" c="dimmed">
+                          <Text size="sm" c="cyan">
                             {new Date(award.created_at).toLocaleDateString()}
                           </Text>
                         </Table.Td>
@@ -558,7 +558,7 @@ export default function AwardsManagementPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Medal size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-                  <Text c="dimmed">No player awards for this season</Text>
+                  <Text c="cyan">No player awards for this season</Text>
                   <Button leftSection={<Plus size={16} />} onClick={openPlayerAwardModal}>
                     Add First Player Award
                   </Button>
@@ -592,7 +592,7 @@ export default function AwardsManagementPageMantine() {
                           </Badge>
                         </Table.Td>
                         <Table.Td>
-                          <Text size="sm" c="dimmed">
+                          <Text size="sm" c="cyan">
                             {new Date(award.created_at).toLocaleDateString()}
                           </Text>
                         </Table.Td>

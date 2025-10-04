@@ -145,10 +145,10 @@ export default function ResetUserPasswordPageMantine() {
           <ThemeIcon size={80} radius="xl" variant="light" color="white">
             <Key size={40} />
           </ThemeIcon>
-          <Title order={1} c="white" ta="center">
+          <Title order={1} c="cyan" ta="center">
             Reset User Password
           </Title>
-          <Text size="lg" c="white" ta="center" maw={600}>
+          <Text size="lg" c="yellow" ta="center" maw={600}>
             Reset a user's password by email address - secure password recovery
           </Text>
         </Stack>

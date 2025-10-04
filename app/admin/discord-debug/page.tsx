@@ -224,7 +224,7 @@ export default function DiscordDebugPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Discord Debug Info...</Text>
+            <Text c="cyan">Loading Discord Debug Info...</Text>
           </Stack>
         </Center>
       </Container>
@@ -241,10 +241,10 @@ export default function DiscordDebugPageMantine() {
               <MessageCircle size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Discord Debug
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Debug Discord bot integration and role assignments
               </Text>
             </div>
@@ -252,7 +252,7 @@ export default function DiscordDebugPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="indigo">{discordUsers.length}</Text>
-              <Text size="sm" c="dimmed">Connected Users</Text>
+              <Text size="sm" c="cyan">Connected Users</Text>
             </Stack>
           </Card>
         </Group>
@@ -308,7 +308,7 @@ export default function DiscordDebugPageMantine() {
             <Users size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="blue">{discordUsers.length}</Text>
-          <Text size="sm" c="dimmed">Connected Users</Text>
+          <Text size="sm" c="cyan">Connected Users</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -318,7 +318,7 @@ export default function DiscordDebugPageMantine() {
           <Text size="xl" fw={700} c="green">
             {discordUsers.filter(u => u.is_connected).length}
           </Text>
-          <Text size="sm" c="dimmed">Active Connections</Text>
+          <Text size="sm" c="cyan">Active Connections</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -326,7 +326,7 @@ export default function DiscordDebugPageMantine() {
             <Shield size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="orange">{discordRoles.length}</Text>
-          <Text size="sm" c="dimmed">Discord Roles</Text>
+          <Text size="sm" c="cyan">Discord Roles</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -336,7 +336,7 @@ export default function DiscordDebugPageMantine() {
           <Text size="xl" fw={700} c="red">
             {discordUsers.filter(u => u.sync_errors.length > 0).length}
           </Text>
-          <Text size="sm" c="dimmed">Sync Errors</Text>
+          <Text size="sm" c="cyan">Sync Errors</Text>
         </Card>
       </Group>
 
@@ -374,7 +374,7 @@ export default function DiscordDebugPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <MessageCircle size={48} stroke={1} color="var(--mantine-color-indigo-5)" />
-                  <Text c="dimmed">
+                  <Text c="cyan">
                     {searchTerm ? `No users match "${searchTerm}"` : "No Discord users found"}
                   </Text>
                 </Stack>
@@ -433,7 +433,7 @@ export default function DiscordDebugPageMantine() {
                           </Group>
                         </Table.Td>
                         <Table.Td>
-                          <Text size="sm" c="dimmed">
+                          <Text size="sm" c="cyan">
                             {new Date(user.last_sync).toLocaleDateString()}
                           </Text>
                         </Table.Td>
@@ -456,7 +456,7 @@ export default function DiscordDebugPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Shield size={48} stroke={1} color="var(--mantine-color-indigo-5)" />
-                  <Text c="dimmed">No Discord roles configured</Text>
+                  <Text c="cyan">No Discord roles configured</Text>
                 </Stack>
               </Center>
             ) : (

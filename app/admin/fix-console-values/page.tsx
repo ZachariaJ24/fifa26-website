@@ -242,7 +242,7 @@ export default function FixConsoleValuesPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Scanning for Invalid Console Values...</Text>
+            <Text c="cyan">Scanning for Invalid Console Values...</Text>
           </Stack>
         </Center>
       </Container>
@@ -259,10 +259,10 @@ export default function FixConsoleValuesPageMantine() {
               <GameController size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Fix Console Values
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Fix invalid console values for users that failed to sync
               </Text>
             </div>
@@ -270,7 +270,7 @@ export default function FixConsoleValuesPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="indigo">{invalidUsers.length}</Text>
-              <Text size="sm" c="dimmed">Invalid Consoles</Text>
+              <Text size="sm" c="cyan">Invalid Consoles</Text>
             </Stack>
           </Card>
         </Group>
@@ -303,7 +303,7 @@ export default function FixConsoleValuesPageMantine() {
           <Stack gap="md">
             <Group justify="space-between">
               <Text fw={500}>Fixing Console Values...</Text>
-              <Text size="sm" c="dimmed">{Math.round(fixProgress)}% complete</Text>
+              <Text size="sm" c="cyan">{Math.round(fixProgress)}% complete</Text>
             </Group>
             <Progress value={fixProgress} size="lg" color="indigo" />
           </Stack>
@@ -352,7 +352,7 @@ export default function FixConsoleValuesPageMantine() {
             <AlertTriangle size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="orange">{invalidUsers.length}</Text>
-          <Text size="sm" c="dimmed">Invalid Consoles</Text>
+          <Text size="sm" c="cyan">Invalid Consoles</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -362,7 +362,7 @@ export default function FixConsoleValuesPageMantine() {
           <Text size="xl" fw={700} c="blue">
             {invalidUsers.filter(u => u.suggested_console === 'PC').length}
           </Text>
-          <Text size="sm" c="dimmed">Suggest PC</Text>
+          <Text size="sm" c="cyan">Suggest PC</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -372,7 +372,7 @@ export default function FixConsoleValuesPageMantine() {
           <Text size="xl" fw={700} c="green">
             {fixResults.filter(r => r.success).length}
           </Text>
-          <Text size="sm" c="dimmed">Fixed Users</Text>
+          <Text size="sm" c="cyan">Fixed Users</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -382,7 +382,7 @@ export default function FixConsoleValuesPageMantine() {
           <Text size="xl" fw={700} c="red">
             {fixResults.filter(r => !r.success).length}
           </Text>
-          <Text size="sm" c="dimmed">Failed Fixes</Text>
+          <Text size="sm" c="cyan">Failed Fixes</Text>
         </Card>
       </Group>
 
@@ -397,7 +397,7 @@ export default function FixConsoleValuesPageMantine() {
             <Stack align="center">
               <CheckCircle size={48} stroke={1} color="var(--mantine-color-green-5)" />
               <Text c="green" fw={500}>All console values are valid!</Text>
-              <Text c="dimmed" size="sm">No invalid console values found.</Text>
+              <Text c="cyan" size="sm">No invalid console values found.</Text>
             </Stack>
           </Center>
         ) : (
@@ -418,7 +418,7 @@ export default function FixConsoleValuesPageMantine() {
                     <Table.Td>
                       <div>
                         <Text fw={500}>{user.gamer_tag_id}</Text>
-                        <Text size="sm" c="dimmed">{user.email}</Text>
+                        <Text size="sm" c="cyan">{user.email}</Text>
                       </div>
                     </Table.Td>
                     <Table.Td>
@@ -432,7 +432,7 @@ export default function FixConsoleValuesPageMantine() {
                       </Badge>
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {new Date(user.created_at).toLocaleDateString()}
                       </Text>
                     </Table.Td>

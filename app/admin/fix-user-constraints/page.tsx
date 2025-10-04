@@ -263,7 +263,7 @@ export default function FixUserConstraintsPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Scanning for Constraint Violations...</Text>
+            <Text c="cyan">Scanning for Constraint Violations...</Text>
           </Stack>
         </Center>
       </Container>
@@ -280,10 +280,10 @@ export default function FixUserConstraintsPageMantine() {
               <Wrench size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Fix User Constraints
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Fix console and gamer tag constraint violations for user sync
               </Text>
             </div>
@@ -291,7 +291,7 @@ export default function FixUserConstraintsPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="red">{violations.length}</Text>
-              <Text size="sm" c="dimmed">Violations Found</Text>
+              <Text size="sm" c="cyan">Violations Found</Text>
             </Stack>
           </Card>
         </Group>
@@ -324,7 +324,7 @@ export default function FixUserConstraintsPageMantine() {
           <Stack gap="md">
             <Group justify="space-between">
               <Text fw={500}>Fixing Constraint Violations...</Text>
-              <Text size="sm" c="dimmed">{Math.round(fixProgress)}% complete</Text>
+              <Text size="sm" c="cyan">{Math.round(fixProgress)}% complete</Text>
             </Group>
             <Progress value={fixProgress} size="lg" color="orange" />
           </Stack>
@@ -357,7 +357,7 @@ export default function FixUserConstraintsPageMantine() {
           <Text size="xl" fw={700} c="red">
             {violations.filter(v => v.violation_type === 'duplicate_gamer_tag').length}
           </Text>
-          <Text size="sm" c="dimmed">Duplicate Tags</Text>
+          <Text size="sm" c="cyan">Duplicate Tags</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -367,7 +367,7 @@ export default function FixUserConstraintsPageMantine() {
           <Text size="xl" fw={700} c="orange">
             {violations.filter(v => v.violation_type === 'invalid_console').length}
           </Text>
-          <Text size="sm" c="dimmed">Invalid Consoles</Text>
+          <Text size="sm" c="cyan">Invalid Consoles</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -375,7 +375,7 @@ export default function FixUserConstraintsPageMantine() {
             <Database size={24} />
           </ThemeIcon>
           <Text size="xl" fw={700} c="blue">{violations.length}</Text>
-          <Text size="sm" c="dimmed">Total Violations</Text>
+          <Text size="sm" c="cyan">Total Violations</Text>
         </Card>
         
         <Card withBorder p="md" ta="center">
@@ -385,7 +385,7 @@ export default function FixUserConstraintsPageMantine() {
           <Text size="xl" fw={700} c="green">
             {fixResults.filter(r => r.success).length}
           </Text>
-          <Text size="sm" c="dimmed">Fixed Issues</Text>
+          <Text size="sm" c="cyan">Fixed Issues</Text>
         </Card>
       </Group>
 
@@ -400,7 +400,7 @@ export default function FixUserConstraintsPageMantine() {
             <Stack align="center">
               <CheckCircle size={48} stroke={1} color="var(--mantine-color-green-5)" />
               <Text c="green" fw={500}>No constraint violations found!</Text>
-              <Text c="dimmed" size="sm">All user accounts are properly configured.</Text>
+              <Text c="cyan" size="sm">All user accounts are properly configured.</Text>
             </Stack>
           </Center>
         ) : (
@@ -421,7 +421,7 @@ export default function FixUserConstraintsPageMantine() {
                     <Table.Td>
                       <div>
                         <Text fw={500}>{violation.gamer_tag_id}</Text>
-                        <Text size="sm" c="dimmed">{violation.email}</Text>
+                        <Text size="sm" c="cyan">{violation.email}</Text>
                       </div>
                     </Table.Td>
                     <Table.Td>
@@ -434,7 +434,7 @@ export default function FixUserConstraintsPageMantine() {
                       <Text size="sm" c="red">{violation.error_message}</Text>
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="cyan">
                         {new Date(violation.created_at).toLocaleDateString()}
                       </Text>
                     </Table.Td>

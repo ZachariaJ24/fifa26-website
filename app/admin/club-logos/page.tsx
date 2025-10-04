@@ -246,7 +246,7 @@ export default function AdminClubLogosPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Club Logos...</Text>
+            <Text c="cyan">Loading Club Logos...</Text>
           </Stack>
         </Center>
       </Container>
@@ -263,10 +263,10 @@ export default function AdminClubLogosPageMantine() {
               <ImageIcon size={40} />
             </ThemeIcon>
             <div>
-              <Title order={1} c="white">
+              <Title order={1} c="cyan">
                 Club Logos Management
               </Title>
-              <Text size="lg" c="white" opacity={0.9}>
+              <Text size="lg" c="yellow" >
                 Manage club logos and branding assets
               </Text>
             </div>
@@ -274,7 +274,7 @@ export default function AdminClubLogosPageMantine() {
           <Card withBorder p="md" bg="white">
             <Stack gap="xs" align="center">
               <Text size="xl" fw={700} c="blue">{clubs.length}</Text>
-              <Text size="sm" c="dimmed">Total Clubs</Text>
+              <Text size="sm" c="cyan">Total Clubs</Text>
             </Stack>
           </Card>
         </Group>
@@ -325,7 +325,7 @@ export default function AdminClubLogosPageMantine() {
                 {/* Club Info */}
                 <div style={{ textAlign: 'center' }}>
                   <Text fw={600} size="lg">{club.name}</Text>
-                  <Text size="sm" c="dimmed">
+                  <Text size="sm" c="cyan">
                     {club.logo_url ? 'Logo Set' : 'No Logo'}
                   </Text>
                 </div>
@@ -365,7 +365,7 @@ export default function AdminClubLogosPageMantine() {
                 </Group>
 
                 {/* Last Updated */}
-                <Text size="xs" c="dimmed">
+                <Text size="xs" c="cyan">
                   Updated: {new Date(club.updated_at).toLocaleDateString()}
                 </Text>
               </Stack>

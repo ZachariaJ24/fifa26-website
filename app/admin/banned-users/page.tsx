@@ -448,7 +448,7 @@ export default function BannedUsersPageMantine() {
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading Banned Users Management...</Text>
+            <Text c="cyan">Loading Banned Users Management...</Text>
           </Stack>
         </Center>
       </Container>
@@ -468,10 +468,10 @@ export default function BannedUsersPageMantine() {
             <ThemeIcon size={80} radius="xl" variant="light" color="white">
               <UserX size={40} />
             </ThemeIcon>
-            <Title order={1} c="white" ta="center">
+            <Title order={1} c="cyan" ta="center">
               Banned Users Management
             </Title>
-            <Text size="lg" c="white" ta="center" maw={600}>
+            <Text size="lg" c="yellow" ta="center" maw={600}>
               Manage user access and maintain community standards. View, unban, and track banned users across the platform.
             </Text>
           </Stack>
@@ -495,7 +495,7 @@ export default function BannedUsersPageMantine() {
             <Group justify="space-between" p="md">
               <div>
                 <Title order={3}>Banned Users</Title>
-                <Text c="dimmed">View and manage banned users</Text>
+                <Text c="cyan">View and manage banned users</Text>
               </div>
               <Group>
                 <Button variant="outline" leftSection={<Download size={16} />} onClick={exportToCsv}>
@@ -526,14 +526,14 @@ export default function BannedUsersPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Loader />
-                  <Text c="dimmed">Loading banned users...</Text>
+                  <Text c="cyan">Loading banned users...</Text>
                 </Stack>
               </Center>
             ) : filteredBannedUsers.length === 0 ? (
               <Center p="xl">
                 <Stack align="center">
                   <UserX size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-                  <Text c="dimmed">
+                  <Text c="cyan">
                     {searchTerm ? `No banned users match "${searchTerm}"` : "No banned users found"}
                   </Text>
                   {searchTerm && (
@@ -627,7 +627,7 @@ export default function BannedUsersPageMantine() {
             <Group justify="space-between" p="md">
               <div>
                 <Title order={3}>User Management</Title>
-                <Text c="dimmed">Ban users from the platform</Text>
+                <Text c="cyan">Ban users from the platform</Text>
               </div>
               <Button leftSection={<RefreshCw size={16} />} onClick={() => fetchUsers(1)} loading={loadingUsers}>
                 Load Users
@@ -654,7 +654,7 @@ export default function BannedUsersPageMantine() {
               <Center p="xl">
                 <Stack align="center">
                   <Users size={48} stroke={1} color="var(--mantine-color-blue-5)" />
-                  <Text c="dimmed">Click "Load Users" to see available users</Text>
+                  <Text c="cyan">Click "Load Users" to see available users</Text>
                 </Stack>
               </Center>
             ) : (
@@ -676,7 +676,7 @@ export default function BannedUsersPageMantine() {
                               {user.gamer_tag_id || 'No username'}
                             </Text>
                             {user.discord_name && (
-                              <Text size="xs" c="dimmed">Discord: {user.discord_name}</Text>
+                              <Text size="xs" c="cyan">Discord: {user.discord_name}</Text>
                             )}
                           </Stack>
                         </Table.Td>
