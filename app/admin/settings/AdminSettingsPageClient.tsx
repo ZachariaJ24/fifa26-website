@@ -85,14 +85,14 @@ export function AdminSettingsPageClientMantine() {
 
   if (loading) {
     return (
-      <Container size="xl" py="xl">
+      <div className="max-w-7xl mx-auto py-8">
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading System Settings...</Text>
+            <Text c="blue">Loading System Settings...</Text>
           </Stack>
         </Center>
-      </Container>
+      </div>
     )
   }
 
@@ -101,7 +101,7 @@ export function AdminSettingsPageClientMantine() {
   }
 
   return (
-    <Container size="xl" py="md">
+    <div className="max-w-7xl mx-auto py-4">
       {/* Hero Header */}
       <Paper p="xl" mb="xl" style={{ background: 'linear-gradient(135deg, var(--mantine-color-yellow-6) 0%, var(--mantine-color-orange-6) 100%)' }}>
         <Center>
@@ -224,7 +224,7 @@ export function AdminSettingsPageClientMantine() {
         <Tabs.Panel value="diagnostics" pt="md">
           <Paper withBorder p="lg">
             <Group mb="md">
-              <ThemeIcon color="gray" variant="light">
+              <ThemeIcon color="indigo" variant="light">
                 <Database size={20} />
               </ThemeIcon>
               <Title order={3}>System Diagnostics</Title>
@@ -233,6 +233,6 @@ export function AdminSettingsPageClientMantine() {
           </Paper>
         </Tabs.Panel>
       </Tabs>
-    </Container>
+    </div>
   )
 }

@@ -218,6 +218,7 @@ export default function UsersPageMantine() {
       else if (role === 'gm' || role === 'agm') color = 'blue'
       else if (role === 'owner') color = 'yellow'
       else if (role === 'player') color = 'green'
+      else color = 'blue'
 
       return (
         <Badge key={index} variant="light" color={color} size="sm">
@@ -232,7 +233,7 @@ export default function UsersPageMantine() {
       return <Badge color="red" variant="filled" size="sm">Banned</Badge>
     }
     if (!user.is_active) {
-      return <Badge color="gray" variant="outline" size="sm">Inactive</Badge>
+      return <Badge color="orange" variant="outline" size="sm">Inactive</Badge>
     }
     return <Badge color="green" variant="light" size="sm">Active</Badge>
   }
@@ -251,25 +252,25 @@ export default function UsersPageMantine() {
 
   if (loading && users.length === 0) {
     return (
-      <Container size="xl" py="xl">
+      <div className="max-w-7xl mx-auto py-8">
         <Center h={400}>
           <Stack align="center">
             <Loader size="lg" />
-            <Text c="dimmed">Loading users...</Text>
+            <Text c="blue">Loading users...</Text>
           </Stack>
         </Center>
-      </Container>
+      </div>
     )
   }
 
   return (
-    <Container size="xl" py="md">
+    <div className="max-w-7xl mx-auto py-4">
       {/* Header */}
       <Paper p="lg" mb="lg" withBorder>
         <Group justify="space-between" mb="md">
           <div>
             <Title order={2}>User Management</Title>
-            <Text c="dimmed">Manage user accounts, roles, and team assignments</Text>
+            <Text c="blue">Manage user accounts, roles, and team assignments</Text>
           </div>
           <Group>
             <Button variant="outline" leftSection={<IconDownload size={16} />} onClick={handleExportCSV}>
@@ -345,7 +346,7 @@ export default function UsersPageMantine() {
           <Text fw={500}>
             Users ({totalUsers} total)
           </Text>
-          <Text size="sm" c="dimmed">
+          <Text size="sm" c="blue">
             Page {currentPage} of {totalPages}
           </Text>
         </Group>
@@ -359,8 +360,8 @@ export default function UsersPageMantine() {
         ) : users.length === 0 ? (
           <Center p="xl">
             <Stack align="center">
-              <IconUsers size={48} stroke={1} color="var(--mantine-color-gray-5)" />
-              <Text c="dimmed">No users found</Text>
+              <IconUsers size={48} stroke={1} color="var(--mantine-color-blue-5)" />
+              <Text c="blue">No users found</Text>
               <Button variant="outline" onClick={clearFilters}>
                 Clear filters
               </Button>
@@ -392,11 +393,11 @@ export default function UsersPageMantine() {
                           <Text fw={500} size="sm">
                             {user.gamer_tag_id || 'No username'}
                           </Text>
-                          <Text size="xs" c="dimmed">
+                          <Text size="xs" c="blue">
                             {user.email}
                           </Text>
                           {user.discord_name && (
-                            <Text size="xs" c="dimmed">
+                            <Text size="xs" c="blue">
                               Discord: {user.discord_name}
                             </Text>
                           )}
@@ -414,7 +415,7 @@ export default function UsersPageMantine() {
                           {user.clubs[0].name}
                         </Badge>
                       ) : (
-                        <Text size="sm" c="dimmed">No club</Text>
+                        <Text size="sm" c="blue">No club</Text>
                       )}
                     </Table.Td>
                     <Table.Td>
@@ -425,7 +426,7 @@ export default function UsersPageMantine() {
                           </Badge>
                         )}
                         {user.secondary_position && (
-                          <Badge variant="outline" size="xs" c="dimmed">
+                          <Badge variant="outline" size="xs" c="blue">
                             {user.secondary_position}
                           </Badge>
                         )}
@@ -435,7 +436,7 @@ export default function UsersPageMantine() {
                       {getStatusBadge(user)}
                     </Table.Td>
                     <Table.Td>
-                      <Text size="sm" c="dimmed">
+                      <Text size="sm" c="blue">
                         {user.last_login_at 
                           ? new Date(user.last_login_at).toLocaleDateString() 
                           : 'Never'}
@@ -593,6 +594,6 @@ export default function UsersPageMantine() {
           </Stack>
         )}
       </Modal>
-    </Container>
+    </div>
   )
 }
