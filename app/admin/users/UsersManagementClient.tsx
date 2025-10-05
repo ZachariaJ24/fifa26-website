@@ -147,9 +147,9 @@ const newUserSchema = z.object({
   roles: z.array(z.string()).min(1, "Select at least one role"),
 })
 
-const teamAssignmentSchema = z.object({
+const clubAssignmentSchema = z.object({
   playerId: z.string().uuid(),
-  teamId: z.string().uuid().nullable(),
+  clubId: z.string().uuid().nullable(),
 })
 
 // New schema for salary setting
@@ -347,12 +347,12 @@ export default function UsersManagementClient() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState<any[]>([])
-  const [teams, setTeams] = useState<any[]>([])
+  const [clubs, setClubs] = useState<any[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
   const [selectedUser, setSelectedUser] = useState<any>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [newUserDialogOpen, setNewUserDialogOpen] = useState(false)
-  const [teamAssignDialogOpen, setTeamAssignDialogOpen] = useState(false)
+  const [clubAssignDialogOpen, setTeamAssignDialogOpen] = useState(false)
   const [positionDialogOpen, setPositionDialogOpen] = useState(false) // New state for position dialog
   const [salaryDialogOpen, setSalaryDialogOpen] = useState(false) // New state for salary dialog
   const [submitting, setSubmitting] = useState(false)
@@ -413,7 +413,7 @@ export default function UsersManagementClient() {
     },
   })
 
-  const teamAssignmentForm = useForm<z.infer<typeof teamAssignmentSchema>>({
+  const clubAssignmentForm = useForm<z.infer<typeof teamAssignmentSchema>>({
     resolver: zodResolver(teamAssignmentSchema),
     defaultValues: {
       playerId: "",
@@ -503,9 +503,9 @@ export default function UsersManagementClient() {
         }
 
         try {
-          await fetchTeams()
+          await fetchClubs()
         } catch (error) {
-          console.error("Error fetching teams:", error)
+          console.error("Error fetching clubs:", error)
         }
 
         // Fetch valid roles (with built-in fallback)
@@ -630,7 +630,7 @@ export default function UsersManagementClient() {
     }
   }
 
-  async function fetchTeams() {
+  async function fetchClubs() {
     try {
       const { data, error } = await supabase.from("clubs").select("id, name").order("name")
 
@@ -638,19 +638,19 @@ export default function UsersManagementClient() {
         throw error
       }
 
-      setTeams(data || [])
+      setClubs(data || [])
     } catch (error: any) {
-      console.error("Error fetching teams:", error)
+      console.error("Error fetching clubs:", error)
       toast({
-        title: "Error loading teams",
-        description: error.message || "Failed to load teams",
+        title: "Error loading clubs",
+        description: error.message || "Failed to load clubs",
         variant: "destructive",
       })
     }
   }
 
   // Add a function to fetch valid roles from the database
-  // Add this function after the fetchTeams function
+  // Add this function after the fetchClubs function
   // Update the fetchValidRoles function to handle errors better and add retry logic for fetchUsers
 
   // Replace the fetchValidRoles function with this implementation
@@ -701,12 +701,12 @@ export default function UsersManagementClient() {
         email,
         is_active,
         created_at,
-        players(
+        players!inner(
           id,
           role,
           club_id,
           salary,
-          clubs:clubs(
+          clubs(
             id,
             name
           )
@@ -1291,7 +1291,7 @@ export default function UsersManagementClient() {
     }
   }
 
-  const openTeamAssignDialog = async (user: any) => {
+  const openClubAssignDialog = async (user: any) => {
     try {
       if (!user || !user.id) {
         console.error("Invalid user object:", user)
@@ -1331,7 +1331,7 @@ export default function UsersManagementClient() {
           }
 
           // Use the newly created player
-          teamAssignmentForm.reset({
+          clubAssignmentForm.reset({
             playerId: newPlayer.id,
             teamId: null,
           })
@@ -1340,7 +1340,7 @@ export default function UsersManagementClient() {
         }
       } else if (playerData) {
         // Use the fetched player data
-        teamAssignmentForm.reset({
+        clubAssignmentForm.reset({
           playerId: playerData.id,
           teamId: playerData.club_id,
         })
@@ -1594,10 +1594,10 @@ export default function UsersManagementClient() {
   }
 
   // Updated team assignment function with proper manual removal handling
-  const onAssignTeam = async (values: z.infer<typeof teamAssignmentSchema>) => {
+  const onAssignClub = async (values: z.infer<typeof teamAssignmentSchema>) => {
     try {
       setSubmitting(true)
-      const { playerId, teamId } = values
+      const { playerId, clubId } = values
 
       console.log("Assigning player to team:", playerId, teamId)
 
@@ -1660,12 +1660,12 @@ export default function UsersManagementClient() {
         }
 
         // Get team name for the toast message
-        const team = teams.find((t) => t.id === teamId)
-        const teamName = team ? team.name : "Unknown Team"
+        const club = clubs.find((t) => t.id === clubId)
+        const clubName = club ? club.name : "Unknown Club"
 
         toast({
           title: "Team assigned",
-          description: `Player has been assigned to ${teamName}.`,
+          description: `Player has been assigned to ${clubName}.`,
         })
       }
 
@@ -1859,7 +1859,7 @@ export default function UsersManagementClient() {
             // If deactivating, also update the club_id in the local state
             if (!isActive && updatedUser.players && updatedUser.players.length > 0) {
               updatedUser.players[0].club_id = null
-              updatedUser.players[0].teams = null
+              updatedUser.players[0].clubs = null
             }
 
             return updatedUser
@@ -1917,10 +1917,10 @@ export default function UsersManagementClient() {
   }
 
   // Handle team assignment dialog close with proper form reset
-  const handleTeamAssignDialogClose = (open: boolean) => {
+  const handleClubAssignDialogClose = (open: boolean) => {
     if (!open) {
-      if (teamAssignmentForm) {
-        teamAssignmentForm.reset({
+      if (clubAssignmentForm) {
+        clubAssignmentForm.reset({
           playerId: "",
           teamId: null,
         })
@@ -2134,10 +2134,10 @@ export default function UsersManagementClient() {
                     <Crown className="h-8 w-8 text-white" />
                   </div>
                   <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
-                    {teams.length}
+                    {clubs.length}
                   </div>
                   <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
-                    Teams
+                    Clubs
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
                 </div>
@@ -2503,7 +2503,7 @@ export default function UsersManagementClient() {
                                   variant="outline"
                                   size="sm"
                                   className="hockey-button border-rink-blue-300 hover:border-rink-blue-500 hover:bg-rink-blue-50 dark:hover:bg-rink-blue-900/20 text-rink-blue-700 dark:text-rink-blue-300 transition-all duration-200 hover:scale-105"
-                                  onClick={() => openTeamAssignDialog(user)}
+                                  onClick={() => openClubAssignDialog(user)}
                                   disabled={submitting}
                                 >
                                   <Users className="mr-1 h-3 w-3" />
@@ -2745,7 +2745,7 @@ export default function UsersManagementClient() {
       </Dialog>
 
       {/* Team Assignment Dialog */}
-      <Dialog open={teamAssignDialogOpen} onOpenChange={handleTeamAssignDialogClose}>
+      <Dialog open={clubAssignDialogOpen} onOpenChange={handleClubAssignDialogClose}>
         <DialogContent className="sm:max-w-[425px] bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:to-rink-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
           <DialogHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
             <DialogTitle className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Assign Team</DialogTitle>
@@ -2759,10 +2759,10 @@ export default function UsersManagementClient() {
                 Team
               </label>
               <Select
-                value={teamAssignmentForm.getValues().teamId?.toString() || "none"}
+                value={clubAssignmentForm.getValues().teamId?.toString() || "none"}
                 onValueChange={(value) => {
                   const newValue = value === "none" ? null : value
-                  teamAssignmentForm.setValue("teamId", newValue)
+                  clubAssignmentForm.setValue("teamId", newValue)
                 }}
                 disabled={submitting}
               >
@@ -2771,9 +2771,9 @@ export default function UsersManagementClient() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">Free Agent (No Team)</SelectItem>
-                  {teams.map((team) => (
-                    <SelectItem key={team.id} value={team.id}>
-                      {team.name}
+                  {clubs.map((club) => (
+                    <SelectItem key={club.id} value={club.id}>
+                      {club.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -2784,7 +2784,7 @@ export default function UsersManagementClient() {
               </p>
             </div>
             <DialogFooter className="pt-4 border-t-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
-              <Button onClick={() => teamAssignmentForm.handleSubmit(onAssignTeam)()} disabled={submitting} className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+              <Button onClick={() => clubAssignmentForm.handleSubmit(onAssignClub)()} disabled={submitting} className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
                 {submitting ? "Saving..." : "Assign Team"}
               </Button>
             </DialogFooter>
@@ -3018,6 +3018,19 @@ export default function UsersManagementClient() {
     </div>
   )
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
