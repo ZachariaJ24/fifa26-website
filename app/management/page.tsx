@@ -139,6 +139,27 @@ export default function ManagementPageMantine() {
     try {
       setLoading(true)
 
+      // Check if user has Management role (can view all clubs)
+      const { data: managementRole } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", session.user.id)
+        .eq("role", "Management")
+        .single()
+
+      if (managementRole) {
+        // User has Management role - show all clubs or let them select one
+        notifications.show({
+          title: "Management Access",
+          message: "You have management access. Please select a club to manage from the admin panel.",
+          color: "blue",
+          icon: <AlertCircle size={16} />
+        })
+        setUserRole("Management")
+        setLoading(false)
+        return
+      }
+
       // Get user's club through players table (fixed to use club_id)
       const { data: playerData, error: playerError } = await supabase
         .from("players")
@@ -163,7 +184,7 @@ export default function ManagementPageMantine() {
         console.error("Error fetching player data:", playerError)
         notifications.show({
           title: "Error",
-          message: "Failed to load your club data. Please try again.",
+          message: "Failed to load your club data. You may not be assigned to a club yet.",
           color: "red",
           icon: <AlertCircle size={16} />
         })
