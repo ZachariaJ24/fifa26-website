@@ -76,7 +76,7 @@ import {
 } from "lucide-react"
 
 // Define valid player roles - these must match the database constraint
-const VALID_PLAYER_ROLES = ["Player", "GM", "AGM", "Owner"]
+const VALID_PLAYER_ROLES = ["Player", "GM", "AGM", "Owner", "Management"]
 
 // Update the roles array to match the database constraint
 // Replace the existing roles array with this one
@@ -86,6 +86,7 @@ const roles = [
   { label: "AGM", value: "AGM" },
   { label: "Owner", value: "Owner" },
   { label: "Admin", value: "Admin" },
+  { label: "Management", value: "Management" },
 ]
 
 const positions = [
