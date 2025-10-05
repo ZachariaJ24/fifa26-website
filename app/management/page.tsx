@@ -145,18 +145,17 @@ export default function ManagementPageMantine() {
         .select("role")
         .eq("user_id", session.user.id)
         .eq("role", "Management")
-        .single()
+        .maybeSingle()
 
       if (managementRole) {
-        // User has Management role - show all clubs or let them select one
+        // User has Management role - redirect to admin panel
         notifications.show({
           title: "Management Access",
-          message: "You have management access. Please select a club to manage from the admin panel.",
+          message: "Redirecting to admin panel...",
           color: "blue",
           icon: <AlertCircle size={16} />
         })
-        setUserRole("Management")
-        setLoading(false)
+        router.push("/admin")
         return
       }
 
@@ -178,7 +177,7 @@ export default function ManagementPageMantine() {
           )
         `)
         .eq("user_id", session.user.id)
-        .single()
+        .maybeSingle()
 
       if (playerError) {
         console.error("Error fetching player data:", playerError)

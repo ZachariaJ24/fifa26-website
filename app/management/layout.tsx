@@ -29,23 +29,23 @@ export default function ManagementLayout({
         }
 
         // Check if user has Management role in user_roles table
-        const { data: roleData, error: roleError } = await supabase
+        const { data: roleData } = await supabase
           .from("user_roles")
           .select("role")
           .eq("user_id", session.user.id)
           .eq("role", "Management")
-          .single()
+          .maybeSingle()
 
-        if (roleError || !roleData) {
+        if (!roleData) {
           // Also check if user has GM, AGM, or Owner role in players table
-          const { data: playerData, error: playerError } = await supabase
+          const { data: playerData } = await supabase
             .from("players")
             .select("role, club_id")
             .eq("user_id", session.user.id)
             .in("role", ["GM", "AGM", "Owner"])
-            .single()
+            .maybeSingle()
 
-          if (playerError || !playerData) {
+          if (!playerData) {
             setError("You don't have permission to access the management area. You need either a Management role or be a GM/AGM/Owner.")
             setIsAuthorized(false)
             return
