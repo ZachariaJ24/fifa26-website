@@ -687,7 +687,6 @@ export default function UsersManagementClient() {
       // Continue with default roles
     }
   }
-
   // Replace the fetchUsers function with this implementation that includes retry logic
   async function fetchUsers(retryCount = 0) {
     setLoading(true)
@@ -696,13 +695,18 @@ export default function UsersManagementClient() {
       const { data: usersData, error: usersError } = await supabase
         .from("users")
         .select(`
-        *,
+        id,
+        gamer_tag,
+        gamer_tag_id,
+        email,
+        is_active,
+        created_at,
         players(
           id,
           role,
-          team_id,
+          club_id,
           salary,
-          teams:teams(
+          clubs:clubs(
             id,
             name
           )
@@ -744,8 +748,8 @@ export default function UsersManagementClient() {
               {
                 id: null, // Will be filled in next fetch
                 role: "Player",
-                team_id: null,
-                teams: null,
+                club_id: null,
+                clubs: null,
               },
             ]
           } catch (error) {
@@ -1112,7 +1116,7 @@ export default function UsersManagementClient() {
       const csvData = filteredUsers.map((user) => {
         const playerRole = user.players && user.players.length > 0 ? user.players[0].role : ""
         const teamName =
-          user.players && user.players.length > 0 && user.players[0].teams ? user.players[0].teams.name : "Free Agent"
+          user.players && user.players.length > 0 && user.players[0].clubs ? user.players[0].clubs.name : "Free Agent"
         const salary = user.players && user.players.length > 0 ? user.players[0].salary || 0 : 0
 
         //
@@ -1305,7 +1309,7 @@ export default function UsersManagementClient() {
       // Fetch the player record directly from the database to ensure we have the latest data
       const { data: playerData, error: playerError } = await supabase
         .from("players")
-        .select("id, team_id")
+        .select("id, club_id")
         .eq("user_id", user.id)
         .single()
 
@@ -1338,7 +1342,7 @@ export default function UsersManagementClient() {
         // Use the fetched player data
         teamAssignmentForm.reset({
           playerId: playerData.id,
-          teamId: playerData.team_id,
+          teamId: playerData.club_id,
         })
       } else {
         throw new Error("No player data returned")
@@ -1628,7 +1632,7 @@ export default function UsersManagementClient() {
         const { error } = await supabase
           .from("players")
           .update({
-            team_id: teamId,
+            club_id: teamId,
             manually_removed: false, // Reset manual removal flag
             manually_removed_at: null,
           })
@@ -1805,21 +1809,21 @@ export default function UsersManagementClient() {
         // First, get the player record
         const { data: playerData, error: playerError } = await supabase
           .from("players")
-          .select("id, team_id")
+          .select("id, club_id")
           .eq("user_id", userId)
           .single()
 
-        if (!playerError && playerData && playerData.team_id) {
+        if (!playerError && playerData && playerData.club_id) {
           // Remove player from team
           const { error: updatePlayerError } = await supabase
             .from("players")
-            .update({ team_id: null })
+            .update({ club_id: null })
             .eq("id", playerData.id)
 
           if (updatePlayerError) {
             console.error("Error removing player from team:", updatePlayerError)
           } else {
-            console.log(`Player ${playerData.id} removed from team ${playerData.team_id} due to deactivation`)
+            console.log(`Player ${playerData.id} removed from club ${playerData.club_id} due to deactivation`)
           }
         }
       }
@@ -1852,9 +1856,9 @@ export default function UsersManagementClient() {
             // Update the user's active status
             const updatedUser = { ...user, is_active: isActive }
 
-            // If deactivating, also update the team_id in the local state
+            // If deactivating, also update the club_id in the local state
             if (!isActive && updatedUser.players && updatedUser.players.length > 0) {
-              updatedUser.players[0].team_id = null
+              updatedUser.players[0].club_id = null
               updatedUser.players[0].teams = null
             }
 
@@ -2447,7 +2451,7 @@ export default function UsersManagementClient() {
                               user.players[0].team_id &&
                               user.players[0].teams ? (
                                 <Badge variant="outline" className="bg-assist-green-50 dark:bg-assist-green-900/20 border-assist-green-200 dark:border-assist-green-700 text-assist-green-700 dark:text-assist-green-300">
-                                  {user.players[0].teams.name}
+                                  {user.players[0].clubs.name}
                                 </Badge>
                               ) : (
                                 <Badge variant="outline" className="bg-hockey-silver-50 dark:bg-hockey-silver-900/20 border-hockey-silver-200 dark:border-hockey-silver-700 text-hockey-silver-700 dark:text-hockey-silver-300">
@@ -3014,3 +3018,8 @@ export default function UsersManagementClient() {
     </div>
   )
 }
+
+
+
+
+
