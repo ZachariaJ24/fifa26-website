@@ -147,9 +147,9 @@ const newUserSchema = z.object({
   roles: z.array(z.string()).min(1, "Select at least one role"),
 })
 
-const clubAssignmentSchema = z.object({
+const teamAssignmentSchema = z.object({
   playerId: z.string().uuid(),
-  clubId: z.string().uuid().nullable(),
+  teamId: z.string().uuid().nullable(),
 })
 
 // New schema for salary setting
@@ -347,12 +347,12 @@ export default function UsersManagementClient() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState<any[]>([])
-  const [clubs, setClubs] = useState<any[]>([])
+  const [teams, setTeams] = useState<any[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
   const [selectedUser, setSelectedUser] = useState<any>(null)
   const [dialogOpen, setDialogOpen] = useState(false)
   const [newUserDialogOpen, setNewUserDialogOpen] = useState(false)
-  const [clubAssignDialogOpen, setTeamAssignDialogOpen] = useState(false)
+  const [teamAssignDialogOpen, setTeamAssignDialogOpen] = useState(false)
   const [positionDialogOpen, setPositionDialogOpen] = useState(false) // New state for position dialog
   const [salaryDialogOpen, setSalaryDialogOpen] = useState(false) // New state for salary dialog
   const [submitting, setSubmitting] = useState(false)
@@ -413,7 +413,7 @@ export default function UsersManagementClient() {
     },
   })
 
-  const clubAssignmentForm = useForm<z.infer<typeof teamAssignmentSchema>>({
+  const teamAssignmentForm = useForm<z.infer<typeof teamAssignmentSchema>>({
     resolver: zodResolver(teamAssignmentSchema),
     defaultValues: {
       playerId: "",
@@ -503,9 +503,9 @@ export default function UsersManagementClient() {
         }
 
         try {
-          await fetchClubs()
+          await fetchTeams()
         } catch (error) {
-          console.error("Error fetching clubs:", error)
+          console.error("Error fetching teams:", error)
         }
 
         // Fetch valid roles (with built-in fallback)
@@ -630,7 +630,7 @@ export default function UsersManagementClient() {
     }
   }
 
-  async function fetchClubs() {
+  async function fetchTeams() {
     try {
       const { data, error } = await supabase.from("clubs").select("id, name").order("name")
 
@@ -638,19 +638,19 @@ export default function UsersManagementClient() {
         throw error
       }
 
-      setClubs(data || [])
+      setTeams(data || [])
     } catch (error: any) {
-      console.error("Error fetching clubs:", error)
+      console.error("Error fetching teams:", error)
       toast({
-        title: "Error loading clubs",
-        description: error.message || "Failed to load clubs",
+        title: "Error loading teams",
+        description: error.message || "Failed to load teams",
         variant: "destructive",
       })
     }
   }
 
   // Add a function to fetch valid roles from the database
-  // Add this function after the fetchClubs function
+  // Add this function after the fetchTeams function
   // Update the fetchValidRoles function to handle errors better and add retry logic for fetchUsers
 
   // Replace the fetchValidRoles function with this implementation
@@ -687,6 +687,7 @@ export default function UsersManagementClient() {
       // Continue with default roles
     }
   }
+
   // Replace the fetchUsers function with this implementation that includes retry logic
   async function fetchUsers(retryCount = 0) {
     setLoading(true)
@@ -695,18 +696,13 @@ export default function UsersManagementClient() {
       const { data: usersData, error: usersError } = await supabase
         .from("users")
         .select(`
-        id,
-        gamer_tag,
-        gamer_tag_id,
-        email,
-        is_active,
-        created_at,
-        players!inner(
+        *,
+        players(
           id,
           role,
-          club_id,
+          team_id,
           salary,
-          clubs(
+          teams:teams(
             id,
             name
           )
@@ -748,8 +744,8 @@ export default function UsersManagementClient() {
               {
                 id: null, // Will be filled in next fetch
                 role: "Player",
-                club_id: null,
-                clubs: null,
+                team_id: null,
+                teams: null,
               },
             ]
           } catch (error) {
@@ -1116,7 +1112,7 @@ export default function UsersManagementClient() {
       const csvData = filteredUsers.map((user) => {
         const playerRole = user.players && user.players.length > 0 ? user.players[0].role : ""
         const teamName =
-          user.players && user.players.length > 0 && user.players[0].clubs ? user.players[0].clubs.name : "Free Agent"
+          user.players && user.players.length > 0 && user.players[0].teams ? user.players[0].teams.name : "Free Agent"
         const salary = user.players && user.players.length > 0 ? user.players[0].salary || 0 : 0
 
         //
@@ -1291,7 +1287,7 @@ export default function UsersManagementClient() {
     }
   }
 
-  const openClubAssignDialog = async (user: any) => {
+  const openTeamAssignDialog = async (user: any) => {
     try {
       if (!user || !user.id) {
         console.error("Invalid user object:", user)
@@ -1309,7 +1305,7 @@ export default function UsersManagementClient() {
       // Fetch the player record directly from the database to ensure we have the latest data
       const { data: playerData, error: playerError } = await supabase
         .from("players")
-        .select("id, club_id")
+        .select("id, team_id")
         .eq("user_id", user.id)
         .single()
 
@@ -1331,7 +1327,7 @@ export default function UsersManagementClient() {
           }
 
           // Use the newly created player
-          clubAssignmentForm.reset({
+          teamAssignmentForm.reset({
             playerId: newPlayer.id,
             teamId: null,
           })
@@ -1340,9 +1336,9 @@ export default function UsersManagementClient() {
         }
       } else if (playerData) {
         // Use the fetched player data
-        clubAssignmentForm.reset({
+        teamAssignmentForm.reset({
           playerId: playerData.id,
-          teamId: playerData.club_id,
+          teamId: playerData.team_id,
         })
       } else {
         throw new Error("No player data returned")
@@ -1594,10 +1590,10 @@ export default function UsersManagementClient() {
   }
 
   // Updated team assignment function with proper manual removal handling
-  const onAssignClub = async (values: z.infer<typeof teamAssignmentSchema>) => {
+  const onAssignTeam = async (values: z.infer<typeof teamAssignmentSchema>) => {
     try {
       setSubmitting(true)
-      const { playerId, clubId } = values
+      const { playerId, teamId } = values
 
       console.log("Assigning player to team:", playerId, teamId)
 
@@ -1632,7 +1628,7 @@ export default function UsersManagementClient() {
         const { error } = await supabase
           .from("players")
           .update({
-            club_id: teamId,
+            team_id: teamId,
             manually_removed: false, // Reset manual removal flag
             manually_removed_at: null,
           })
@@ -1660,12 +1656,12 @@ export default function UsersManagementClient() {
         }
 
         // Get team name for the toast message
-        const club = clubs.find((t) => t.id === clubId)
-        const clubName = club ? club.name : "Unknown Club"
+        const team = teams.find((t) => t.id === teamId)
+        const teamName = team ? team.name : "Unknown Team"
 
         toast({
           title: "Team assigned",
-          description: `Player has been assigned to ${clubName}.`,
+          description: `Player has been assigned to ${teamName}.`,
         })
       }
 
@@ -1809,21 +1805,21 @@ export default function UsersManagementClient() {
         // First, get the player record
         const { data: playerData, error: playerError } = await supabase
           .from("players")
-          .select("id, club_id")
+          .select("id, team_id")
           .eq("user_id", userId)
           .single()
 
-        if (!playerError && playerData && playerData.club_id) {
+        if (!playerError && playerData && playerData.team_id) {
           // Remove player from team
           const { error: updatePlayerError } = await supabase
             .from("players")
-            .update({ club_id: null })
+            .update({ team_id: null })
             .eq("id", playerData.id)
 
           if (updatePlayerError) {
             console.error("Error removing player from team:", updatePlayerError)
           } else {
-            console.log(`Player ${playerData.id} removed from club ${playerData.club_id} due to deactivation`)
+            console.log(`Player ${playerData.id} removed from team ${playerData.team_id} due to deactivation`)
           }
         }
       }
@@ -1856,10 +1852,10 @@ export default function UsersManagementClient() {
             // Update the user's active status
             const updatedUser = { ...user, is_active: isActive }
 
-            // If deactivating, also update the club_id in the local state
+            // If deactivating, also update the team_id in the local state
             if (!isActive && updatedUser.players && updatedUser.players.length > 0) {
-              updatedUser.players[0].club_id = null
-              updatedUser.players[0].clubs = null
+              updatedUser.players[0].team_id = null
+              updatedUser.players[0].teams = null
             }
 
             return updatedUser
@@ -1917,10 +1913,10 @@ export default function UsersManagementClient() {
   }
 
   // Handle team assignment dialog close with proper form reset
-  const handleClubAssignDialogClose = (open: boolean) => {
+  const handleTeamAssignDialogClose = (open: boolean) => {
     if (!open) {
-      if (clubAssignmentForm) {
-        clubAssignmentForm.reset({
+      if (teamAssignmentForm) {
+        teamAssignmentForm.reset({
           playerId: "",
           teamId: null,
         })
@@ -2134,10 +2130,10 @@ export default function UsersManagementClient() {
                     <Crown className="h-8 w-8 text-white" />
                   </div>
                   <div className="text-3xl font-bold text-goal-red-700 dark:text-goal-red-300 mb-2">
-                    {clubs.length}
+                    {teams.length}
                   </div>
                   <div className="text-sm text-hockey-silver-600 dark:text-hockey-silver-400 font-medium">
-                    Clubs
+                    Teams
                   </div>
                   <div className="w-16 h-1 bg-gradient-to-r from-goal-red-500 to-assist-green-600 rounded-full mx-auto mt-3 group-hover:w-20 transition-all duration-300"></div>
                 </div>
@@ -2451,7 +2447,7 @@ export default function UsersManagementClient() {
                               user.players[0].team_id &&
                               user.players[0].teams ? (
                                 <Badge variant="outline" className="bg-assist-green-50 dark:bg-assist-green-900/20 border-assist-green-200 dark:border-assist-green-700 text-assist-green-700 dark:text-assist-green-300">
-                                  {user.players[0].clubs.name}
+                                  {user.players[0].teams.name}
                                 </Badge>
                               ) : (
                                 <Badge variant="outline" className="bg-hockey-silver-50 dark:bg-hockey-silver-900/20 border-hockey-silver-200 dark:border-hockey-silver-700 text-hockey-silver-700 dark:text-hockey-silver-300">
@@ -2503,7 +2499,7 @@ export default function UsersManagementClient() {
                                   variant="outline"
                                   size="sm"
                                   className="hockey-button border-rink-blue-300 hover:border-rink-blue-500 hover:bg-rink-blue-50 dark:hover:bg-rink-blue-900/20 text-rink-blue-700 dark:text-rink-blue-300 transition-all duration-200 hover:scale-105"
-                                  onClick={() => openClubAssignDialog(user)}
+                                  onClick={() => openTeamAssignDialog(user)}
                                   disabled={submitting}
                                 >
                                   <Users className="mr-1 h-3 w-3" />
@@ -2745,7 +2741,7 @@ export default function UsersManagementClient() {
       </Dialog>
 
       {/* Team Assignment Dialog */}
-      <Dialog open={clubAssignDialogOpen} onOpenChange={handleClubAssignDialogClose}>
+      <Dialog open={teamAssignDialogOpen} onOpenChange={handleTeamAssignDialogClose}>
         <DialogContent className="sm:max-w-[425px] bg-gradient-to-b from-ice-blue-50 to-rink-blue-50 dark:from-hockey-silver-900 dark:to-rink-blue-900 border-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 shadow-2xl shadow-ice-blue-500/20">
           <DialogHeader className="border-b-2 border-ice-blue-200/50 dark:border-rink-blue-700/50 pb-4">
             <DialogTitle className="text-2xl font-bold text-hockey-silver-800 dark:text-hockey-silver-200">Assign Team</DialogTitle>
@@ -2759,10 +2755,10 @@ export default function UsersManagementClient() {
                 Team
               </label>
               <Select
-                value={clubAssignmentForm.getValues().teamId?.toString() || "none"}
+                value={teamAssignmentForm.getValues().teamId?.toString() || "none"}
                 onValueChange={(value) => {
                   const newValue = value === "none" ? null : value
-                  clubAssignmentForm.setValue("teamId", newValue)
+                  teamAssignmentForm.setValue("teamId", newValue)
                 }}
                 disabled={submitting}
               >
@@ -2771,9 +2767,9 @@ export default function UsersManagementClient() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="none">Free Agent (No Team)</SelectItem>
-                  {clubs.map((club) => (
-                    <SelectItem key={club.id} value={club.id}>
-                      {club.name}
+                  {teams.map((team) => (
+                    <SelectItem key={team.id} value={team.id}>
+                      {team.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -2784,7 +2780,7 @@ export default function UsersManagementClient() {
               </p>
             </div>
             <DialogFooter className="pt-4 border-t-2 border-ice-blue-200/50 dark:border-rink-blue-700/50">
-              <Button onClick={() => clubAssignmentForm.handleSubmit(onAssignClub)()} disabled={submitting} className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+              <Button onClick={() => teamAssignmentForm.handleSubmit(onAssignTeam)()} disabled={submitting} className="hockey-button bg-gradient-to-r from-ice-blue-500 to-rink-blue-600 text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
                 {submitting ? "Saving..." : "Assign Team"}
               </Button>
             </DialogFooter>
@@ -3018,21 +3014,3 @@ export default function UsersManagementClient() {
     </div>
   )
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
